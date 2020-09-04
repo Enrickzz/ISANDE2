@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/add.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
 </head>
@@ -15,16 +16,30 @@
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Brand</span></div>
+                    <div class="sidebar-brand-icon"><i class="fas fa-laugh-wink" id="company-icon"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>Louella Bakery</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-box"></i><span>Products</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-warehouse"></i><span>Inventory</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-recycle"></i><span>Pull Out Products</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-chalkboard-teacher"></i><span>Production Orders</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-truck-moving"></i><span>Deliveries</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-cart-arrow-down"></i><span>Returns</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-users"></i><span>Supplier</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-list-alt"></i><span>Purchase Orders</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-poll"></i><span>Sales Records</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a></li>
+                    
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Table</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Login</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="register.html"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+                    
+                    
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -33,11 +48,7 @@
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                                <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                            </div>
-                        </form>
+                        <button class="btn btn-primary" type="button">Create <i class="fa fa-edit"></i></button>
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
@@ -138,7 +149,7 @@
             </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div><div class="row">
+                    <h3 class="text-dark mb-0">Dashboard</h3></div><div class="row">
     <div class="col-md-6 col-xl-3 mb-4">
         <div class="card shadow border-left-primary py-2">
             <div class="card-body">
@@ -221,7 +232,7 @@
                     <div class="col-lg-5 col-xl-4">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary font-weight-bold m-0">Revenue Sources</h6>
+                                <h6 class="text-primary font-weight-bold m-0">Monthly Sales Ranking</h6>
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                     <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
                                         role="menu">
@@ -229,11 +240,19 @@
                                         <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#">&nbsp;Something else here</a></div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="chart-area"><canvas data-bs-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Direct&quot;,&quot;Social&quot;,&quot;Referral&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{}}}"></canvas></div>
-                                <div
-                                    class="text-center small mt-4"><span class="mr-2"><i class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span class="mr-2"><i class="fas fa-circle text-success"></i>&nbsp;Social</span><span class="mr-2"><i class="fas fa-circle text-info"></i>&nbsp;Refferal</span></div>
-                        </div>
+                            <div class="card-group">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="card">
+                                            <div class="card-body"><span style="font-size: 23px;"><strong>#1</strong></span><span style="padding: 26px;font-size: 23px;">Branch A</span></div>
+                                            <div class="card-body"><span style="font-size: 23px;"><strong>#2</strong></span><span style="padding: 26px;font-size: 23px;">Branch B</span></div>
+                                            <div class="card-body"><span style="font-size: 23px;"><strong>#3</strong></span><span style="padding: 26px;font-size: 23px;">Branch C</span></div>
+                                            <div class="card-body"><span style="font-size: 23px;"><strong>#4</strong></span><span style="padding: 26px;font-size: 23px;">Branch D</span></div>
+                                        </div>
+                                        <div class="card"></div>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>

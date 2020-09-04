@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Table - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/add.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
 </head>
@@ -15,14 +16,26 @@
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Brand</span></div>
+                    <div class="sidebar-brand-icon"><i class="fas fa-laugh-wink" id="company-icon"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>Louella Bakery</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-box"></i><span>Products</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-warehouse"></i><span>Inventory</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-recycle"></i><span>Pull Out Products</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-chalkboard-teacher"></i><span>Production Orders</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-truck-moving"></i><span>Deliveries</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-cart-arrow-down"></i><span>Returns</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-users"></i><span>Supplier</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-list-alt"></i><span>Purchase Orders</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-poll"></i><span>Sales Records</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a></li>
+                    
                     <li class="nav-item" role="presentation"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="table.html"><i class="fas fa-table"></i><span>Table</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Table</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Login</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="register.html"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
                 </ul>
@@ -33,11 +46,7 @@
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                                <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                            </div>
-                        </form>
+                        <button class="btn btn-primary" type="button">Create <i class="fa fa-edit"></i></button>
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
@@ -136,19 +145,38 @@
                     </ul>
             </div>
             </nav>
+            
             <div class="container-fluid">
-                <h3 class="text-dark mb-4">Team</h3>
-                <div class="card shadow">
-                    <div class="card-header py-3">
-                        <p class="text-primary m-0 font-weight-bold">Employee Info</p>
+                <h3 class="text-dark mb-4">Manage Users</h3>
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item btn"><a id="tab" class="nav-link active"  onclick="opentab('users')">Users</a></li>
+                            <li class="nav-item btn"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Register User</a></li>
+                            <li class="nav-item"></li>
+                        </ul>
                     </div>
-                    <div class="card-body">
+
+                    <div class="card-body" id="reguser" style="display:none">
+                        <span>hello world</span>
+                    </div>
+
+                    <div class="card-body" id="users">
                         <div class="row">
                             <div class="col-md-6 text-nowrap">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label style="padding: 11px;margin: -6px;margin-right: 20px;">Branch 
+                                    <select class="form-control form-control-sm custom-select custom-select-sm" style="padding-left: 10 px;margin-left: 20;">
+                                        <option value="10" selected>Branch A</option>
+                                        <option value="Branch B">Branch B</option>
+                                        <option value="Branch C">Branch C</option>
+                                        <option value="Branch D">Branch D</option>
+                                        <option value="Branch D">Branch D</option>
+                                        <option value="Branch D">Branch D</option>
+                                    </select></label>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search" /></label></div>
                             </div>
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -165,7 +193,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar1.jpeg">Airi Satou</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar1.jpeg" />Airi Satou</td>
                                         <td>Accountant</td>
                                         <td>Tokyo</td>
                                         <td>33</td>
@@ -173,75 +201,75 @@
                                         <td>$162,700</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar2.jpeg">Angelica Ramos</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar2.jpeg" />Angelica Ramos</td>
                                         <td>Chief Executive Officer(CEO)</td>
                                         <td>London</td>
                                         <td>47</td>
-                                        <td>2009/10/09<br></td>
+                                        <td>2009/10/09<br /></td>
                                         <td>$1,200,000</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar3.jpeg">Ashton Cox</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar3.jpeg" />Ashton Cox</td>
                                         <td>Junior Technical Author</td>
                                         <td>San Francisco</td>
                                         <td>66</td>
-                                        <td>2009/01/12<br></td>
+                                        <td>2009/01/12<br /></td>
                                         <td>$86,000</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar4.jpeg">Bradley Greer</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar4.jpeg" />Bradley Greer</td>
                                         <td>Software Engineer</td>
                                         <td>London</td>
                                         <td>41</td>
-                                        <td>2012/10/13<br></td>
+                                        <td>2012/10/13<br /></td>
                                         <td>$132,000</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar5.jpeg">Brenden Wagner</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar5.jpeg" />Brenden Wagner</td>
                                         <td>Software Engineer</td>
                                         <td>San Francisco</td>
                                         <td>28</td>
-                                        <td>2011/06/07<br></td>
+                                        <td>2011/06/07<br /></td>
                                         <td>$206,850</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar1.jpeg">Brielle Williamson</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar1.jpeg" />Brielle Williamson</td>
                                         <td>Integration Specialist</td>
                                         <td>New York</td>
                                         <td>61</td>
-                                        <td>2012/12/02<br></td>
+                                        <td>2012/12/02<br /></td>
                                         <td>$372,000</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar2.jpeg">Bruno Nash<br></td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar2.jpeg" />Bruno Nash<br /></td>
                                         <td>Software Engineer</td>
                                         <td>London</td>
                                         <td>38</td>
-                                        <td>2011/05/03<br></td>
+                                        <td>2011/05/03<br /></td>
                                         <td>$163,500</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar3.jpeg">Caesar Vance</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar3.jpeg" />Caesar Vance</td>
                                         <td>Pre-Sales Support</td>
                                         <td>New York</td>
                                         <td>21</td>
-                                        <td>2011/12/12<br></td>
+                                        <td>2011/12/12<br /></td>
                                         <td>$106,450</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar4.jpeg">Cara Stevens</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar4.jpeg" />Cara Stevens</td>
                                         <td>Sales Assistant</td>
                                         <td>New York</td>
                                         <td>46</td>
-                                        <td>2011/12/06<br></td>
+                                        <td>2011/12/06<br /></td>
                                         <td>$145,600</td>
                                     </tr>
                                     <tr>
-                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar5.jpeg">Cedric Kelly</td>
+                                        <td><img class="rounded-circle mr-2" width="30" height="30" src="assets/img/avatars/avatar5.jpeg" />Cedric Kelly</td>
                                         <td>Senior JavaScript Developer</td>
                                         <td>Edinburgh</td>
                                         <td>22</td>
-                                        <td>2012/03/29<br></td>
+                                        <td>2012/03/29<br /></td>
                                         <td>$433,060</td>
                                     </tr>
                                 </tbody>
@@ -274,7 +302,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-body"></div>
                 </div>
+                <div class="card shadow"></div>
             </div>
         </div>
         <footer class="bg-white sticky-footer">
@@ -285,6 +315,7 @@
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/add.js"></script>
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>

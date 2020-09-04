@@ -1,0 +1,7 @@
+
+#company-icon{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    content: url("../../img/avatars/sample.png");
+}
