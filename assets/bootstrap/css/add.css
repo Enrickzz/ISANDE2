@@ -24,7 +24,6 @@
 }
 
 #eContact{
-    margin-top: 2rem;
     margin-left: .1rem;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     padding: 1rem;
@@ -34,4 +33,8 @@
 .resume{
     margin-top: 1.2rem;
 
+}
+#econHeader{
+    margin-top: 1rem;
+    padding: 1rem;
 }
