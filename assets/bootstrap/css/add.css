@@ -85,3 +85,9 @@
     background-color: rgba(184, 184, 184, 0.315);
     cursor: pointer;
 }
+
+.bg-gradient-login{
+    background-color: #205877;
+    background-size:cover;
+
+}
