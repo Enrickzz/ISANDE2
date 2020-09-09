@@ -163,60 +163,22 @@
                 <h3 class="text-dark mb-1">Product Group</h3>
                 <div class="card">
                     <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item btn"><a id="tab" class="nav-link active"  onclick="opentab('users')">All Product Groups</a></li>
-                                <li class="nav-item btn"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Add Product Group</a></li>
-                            <li class="nav-item"></li>
-                        </ul>
+                        <h2 class="text-dark mb-1">Product Group Information</h2>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body" id="users">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Name  <i class="fa fa-sort"></i></th>
-                                        <th>Number of Products  <i class="fa fa-sort"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                        <td>Jack Cakes</td>
-                                        <td>3</td>
-                                        <td>icon<i class="fa fa-sign-in"></i></td>
-                                    </tr>
-                                    <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                        
-                                            <td>Jimmy Breads</td>
-                                            <td>2</td>
-                                            <td>icon<i class="fa fa-sign-in"></i></td>
-                                        
-                                    </tr>
-                                    <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                        <td>Jimmy Breads</td>
-                                        <td>2</td>
-                                        <td>icon<i class="fa fa-sign-in"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
             
                 <div class="card">
-                    <div class="card-body" id="reguser" style="display: none;">       
+                    <div class="card-body" id="reguser">       
                         <div class="row">
-                            <div class="col" id="regform2">
-                                <h3 class="regheader">Product Group</h3>
+                            <div class="col" >
+                                <h3 class="regheader">Jimmy Breads</h3>
                                 <div class="row">
                                     
                                     <div class="col">
                                         <form>
                                             <div class="form-group">
-                                                <label>Label</label>
-                                                <input type="text" class="form-control" /><br>
+                                                <label>Name</label>
+                                                <p>Jimmy Bread</p>
                                                 
                                             </div>
                                         </form>
@@ -225,8 +187,8 @@
                                     <div class="col">
                                         <form>
                                             <div class="form-group">
-                                                <label>Label</label>
-                                                <input type="text" class="form-control" /><br>
+                                                <label>Product Group ID</label>
+                                                <p>PG-KB-00123</p>
                                                 
                                                 
                                             </div>
@@ -238,7 +200,7 @@
                                         <form action="">
                                             <div class="form-group">
                                                 <label for="">Description</label>
-                                                <textarea class="form-control" name="" id="" cols="30" rows="6"></textarea>
+                                                <p>A savory category of buns</p>
                                             </div>
                                         </form>
                                       </div>
@@ -248,69 +210,73 @@
                                     <div class="col">
                                       <form action="">
                                           <div class="form-group">
-                                              <label for="cars">Label</label>
-                                                    <select id="cars" name="cars" class="form-control">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="fiat">Fiat</option>
-                                                        <option value="audi">Audi</option>
-                                                    </select><br>
+                                            <label>UOM</label>
+                                            <p>Piece/s</p>
                                           </div>
                                       </form>
                                     </div>
                                     <div class="col">
                                         <form action="">
                                             <div class="form-group">
-                                                <label for="cars">Label</label>
-                                                      <select id="cars" name="cars" class="form-control">
-                                                          <option value="volvo">Volvo</option>
-                                                          <option value="saab">Saab</option>
-                                                          <option value="fiat">Fiat</option>
-                                                          <option value="audi">Audi</option>
-                                                      </select><br>
+                                                <label>Taxibility</label>
+                                                <p>Non-taxable</p>
+                                                
                                             </div>
                                         </form>
                                       </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="prof-pic-card">
-                                <form class="up_profpic">
+                            <div class="col-md-6">
+                                <form class="product-pic">
                                   <div >
-                                    <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" id="prof-pic-cont" />
-                                    <div class="mb-3" style="margin-top: 1.5rem;">
-                                        <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
-                                    </div>
+                                    <img class="" src="assets/img/dogs/image2.jpeg" id="product-pic" />
+                                    
                                   </div> 
                                 </form>
                             </div>
                         </div>
                         
-                        <div class="table-responsive table mt-2" id="regproductlist">
+                        <div class="table-responsive table mt-2" id="productlist">
                             <div class="col">
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr class="tr-addproducts">
-                                            <th>#</th>
-                                            <th>Product ID</th>
-                                            <th>Product Name</th>
+                                            <th>Product Details</th>
                                             <th>Cost Price</th>
                                             <th>Selling Price</th>
-                                            <th>SKU</th>
-                                            <th>Reorder Point</th>
-                                            <th>Image</th>
+                                            <th>Stock on Hand</th>
+                                            <th>Reorder pt.</th>
+                                            <th><span>  </span></th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         
                                         <tr>
-                                            <td class="td-num-addproducts">1</td>
-                                            <td> <input type="text" class="form-control" placeholder="Product ID"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Product Name"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Cost Price"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Selling Price"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="SKU"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Reorder Point"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Image"> </td>                                    
+                                            <td><i>☺</i> Ensaymada </td>
+                                            <td> 20.0</td>
+                                            <td> 25.0 </td>
+                                            <td> 100.0 </td>
+                                            <td> 10.0 </td>
+                                            <td> icon </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><i>☺</i> Pandesal </td>
+                                            <td> 1.0</td>
+                                            <td> 2.0 </td>
+                                            <td> 100.0 </td>
+                                            <td> 10.0 </td>
+                                            <td> icon </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><i>☺</i> Spanish Bread </td>
+                                            <td> 3.0</td>
+                                            <td> 4.0 </td>
+                                            <td> 100.0 </td>
+                                            <td> 10.0 </td>
+                                            <td> icon </td>
                                         </tr>
                                         
                                     </tbody>
@@ -320,7 +286,7 @@
                                 </table>
                                 <div class="row">
                                     <div class="col">
-                                        <label for="" style="margin-left: 20px;"><i>icon </i> Add Product</label>
+                                        <label for="" style="margin-left: 20px; margin-top: .5rem;"><i>+icon </i> Add Product</label>
                                     </div>
                                 </div>
                             </div>
@@ -331,17 +297,7 @@
                         
                         
         
-                        <div class="row" style="margin-top: 2rem;">
-                            
-                            <div class="col">
-                                <div class="text-md-center dataTables_filter" id="dataTable_filter">
-                                    <label>
-                                        <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
-                                        <button class="btn btn-primary btn-sm" type="submit">Add</button>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>   
+                        
                     </div>
                 </div>
             </div>
