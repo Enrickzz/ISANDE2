@@ -91,3 +91,9 @@
     background-size:cover;
 
 }
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    color: #ffffff !important;
+    background-color: #5AA5CD !important;
+    border-color: #5AA5CD !important;
+  }
