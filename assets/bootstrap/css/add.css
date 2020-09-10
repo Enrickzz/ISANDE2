@@ -101,3 +101,8 @@
 #tab:hover{
     cursor: pointer;
 }
+.mini-pic-list{
+    max-width: 34px;
+    max-height: 34px;
+    margin-right: 10px;
+}
