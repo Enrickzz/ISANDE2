@@ -97,3 +97,7 @@
     background-color: #5AA5CD !important;
     border-color: #5AA5CD !important;
   }
+
+#tab:hover{
+    cursor: pointer;
+}

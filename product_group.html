@@ -164,13 +164,11 @@
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item btn"><a id="tab" class="nav-link active"  onclick="opentab('users')">All Product Groups</a></li>
-                                <li class="nav-item btn"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Add Product Group</a></li>
+                            <li class="nav-item"><a id="tab" class="nav-link active"  onclick="opentab('users', this)">All Product Groups</a></li>
+                                <li class="nav-item"><a id="tab" class="nav-link"  onclick="opentab('reguser', this)">Add Product Group</a></li>
                             <li class="nav-item"></li>
                         </ul>
                     </div>
-                </div>
-                <div class="card">
                     <div class="card-body" id="users">
                         <div class="table-responsive">
                             <table class="table">
@@ -194,7 +192,7 @@
                                         
                                     </tr>
                                     <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                        <td>Jimmy Breads</td>
+                                        <td>Mong Breads .</td>
                                         <td>2</td>
                                         <td>icon<i class="fa fa-sign-in"></i></td>
                                     </tr>
@@ -202,10 +200,6 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                
-            
-                <div class="card">
                     <div class="card-body" id="reguser" style="display: none;">       
                         <div class="row">
                             <div class="col" id="regform2">
@@ -320,17 +314,11 @@
                                 </table>
                                 <div class="row">
                                     <div class="col">
-                                        <label for="" style="margin-left: 20px;"><i>icon </i> Add Product</label>
+                                        <label for="" style="margin-left: 20px;">icon<i> </i> Add Product</label>
                                     </div>
                                 </div>
                             </div>
-                            
-        
                         </div>
-                        
-                        
-                        
-        
                         <div class="row" style="margin-top: 2rem;">
                             
                             <div class="col">
