@@ -27,7 +27,7 @@
                         </a>
                         <div class="dropdown-menu" role="menu">
                             <a class="dropdown-item" role="presentation" href="product_group.html"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
-                            <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Products</span></a>
+                            <a class="dropdown-item" role="presentation" href="allproducts.html"><i class="fas fa-warehouse"></i><span> Products</span></a>
                             <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Raw Materials</span></a>
                         </div>
                     </li>                      
@@ -38,7 +38,7 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-cart-arrow-down"></i><span>Returns</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-users"></i><span>Supplier</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-list-alt"></i><span>Purchase Orders</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" id="manageusers" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-poll"></i><span>Sales Records</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a></li>
                     
@@ -163,15 +163,14 @@
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item btn"><a id="tab" class="nav-link active"  onclick="opentab('users')">Users</a></li>
-                            <li class="nav-item btn"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Register User</a></li>
+                            <li class="nav-item "><a id="tab" class="nav-link active"  onclick="opentab('users', this, 'manageusers')">Users</a></li>
+                            <li class="nav-item "><a id="tab" class="nav-link"  onclick="opentab('reguser', this, 'manageusers')">Register User</a></li>
                             <li class="nav-item"></li>
+                            
                         </ul>
                     </div>
                     
                     <div class="card-body" id="reguser" style="display: none;">
-
-                        
                         <h3 class="text-dark mb-4">Register a User</h3>
                         <div class="row">
                             <div class="col-md-6">

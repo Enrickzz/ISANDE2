@@ -26,8 +26,8 @@
                         <a class="nav-link active" id="products" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products</span> 
                         </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item active" role="presentation" href="product_group.html"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
-                            <a class="dropdown-item" role="presentation" href="allproducts.html"><i class="fas fa-warehouse"></i><span> Products</span></a>
+                            <a class="dropdown-item" role="presentation" href="product_group.html"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
+                            <a class="dropdown-item active" role="presentation" href="allproducts.html"><i class="fas fa-warehouse"></i><span> Products</span></a>
                             <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Raw Materials</span></a>
                         </div>
                     </li>                   
@@ -160,12 +160,12 @@
             </div>
             </nav>
             <div class="container-fluid">
-                <h3 class="text-dark mb-1">Product Group</h3>
+                <h3 class="text-dark mb-1">All Products</h3>
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item"><a id="tab" class="nav-link active"  onclick="opentab('users', this, 'products')">All Product Groups</a></li>
-                                <li class="nav-item"><a id="tab" class="nav-link"  onclick="opentab('reguser', this, 'products')">Add Product Group</a></li>
+                            <li class="nav-item"><a id="tab" class="nav-link active"  onclick="opentab('users', this, 'products')">All Products</a></li>
+                                <li class="nav-item"><a id="tab" class="nav-link"  onclick="opentab('reguser', this, 'products')">Add Product</a></li>
                             <li class="nav-item"></li>
                         </ul>
                     </div>
@@ -175,25 +175,33 @@
                                 <thead>
                                     <tr>
                                         <th>Name  <i class="fa fa-sort"></i></th>
-                                        <th>Number of Products  <i class="fa fa-sort"></i></th>
+                                        <th>SKU </th>
+                                        <th>Stock on Hand</th>
+                                        <th>Reorder Pt.</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                        <td> <img class="mini-pic-list" src="assets/img/avatars/avatar1.jpeg"> Jack Cakes</td>
-                                        <td>3</td>
+                                    <tr class="clickable" onclick='window.location="product-card-prod.html"'>
+                                        <td><img class="mini-pic-list" src="assets/img/avatars/avatar1.jpeg">Banana Loaf</td>
+                                        <td></td>
+                                        <td>100.0</td>
+                                        <td>10.0</td>
                                         <td>icon<i class="fa fa-sign-in"></i></td>
                                     </tr>
-                                    <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
+                                    <tr class="clickable" onclick='window.location="product-card-prod.html"'>
                                         
-                                            <td><img class="mini-pic-list" src="assets/img/avatars/avatar1.jpeg">Jimmy Breads</td>
-                                            <td>2</td>
+                                            <td> <img class="mini-pic-list" src="assets/img/avatars/avatar1.jpeg">Bibingka</td>
+                                            <td></td>
+                                            <td>100.0</td>
+                                            <td>10.0</td>
                                             <td>icon<i class="fa fa-sign-in"></i></td>
                                         
                                     </tr>
-                                    <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                        <td><img class="mini-pic-list" src="assets/img/avatars/avatar1.jpeg">Mong Breads .</td>
-                                        <td>2</td>
+                                    <tr class="clickable" onclick='window.location="product-card-prod.html"'>
+                                        <td><img class="mini-pic-list" src="assets/img/avatars/avatar1.jpeg">Chifon Cake</td>
+                                        <td></td>
+                                        <td>100.0</td>
+                                        <td>10.0</td>
                                         <td>icon<i class="fa fa-sign-in"></i></td>
                                     </tr>
                                 </tbody>
@@ -203,7 +211,7 @@
                     <div class="card-body" id="reguser" style="display: none;">       
                         <div class="row">
                             <div class="col" id="regform2">
-                                <h3 class="regheader">Product Group</h3>
+                                <h3 class="regheader">Product</h3>
                                 <div class="row">
                                     
                                     <div class="col">
@@ -285,12 +293,10 @@
                                     <thead>
                                         <tr class="tr-addproducts">
                                             <th>#</th>
-                                            <th>Product ID</th>
-                                            <th>Product Name</th>
+                                            <th>Raw Material ID</th>
+                                            <th>Raw Material Name</th>
                                             <th>Cost Price</th>
-                                            <th>Selling Price</th>
-                                            <th>SKU</th>
-                                            <th>Reorder Point</th>
+                                            <th>Reorder Pt.</th>
                                             <th>Image</th>
                                         </tr>
                                     </thead>
@@ -298,13 +304,11 @@
                                         
                                         <tr>
                                             <td class="td-num-addproducts">1</td>
-                                            <td> <input type="text" class="form-control" placeholder="Product ID"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Product Name"> </td>
+                                            <td> <input type="text" class="form-control" placeholder="Raw Material ID"> </td>
+                                            <td> <input type="text" class="form-control" placeholder="Raw Material Name"> </td>
                                             <td> <input type="text" class="form-control" placeholder="Cost Price"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Selling Price"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="SKU"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Reorder Point"> </td>
-                                            <td> <input type="text" class="form-control" placeholder="Image"> </td>                                    
+                                            <td> <input type="text" class="form-control" placeholder="Reorder Pt."> </td>
+                                            <td> <input type="text" class="form-control" placeholder="Image"> </td>                                   
                                         </tr>
                                         
                                     </tbody>

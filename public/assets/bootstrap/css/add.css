@@ -97,3 +97,12 @@
     background-color: #5AA5CD !important;
     border-color: #5AA5CD !important;
   }
+
+#tab:hover{
+    cursor: pointer;
+}
+.mini-pic-list{
+    max-width: 34px;
+    max-height: 34px;
+    margin-right: 10px;
+}
