@@ -32,8 +32,13 @@ router.get('/productgroup/view/:id', (req, res) => {
   console.log("Read view successful!");
    
   productgroupsController.getID(req, (productGroup) => {
-      res.render('productgroup-card', { 
-        pgroup: productGroup 
+      productController.getAllproducts(req,(products)=> {
+        res.render('productgroup-card', { 
+          layout:'main',
+          title:"Product Groups",
+          pgroup: productGroup,
+          plist:products
+        });
       });
     });
 });
