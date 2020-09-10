@@ -1,0 +1,42 @@
+{
+  "name": "mp-itisdev",
+  "version": "1.0.0",
+  "description": "Louella Bakery Inventory Management System\r * Brosoto, Mig\r * Cuison, Enrico\r * Madrazo, Wilford\r * Ngan, Jess",
+  "main": "index.js",
+  "scripts": {
+    "debug": "nodemon  -r dotenv/config app.js",
+    "dev": "node  -r dotenv/config app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Enrickzz/MP-ITISDEV.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Enrickzz/MP-ITISDEV/issues"
+  },
+  "homepage": "https://github.com/Enrickzz/MP-ITISDEV#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.0",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.6.1",
+    "handlebars": "^4.7.3",
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.6"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.2"
+  },
+  "directories": {
+    "doc": "docs"
+  }
+}
