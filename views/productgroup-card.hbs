@@ -10,7 +10,7 @@
                     <div class="card-body" id="reguser">       
                         <div class="row">
                             <div class="col" >
-                                <h3 class="regheader">Jimmy Breads</h3>
+                                <h3 class="regheader">{{pgroup.name}}</h3>
                                 <div class="row">
                                     
                                     <div class="col">
@@ -27,7 +27,7 @@
                                         <form>
                                             <div class="form-group">
                                                 <label>Product Group ID</label>
-                                                <p>PG-KB-00123</p>
+                                                <p>{{pgroup._id}}</p>
                                                 
                                                 
                                             </div>
@@ -39,7 +39,7 @@
                                         <form action="">
                                             <div class="form-group">
                                                 <label for="">Description</label>
-                                                <p>A savory category of buns</p>
+                                                <p>{{pgroup.description}}</p>
                                             </div>
                                         </form>
                                       </div>
@@ -50,7 +50,7 @@
                                       <form action="">
                                           <div class="form-group">
                                             <label>UOM</label>
-                                            <p>Piece/s</p>
+                                            <p>{{pgroup.UOM}}</p>
                                           </div>
                                       </form>
                                     </div>

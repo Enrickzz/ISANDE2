@@ -1,0 +1,9 @@
+{{#each pglist}}
+
+<tr class="clickable" onclick='window.location="/product/view/{{this._id}}"'>
+    <td> <img class="mini-pic-list" src="assets/img/avatars/avatar1.jpeg"> {{name}}</td>
+    <td>{{num_products}}</td>
+    <td>icon<i class="fa fa-sign-in"></i></td>
+</tr>
+
+{{/each}}
