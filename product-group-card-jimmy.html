@@ -1,4 +1,18 @@
-<div id="wrapper">
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/add.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
@@ -7,13 +21,13 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/home"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products</span> 
+                        <a class="nav-link active" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products</span> 
                         </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="/productgroup"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
-                            <a class="dropdown-item" role="presentation" href="/allproducts"><i class="fas fa-warehouse"></i><span> Products</span></a>
+                            <a class="dropdown-item active" role="presentation" href="product_group.html"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
+                            <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Products</span></a>
                             <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Raw Materials</span></a>
                         </div>
                     </li>                   
@@ -24,11 +38,16 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-cart-arrow-down"></i><span>Returns</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-users"></i><span>Supplier</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-list-alt"></i><span>Purchase Orders</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="/manageusers"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-poll"></i><span>Sales Records</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a></li>
                     
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="/profile"><i class="fas fa-user"></i><span>Profile</span></a></li>   
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Table</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="register.html"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+                    
+                    
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -36,10 +55,10 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><button class="btn btn-primary" type="button">Create&nbsp;<i class="fa fa-edit"></i></button>
                         <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                                <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                            <div class="input-group">
+                                <div class="input-group-append"></div>
                             </div>
                         </form>
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
@@ -141,147 +160,167 @@
             </div>
             </nav>
             <div class="container-fluid">
-                <h3 class="text-dark mb-4">Profile</h3>
-                <div class="row mb-3">
-                    <div class="col-lg-4">
-                        <div class="card mb-3">
-                            <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="160" height="160">
-                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
-                            </div>
-                        </div>
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="text-primary font-weight-bold m-0">Projects</h6>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="small font-weight-bold">Server migration<span class="float-right">20%</span></h4>
-                                <div class="progress progress-sm mb-3">
-                                    <div class="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="sr-only">20%</span></div>
-                                </div>
-                                <h4 class="small font-weight-bold">Sales tracking<span class="float-right">40%</span></h4>
-                                <div class="progress progress-sm mb-3">
-                                    <div class="progress-bar bg-warning" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"><span class="sr-only">40%</span></div>
-                                </div>
-                                <h4 class="small font-weight-bold">Customer Database<span class="float-right">60%</span></h4>
-                                <div class="progress progress-sm mb-3">
-                                    <div class="progress-bar bg-primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60%</span></div>
-                                </div>
-                                <h4 class="small font-weight-bold">Payout Details<span class="float-right">80%</span></h4>
-                                <div class="progress progress-sm mb-3">
-                                    <div class="progress-bar bg-info" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="sr-only">80%</span></div>
-                                </div>
-                                <h4 class="small font-weight-bold">Account setup<span class="float-right">Complete!</span></h4>
-                                <div class="progress progress-sm mb-3">
-                                    <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="sr-only">100%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8">
-                        <div class="row mb-3 d-none">
-                            <div class="col">
-                                <div class="card text-white bg-primary shadow">
-                                    <div class="card-body">
-                                        <div class="row mb-2">
-                                            <div class="col">
-                                                <p class="m-0">Peformance</p>
-                                                <p class="m-0"><strong>65.2%</strong></p>
-                                            </div>
-                                            <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                                        </div>
-                                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card text-white bg-success shadow">
-                                    <div class="card-body">
-                                        <div class="row mb-2">
-                                            <div class="col">
-                                                <p class="m-0">Peformance</p>
-                                                <p class="m-0"><strong>65.2%</strong></p>
-                                            </div>
-                                            <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                                        </div>
-                                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card shadow mb-3">
-                                    <div class="card-header py-3">
-                                        <p class="text-primary m-0 font-weight-bold">User Settings</p>
-                                    </div>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" placeholder="user.name" name="username"></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label for="email"><strong>Email Address</strong></label><input class="form-control" type="email" placeholder="user@example.com" name="email"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" placeholder="John" name="first_name"></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" placeholder="Doe" name="last_name"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="card shadow">
-                                    <div class="card-header py-3">
-                                        <p class="text-primary m-0 font-weight-bold">Contact Settings</p>
-                                    </div>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="form-group"><label for="address"><strong>Address</strong></label><input class="form-control" type="text" placeholder="Sunset Blvd, 38" name="address"></div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group"><label for="city"><strong>City</strong></label><input class="form-control" type="text" placeholder="Los Angeles" name="city"></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label for="country"><strong>Country</strong></label><input class="form-control" type="text" placeholder="USA" name="country"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save&nbsp;Settings</button></div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <h3 class="text-dark mb-1">Product Group</h3>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-dark mb-1">Product Group Information</h2>
                     </div>
                 </div>
-                <div class="card shadow mb-5">
-                    <div class="card-header py-3">
-                        <p class="text-primary m-0 font-weight-bold">Forum Settings</p>
-                    </div>
-                    <div class="card-body">
+            
+                <div class="card">
+                    <div class="card-body" id="reguser">       
                         <div class="row">
-                            <div class="col-md-6">
-                                <form>
-                                    <div class="form-group"><label for="signature"><strong>Signature</strong><br></label><textarea class="form-control" rows="4" name="signature"></textarea></div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-switch"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"><strong>Notify me about new replies</strong></label></div>
+                            <div class="col" >
+                                <h3 class="regheader">Jimmy Breads</h3>
+                                <div class="row">
+                                    
+                                    <div class="col">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <p>Jimmy Bread</p>
+                                                
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
+        
+                                    <div class="col">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Product Group ID</label>
+                                                <p>PG-KB-00123</p>
+                                                
+                                                
+                                            </div>
+                                        </form>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col">
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label for="">Description</label>
+                                                <p>A savory category of buns</p>
+                                            </div>
+                                        </form>
+                                      </div>
+                                  </div>
+        
+                                  <div class="row">
+                                    <div class="col">
+                                      <form action="">
+                                          <div class="form-group">
+                                            <label>UOM</label>
+                                            <p>Piece/s</p>
+                                          </div>
+                                      </form>
+                                    </div>
+                                    <div class="col">
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label>Taxibility</label>
+                                                <p>Non-taxable</p>
+                                                
+                                            </div>
+                                        </form>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <form class="product-pic">
+                                  <div >
+                                    <img class="" src="assets/img/dogs/image2.jpeg" id="product-pic" />
+                                    
+                                  </div> 
                                 </form>
                             </div>
                         </div>
+                        
+                        <div class="table-responsive table mt-2" id="productlist">
+                            <div class="col">
+                                <table class="table my-0" id="dataTable">
+                                    <thead>
+                                        <tr class="tr-addproducts">
+                                            <th>Product Details</th>
+                                            <th>Cost Price</th>
+                                            <th>Selling Price</th>
+                                            <th>Stock on Hand</th>
+                                            <th>Reorder pt.</th>
+                                            <th><span>  </span></th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <tr class="clickable">
+                                            <td><i>☺</i> Ensaymada </td>
+                                            <td> 20.0</td>
+                                            <td> 25.0 </td>
+                                            <td> 100.0 </td>
+                                            <td> 10.0 </td>
+                                            <td> icon </td>
+                                        </tr>
+
+                                        <tr class="clickable">
+                                            <td><i>☺</i> Pandesal </td>
+                                            <td> 1.0</td>
+                                            <td> 2.0 </td>
+                                            <td> 100.0 </td>
+                                            <td> 10.0 </td>
+                                            <td> icon </td>
+                                        </tr>
+
+                                        <tr class="clickable">
+                                            <td><i>☺</i> Spanish Bread </td>
+                                            <td> 3.0</td>
+                                            <td> 4.0 </td>
+                                            <td> 100.0 </td>
+                                            <td> 10.0 </td>
+                                            <td> icon </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                    <tfoot>
+                                        
+                                    </tfoot>
+                                </table>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" style="margin-left: 20px; margin-top: .5rem;"><i>+icon </i> Add Product</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+        
+                        </div>
+                        
+                        
+                        
+        
+                        
                     </div>
                 </div>
             </div>
+            
+
+
+            
+            
+
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
                 <div class="text-center my-auto copyright"><span>Copyright © Brand 2020</span></div>
             </div>
         </footer>
-    </div>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/chart.min.js"></script>
+    <script src="assets/bootstrap/js/add.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
+
+</html>

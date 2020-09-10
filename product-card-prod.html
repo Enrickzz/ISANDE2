@@ -1,4 +1,18 @@
-<div id="wrapper">
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/add.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
@@ -7,13 +21,13 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/home"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products</span> 
+                        <a class="nav-link active" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products</span> 
                         </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="/productgroup"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
-                            <a class="dropdown-item" role="presentation" href="/allproducts"><i class="fas fa-warehouse"></i><span> Products</span></a>
+                            <a class="dropdown-item active" role="presentation" href="product_group.html"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
+                            <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Products</span></a>
                             <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Raw Materials</span></a>
                         </div>
                     </li>                   
@@ -24,11 +38,16 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-cart-arrow-down"></i><span>Returns</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-users"></i><span>Supplier</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-list-alt"></i><span>Purchase Orders</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="/manageusers"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-poll"></i><span>Sales Records</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a></li>
                     
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="/profile"><i class="fas fa-user"></i><span>Profile</span></a></li>   
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Table</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="register.html"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+                    
+                    
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -168,7 +187,7 @@
                                     <div class="col">
                                         <form>
                                             <div class="form-group">
-                                                <label>Product ID</label>
+                                                <label>Product Group ID</label>
                                                 <p>PG-KB-00123</p>
                                                 
                                                 
@@ -235,7 +254,7 @@
                                     <tbody>
                                         
                                         <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                            <td><i>☺</i> Sugar </td>
+                                            <td><i>☺</i> Ensaymada </td>
                                             <td> 10.0</td>
                                             <td> 8.73 </td>
                                             <td> 100.0 </td>
@@ -245,7 +264,7 @@
                                         </tr>
 
                                         <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                            <td><i>☺</i> Salt </td>
+                                            <td><i>☺</i> Pandesal </td>
                                             <td> 10.0</td>
                                             <td> 8.73 </td>
                                             <td> 100.0 </td>
@@ -255,7 +274,7 @@
                                         </tr>
 
                                         <tr class="clickable" onclick='window.location="product-group-card-jimmy.html"'>
-                                            <td><i>☺</i> Yeast </td>
+                                            <td><i>☺</i> Spanish Bread </td>
                                             <td> 10.0</td>
                                             <td> 8.73 </td>
                                             <td> 100.0 </td>
@@ -286,10 +305,26 @@
                     </div>
                 </div>
             </div>
+            
+
+
+            
+            
+
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
                 <div class="text-center my-auto copyright"><span>Copyright © Brand 2020</span></div>
             </div>
         </footer>
-    </div>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/chart.min.js"></script>
+    <script src="assets/bootstrap/js/add.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
+
+</html>
