@@ -1,6 +1,6 @@
 
 
-function opentab(tabname , thisbtn) {
+function opentab(tabname , thisbtn,page) {
     var i;
     var x = document.getElementsByClassName("card-body");
     for (i = 0; i < x.length; i++) {
@@ -12,7 +12,8 @@ function opentab(tabname , thisbtn) {
     for(i=0; i< z.length; i++){
       z[i].classList.remove("active");
     }
-    
+    y=document.getElementById(page);
+    y.classList.add("active");
     thisbtn.classList.add("active");
   }
   

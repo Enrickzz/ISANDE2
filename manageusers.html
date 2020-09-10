@@ -38,7 +38,7 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-cart-arrow-down"></i><span>Returns</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-users"></i><span>Supplier</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-list-alt"></i><span>Purchase Orders</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" id="manageusers" href="manageusers.html"><i class="fas fa-folder-plus"></i><span>Manage Users</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-poll"></i><span>Sales Records</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a></li>
                     
@@ -163,8 +163,8 @@
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item "><a id="tab" class="nav-link active"  onclick="opentab('users', this)">Users</a></li>
-                            <li class="nav-item "><a id="tab" class="nav-link"  onclick="opentab('reguser', this)">Register User</a></li>
+                            <li class="nav-item "><a id="tab" class="nav-link active"  onclick="opentab('users', this, 'manageusers')">Users</a></li>
+                            <li class="nav-item "><a id="tab" class="nav-link"  onclick="opentab('reguser', this, 'manageusers')">Register User</a></li>
                             <li class="nav-item"></li>
                             
                         </ul>

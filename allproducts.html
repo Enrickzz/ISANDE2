@@ -23,7 +23,7 @@
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products</span> 
+                        <a class="nav-link active" id="products" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products</span> 
                         </a>
                         <div class="dropdown-menu" role="menu">
                             <a class="dropdown-item" role="presentation" href="product_group.html"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
@@ -164,8 +164,8 @@
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item"><a id="tab" class="nav-link active"  onclick="opentab('users', this)">All Products</a></li>
-                                <li class="nav-item"><a id="tab" class="nav-link"  onclick="opentab('reguser', this)">Add Product</a></li>
+                            <li class="nav-item"><a id="tab" class="nav-link active"  onclick="opentab('users', this, 'products')">All Products</a></li>
+                                <li class="nav-item"><a id="tab" class="nav-link"  onclick="opentab('reguser', this, 'products')">Add Product</a></li>
                             <li class="nav-item"></li>
                         </ul>
                     </div>
