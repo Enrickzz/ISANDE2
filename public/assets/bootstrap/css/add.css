@@ -106,3 +106,7 @@
     max-height: 34px;
     margin-right: 10px;
 }
+
+.addprod:hover{
+    cursor: pointer;
+}
