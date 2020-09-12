@@ -110,3 +110,9 @@
 .addprod:hover{
     cursor: pointer;
 }
+
+.sidebar_logo{
+    border-radius: 35%;
+    width: 43px;
+    height: 40px;
+}
