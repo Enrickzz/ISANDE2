@@ -30,21 +30,21 @@
                     <div class="row">
                         <div class="col" id="regform2">
                             <h3 class="regheader">Product</h3>
-    <form  action="/addProduct" method="POST" > <!--ADDING PRODUCTS// -->
-                            <div class="row">
-                                <div class="col">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input name="name" type="text" class="form-control" /><br>
-                                        </div>
+                            <form  action="/addProduct" method="POST" > <!--ADDING PRODUCTS// -->
+                                <div class="row">
+                                    <div class="col">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input name="name" type="text" class="form-control" /><br>
+                                            </div>
+                                    </div>
+                                    <div class="col">
+                                            <div class="form-group">
+                                                <label>Product ID</label>
+                                                <input name="ProductID" type="text" class="form-control" /><br>
+                                            </div>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                        <div class="form-group">
-                                            <label>Product ID</label>
-                                            <input name="ProductID" type="text" class="form-control" /><br>
-                                        </div>
-                                </div>
-                            </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -55,17 +55,17 @@
                                 </div>
     
                                 <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="cars">UOM</label>
-                                            <select id="cars" name="UOM" class="form-control">
-                                                <option value="volvo">Volvo</option>
-                                                <option value="saab">Saab</option>
-                                                <option value="fiat">Fiat</option>
-                                                <option value="audi">Audi</option>
-                                            </select><br>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="cars">UOM</label>
+                                                <select id="cars" name="UOM" class="form-control">
+                                                    <option value="volvo">Volvo</option>
+                                                    <option value="saab">Saab</option>
+                                                    <option value="fiat">Fiat</option>
+                                                    <option value="audi">Audi</option>
+                                                </select><br>
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="cars">SKU</label>
@@ -79,17 +79,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" id="prof-pic-card">
+                        <div class="col-md-6" id="prof-pic-card"> <!--UPLOAD PHOTO-->
                                 <div class="up_profpic">
-                                <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" id="prof-pic-cont" />
-                                <div class="mb-3" style="margin-top: 1.5rem;">
-                                    <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
-                                </div>
+                                    <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" id="prof-pic-cont" />
+
+                                    <div class="mb-3" style="margin-top: 1.5rem;">
+                                        <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
+                                    </div>
                                 </div> 
                         </div>
                     </div>
-                    
-                    <div class="table-responsive table mt-2" id="regproductlist">
+                    <div class="table-responsive table mt-2" id="regproductlist"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
                         <div class="col">
                             <table class="table my-0" id="dataTable">
                                 <thead>
@@ -103,7 +103,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
                                     <tr>
                                         <td class="td-num-addproducts">1</td>
                                         <td> <input type="text" class="form-control" placeholder="Raw Material ID"> </td>
@@ -112,7 +111,6 @@
                                         <td> <input type="text" class="form-control" placeholder="Reorder Pt."> </td>
                                         <td> <input type="text" class="form-control" placeholder="Image"> </td>                                   
                                     </tr>
-                                    
                                 </tbody>
                                 <tfoot>
                                     
@@ -125,9 +123,7 @@
                             </div>
                         </div>
                     </div>
-                 
                     <div class="row" style="margin-top: 2rem;">
-                        
                         <div class="col">
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                 <label>
@@ -137,9 +133,8 @@
                             </div>
                         </div>
                     </div> 
-</form>
-                </div>
+                </form>
             </div>
-
         </div>
+    </div>
         
