@@ -20,7 +20,7 @@ router.get('/', isPublic, function(req, res) {
 // router.post('/register', isPublic, registerValidation, userController.register);
 router.post('/login', isPublic, loginValidation, userController.login);
 
-// // logout
-// router.get('/logout', isPrivate, userController.logout);
+// logout
+router.get('/logout', isPrivate, userController.logout);
 
 module.exports = router;
