@@ -23,3 +23,25 @@ exports.getID = (req, res) => {
       }
     });
   };
+//No VALIDATORS 
+exports.addProduct = (req,res)=>{
+    var product = {
+      name: req.body.name,
+      sku: req.body.sku,
+      stock: "123",
+      reorder:"100",
+      description: req.body.description,
+      UOM: req.body.UOM,
+      num_products: "123"
+    }
+    productModel.createProduct(product, function (err, product_result) {
+      if(err){
+        console.log(err);
+        res.redirect('/allproducts');
+      }
+      else{
+        console.log(product_result);
+        res.redirect('/allproducts');
+      }
+    })
+};

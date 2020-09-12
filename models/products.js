@@ -23,3 +23,14 @@ exports.getByID = function(query, next) {
       next(err, post);
     });
   };
+
+//for adding products .createProducct // NO CONNECTION TO OTHER DBs YET
+exports.createProduct = function(obj, next) {
+    const product = new productModel(obj);
+    console.log(product);
+    product.save(function(err, product) {
+      console.log(err);
+      next(err, product);
+    });
+  };
+

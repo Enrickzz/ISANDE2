@@ -103,4 +103,7 @@ router.get('/profile', isPrivate, function(req, res) {
   })
 });
 
-  module.exports = router;
+
+router.post('/addProduct', productController.addProduct);
+
+module.exports = router;

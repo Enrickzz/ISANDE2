@@ -30,78 +30,62 @@
                     <div class="row">
                         <div class="col" id="regform2">
                             <h3 class="regheader">Product</h3>
+    <form  action="/addProduct" method="POST" > <!--ADDING PRODUCTS// -->
                             <div class="row">
-                                
                                 <div class="col">
-                                    <form>
                                         <div class="form-group">
-                                            <label>Label</label>
-                                            <input type="text" class="form-control" /><br>
-                                            
+                                            <label>Name</label>
+                                            <input name="name" type="text" class="form-control" /><br>
                                         </div>
-                                    </form>
                                 </div>
-    
                                 <div class="col">
-                                    <form>
                                         <div class="form-group">
-                                            <label>Label</label>
-                                            <input type="text" class="form-control" /><br>
-                                            
-                                            
+                                            <label>Product ID</label>
+                                            <input name="ProductID" type="text" class="form-control" /><br>
                                         </div>
-                                    </form>
                                 </div>
-                                </div>
+                            </div>
                                 <div class="row">
                                     <div class="col">
-                                    <form action="">
                                         <div class="form-group">
                                             <label for="">Description</label>
-                                            <textarea class="form-control" name="" id="" cols="30" rows="6"></textarea>
+                                            <textarea name="description" class="form-control" name="" id="" cols="30" rows="6"></textarea>
                                         </div>
-                                    </form>
                                     </div>
                                 </div>
     
                                 <div class="row">
                                 <div class="col">
-                                    <form action="">
-                                        <div class="form-group">
-                                            <label for="cars">Label</label>
-                                                <select id="cars" name="cars" class="form-control">
-                                                    <option value="volvo">Volvo</option>
-                                                    <option value="saab">Saab</option>
-                                                    <option value="fiat">Fiat</option>
-                                                    <option value="audi">Audi</option>
-                                                </select><br>
-                                        </div>
-                                    </form>
+                                    <div class="form-group">
+                                        <label for="cars">UOM</label>
+                                            <select id="cars" name="UOM" class="form-control">
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="fiat">Fiat</option>
+                                                <option value="audi">Audi</option>
+                                            </select><br>
+                                    </div>
                                 </div>
                                 <div class="col">
-                                    <form action="">
-                                        <div class="form-group">
-                                            <label for="cars">Label</label>
-                                                    <select id="cars" name="cars" class="form-control">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="fiat">Fiat</option>
-                                                        <option value="audi">Audi</option>
-                                                    </select><br>
-                                        </div>
-                                    </form>
+                                    <div class="form-group">
+                                        <label for="cars">SKU</label>
+                                            <select id="cars" name="sku" class="form-control">
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="fiat">Fiat</option>
+                                                <option value="audi">Audi</option>
+                                            </select><br>
                                     </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6" id="prof-pic-card">
-                            <form class="up_profpic">
-                                <div >
+                                <div class="up_profpic">
                                 <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" id="prof-pic-cont" />
                                 <div class="mb-3" style="margin-top: 1.5rem;">
                                     <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
                                 </div>
                                 </div> 
-                            </form>
                         </div>
                     </div>
                     
@@ -141,6 +125,7 @@
                             </div>
                         </div>
                     </div>
+                 
                     <div class="row" style="margin-top: 2rem;">
                         
                         <div class="col">
@@ -151,7 +136,8 @@
                                 </label>
                             </div>
                         </div>
-                    </div>   
+                    </div> 
+</form>
                 </div>
             </div>
 
