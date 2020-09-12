@@ -1,4 +1,5 @@
 const productModel = require('../models/products');
+const PconnModel = require('../models/productconnection');
 const { validationResult } = require('express-validator');
 
 exports.getAllproducts = (param, callback) =>{
@@ -34,6 +35,7 @@ exports.addProduct = (req,res)=>{
       UOM: req.body.UOM,
       num_products: "0"
     }
+    
     productModel.createProduct(product, function (err, product_result) {
       if(err){
         console.log(err);
@@ -41,7 +43,22 @@ exports.addProduct = (req,res)=>{
       }
       else{
         console.log(product_result);
-        res.redirect('/allproducts');
+
+        var conn = {
+          productID: product_result._id,
+          product_groupID: ""
+        }
+        
+        PconnModel.createConnection(conn, function(err, conn_result){
+          if(err){
+            console.log(err);
+            res.redirect("/allproducts");
+          }
+          else{
+            console.log("SUCCESS CONNECTIONS");
+            res.redirect("/allproducts");
+          }
+        })
       }
     })
 };
