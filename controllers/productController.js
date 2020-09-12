@@ -28,11 +28,11 @@ exports.addProduct = (req,res)=>{
     var product = {
       name: req.body.name,
       sku: req.body.sku,
-      stock: "123",
+      stock: "12",
       reorder:"100",
       description: req.body.description,
       UOM: req.body.UOM,
-      num_products: "123"
+      num_products: "0"
     }
     productModel.createProduct(product, function (err, product_result) {
       if(err){

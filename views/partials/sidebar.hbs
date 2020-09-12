@@ -6,14 +6,14 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="/home"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item" role="presentation"><a id="Dashboard" class="nav-link" href="/home" onclick="activateNav('dashboard')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products  </span><i class="fas fa-caret-down"></i>
+                        <a id="products" class="nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-box"></i><span>Products  </span><i class="fas fa-caret-down"></i>
                         </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="/productgroup"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
-                            <a class="dropdown-item" role="presentation" href="/allproducts"><i class="fas fa-warehouse"></i><span> Products</span></a>
-                            <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-warehouse"></i><span> Raw Materials</span></a>
+                            <a class="dropdown-item" role="presentation" href="/productgroup" onclick="activateNav('products')"><i class="fas fa-warehouse"></i><span> Product Groups</span></a>
+                            <a class="dropdown-item" role="presentation" href="/allproducts" onclick="activateNav('products')"><i class="fas fa-warehouse"></i><span> Products</span></a>
+                            <a class="dropdown-item" role="presentation" href="#" onclick="activateNav('products')"><i class="fas fa-warehouse"></i><span> Raw Materials</span></a>
                         </div>
                     </li>                   
                     <li class="nav-item" role="presentation"><a class="nav-link" href=""><i class="fas fa-warehouse"></i><span>Inventory</span></a></li>

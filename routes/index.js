@@ -12,7 +12,7 @@ router.get('/home', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('home', {
     layout: 'main',
-    title: 'Dashboard - Brand'
+    title: 'Dashboard'
   })
 });
 
