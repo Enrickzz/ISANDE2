@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const userController = require('../controllers/userController');
 const productgroupsController = require('../controllers/productgroupsController');
+const productconnectionController = require('../controllers/productconnectionController');
 const productController = require('../controllers/productController');
 
 const { registerValidation, loginValidation } = require('../validators.js');
@@ -30,17 +31,21 @@ router.get('/productgroup', isPrivate, function(req, res) {
 
 router.get('/productgroup/view/:id', (req, res) => {
   console.log("Read view successful!");
-   
+  
   productgroupsController.getID(req, (productGroup) => {
-      productController.getAllproducts(req,(products)=> {
-        res.render('productgroup-card', { 
-          layout:'main',
-          title:"Product Groups",
-          pgroup: productGroup,
-          plist:products
-        });
+    var query = productGroup._id;
+    productController.getGroupProducts(query,(pgproducts)=>{
+      console.log("LIST OF CONNECTIONS : ");
+      console.log(pgproducts); // this is the connection of products to its group
+      //need to connect the products of this specific product group. 
+      res.render('productgroup-card', { 
+        layout:'main',
+        title:"Product Groups",
+        pgroup: productGroup,
+        plist: pgproducts
       });
-    });
+    })
+  });
 });
 
 router.get('/allproducts', isPrivate, function(req, res) {

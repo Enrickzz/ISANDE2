@@ -7,7 +7,8 @@ const productSchema = new mongoose.Schema({
     stock:{type:String,required:true},
     reorder: { type: String, required:true},
     UOM: { type: String, required:true},
-    description:{type:String, requireed:true}
+    description:{type:String, requireed:true},
+    product_groupID: {type: String, required: false}
   }
 );
 
@@ -18,6 +19,17 @@ exports.getAll = (param, next) => {
       next(err, product);
     });
   };
+
+  exports.getProdByID = function(param, next) { //product._id = productID (connection)
+    productModel.find(param, function(err, connection) {
+        next(err, connection);
+    });
+};
+exports.fetchGrouped = function(query, next) {
+  productModel.find(query, function(err, products) {
+    next(err, products);
+  });
+};
 
 exports.getByID = function(query, next) {
     productModel.findById(query, function(err, post) {
