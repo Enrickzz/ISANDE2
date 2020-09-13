@@ -1,16 +1,31 @@
             <div class="container-fluid">
                 <h3 class="text-dark mb-1">Product Group</h3>
+
+                {{!-- Nav Tabs --}}
                 <div class="card">
                     <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs">
+
+                        {{!-- <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item"><a id="tab" class="nav-link active"  onclick="opentab('users')">All Product Groups</a></li>
                                 <li class="nav-item"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Add Product Group</a></li>
                             <li class="nav-item"></li>
-                        </ul>
+                        </ul> --}}
+
+                         <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#product_group">All Product Groups</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#regproduct_group">Add Product Group</a>
+                            </li>
+
+                            </ul>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-body" id="users">
+                
+                <div class="tab-content">
+                    {{!-- ALL PRODUCT GROUPS --}}
+                    <div class="container tab-pane active" id="product_group">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -25,19 +40,21 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                
-            
-                <div class="card">
-                    <div class="card-body" id="reguser" style="display: none;">       
+               
+                {{!-- END OF ALL PRODUCT GROUPS --}}
+
+                 {{!-- ADD PRODUCT GROUP --}}
+                    <div class="container tab-pane fade" id="regproduct_group">       
                         <div class="row">
                             <div class="col" id="regform2">
                                 <h3 class="regheader">Product Group</h3>
                                 <div class="row">
-                                    
+                                
                                     <div class="col">
+                                        {{!-- Start form --}}
                                         <form>
                                             <div class="form-group">
+                                                {{!-- Product Name --}}
                                                 <label>Name</label>
                                                 <input type="text" class="form-control" /><br>
                                                 
@@ -48,6 +65,7 @@
                                     <div class="col">
                                         <form>
                                             <div class="form-group">
+                                                {{!-- Product Group ID --}}
                                                 <label>Product Group ID</label>
                                                 <input type="text" class="form-control" /><br>
                                                 
@@ -60,6 +78,7 @@
                                       <div class="col">
                                         <form action="">
                                             <div class="form-group">
+                                                {{!-- Description --}}
                                                 <label for="">Description</label>
                                                 <textarea class="form-control" name="" id="" cols="20" rows="6"></textarea>
                                             </div>
@@ -71,12 +90,12 @@
                                     <div class="col">
                                       <form action="">
                                           <div class="form-group">
+                                              {{!-- UOM --}}
                                               <label for="cars">UOM</label>
                                                     <select id="cars" name="cars" class="form-control">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="fiat">Fiat</option>
-                                                        <option value="audi">Audi</option>
+                                                        <option value="volvo">uom1</option>
+                                                        <option value="saab">uom2</option>
+                                                        <option value="fiat">uom3</option>
                                                     </select><br>
                                           </div>
                                       </form>
@@ -84,12 +103,12 @@
                                     <div class="col">
                                         <form action="">
                                             <div class="form-group">
+                                                {{!-- Taxibility --}}
                                                 <label for="cars">Taxibility</label>
                                                       <select id="cars" name="cars" class="form-control">
-                                                          <option value="volvo">Volvo</option>
-                                                          <option value="saab">Saab</option>
-                                                          <option value="fiat">Fiat</option>
-                                                          <option value="audi">Audi</option>
+                                                          <option value="volvo">1</option>
+                                                          <option value="saab">2</option>
+                                                          <option value="fiat">3</option>
                                                       </select><br>
                                             </div>
                                         </form>
@@ -97,6 +116,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6" id="prof-pic-card">
+                                {{!-- Product Pic --}}
                                 <form class="up_profpic">
                                   <div >
                                     <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" id="prof-pic-cont" />
@@ -164,7 +184,14 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>   
+                        </div>  
+                        {{!-- END OF ADD CANCEL --}} 
                     </div>
-                </div>
+                    {{!-- END OF ADD PRODUCT GROUP --}} 
+
+               </div> 
+               {{!-- END TAB CONTENT --}} 
+
             </div>
+            
+        </div>
