@@ -24,6 +24,8 @@ function activateNav(tabname){
     x[i].classList.remove("active");
   }
   var active = document.getElementById(tabname);
-  active.classList.add("active")
+  active.classList.add("active");
+
+
 }
   
