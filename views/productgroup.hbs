@@ -67,9 +67,13 @@
                                             <div class="form-group">
                                                 {{!-- Product Group ID --}}
                                                 <label>Product Group ID</label>
-                                                <input type="text" class="form-control" /><br>
-                                                
-                                                
+                                                <select id="prodgroup" name="prodgroup" class="form-control">
+                                                    <option value="Ungrouped">Ungrouped</option>
+                                                    {{#each pglist}}
+                                                        <option value="volvo">{{name}}</option>
+                                                    {{/each}}
+                                                </select>
+                                                <br>
                                             </div>
                                         </form>
                                     </div>
@@ -101,18 +105,8 @@
                                       </form>
                                     </div>
                                     <div class="col">
-                                        <form action="">
-                                            <div class="form-group">
-                                                {{!-- Taxibility --}}
-                                                <label for="cars">Taxibility</label>
-                                                      <select id="cars" name="cars" class="form-control">
-                                                          <option value="volvo">1</option>
-                                                          <option value="saab">2</option>
-                                                          <option value="fiat">3</option>
-                                                      </select><br>
-                                            </div>
-                                        </form>
-                                      </div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6" id="prof-pic-card">
@@ -163,8 +157,8 @@
                                     </tfoot>
                                 </table>
                                 <div class="row">
-                                    <div class="col">
-                                        <label for="" style="margin-left: 20px;"><i>icon </i> Add Product</label>
+                                    <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Product</button>
                                     </div>
                                 </div>
                             </div>
