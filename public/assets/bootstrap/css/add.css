@@ -121,6 +121,11 @@
     font-weight: bold;
 }
 
-/* .fa-folder-plus:before, .fa-tachometer-alt:before {
+a.nav-link {
+    color: #5AA5CD;
+}
+
+a.dropdown-item.active, a.dropdown-item.active:focus, a.dropdown-item:focus {
+    background-color:#26456E !important;
     color: white;
-} */
+}
