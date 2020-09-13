@@ -2,75 +2,75 @@ const bcrypt = require('bcrypt');
 const userModel = require('../models/user');
 const { validationResult } = require('express-validator');
 
-  // exports.register = (req, res) => {
-  //   // 1. Validate request
+  exports.register = (req, res) => {
+    // 1. Validate request
   
-  //   // 2. If VALID, find if email exists in users
-  //   //      NEW USER (no results retrieved)
-  //   //        a. Hash password
-  //   //        b. Create user
-  //   //        c. Redirect to login page
-  //   //      EXISTING USER (match retrieved)
-  //   //        a. Redirect user to login page with error message.
+    // 2. If VALID, find if email exists in users
+    //      NEW USER (no results retrieved)
+    //        a. Hash password
+    //        b. Create user
+    //        c. Redirect to login page
+    //      EXISTING USER (match retrieved)
+    //        a. Redirect user to login page with error message.
   
-  //   // 3. If INVALID, redirect to register page with errors
-  //   const errors = validationResult(req);
+    // 3. If INVALID, redirect to register page with errors
+    const errors = validationResult(req);
 
-  //   const { utype, uname, fname, lname, mnum, email, pword } = req.body;
+    const { utype, uname, fname, lname, mnum, email, pword } = req.body;
       
-  //     if (errors.isEmpty()) {      
-  //     userModel.getOne({ uname: uname }, (err, result) => {
-  //       if (result) {
-  //         console.log("Username already taken!");
-  //         // found a match, return to login with error
-  //       req.flash('error_msg', 'Username already taken.');
-  //       //   req.session.save( function(){ res.redirect('/'); })
-  //       res.redirect('/');
+      if (errors.isEmpty()) {      
+      userModel.getOne({ uname: uname }, (err, result) => {
+        if (result) {
+          console.log("Username already taken!");
+          // found a match, return to login with error
+        req.flash('error_msg', 'Username already taken.');
+        //   req.session.save( function(){ res.redirect('/'); })
+        res.redirect('/');
 
-  //       } else {
-  //         const saltRounds = 10;
+        } else {
+          const saltRounds = 10;
   
-  //         // Hash password
-  //         bcrypt.hash(pword, saltRounds, (err, hashed) => {
-  //           const newUser = {
-  //             utype,
-  //             uname,
-  //             fname,
-  //             lname,
-  //             mnum,
-  //             email,
-  //             pword: hashed
-  //           };
+          // Hash password
+          bcrypt.hash(pword, saltRounds, (err, hashed) => {
+            const newUser = {
+              utype,
+              uname,
+              fname,
+              lname,
+              mnum,
+              email,
+              pword: hashed
+            };
           
-  //           userModel.register(newUser, (err, user) => {
-  //             if (err) {
-  //               req.flash('error_msg', 'Could not create user. Please try again.');
-  //               console.log(err.errors);
-  //               result = { success: false, message: "User was not created!" }
-  //               //res.send(result); this causes an error LOL :<
-  //               res.redirect('/');
+            userModel.register(newUser, (err, user) => {
+              if (err) {
+                req.flash('error_msg', 'Could not create user. Please try again.');
+                console.log(err.errors);
+                result = { success: false, message: "User was not created!" }
+                //res.send(result); this causes an error LOL :<
+                res.redirect('/');
      
-  //             } else {
-  //               console.log("Successfully added user!");
-  //               console.log(user);
-  //               result = { success: true, message: "User created!" }
-  //               //res.send(result); this causes an error LOL :<
+              } else {
+                console.log("Successfully added user!");
+                console.log(user);
+                result = { success: true, message: "User created!" }
+                //res.send(result); this causes an error LOL :<
 
-  //               req.flash('success_msg', 'You are now registered.');
-  //               res.redirect('/');
-  //             }
-  //           });
-  //         });
-  //       }
-  //     });
-  //   } 
-  //   else {
-  //     const messages = errors.array().map((item) => item.msg);
+                req.flash('success_msg', 'You are now registered.');
+                res.redirect('/');
+              }
+            });
+          });
+        }
+      });
+    } 
+    else {
+      const messages = errors.array().map((item) => item.msg);
   
-  //     req.flash('error_msg', messages.join(' '));
-  //     res.redirect('/contactus'); // making this redirect to / makes req.flash not appear
-  //   }
-  // };
+      req.flash('error_msg', messages.join(' '));
+      res.redirect('/contactus'); // making this redirect to / makes req.flash not appear
+    }
+  };
 
   exports.login = (req, res) => {
     // 1. Validate request

@@ -1,130 +1,32 @@
-                <div class="container-fluid">
+            <div class="container-fluid" style="padding-bottom: 70px;">
                 <h3 class="text-dark mb-4">Manage Users</h3>
+
+                {{!-- Nav Tabs --}}
                 <div class="card">
                     <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs">
+                        {{!-- <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item btn"><a id="tab" class="nav-link active"  onclick="opentab('users')">Users</a></li>
                             <li class="nav-item btn"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Register User</a></li>
                             <li class="nav-item"></li>
-                        </ul>
+                        </ul> --}}
+
+                            <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#users">Users</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#reguser">Register User</a>
+                            </li>
+
+                            </ul>
                     </div>
                     
-                    <div class="card-body" id="reguser" style="display: none;">
+                    {{!-- Tab panes --}}
 
-                        
-                        <h3 class="text-dark mb-4">Register a User</h3>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <form class="up_profpic">
-                                  <div >
-                                    <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="250" height="250" />
-                                    <div class="mb-3" style="margin-top: 1.5rem;">
-                                        <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm" type="submit">Upload</button>
-                                  </div> 
-                                </form>
-                            </div>
-                            <div class="col" id="regform2">
-                                <h3 class="regheader">User Information</h3>
-                                <div class="row">
-                                    
-                                    <div class="col">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" class="form-control" /><br>
-                                                <label>Email</label>
-                                                <input type="email" class="form-control" /><br>
-                                                <label for="cars">Gender</label>
-                                                    <select id="cars" name="cars" class="form-control">
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
-                                                    </select><br>
-                                                <label for="cars">User Type</label>
-                                                    <select id="cars" name="cars" class="form-control">
-                                                        <option value="volvo">Branch Manager</option>
-                                                        <option value="saab">Admin</option>
-                                                    </select><br>
-                                                <label for="start"> Start Date</label>
-                                                <input type="date" id="start" name="start-date" class="form-control"
-                                                    value="2018-07-22"
-                                                    min="2018-01-01" max="2018-12-31"><br>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <div class="col">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input type="text" class="form-control" /><br>
-                                                <label>Mobile Number</label>
-                                                <input type="number" class="form-control" /><br>
-                                                <label>Birth Date</label>
-                                                <input type="date" id="start" name="start-date" class="form-control"
-                                                    value="2018-07-22"><br>
-                                                <label for="cars">Branch Assigned</label>
-                                                    <select id="cars" name="cars" class="form-control">
-                                                        <option value="volvo">Branch A</option>
-                                                        <option value="saab">Branch B</option>
-                                                        <option value="fiat">Branch C</option>
-                                                        <option value="audi">Branch D</option>
-                                                    </select><br>
-                                                <label for="start"> Salary</label>
-                                                <input type="number" id="salary" class="form-control">
-                                            </div>
-                                        </form>
-                                    </div>
-                                  </div>
-                            </div>
-                            
-                        </div>
-                        
-                        <div>
-                            <h2 id="econHeader">Emergency Contact</h2>
-                            <div class="row" id="eContact">
-                                <div class="col" >
-                                    <form>
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control" />
-                                            <label>Contact Number</label>
-                                            <input type="number" class="form-control" />
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col">
-                                    <form>
-                                        <div class="form-group">
-                                            <label>Relationship with Staff</label>
-                                            <input type="text" class="form-control" />
-                                            <label>Address</label>
-                                            <input type="text" class="form-control" />
-
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        
-
-                        <div class="row" style="margin-top: 2rem;">
-                            <div class="col-md-6">
-                                
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-right dataTables_filter" id="dataTable_filter">
-                                    <label>
-                                        <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
-                                        <button class="btn btn-primary btn-sm" type="submit">Register</button>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>   
-                    </div>
-
-                    <div class="card-body" id="users">
+                      <div class="tab-content">
+                        {{!-- ALL USERS --}}
+                        <div id="users" class="container tab-pane active"><br>
                         <div class="row">
                             <div class="col-md-6 text-nowrap">
                                 <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label style="padding: 11px;margin: -6px;margin-right: 20px;">Branch 
@@ -265,6 +167,93 @@
                             </div>
                         </div>
                     </div>
+                    {{!-- END OF ALL USERS --}}
+
+                    {{!-- Register a User --}}
+                    <div id="reguser" class="container tab-pane fade"><br>
+                         <h3 class="text-dark mb-4">Register a User</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form class="up_profpic">
+                                  <div >
+                                    <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="250" height="250" />
+                                    <div class="mb-3" style="margin-top: 1.5rem;">
+                                        <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm" type="submit">Upload</button>
+                                  </div> 
+                                </form>
+                            </div>
+
+                            <div class="col" id="regform2">
+                                <h3 class="regheader">User Information</h3>
+                                <div class="row">
+                                    {{!-- First Column --}}
+                                    <div class="col">
+                                        {{!-- Start form --}}
+                                        <form method="POST" action="/register">
+                                            <div class="form-group">
+                                                {{!-- First Name --}}
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control" /><br>
+                                                {{!-- Email --}}
+                                                <label>Email</label>
+                                                <input type="email" class="form-control" /><br>
+                            
+                                                {{!-- Usertype --}}
+                                                <label for="usertypes">User Type</label>
+                                                    <select id="usertypes" name="usertypes" class="form-control">
+                                                        <option value="volvo">Branch Manager</option>
+                                                        <option value="saab">Admin</option>
+                                                    </select><br>
+                                            </div>
+                                    </div>
+                                    {{!-- Second Column --}}
+                                    <div class="col">
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <input type="text" class="form-control" /><br>
+                                                <label>Mobile Number</label>
+                                                <input type="number" class="form-control" /><br>
+                                                <label for="cars">Branch Assigned</label>
+                                                    <select id="cars" name="cars" class="form-control">
+                                                        <option value="volvo">Branch A</option>
+                                                        <option value="saab">Branch B</option>
+                                                        <option value="fiat">Branch C</option>
+                                                        <option value="audi">Branch D</option>
+                                                    </select><br>
+                                            </div>
+                                        </form>
+                                    </div>
+                                  </div>
+                            </div>
+                            
+                        </div>
+
+                          {{!-- SUBMIT CANCEL --}}
+                                <div class="row" style="margin-top: 2rem;">
+                                    <div class="col-md-6">
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-md-right dataTables_filter" id="dataTable_filter">
+                                            <label>
+                                                <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
+                                                <button class="btn btn-primary btn-sm" type="submit">Register</button>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>   
+                                  {{!-- END OF SUBMIT CANCEL --}}
+
+                          
+                    </div>
+                    {{!-- END OF REGUSER --}}
+
+                       
+                    </div>
+                    {{!-- END TAB CONTENT --}}
+                   
                     <div class="card-body"></div>
                 </div>
                 <div class="card shadow"></div>
