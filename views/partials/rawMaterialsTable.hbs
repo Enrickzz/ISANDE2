@@ -3,12 +3,15 @@
 {{#if rawList}}
     {{#each rawList}}
 
-    <tr>
-        <td><i>☺</i> {{name}} </td>
+    <tr class="clickable">
+        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg"> {{name}} </td>
         <td> {{quantity}}</td>
         <td> {{unit}} </td>
         <td> {{cost}} </td>
-        <td> icon </td>
+        <td style="max-width:50px;">
+            <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
+            <button class="btn btn-primary btn-sm" type="submit">Delete</button>
+        </td>
     </tr>
 
     {{/each}}

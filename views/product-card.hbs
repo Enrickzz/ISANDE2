@@ -1,8 +1,7 @@
             <div class="container-fluid">
-                <h3 class="text-dark mb-1">Product Group</h3>
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="text-dark mb-1">Product Group Information</h2>
+                        <h2 class="text-dark mb-1">{{product.name}}</h2>
                     </div>
                 </div>
             
@@ -97,19 +96,12 @@
                                     </tfoot>
                                 </table>
                                 <div class="row">
-                                    <div class="col">
-                                        <label for="" style="margin-left: 20px; margin-top: .5rem;"><i>+icon </i> Add Product</label>
+                                    <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                        <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Raw Material</button>
                                     </div>
                                 </div>
                             </div>
-                            
-        
                         </div>
-                        
-                        
-                        
-        
-                        
                     </div>
                 </div>
             </div>
@@ -120,3 +112,37 @@
             </div>
         </footer>
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+
+<!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Header</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr class="tr-addproducts">
+                            <th>Raw Materials </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{> chooseRawMaterials}}
+                    </tbody>
+
+                    <tfoot>
+                        
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+        </div>
+    </div>

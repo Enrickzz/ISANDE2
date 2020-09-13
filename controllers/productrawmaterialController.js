@@ -1,5 +1,5 @@
 const productmaterialModel = require('../models/productrawmaterial');
-const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator'); 
 
 exports.getAllmaterials = (param, callback) =>{
     productmaterialModel.getAll(param, (err, materials) => {

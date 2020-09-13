@@ -6,7 +6,8 @@ const productrawmaterialSchema = new mongoose.Schema(
     name: { type: String, required:true},
     quantity:{type:String,required:true},
     unit:{type:String,required:true},
-    cost: { type: String, required:true}
+    cost: { type: String, required:true},
+    rawmaterialID: {type:String, required:false}
   }
 );
 

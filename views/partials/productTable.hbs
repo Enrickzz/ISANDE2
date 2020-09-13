@@ -3,10 +3,14 @@
 
 <tr class="clickable" onclick='window.location="/product/view/{{this._id}}"'>
     <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{name}}</td>
-    <td></td>
+    <td> {{sku}}</td>
+    <td> {{stock}}</td>
     <td>{{stock}}</td>
     <td>{{reorder}}</td>
-    <td>icon<i class="fa fa-sign-in"></i></td>
+    <td style="max-width:80px; ">
+            <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
+            <button class="btn btn-primary btn-sm" type="submit">Delete</button>
+        </td>
 </tr>
 
 {{/each}}
