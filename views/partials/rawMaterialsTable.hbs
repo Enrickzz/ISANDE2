@@ -1,12 +1,21 @@
 
-{{#each plist}}
 
-<tr class="clickable" onclick='window.location="/product/view/{{this._id}}"'>
-    <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{name}}</td>
-    <td></td>
-    <td>{{stock}}</td>
-    <td>{{reorder}}</td>
-    <td>icon<i class="fa fa-sign-in"></i></td>
-</tr>
+{{#if rawList}}
+    {{#each rawList}}
 
-{{/each}}
+    <tr>
+        <td><i>☺</i> {{name}} </td>
+        <td> {{quantity}}</td>
+        <td> {{unit}} </td>
+        <td> {{cost}} </td>
+        <td> icon </td>
+    </tr>
+
+    {{/each}}
+{{else}}
+    <tr>
+        <div style="text-align: center; color:red; font-weight:700;">
+            NO RAW MATERIALS YET
+        </div> 
+    </tr>
+{{/if}}

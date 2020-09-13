@@ -16,7 +16,7 @@ exports.getRawMaterials = (req,res) => {
     var query = req;
   
     console.log("find raw materials by productID ID : " + query);
-    productmaterialModel.getAll({ productID : query }, (err, result) => {
+    productmaterialModel.fetchMaterials({ productID : query }, (err, result) => {
       if(err){
         throw err;
       }

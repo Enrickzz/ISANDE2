@@ -1,6 +1,7 @@
 const mongoose = require('./connection');
 
-const PRMSchema = new mongoose.Schema({
+const productrawmaterialSchema = new mongoose.Schema(
+  {
     productID: { type: String, required: true },
     name: { type: String, required:true},
     quantity:{type:String,required:true},
@@ -9,7 +10,7 @@ const PRMSchema = new mongoose.Schema({
   }
 );
 
-const PRMmodel = mongoose.model('productrawmaterial', PRMSchema);
+const PRMmodel = mongoose.model('PRMmodel', productrawmaterialSchema, "productrawmaterial");
 
 exports.getAll = (param, next) => {
   PRMmodel.find({}, (err, productgroups) => {
