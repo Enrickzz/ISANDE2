@@ -3,6 +3,7 @@ const userController = require('../controllers/userController');
 const productgroupsController = require('../controllers/productgroupsController');
 const productconnectionController = require('../controllers/productconnectionController');
 const productController = require('../controllers/productController');
+const productrawmaterialController = require('../controllers/productrawmaterialController');
 
 const { registerValidation, loginValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -33,11 +34,10 @@ router.get('/productgroup/view/:id', (req, res) => {
   console.log("Read view successful!");
   
   productgroupsController.getID(req, (productGroup) => {
-    var query = productGroup._id;
+    var query = productGroup._id; // this is the connection of products to its group
     productController.getGroupProducts(query,(pgproducts)=>{
       console.log("LIST OF CONNECTIONS : ");
-      console.log(pgproducts); // this is the connection of products to its group
-      //need to connect the products of this specific product group. 
+      console.log(pgproducts); 
       res.render('productgroup-card', { 
         layout:'main',
         title:"Product Groups",
@@ -64,10 +64,18 @@ router.get('/product/view/:id', (req, res) => {
   console.log("Read view successful!");
    
   productController.getID(req, (prod) => {
+    var query = prod._id;
+    productrawmaterialController.getRawMaterials(query,(materials) => {
+      console.log("Materials for " + prod.name);
+      console.log(materials);
       res.render('product-card', { 
-        product: prod 
+        layout:'main',
+        title: prod.name,
+        product: prod,
+        rawList: materials
       });
-    });
+    })
+  });
 });
 
 

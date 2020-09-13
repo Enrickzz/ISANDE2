@@ -1,0 +1,12 @@
+
+{{#each plist}}
+
+<tr class="clickable" onclick='window.location="/product/view/{{this._id}}"'>
+    <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{name}}</td>
+    <td></td>
+    <td>{{stock}}</td>
+    <td>{{reorder}}</td>
+    <td>icon<i class="fa fa-sign-in"></i></td>
+</tr>
+
+{{/each}}
