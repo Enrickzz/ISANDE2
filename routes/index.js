@@ -60,6 +60,16 @@ router.get('/allproducts', isPrivate, function(req, res) {
   });
 });
 
+router.get('/rawmaterials', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  res.render('raw-materials', {
+    layout: 'main',
+    title: 'Raw Materials'
+  })
+});
+
+
 router.get('/product/view/:id', (req, res) => {
   console.log("Read view successful!");
    
