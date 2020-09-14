@@ -130,8 +130,11 @@
                             <th style="width: 10%;"><span> </span></th>
                         </tr>
                     </thead>
-
+            
                     <tbody>
+                        <p>{{product._id}}</p>
+                        
+                        
                          {{#each allMat}}
                          <form action="/productNewMaterial" method="POST">
                             <tr class="clickable" >
@@ -148,7 +151,8 @@
                                     
                                 </td>
                                 <input type="hidden" name="rawMaterialID" value="{{this._id}}">
-                                <input type="hidden" name="productID" value="5f5ceadd45d80c01b8e94a37">
+                                <input type="hidden" name="productID" value="{{product._id}}">
+                                <!-- #each disallows access to product._id-->
                                 <input type="hidden" name="name" value="{{name}}">
                                 
 
