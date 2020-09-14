@@ -195,7 +195,7 @@
                                             <div class="form-group">
                                                 {{!-- First Name --}}
                                                 <label>First Name</label>
-                                                <input type="text" class="form-control" /><br>
+                                                <input name="first_name" type="text" class="form-control" /><br>
                                                 {{!-- Email --}}
                                                 <label>Email</label>
                                                 <input type="email" class="form-control" /><br>
@@ -206,22 +206,30 @@
                                                         <option value="volvo">Branch Manager</option>
                                                         <option value="saab">Admin</option>
                                                     </select><br>
+
+                                                {{!-- Password --}}
+                                                <label>Password</label>
+                                                <input name="password" type="text" class="form-control" /><br>
                                             </div>
                                     </div>
                                     {{!-- Second Column --}}
                                     <div class="col">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" class="form-control" /><br>
+                                                <input name="last_name" type="text" class="form-control" /><br>
                                                 <label>Mobile Number</label>
-                                                <input type="number" class="form-control" /><br>
+                                                <input name= "mobileno" type="number" class="form-control" /><br>
                                                 <label for="cars">Branch Assigned</label>
-                                                    <select id="cars" name="cars" class="form-control">
+                                                    <select id="cars" name="branchID" class="form-control">
                                                         <option value="volvo">Branch A</option>
                                                         <option value="saab">Branch B</option>
                                                         <option value="fiat">Branch C</option>
                                                         <option value="audi">Branch D</option>
                                                     </select><br>
+
+                                                {{!-- Confirm Password --}}
+                                                <label>Confirm Password</label>
+                                                <input name="cpw" type="text" class="form-control" /><br>
                                             </div>
                                         </form>
                                     </div>
