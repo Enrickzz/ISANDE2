@@ -50,11 +50,11 @@ exports.getRawMaterials = (req,res) => {
     productmaterialModel.saveMaterial(material, function (err, result) {
       if(err){
         console.log(err);
-        res.redirect('/productgroup');
+        res.redirect('/product/view/'+material.productID);
       }
       else{
         console.log(result);
-        res.redirect('/productgroup');
+        res.redirect('/product/view/'+material.productID);
       }
     })
   };

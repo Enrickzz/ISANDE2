@@ -132,7 +132,7 @@
                     </thead>
             
                     <tbody>
-                        <p>{{product._id}}</p>
+                        <p>{{product._id}} </p>
                         
                         
                          {{#each allMat}}
@@ -151,7 +151,7 @@
                                     
                                 </td>
                                 <input type="hidden" name="rawMaterialID" value="{{this._id}}">
-                                <input type="hidden" name="productID" value="{{product._id}}">
+                                <input type="hidden" name="productID" value="{{../product._id}}">
                                 <!-- #each disallows access to product._id-->
                                 <input type="hidden" name="name" value="{{name}}">
                                 
