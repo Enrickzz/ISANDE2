@@ -3,11 +3,11 @@ const mongoose = require('./connection');
 const productrawmaterialSchema = new mongoose.Schema(
   {
     productID: { type: String, required: true },
+    rawmaterialID: {type:String, required:false},
     name: { type: String, required:true},
     quantity:{type:String,required:true},
     unit:{type:String,required:true},
-    cost: { type: String, required:true},
-    rawmaterialID: {type:String, required:false}
+    cost: { type: String, required:true}
   }
 );
 
@@ -28,5 +28,14 @@ exports.getByID = function(query, next) {
   exports.fetchMaterials = function(query, next) {
     PRMmodel.find(query, function(err, rawmaterial) {
       next(err, rawmaterial);
+    });
+  };
+
+  exports.saveMaterial = function(obj, next) {
+    const rawMaterial = new PRMmodel(obj);
+    console.log(rawMaterial);
+    rawMaterial.save(function(err, save) {
+      console.log(err);
+      next(err, save);
     });
   };

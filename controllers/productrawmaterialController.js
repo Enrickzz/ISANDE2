@@ -36,7 +36,29 @@ exports.getRawMaterials = (req,res) => {
     })
   
   };
-  
+
+  exports.addMaterial = (req,res)=>{
+    var material = {
+      productID: req.body.productID,
+      rawMaterialID: req.body.rawMaterialID,
+      name: req.body.name,
+      quantity: req.body.quantity,
+      unit: req.body.UOM,
+      cost: "12.1"
+    }
+    
+    productmaterialModel.saveMaterial(material, function (err, result) {
+      if(err){
+        console.log(err);
+        res.redirect('/productgroup');
+      }
+      else{
+        console.log(result);
+        res.redirect('/productgroup');
+      }
+    })
+  };
+
   exports.getID = (req, res) => {
     var id = req.params.id;
   

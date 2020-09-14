@@ -4,6 +4,7 @@ const productgroupsController = require('../controllers/productgroupsController'
 const productconnectionController = require('../controllers/productconnectionController');
 const productController = require('../controllers/productController');
 const productrawmaterialController = require('../controllers/productrawmaterialController');
+const allRawMaterialController = require('../controllers/allRawMaterialController');
 
 const { registerValidation, loginValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -63,10 +64,13 @@ router.get('/allproducts', isPrivate, function(req, res) {
 router.get('/rawmaterials', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  res.render('raw-materials', {
-    layout: 'main',
-    title: 'Raw Materials'
-  })
+  allRawMaterialController.getAllmaterials(req, (allmaterials) =>{
+    res.render('raw-materials', {
+      layout: 'main',
+      title: 'Raw Materials',
+      rawList: allmaterials
+    });
+  });
 });
 
 
@@ -76,7 +80,7 @@ router.get('/product/view/:id', (req, res) => {
   productController.getID(req, (prod) => {
     var query = prod._id;
     productrawmaterialController.getRawMaterials(query,(materials) => {
-      productrawmaterialController.getAllmaterials(req,(allMaterials) => {
+      allRawMaterialController.getAllmaterials(req,(allMaterials) => {
         res.render('product-card', { 
           layout:'main',
           title: prod.name,
@@ -128,6 +132,9 @@ router.get('/profile', isPrivate, function(req, res) {
 });
 
 
-router.post('/addProduct', productController.addProduct);
+router.post('/addProduct' , productController.addProduct);
+router.post('/addMaterial', allRawMaterialController.addMaterial);
+router.post('/productNewMaterial', productrawmaterialController.addMaterial);
+
 
 module.exports = router;

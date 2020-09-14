@@ -5,11 +5,11 @@
 
                     <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#rawmaterials">All Products</a>
+                            <a class="nav-link active" data-toggle="tab" href="#rawmaterials">All Raw Materials</a>
                             </li>
 
                             <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#add_rawmaterial">Add Product</a>
+                            <a class="nav-link" data-toggle="tab" href="#add_rawmaterial">Add Raw Material</a>
                             </li>
 
                             </ul>
@@ -24,14 +24,25 @@
                             <thead>
                                 <tr>
                                     <th>Name  <i class="fa fa-sort"></i></th>
-                                    <th>SKU </th>
+                                    <th>UOM </th>
                                     <th>Stock on Hand</th>
-                                    <th>Cost Price</th>
-                                    <th>Reorder Pt.</th>
+                                    <th>Cost/Unit</th>
+                                    <th style="min-width:60px;"><span></span></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                TABLE
+                                {{#each rawList}}
+                                    <tr class="clickable">
+                                        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg"> {{name}} </td>
+                                        <td> {{UOM}}</td>
+                                        <td> {{stock}} </td>
+                                        <td> {{costperUnit}} </td>
+                                        <td style="max-width:50px;">
+                                            <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
+                                            <button class="btn btn-primary btn-sm" type="submit">Delete</button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                     </div>
@@ -44,7 +55,7 @@
                     <div class="row">
                         <div class="col" id="regform2">
                             <h3 class="regheader">Raw Materials</h3>
-                            <form> 
+                            <form action="/addMaterial" method="POST"> 
                                 <div class="row">
                                     <div class="col">
                                         {{!-- Start form --}}
@@ -58,28 +69,20 @@
                                             <div class="form-group">
                                                  {{!-- Raw Material ID --}}
                                                 <label>Raw Material ID</label>
-                                                <input name="RawMaterialID" type="text" class="form-control" /><br>
+                                                <input name="RawMaterialID" type="text" class="form-control" disabled><br>
                                             </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            {{!-- Description --}}
-                                            <label for="">Description</label>
-                                            <textarea name="description" class="form-control" name="" id="" cols="30" rows="6"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                                
     
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="cars">UOM</label>
                                                 <select id="cars" name="UOM" class="form-control">
-                                                    <option value="volvo">uom1</option>
-                                                    <option value="saab">uom2</option>
-                                                    <option value="fiat">uom3</option>
+                                                    <option value="volvo">Sack/s</option>
+                                                    <option value="saab">Kilo/s</option>
+                                                    <option value="fiat">gram/s</option>
                                                     <option value="audi">uom4</option>
                                                 </select><br>
                                         </div>
@@ -100,8 +103,8 @@
                             <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="cars">Cost Price</label>
-                                            <input name="cost" type="number" class="form-control" /><br>
+                                            <label for="cars">Cost Price per Unit</label>
+                                            <input name="costperUnit" type="number" class="form-control" /><br>
                                         </div>
                                     </div>
                                 <div class="col">
@@ -113,7 +116,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="cars">Reorder Point UOM</label>
-                                        <select id="cars" name="UOM" class="form-control">
+                                        <select id="cars" name="" class="form-control">
                                                     <option value="volvo">uom1</option>
                                                     <option value="saab">uom2</option>
                                                     <option value="fiat">uom3</option>
