@@ -66,13 +66,8 @@
                                         <form>
                                             <div class="form-group">
                                                 {{!-- Product Group ID --}}
-                                                <label>Product Group ID</label>
-                                                <select id="prodgroup" name="prodgroup" class="form-control">
-                                                    <option value="Ungrouped">Ungrouped</option>
-                                                    {{#each pglist}}
-                                                        <option value="volvo">{{name}}</option>
-                                                    {{/each}}
-                                                </select>
+                                                <label>Product Group ID (Omit na to?)</label>
+                                                <input type="text" class="form-control" /><br>
                                                 <br>
                                             </div>
                                         </form>

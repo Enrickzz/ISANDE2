@@ -53,10 +53,13 @@ router.get('/allproducts', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   productController.getAllproducts(req, (products) => {
-    res.render('products', { 
-      layout: 'main',
-      title: 'Products List',
-      plist: products
+    productgroupsController.getAllpg(req,(productgroups) =>{
+      res.render('products', { 
+        layout: 'main',
+        title: 'Products List',
+        plist: products,
+        pglist: productgroups
+      })
     })
   });
 });

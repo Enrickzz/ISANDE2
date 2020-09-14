@@ -58,10 +58,13 @@
                                             </div>
                                     </div>
                                     <div class="col">
-                                            <div class="form-group">
-                                                <label>Product ID</label>
-                                                <input name="ProductID" type="text" class="form-control" /><br>
-                                            </div>
+                                        <label>Product Group</label>
+                                            <select id="prodgroup" name="prodgroup" class="form-control">
+                                                <option value="Ungrouped">Ungrouped</option>
+                                                {{#each pglist}}
+                                                    <option value="{{name}}">{{name}}</option>
+                                                {{/each}}
+                                            </select>
                                     </div>
                                 </div>
                                 <div class="row">
