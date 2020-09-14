@@ -54,11 +54,14 @@ router.get('/allproducts', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   productController.getAllproducts(req, (products) => {
     productgroupsController.getAllpg(req,(productgroups) =>{
-      res.render('products', { 
-        layout: 'main',
-        title: 'Products List',
-        plist: products,
-        pglist: productgroups
+      allRawMaterialController.getAllmaterials(req, (allmaterials) => {
+        res.render('products', { 
+          layout: 'main',
+          title: 'Products List',
+          plist: products,
+          pglist: productgroups,
+          allRawMat: allmaterials,
+        })
       })
     })
   });
