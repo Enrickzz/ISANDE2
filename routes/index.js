@@ -23,10 +23,14 @@ router.get('/productgroup', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   productgroupsController.getAllpg(req, (productgroups) => { //make productmodel function to return ungrouped products
-    res.render('productgroup', {  
-      layout: 'main',
-      title: 'Product Groups',
-      pglist: productgroups
+    productController.getAllproducts(req, (products) =>
+    {
+      res.render('productgroup', {  
+        layout: 'main',
+        title: 'Product Groups',
+        pglist: productgroups,
+        plist:products
+      })
     })
   });
 });
@@ -82,7 +86,7 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
 
 router.get('/product/view/:id', (req, res) => {
   console.log("Read view successful!");
-   
+  
   productController.getID(req, (prod) => {
     var query = prod._id;
     productrawmaterialController.getRawMaterials(query,(materials) => {
@@ -140,6 +144,7 @@ router.get('/profile', isPrivate, function(req, res) {
 
 router.post('/addProduct' , productController.addProduct);
 router.post('/addMaterial', allRawMaterialController.addMaterial);
+router.post('/addGroup', productgroupsController.addGroup);
 router.post('/productNewMaterial', productrawmaterialController.addMaterial);
 
 

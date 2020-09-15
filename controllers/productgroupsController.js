@@ -24,3 +24,22 @@ exports.getAllpg = (param, callback) =>{
       }
     });
   };
+
+exports.addGroup = (req,res)=>{
+    var pgroup = {
+      name: req.body.name,
+      description: req.body.description,
+      UOM: req.body.UOM,
+      num_products: "0",
+    }
+    productgroupsModel.createProductGroup(pgroup, function (err, pgroup_result) {
+      if(err){
+        console.log(err);
+        res.redirect('/productgroup');
+      }
+      else{
+        console.log(pgroup_result);
+        res.redirect('/productgroup')
+      }
+    })
+};
