@@ -52,7 +52,7 @@ exports.incrementNumProd = (req,res)=>{
     }
     else{
       console.log("INCREASE successful!");
-      res(counted);
+      res(err);
     }
   })
 };

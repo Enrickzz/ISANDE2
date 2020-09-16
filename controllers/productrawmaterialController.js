@@ -71,3 +71,37 @@ exports.getRawMaterials = (req,res) => {
       }
     });
   };
+
+  exports.removeprodID = (req, res) => {
+    var update ={
+      $set: {
+        productID: "N/A"
+      }
+    }
+    var productID = req.body.productID;
+    productmaterialModel.update(productID, update, (err, result) =>{
+      if(err){
+        console.log("NAGERROR");
+        console.log(err);
+        res.redirect('back');
+      }
+      else{
+        console.log(result);
+        res.redirect('/PGIncrement/'+ req.body.groupID);
+      }
+    })
+  }
+
+  exports.delete = (req, res) => {
+    var id = req.body.rawID;
+    var pageid= req.body.productID;
+    productmaterialModel.remove(id, (err, result) => {
+      if (err) {
+        throw err; 
+      } 
+      else {
+        console.log(result);
+        res.redirect('/product/view/'+pageid);
+      }
+    }); 
+  };

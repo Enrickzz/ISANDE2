@@ -9,8 +9,16 @@
         <td> {{unit}} </td>
         <td> {{cost}} </td>
         <td style="max-width:50px;">
-            <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
-            <button class="btn btn-primary btn-sm" type="submit">Delete</button>
+            <form action="/removeFrmProdGrp">
+                <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
+            </form> 
+        </td>
+        <td style="max-width:50px;">
+            <form action="/removematfromProduct" method="POST">
+                <input type="hidden" name="rawID" value="{{this._id}}">
+                <input type="hidden" name="productID" value="{{this.productID}}">
+                <button class="btn btn-primary btn-sm" type="submit">Remove</button>
+            </form>
         </td>
     </tr>
 

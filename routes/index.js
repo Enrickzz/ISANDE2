@@ -143,9 +143,10 @@ router.get('/profile', isPrivate, function(req, res) {
   })
 });
 
+
+
+//.get/s below are redirected from other functions from specific controllers so that it will connect with other controllers
 router.get('/PGiterate/:id', (req, res) => {
-  console.log("ITERATE successful!");
-  
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id;
     productgroupsController.incrementNumProd(query, (counted) => {
@@ -162,10 +163,25 @@ router.get('/PGiterate/:id', (req, res) => {
     })
   });
 });
+router.get('/PGdecrementA/:id', (req, res) => {
+  productgroupsController.getID(req, (productGroup) => {
+    var query = productGroup._id;
+    productgroupsController.decrementNumProd(query, (counted) => {
+      productgroupsController.getAllpg(req, (productgroups) => {
+        productController.getAllproducts(req, (productlist) => {
+          res.render('products', {
+            layout: 'main',
+            title: 'Product Groups',
+            pglist: productgroups,
+            plist: productlist
+          })
+        })
+      })
+    })
+  });
+});
 
 router.get('/PGincrement/:id', (req, res) => {
-  console.log("ITERATE successful!");
-  
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id;
     productgroupsController.incrementNumProd(query, (counted) => {
@@ -210,6 +226,8 @@ router.post('/addMaterial', allRawMaterialController.addMaterial);
 router.post('/addGroup', productgroupsController.addGroup);
 router.post('/productNewMaterial', productrawmaterialController.addMaterial);
 router.post('/removeFrmProdGrp', productController.ungroup);
-router.post('/addProdtoPG', productController.assigngroup)
+router.post('/addProdtoPG', productController.assigngroup);
+router.post('/removematfromProduct',productrawmaterialController.delete)
+router.post('/deleteProduct',productController.delete)
 
 module.exports = router;

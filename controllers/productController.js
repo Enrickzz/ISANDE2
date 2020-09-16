@@ -61,7 +61,7 @@ exports.addProduct = (req,res)=>{
       reorder:"100", //idk if maglalagay tayo ng default reorder pt.
       description: req.body.description,
       UOM: req.body.UOM,
-      num_products: "0",
+      sellingprice: "0",
       product_groupID: req.body.prodgroup
     }
     
@@ -125,3 +125,23 @@ exports.ungroup = (req, res) => {
     }
   })
 }
+
+exports.delete = (req, res) => {
+  var id = req.body.productID;
+  var groupid = req.body.groupID;
+  productModel.remove(id, (err, result) => {
+    if (err) {
+      throw err; 
+    } 
+    else {
+      if(groupid != "Ungrouped"){
+        console.log(result);
+        res.redirect('/PGdecrementA/'+groupid);
+      }
+      else{
+        res.redirect('/allproducts');
+      }
+      
+    }
+  }); 
+};

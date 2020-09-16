@@ -3,7 +3,7 @@ const mongoose = require('./connection');
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     sku: { type: String, required:true},
-    num_products: { type: String, required:true},
+    sellingprice: { type: String, required:true},
     stock:{type:String,required:true},
     reorder: { type: String, required:true},
     UOM: { type: String, required:true},
@@ -52,4 +52,8 @@ exports.createProduct = function(obj, next) {
       next(err, pgroup);
     })
   };
-
+  exports.remove = function(query, next) {
+    productModel.findByIdAndRemove(query, function(err, del){
+      next(err, del);
+    });
+  };
