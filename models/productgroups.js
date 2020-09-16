@@ -2,7 +2,7 @@ const mongoose = require('./connection');
 
 const productgroupSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    num_products: { type: String, required:false},
+    num_products: { type:Number, required:false},
     description:{type:String,required:true},
     UOM: { type: String, required:true}
   }
@@ -30,3 +30,23 @@ exports.createProductGroup = function(obj, next) {
       next(err, group);
     });
   };
+
+exports.update = function(id, update, next) {
+  productgroupModel.findOneAndUpdate({_id: id}, update, { new: true }, function(err, pgroup) {
+    next(err, pgroup);
+  })
+};
+
+exports.increaseOne = function(id, next) {
+  productgroupModel.findOneAndUpdate({_id: id}, {$inc: {num_products: 1} },  function(err, pgroup) {
+    next(err, pgroup);
+  })
+};
+
+exports.decreaseOne = function(id, next) {
+  productgroupModel.findOneAndUpdate({_id: id}, {$inc: {num_products: -1} },  function(err, pgroup) {
+    next(err, pgroup);
+  })
+};
+
+

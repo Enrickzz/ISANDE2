@@ -47,3 +47,9 @@ exports.createProduct = function(obj, next) {
     });
   };
 
+  exports.update = function(id, update, next) {
+    productModel.findOneAndUpdate({_id: id}, update, { new: true }, function(err, pgroup) {
+      next(err, pgroup);
+    })
+  };
+

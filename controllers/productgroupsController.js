@@ -43,3 +43,29 @@ exports.addGroup = (req,res)=>{
       }
     })
 };
+
+exports.incrementNumProd = (req,res)=>{
+  var query= req;
+  productgroupsModel.increaseOne( query ,function (err, counted) {
+    if(err) {
+      throw err;
+    }
+    else{
+      console.log("INCREASE successful!");
+      res(counted);
+    }
+  })
+};
+
+exports.decrementNumProd = (req,res)=>{
+  var query= req;
+  productgroupsModel.decreaseOne( query ,function (err, counted) {
+    if(err) {
+      throw err;
+    }
+    else{
+      console.log("DECREASE successful!");
+      res(counted);
+    }
+  })
+};

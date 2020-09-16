@@ -29,7 +29,7 @@ exports.getID = (req, res) => {
 exports.getGroupProducts = (req,res) => {
   var query = req;
 
-  console.log("find products by group ID : " + query);
+  console.log("FETCHING PRODUCTS WITH QUERY PRODUCT_GROUPID = " + query);
   productModel.fetchGrouped({product_groupID: query}, (err, result) => {
     if(err){
       throw err;
@@ -71,8 +71,57 @@ exports.addProduct = (req,res)=>{
         res.redirect('/allproducts');
       }
       else{
-        console.log(product_result);
-        res.redirect('/allproducts')
+        if(product_result.product_groupID != "Ungrouped"){
+          console.log(product_result);
+          res.redirect('/PGiterate/'+product_result.product_groupID);
+        }
+        else
+        {
+          res.redirect('/allproducts');
+        }
+        
       }
     })
 };
+
+
+exports.assigngroup = (req, res) => {
+  var update ={
+    $set: {
+      product_groupID: req.body.groupID
+    }
+  }
+  var productID = req.body.productID;
+  productModel.update(productID, update, (err, result) =>{
+    if(err){
+      console.log("NAGERROR");
+      console.log(err);
+      res.redirect('back');
+    }
+    else{
+      console.log(result);
+      res.redirect('/PGIncrement/'+ req.body.groupID);
+    }
+  })
+}
+
+
+exports.ungroup = (req, res) => {
+  var update ={
+    $set: {
+      product_groupID: "Ungrouped"
+    }
+  }
+  var productID = req.body.productID;
+  productModel.update(productID, update, (err, result) =>{
+    if(err){
+      console.log("NAGERROR");
+      console.log(err);
+      res.redirect('back');
+    }
+    else{
+      console.log(result);
+      res.redirect('/PGdecrement/'+ req.body.groupID);
+    }
+  })
+}

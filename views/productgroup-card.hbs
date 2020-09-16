@@ -86,10 +86,35 @@
                                             <th>Stock on Hand</th>
                                             <th>Reorder pt.</th>
                                             <th><span>  </span></th>
+                                            <th><span>  </span></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{>productTable}}
+                                        
+                                        {{#each plist}}
+
+                                        <tr class="clickable" onclick='window.location="/product/view/{{this._id}}"'>
+                                            <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{name}}</td>
+                                            <td> {{sku}}</td>
+                                            <td> {{stock}}</td>
+                                            <td>{{stock}}</td>
+                                            <td>{{reorder}}</td>
+                                            <td style="max-width:60px;">
+                                                <form action="/" method="POST">
+                                                    <input type="hidden" name="productID" value="{{this._id}}">
+                                                    <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
+                                                </form> 
+                                            </td>
+                                            <td style="max-width:30px;">
+                                                <form action="/removeFrmProdGrp" method="POST">
+                                                    <input type="hidden" name="productID" value="{{this._id}}">
+                                                    <input type="hidden" name="groupID" value="{{this.product_groupID}}">
+                                                    <button class="btn btn-primary btn-sm" type="submit">X</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+
+                                        {{/each}}
                                     </tbody>
                                     <tfoot>
                                         
@@ -121,6 +146,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th style="width: 10%;"><span> </span></th>
+                        
                     </tr>
                 </thead>
 

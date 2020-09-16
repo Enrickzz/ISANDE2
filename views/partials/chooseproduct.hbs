@@ -1,11 +1,16 @@
 
-{{#each plist}}
+{{#each ungroupedProd}}
 
 <tr class="clickable" onclick='window.location="/product/view/{{this._id}}"'>
     <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{name}}</td>
     <td> {{description}}</td>
     <td style="width: 2%;">
-        <button class="btn btn-primary btn-sm" type="submit" >Add</button>
+        <form action="/addProdtoPG" method="POST">
+            <input type="hidden" name="productID" value="{{this._id}}">
+            <input type="hidden" name="groupID" value="{{../pgroup._id}}">
+            <button class="btn btn-primary btn-sm" type="submit" >Add</button>
+        </form>
+        
     </td>
 </tr>
 
