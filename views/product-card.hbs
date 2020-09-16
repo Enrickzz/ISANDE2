@@ -144,9 +144,9 @@
                                 <td>
                                     <div class="form-group">
                                         <select id="cars" name="UOM" class="form-control">
-                                            <option value="gram/s">gram/s</option>
-                                            <option value="tbsp">tbsp</option>
-                                            <option value="tsp">tsp</option>
+                                            {{#each ../unitofmeasure}}
+                                            <option value="{{this._id}}">{{name}}</option>
+                                            {{/each }}
                                         </select>
                                     </div>
                                     

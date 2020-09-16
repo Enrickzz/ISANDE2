@@ -5,6 +5,7 @@ const productconnectionController = require('../controllers/productconnectionCon
 const productController = require('../controllers/productController');
 const productrawmaterialController = require('../controllers/productrawmaterialController');
 const allRawMaterialController = require('../controllers/allRawMaterialController');
+const unitofmeasureController = require('../controllers/unitofmeasureController');
 
 const { registerValidation, loginValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -61,12 +62,15 @@ router.get('/allproducts', isPrivate, function(req, res) {
   productController.getAllproducts(req, (products) => {
     productgroupsController.getAllpg(req,(productgroups) =>{
       allRawMaterialController.getAllmaterials(req, (allmaterials) => {
-        res.render('products', { 
-          layout: 'main',
-          title: 'Products List',
-          plist: products,
-          pglist: productgroups,
-          allRawMat: allmaterials,
+        unitofmeasureController.getAll(req, (allUOM) => {
+          res.render('products', { 
+            layout: 'main',
+            title: 'Products List',
+            plist: products,
+            pglist: productgroups,
+            allRawMat: allmaterials,
+            unitofmeasure: allUOM
+          })
         })
       })
     })
@@ -93,13 +97,16 @@ router.get('/product/view/:id', (req, res) => {
     var query = prod._id;
     productrawmaterialController.getRawMaterials(query,(materials) => {
       allRawMaterialController.getAllmaterials(req,(allMaterials) => {
-        res.render('product-card', { 
-          layout:'main',
-          title: prod.name,
-          product: prod,
-          rawList: materials,
-          allMat: allMaterials
-        });
+        unitofmeasureController.getAll(req, (allUOM) => {
+          res.render('product-card', { 
+            layout:'main',
+            title: prod.name,
+            product: prod,
+            rawList: materials,
+            allMat: allMaterials,
+            unitofmeasure: allUOM
+          });
+        })
       });
     })
   });
@@ -147,16 +154,18 @@ router.get('/profile', isPrivate, function(req, res) {
 
 //.get/s below are redirected from other functions from specific controllers so that it will connect with other controllers
 router.get('/PGiterate/:id', (req, res) => {
-  productgroupsController.getID(req, (productGroup) => {
-    var query = productGroup._id;
+  productController.getID(req, (prod) => {
+    var query = prod.product_groupID;
     productgroupsController.incrementNumProd(query, (counted) => {
-      productgroupsController.getAllpg(req, (productgroups) => {
-        productController.getAllproducts(req, (productlist) => {
-          res.render('products', {
+      var query2 = prod._id;
+      productrawmaterialController.getRawMaterials(query2, (productRawMat) => {
+        allRawMaterialController.getAllmaterials(req,(allmaterials) =>{
+          res.render('product-card', {
             layout: 'main',
-            title: 'Product Groups',
-            pglist: productgroups,
-            plist: productlist
+            title: prod.name,
+            product: prod,
+            rawList: productRawMat,
+            allMat: allmaterials
           })
         })
       })

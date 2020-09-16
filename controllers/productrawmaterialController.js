@@ -1,5 +1,6 @@
 const productmaterialModel = require('../models/productrawmaterial');
 const { validationResult } = require('express-validator'); 
+const UOMmodel = require('../models/unitofmeasure');
 
 exports.getAllmaterials = (param, callback) =>{
     productmaterialModel.getAll(param, (err, materials) => {
@@ -38,25 +39,44 @@ exports.getRawMaterials = (req,res) => {
   };
 
   exports.addMaterial = (req,res)=>{
-    var material = {
-      productID: req.body.productID,
-      rawMaterialID: req.body.rawMaterialID,
-      name: req.body.name,
-      quantity: req.body.quantity,
-      unit: req.body.UOM,
-      cost: "12.1"
-    }
-    
-    productmaterialModel.saveMaterial(material, function (err, result) {
+    console.log("add");
+    var query = req.body.UOM;
+    UOMmodel.getByID(query,(err,result) =>{
       if(err){
-        console.log(err);
-        res.redirect('/product/view/'+material.productID);
-      }
-      else{
-        console.log(result);
-        res.redirect('/product/view/'+material.productID);
+        throw err;
+      }else{
+        var material = {
+          productID: req.body.productID,
+          rawMaterialID: req.body.rawMaterialID,
+          name: req.body.name,
+          quantity: req.body.quantity,
+          unit: result.name,
+          cost: "N/A"
+        }
+
+        //if result.inGrams is String quantity * 1
+        //examples: eggs, cups of butter (different gram content with actual "cup")
+        var unit1 = result.inGrams;
+        var qua = req.body.quantity;
+        var unitIngrams = parseFloat(unit1);
+        var quantity = parseFloat(qua);
+        var c = unitIngrams*quantity; //final used raw material (deduct in raw materials inventory)
+        console.log(c);
+        productmaterialModel.saveMaterial(material, function (err, result) {
+          if(err){
+            console.log(err);
+            res.redirect('/product/view/'+material.productID);
+          }
+          else{
+            console.log(result);
+            res.redirect('/product/view/'+material.productID);
+          }
+        })
       }
     })
+    
+    
+    
   };
 
   exports.getID = (req, res) => {

@@ -84,10 +84,10 @@
                                         <div class="form-group">
                                             <label for="cars">UOM</label>
                                                 <select id="cars" name="UOM" class="form-control">
-                                                    <option value="volvo">Volvo</option>
-                                                    <option value="saab">Saab</option>
-                                                    <option value="fiat">Fiat</option>
-                                                    <option value="audi">Audi</option>
+                                                    {{#each unitofmeasure}}
+                                                    <option value="{{inGrams}}">{{name}}</option>
+                                                    <input type="hidden" name="unitname" value="{{name}}">
+                                                    {{/each}}
                                                 </select><br>
                                         </div>
                                     </div>

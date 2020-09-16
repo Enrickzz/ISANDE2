@@ -14,7 +14,6 @@ exports.getAllproducts = (param, callback) =>{
 
 exports.getID = (req, res) => {
     var id = req.params.id;
-    console.log(req);
     console.log(id);
     productModel.getByID(id, (err, result) => {
       if (err) {
@@ -64,7 +63,7 @@ exports.addProduct = (req,res)=>{
       sellingprice: "0",
       product_groupID: req.body.prodgroup
     }
-    
+   
     productModel.createProduct(product, function (err, product_result) {
       if(err){
         console.log(err);
@@ -73,11 +72,11 @@ exports.addProduct = (req,res)=>{
       else{
         if(product_result.product_groupID != "Ungrouped"){
           console.log(product_result);
-          res.redirect('/PGiterate/'+product_result.product_groupID);
+          res.redirect('/PGiterate/'+product_result._id);
         }
         else
         {
-          res.redirect('/allproducts');
+          res.redirect('/product/view/'+product_result._id);
         }
         
       }
