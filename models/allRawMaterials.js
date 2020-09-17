@@ -37,3 +37,8 @@ exports.getByID = function(query, next) {
       next(err, save);
     });
   };
+  exports.remove = function(query, next) {
+    rawMaterialModel.findByIdAndRemove(query, function(err, del){
+      next(err, del);
+    });
+  };

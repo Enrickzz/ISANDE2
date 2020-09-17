@@ -40,11 +40,12 @@ exports.getRawMaterials = (req,res) => {
 
   exports.addMaterial = (req,res)=>{
     console.log("add");
-    var query = req.body.UOM;
+    var query = req.body.UOM; //returns id
     UOMmodel.getByID(query,(err,result) =>{
       if(err){
         throw err;
       }else{
+
         var material = {
           productID: req.body.productID,
           rawMaterialID: req.body.rawMaterialID,
@@ -60,8 +61,10 @@ exports.getRawMaterials = (req,res) => {
         var qua = req.body.quantity;
         var unitIngrams = parseFloat(unit1);
         var quantity = parseFloat(qua);
-        var c = unitIngrams*quantity; //final used raw material (deduct in raw materials inventory)
-        console.log(c);
+        var totalUsed = unitIngrams*quantity; //final used raw material (deduct in raw materials inventory)
+
+        console.log(totalUsed);
+        
         productmaterialModel.saveMaterial(material, function (err, result) {
           if(err){
             console.log(err);
@@ -125,3 +128,17 @@ exports.getRawMaterials = (req,res) => {
       }
     }); 
   };
+
+  exports.deleteMatNoLongerExists = (req,res) =>{
+    var query = req;
+    console.log("DELETEING tHIS : " + query);
+    productmaterialModel.removeDeletedMaterial(query, (err,result) =>{
+      if(err) {
+        throw err;
+      }
+      else{
+        console.log(result);
+        res(result);
+      }
+    })
+  }

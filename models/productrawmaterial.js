@@ -50,3 +50,9 @@ exports.getByID = function(query, next) {
       next(err, del);
     });
   };
+
+  exports.removeDeletedMaterial = function(query, res) {
+    PRMmodel.deleteMany({ rawMaterialID: query}, function(err, del){
+      res(del);
+    });
+  };

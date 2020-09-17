@@ -1,5 +1,6 @@
 const allRawMaterialModel = require('../models/allRawMaterials');
 const { validationResult } = require('express-validator'); 
+const productmaterialModel = require('../models/productrawmaterial');
 
 exports.getAllmaterials = (param, callback) =>{
     allRawMaterialModel.getAll(param, (err, materials) => {
@@ -30,4 +31,21 @@ exports.addMaterial = (req,res)=>{
       res.redirect('/rawmaterials')
     }
   })
+};
+exports.delete = (req,res)=>{
+  var id = req.body.rawID;
+  allRawMaterialModel.remove(id, (err, result) => {
+    if (err) {
+      throw err; 
+    } 
+    else {
+      console.log(result);
+      var query = result._id;
+      console.log("THIS IS THE QUERY: " + query);
+      productmaterialModel.removeDeletedMaterial( query , (err2, deleted) =>{
+        console.log(deleted)
+        res.redirect('/rawmaterials');
+      });
+    }
+  }); 
 };

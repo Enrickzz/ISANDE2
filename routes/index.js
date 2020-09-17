@@ -210,6 +210,7 @@ router.get('/PGincrement/:id', (req, res) => {
 });
 
 router.get('/PGDecrement/:id', (req, res) => {
+  
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id;
     productgroupsController.decrementNumProd(query, (counted) => {
@@ -228,6 +229,20 @@ router.get('/PGDecrement/:id', (req, res) => {
   });
 });
 
+router.get('/deletefromProd/:id', (req,res) => {
+  var query = req;
+  console.log(query);
+  productrawmaterialController.deleteMatNoLongerExists(req, (result) =>{
+    allRawMaterialController.getAllmaterials(req, (allmaterials) =>{
+      res.render('raw-materials', {
+        layout: 'main',
+        title: 'Raw Materials',
+        rawList: allmaterials
+      });
+    })
+  })
+
+})
 
 
 router.post('/addProduct' , productController.addProduct);
@@ -238,5 +253,6 @@ router.post('/removeFrmProdGrp', productController.ungroup);
 router.post('/addProdtoPG', productController.assigngroup);
 router.post('/removematfromProduct',productrawmaterialController.delete)
 router.post('/deleteProduct',productController.delete)
+router.post('/deleteMaterial', allRawMaterialController.delete)
 
 module.exports = router;
