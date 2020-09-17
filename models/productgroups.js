@@ -48,5 +48,9 @@ exports.decreaseOne = function(id, next) {
     next(err, pgroup);
   })
 };
-
+exports.remove = function(query, next) {
+  productgroupModel.findByIdAndRemove(query, function(err, del){
+    next(err, del);
+  });
+};
 

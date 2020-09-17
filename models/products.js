@@ -1,4 +1,5 @@
 const mongoose = require('./connection');
+const { query } = require('express-validator');
 
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -47,10 +48,16 @@ exports.createProduct = function(obj, next) {
     });
   };
 
-  exports.update = function(id, update, next) {
-    productModel.findOneAndUpdate({_id: id}, update, { new: true }, function(err, pgroup) {
+  exports.update = function(query, update, next) {
+    productModel.findOneAndUpdate(query, update, { new: true }, function(err, pgroup) {
       next(err, pgroup);
     })
+  };
+
+  exports.updatemany = (query,update, next) => {
+    productModel.updateMany(query, update, (err, product) => {
+      next(err, product);
+    });
   };
   exports.remove = function(query, next) {
     productModel.findByIdAndRemove(query, function(err, del){

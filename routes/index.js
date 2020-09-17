@@ -244,8 +244,8 @@ router.get('/deletefromProd/:id', (req,res) => {
       });
     })
   })
-
 })
+
 
 
 router.post('/addProduct' , productController.addProduct);
@@ -257,5 +257,6 @@ router.post('/addProdtoPG', productController.assigngroup);
 router.post('/removematfromProduct',productrawmaterialController.delete)
 router.post('/deleteProduct',productController.delete)
 router.post('/deleteMaterial', allRawMaterialController.delete)
+router.post('/deleteGroup' , productgroupsController.delete)
 
 module.exports = router;

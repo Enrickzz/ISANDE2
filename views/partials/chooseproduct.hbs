@@ -1,4 +1,4 @@
-
+{{#if ungroupedProd}}
 {{#each ungroupedProd}}
 
 <tr class="clickable" onclick='window.location="/product/view/{{this._id}}"'>
@@ -15,3 +15,10 @@
 </tr>
 
 {{/each}}
+{{else}}
+    <tr>
+        <div style="text-align: center; color:red; font-weight:700;">
+            Create new products in the products page. Ungrouped products will show here.
+        </div> 
+    </tr>
+{{/if}}

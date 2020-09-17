@@ -1,5 +1,6 @@
 const productgroupsModel = require('../models/productgroups');
 const { validationResult } = require('express-validator');
+const productModel = require('../models/products');
 
 exports.getAllpg = (param, callback) =>{
   productgroupsModel.getAll(param, (err, PGroups) => {
@@ -68,4 +69,32 @@ exports.decrementNumProd = (req,res)=>{
       res(counted);
     }
   })
+};
+
+exports.delete = (req, res) => {
+  var productid = req.body.productID;
+  var groupid = req.body.groupID;
+  productgroupsModel.remove(groupid, (err, result) => {
+    if (err) {
+      throw err; 
+    } 
+    else {
+      var update ={
+        $set: {
+          product_groupID: "Ungrouped"
+        }
+      } 
+      productModel.updatemany({product_groupID: groupid}, update, (err, result) =>{
+        if(err){
+          console.log("NAGERROR");
+          console.log(err);
+          res.redirect('back');
+        }
+        else{
+          console.log(result);
+          res.redirect('/productgroup');
+        }
+      })
+    }
+  }); 
 };

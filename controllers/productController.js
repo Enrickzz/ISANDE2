@@ -91,7 +91,7 @@ exports.assigngroup = (req, res) => {
     }
   }
   var productID = req.body.productID;
-  productModel.update(productID, update, (err, result) =>{
+  productModel.update({_id:productID}, update, (err, result) =>{
     if(err){
       console.log("NAGERROR");
       console.log(err);
@@ -105,6 +105,7 @@ exports.assigngroup = (req, res) => {
 }
 
 
+
 exports.ungroup = (req, res) => {
   var update ={
     $set: {
@@ -112,7 +113,7 @@ exports.ungroup = (req, res) => {
     }
   }
   var productID = req.body.productID;
-  productModel.update(productID, update, (err, result) =>{
+  productModel.update({_id: productID}, update, (err, result) =>{
     if(err){
       console.log("NAGERROR");
       console.log(err);
@@ -121,6 +122,26 @@ exports.ungroup = (req, res) => {
     else{
       console.log(result);
       res.redirect('/PGDecrement/'+ req.body.groupID);
+    }
+  })
+}
+exports.ungroupBulk = (req, res) => {
+  var update ={
+    $set: {
+      product_groupID: "Ungrouped"
+    }
+  }
+  var productID = req.body.productID;
+  var groupID = req.body.groupID;
+  productModel.updatemany({product_groupID: groupID}, update, (err, result) =>{
+    if(err){
+      console.log("NAGERROR");
+      console.log(err);
+      res.redirect('back');
+    }
+    else{
+      console.log(result);
+      res.redirect('/productgroup');
     }
   })
 }
