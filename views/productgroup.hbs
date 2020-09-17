@@ -49,6 +49,7 @@
                             <div class="col" id="regform2">
                                 <form action="/addGroup" method="POSt">
                                 <h3 class="regheader">Product Group</h3>
+                                <p id="errormsg" style="color: red;"></p>
                                 <div class="row">
                                 
                                     <div class="col">
@@ -56,25 +57,17 @@
                                             <div class="form-group">
                                                 {{!-- Product Name --}}
                                                 <label>Name</label>
-                                                <input type="text" name="name" class="form-control" /><br>
+                                                <input id="pgname" type="text" name="name" class="form-control" required><br>
                                             </div>
                                     </div>
         
-                                    <div class="col">
-                                            <div class="form-group">
-                                                {{!-- Product Group ID --}}
-                                                <label>Product Group ID (Omit na to?)</label>
-                                                <input type="text" class="form-control" /><br>
-                                                <br>
-                                            </div>
-                                    </div>
                                   </div>
                                   <div class="row">
                                       <div class="col">
                                             <div class="form-group">
                                                 {{!-- Description --}}
                                                 <label for="">Description</label>
-                                                <textarea class="form-control" name="description" id="" cols="20" rows="6"></textarea>
+                                                <textarea class="form-control" name="description" id="" cols="20" rows="6" required></textarea>
                                             </div>
                                       </div>
                                   </div>
@@ -190,6 +183,51 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
             </div>
+
+            
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+
+            function forceKeyPressUppercase(e){
+                var charInput = e.keyCode;
+                if((charInput >= 97) && (charInput <= 122)) { // lowercase
+                if(!e.ctrlKey && !e.metaKey && !e.altKey) { // no modifier key
+                var newChar = charInput - 32;
+                var start = e.target.selectionStart;
+                var end = e.target.selectionEnd;
+                e.target.value = e.target.value.substring(0, start) + String.fromCharCode(newChar) + e.target.value.substring(end);
+                e.target.setSelectionRange(start+1, start+1);
+                 e.preventDefault();
+                }
+                }   
+            };
+            
+           document.getElementById("pgname").addEventListener("keypress", function(e) {
+            if(this.selectionStart == 0) {
+            // uppercase first letter
+            forceKeyPressUppercase(e);
+            } else {
+            // lowercase other letters
+            forceKeyPressLowercase(e);
+            }
+            }, false);
+
+            $(function() {
+                $('#pgname').keydown(function (e) {
+
+                    var key = e.keyCode;
+      
+                    if (!((key == 8) || (key == 32) || (key >= 65 && key <= 90))) {
+                        e.preventDefault();
+                         $('#errormsg').text('Invalid! Only character input accepted');
+                    }
+                    else{
+                        $('#errormsg').text('');
+                    }
+                });
+            });
+
+        </script>
 
         </div>
     </div>        

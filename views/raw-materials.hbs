@@ -55,6 +55,7 @@
                     <div class="row">
                         <div class="col" id="regform2">
                             <h3 class="regheader">Raw Materials</h3>
+                            <p id="errormsg" style="color: red;"></p>
                             <form action="/addMaterial" method="POST"> 
                                 <div class="row">
                                     <div class="col">
@@ -62,14 +63,7 @@
                                             <div class="form-group">
                                                 {{!-- Raw Material Name --}}
                                                 <label>Name</label>
-                                                <input name="name" type="text" class="form-control" /><br>
-                                            </div>
-                                    </div>
-                                    <div class="col">
-                                            <div class="form-group">
-                                                 {{!-- Raw Material ID --}}
-                                                <label>Raw Material ID</label>
-                                                <input name="RawMaterialID" type="text" class="form-control" disabled><br>
+                                                <input id="rmname" name="name" type="text" class="form-control" required><br>
                                             </div>
                                     </div>
                                 </div>
@@ -104,7 +98,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="cars">Cost Price per Unit</label>
-                                            <input name="costperUnit" type="number" class="form-control" /><br>
+                                            <input id="rmcost" name="costperUnit" type="number" class="form-control" required><br>
                                         </div>
                                     </div>
                                 <div class="col">
@@ -158,5 +152,61 @@
         {{!-- END TAB CONTENT --}} 
 
     </div>
+    
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+
+            function forceKeyPressUppercase(e){
+                var charInput = e.keyCode;
+                if((charInput >= 97) && (charInput <= 122)) { // lowercase
+                if(!e.ctrlKey && !e.metaKey && !e.altKey) { // no modifier key
+                var newChar = charInput - 32;
+                var start = e.target.selectionStart;
+                var end = e.target.selectionEnd;
+                e.target.value = e.target.value.substring(0, start) + String.fromCharCode(newChar) + e.target.value.substring(end);
+                e.target.setSelectionRange(start+1, start+1);
+                 e.preventDefault();
+                }
+                }   
+            };
+            
+           document.getElementById("rmname").addEventListener("keypress", function(e) {
+            if(this.selectionStart == 0) {
+            // uppercase first letter
+            forceKeyPressUppercase(e);
+            } else {
+            // lowercase other letters
+            forceKeyPressLowercase(e);
+            }
+            }, false);
+
+            document.getElementById("rmcost").addEventListener("keypress", function(e) {
+            
+                if ((event.which < 45 || event.which > 57)) {
+                    event.preventDefault();
+                    $('#errormsg').text('Invalid! Only numeric input accepted');
+                }
+                else{
+                    $('#errormsg').text('');
+                    }
+
+            });
+
+            $(function() {
+                $('#rmname').keydown(function (e) {
+
+                    var key = e.keyCode;
+      
+                    if (!((key == 8) || (key == 32) || (key >= 65 && key <= 90))) {
+                        e.preventDefault();
+                         $('#errormsg').text('Invalid! Only character input accepted');
+                    }
+                    else{
+                        $('#errormsg').text('');
+                    }
+                });
+            });
+
+        </script>
         
 </div>
