@@ -1,0 +1,122 @@
+            <div class="container-fluid" style="padding-bottom: 70px;">
+                <h3 class="text-dark mb-4">Supplier</h3>
+
+                {{!-- Nav Tabs --}}
+                <div class="card">
+                    <div class="card-header">
+                        {{!-- <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item btn"><a id="tab" class="nav-link active"  onclick="opentab('users')">Users</a></li>
+                            <li class="nav-item btn"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Register User</a></li>
+                            <li class="nav-item"></li>
+                        </ul> --}}
+
+                            <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#supplier">Users</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#regsupplier">Add Supplier</a>
+                            </li>
+
+                            </ul>
+                    </div>
+                    
+                    {{!-- Tab panes --}}
+
+                      <div class="tab-content">
+                        {{!-- ALL USERS --}}
+                        <div id="supplier" class="container tab-pane active"><br>
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Mobile no.</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Mobile no.</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    {{!-- END OF ALL USERS --}}
+
+                    {{!-- Register a User --}}
+                    <div id="regsupplier" class="container tab-pane fade"><br>
+                         <h3 class="text-dark mb-4">Add Supplier</h3>
+                        <div class="row">
+
+                            <div class="col" id="regform2">
+                                <h3 class="regheader">Supplier Information</h3>
+                                <div class="row">
+                                    {{!-- First Column --}}
+                                    <div class="col">
+                                        {{!-- Start form --}}
+                                        <form method="POST" action="/register">
+                                            <div class="form-group">
+                                                {{!-- First Name --}}
+                                                <label>First Name</label>
+                                                <input name="first_name" type="text" class="form-control" /><br>
+                                                {{!-- Email --}}
+                                                <label>Email</label>
+                                                <input type="email" class="form-control" /><br>
+                            
+                                                {{!-- Company --}}
+                                                <label>Company</label>
+                                                <input type="company" class="form-control" /><br>
+
+                                            </div>
+                                    </div>
+                                    {{!-- Second Column --}}
+                                    <div class="col">
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <input name="last_name" type="text" class="form-control" /><br>
+                                                <label>Mobile Number</label>
+                                                <input name= "mobileno" type="number" class="form-control" /><br>
+                                            </div>
+                                        </form>
+                                    </div>
+                                  </div>
+                            </div>
+                            
+                        </div>
+
+                          {{!-- SUBMIT CANCEL --}}
+                                <div class="row" style="margin-top: 2rem;">
+                                    <div class="col-md-6">
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-md-right dataTables_filter" id="dataTable_filter">
+                                            <label>
+                                                <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
+                                                <button class="btn btn-primary btn-sm" type="submit">Add</button>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>   
+                                  {{!-- END OF SUBMIT CANCEL --}}
+
+                          
+                    </div>
+                    {{!-- END OF REGUSER --}}
+
+                       
+                    </div>
+                    {{!-- END TAB CONTENT --}}
+                   
+                    <div class="card-body"></div>
+                </div>
+                <div class="card shadow"></div>
+            </div>

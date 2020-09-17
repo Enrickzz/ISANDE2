@@ -1,54 +1,52 @@
             <div class="container-fluid">
-                <h3 class="text-dark mb-1">Product Groups</h3>
+                <h3 class="text-dark mb-1">Purchase Orders</h3>
 
                 {{!-- Nav Tabs --}}
                 <div class="card">
                     <div class="card-header">
 
-                        {{!-- <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item"><a id="tab" class="nav-link active"  onclick="opentab('users')">All Product Groups</a></li>
-                                <li class="nav-item"><a id="tab" class="nav-link"  onclick="opentab('reguser')">Add Product Group</a></li>
-                            <li class="nav-item"></li>
-                        </ul> --}}
-
                          <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#product_group">All Product Groups</a>
+                            <a class="nav-link active" data-toggle="tab" href="#purchase_order">All Production Orders</a>
                             </li>
 
                             <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#regproduct_group">Add Product Group</a>
+                            <a class="nav-link" data-toggle="tab" href="#regproduct_group">Create Production Order</a>
                             </li>
-
-                            </ul>
+                        </ul>
                     </div>
                 
                 <div class="tab-content">
-                    {{!-- ALL PRODUCT GROUPS --}}
-                    <div class="container tab-pane active" id="product_group" style="padding-top: 30px;">
+                    {{!-- ALL PRODUCTION ORDERS --}}
+                    <div class="container tab-pane active" id="purchase_order" style="padding-top: 30px;">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Name  <i class="fa fa-sort"></i></th>
-                                        <th>Number of Products  <i class="fa fa-sort"></i></th>
+                                        <th>Order Date  <i class="fa fa-sort"></i></th>
+                                        <th>PO#  <i class="fa fa-sort"></i></th>
+                                        <th>Order Date <i class="fa fa-sort"></i></th>
+                                        <th>Order Method <i class="fa fa-sort"></i></th>
+                                        <th>Total Amount <i class="fa fa-sort"></i></th>
+                                        <th>Payables <i class="fa fa-sort"></i></th>
+                                        <th>Status <i class="fa fa-sort"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{>productgroupsTable}}
+                                    TABLE
                                 </tbody>
                             </table>
                         </div>
                     </div>
                
-                {{!-- END OF ALL PRODUCT GROUPS --}}
+                {{!-- END OF ALL PRODUCTION ORDERS --}}
 
-                 {{!-- ADD PRODUCT GROUP --}}
+                 {{!-- ADD PRODUCTION ORDERS --}}
                     <div class="container tab-pane fade" id="regproduct_group" style="padding-top: 30px;">       
                         <div class="row">
                             <div class="col" id="regform2">
                                 <form action="/addGroup" method="POSt">
-                                <h3 class="regheader">Product Group</h3>
+                                <h3 class="regheader">Purchase Orders (for edit)</h3>
                                 <p id="errormsg" style="color: red;"></p>
                                 <div class="row">
                                 
@@ -57,7 +55,7 @@
                                             <div class="form-group">
                                                 {{!-- Product Name --}}
                                                 <label>Name</label>
-                                                <input id="pgname" type="text" name="name" class="form-control" minlength="3" maxlength="20" required><br>
+                                                <input id="pgname" type="text" name="name" class="form-control" required><br>
                                             </div>
                                     </div>
         
@@ -89,15 +87,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="prof-pic-card">
-                                {{!-- Product Pic --}}
-                                  <div class="up_profpic">
-                                    <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" id="prof-pic-cont" />
-                                    <div class="mb-3" style="margin-top: 1.5rem;">
-                                        <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
-                                    </div>
-                                  </div> 
-                            </div>
                         </div>
                         
                         
@@ -108,14 +97,17 @@
                                 <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                     <label>
                                         <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
-                                        <button class="btn btn-primary btn-sm" type="submit">Add</button>
+                                        <button class="btn btn-primary btn-sm" type="submit">Create</button>
                                     </label>
                                 </div>
                             </div>
                         </div>  
                         {{!-- END OF ADD CANCEL --}} 
                     </div>
-                    {{!-- END OF ADD PRODUCT GROUP --}} 
+                    {{!-- END OF ADD PRODUCTION ORDERS --}} 
+
+                {{!-- VIEW SUGGESTIONS PRODUCTION ORDERS --}}
+                {{!-- END OF VIEW SUGGESTIONS --}} 
 
                </div> 
                </form>
