@@ -160,12 +160,15 @@ router.get('/PGiterate/:id', (req, res) => {
       var query2 = prod._id;
       productrawmaterialController.getRawMaterials(query2, (productRawMat) => {
         allRawMaterialController.getAllmaterials(req,(allmaterials) =>{
-          res.render('product-card', {
-            layout: 'main',
-            title: prod.name,
-            product: prod,
-            rawList: productRawMat,
-            allMat: allmaterials
+          unitofmeasureController.getAll(req, (allUOM) =>{
+            res.render('product-card', {
+              layout: 'main',
+              title: prod.name,
+              product: prod,
+              rawList: productRawMat,
+              allMat: allmaterials,
+              unitofmeasure: allUOM
+            })
           })
         })
       })

@@ -120,7 +120,7 @@ exports.ungroup = (req, res) => {
     }
     else{
       console.log(result);
-      res.redirect('/PGdecrement/'+ req.body.groupID);
+      res.redirect('/PGDecrement/'+ req.body.groupID);
     }
   })
 }
