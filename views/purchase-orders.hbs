@@ -24,16 +24,23 @@
                                 <thead>
                                     <tr>
                                         <th>Order Date  <i class="fa fa-sort"></i></th>
-                                        <th>PO#  <i class="fa fa-sort"></i></th>
-                                        <th>Order Date <i class="fa fa-sort"></i></th>
-                                        <th>Order Method <i class="fa fa-sort"></i></th>
+                                        <th style="max-width: ;">PO#  <i class="fa fa-sort"></i></th>
+                                        <th>Due Date <i class="fa fa-sort"></i></th>
                                         <th>Total Amount <i class="fa fa-sort"></i></th>
-                                        <th>Payables <i class="fa fa-sort"></i></th>
                                         <th>Status <i class="fa fa-sort"></i></th>
+                                        <th><span></span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    TABLE
+                                    {{#each purchaseorder}}
+                                    <tr class="clickable" >
+                                        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{orderDate}}</td>
+                                        <td> {{this._id}}</td>
+                                        <td> {{dueDate}}</td>
+                                        <td>{{total}}</td>
+                                        <td>{{status}}</td>
+                                    </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </div>
