@@ -175,7 +175,7 @@
             </div>
             
         </div>
-<!-- Modal -->
+<!-- Modal (TO BE CHANGED) -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -253,7 +253,7 @@
                 }   
             };
             
-           document.getElementById("pgname").addEventListener("keypress", function(e) {
+           document.getElementById("billaddress").addEventListener("keypress", function(e) {
             if(this.selectionStart == 0) {
             // uppercase first letter
             forceKeyPressUppercase(e);
@@ -262,21 +262,6 @@
             forceKeyPressLowercase(e);
             }
             }, false);
-
-            $(function() {
-                $('#pgname').keydown(function (e) {
-
-                    var key = e.keyCode;
-      
-                    if (!((key == 8) || (key == 32) || (key >= 65 && key <= 90))) {
-                        e.preventDefault();
-                         $('#errormsg').text('Invalid! Only character input accepted');
-                    }
-                    else{
-                        $('#errormsg').text('');
-                    }
-                });
-            });
 
         </script>
 
