@@ -11,7 +11,7 @@
                             </li>
 
                             <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#regproduct_group">Create Production Order</a>
+                            <a class="nav-link" data-toggle="tab" href="#addpurchase_order">Create Production Order</a>
                             </li>
                         </ul>
                     </div>
@@ -48,77 +48,129 @@
                
                 {{!-- END OF ALL PRODUCTION ORDERS --}}
 
-                 {{!-- ADD PRODUCTION ORDERS --}}
-                    <div class="container tab-pane fade" id="regproduct_group" style="padding-top: 30px;">       
-                        <div class="row">
-                            <div class="col" id="regform2">
-                                <form action="/addGroup" method="POSt">
-                                <h3 class="regheader">Purchase Orders (for edit)</h3>
-                                <p id="errormsg" style="color: red;"></p>
+                 {{!-- ADD PURCHASE ORDERS --}}
+                    <div class="container tab-pane fade" id="addpurchase_order" style="padding-top: 30px;">       
+                     <div class="row">
+                        <div class="col" id="regform2">
+                            <h3 class="regheader">Purchase Order Form</h3>
+                            <p id="errormsg" style="color: red;"></p>
+                            <form  action="/addProduct" method="POST" > <!--ADDING PRODUCTS// -->
                                 <div class="row">
-                                
                                     <div class="col">
-                                        {{!-- Start form --}}
                                             <div class="form-group">
-                                                {{!-- Product Name --}}
-                                                <label>Name</label>
-                                                <input id="pgname" type="text" name="name" class="form-control" required><br>
+                                                <label>Supplier Name</label>
+                                                <select id="cars" name="sku" class="form-control">
+                                                <option value="volvo">Volvo</option>
+                                                <option value="saab">Saab</option>
+                                                <option value="fiat">Fiat</option>
+                                                <option value="audi">Audi</option>
+                                            </select><br>
                                             </div>
                                     </div>
-        
-                                  </div>
-                                  <div class="row">
-                                      <div class="col">
-                                            <div class="form-group">
-                                                {{!-- Description --}}
-                                                <label for="">Description</label>
-                                                <textarea class="form-control" name="description" id="" cols="20" rows="6" required></textarea>
-                                            </div>
-                                      </div>
-                                  </div>
-        
-                                  <div class="row">
                                     <div class="col">
-                                          <div class="form-group">
-                                              {{!-- UOM --}}
-                                              <label for="cars">UOM</label>
-                                                    <select id="cars" name="UOM" class="form-control">
-                                                        <option value="volvo">uom1</option>
-                                                        <option value="saab">uom2</option>
-                                                        <option value="fiat">uom3</option>
-                                                    </select><br>
-                                          </div>
-                                    </div>
-                                    <div class="col">
-                                        
+                                        <label>Purchase Order #</label>
+                                            <input id="pname" name="name" type="text" class="form-control" minlength="3" maxlength="20" disabled><br>
                                     </div>
                                 </div>
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="">Order Date</label>
+                                            <input name="description" type="date" class="form-control" name="" id="" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="cars">Expected Delivery Date</label>
+                                            <input name="description" type="date" class="form-control" name="" id="" required></textarea>
+                                        </div>
+                                    </div>
+
+                                     <div class="col">
+                                        <div class="form-group">
+                                            <label for="">Due Date</label>
+                                            <input name="description" type="date" class="form-control" name="" id="" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="cars">Billing Address</label>
+                                            <input name="description" type="text" class="form-control" name="billaddress" id="billaddress"  required></textarea>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
-                        
-                        
-        
-                        <div class="row" style="margin-top: 2rem;">
-                            
-                            <div class="col">
-                                <div class="text-md-center dataTables_filter" id="dataTable_filter">
+
+                {{!-- VIEW SUGGESTIONS PURCHASE ORDERS --}}
+                {{!-- END OF VIEW SUGGESTIONS --}} 
+                        </div>
+                        <br>
+                        <div class="table-responsive table mt-2" id="regproductlist"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
+                        <div class="col">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr class="tr-addproducts">
+                                        <th>#</th>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>UOM</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="td-num-addproducts">1</td>
+                                        <td> <select id="cars" name="sku" class="form-control" placeholder="Item"></select></td>
+                                        <td> <input type="text" class="form-control" placeholder="Quantity"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="UOM"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="Rate"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="Amount"> </td>                                   
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    
+                                </tfoot>
+                            </table>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2rem;">
+                                <div class="" id="">
                                     <label>
-                                        <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
-                                        <button class="btn btn-primary btn-sm" type="submit">Create</button>
+                                        <span>TOTAL AMT:</span>
                                     </label>
                                 </div>
                             </div>
-                        </div>  
-                        {{!-- END OF ADD CANCEL --}} 
+                        </div>
                     </div>
-                    {{!-- END OF ADD PRODUCTION ORDERS --}} 
+                    <div class="row" style="margin-top: 2rem;">
+                        <div class="col">
+                            <div class="text-md-center dataTables_filter" id="dataTable_filter">
+                                <label>
+                                    <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
+                                    <button class="btn btn-primary btn-sm" type="submit">Create</button>
+                                </label>
+                            </div>
+                        </div>
+                    </div> 
+                    {{!-- END OF ADD CANCEL --}} 
+                     </form>
 
-                {{!-- VIEW SUGGESTIONS PRODUCTION ORDERS --}}
-                {{!-- END OF VIEW SUGGESTIONS --}} 
+                </div>
+                    {{!-- END OF ADD PURCHASE ORDERS --}} 
 
-               </div> 
-               </form>
-               {{!-- END TAB CONTENT --}} 
+                </div>
+                    {{!-- END TAB CONTENT --}}
 
             </div>
             
