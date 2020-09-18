@@ -39,12 +39,14 @@
                                 </thead>
 
                                 <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Company</th>
-                                        <th>Mobile no.</th>
-                                        <th>Email</th>
+                                    {{#each suppliers}}
+                                    <tr class="clickable" >
+                                        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{contactperson}}</td>
+                                        <td> {{company}}</td>
+                                        <td> {{mobile}}</td>
+                                        <td>{{email}}</td>
                                     </tr>
+                                    {{/each}}
                                 </tfoot>
                             </table>
                         </div>

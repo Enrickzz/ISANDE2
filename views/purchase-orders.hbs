@@ -54,22 +54,21 @@
                         <div class="col" id="regform2">
                             <h3 class="regheader">Purchase Order Form</h3>
                             <p id="errormsg" style="color: red;"></p>
-                            <form  action="/addProduct" method="POST" > <!--ADDING PRODUCTS// -->
+                            <form  action="/addpurchaseorder" method="POST" > <!--ADDING PRODUCTS// -->
                                 <div class="row">
                                     <div class="col">
                                             <div class="form-group">
                                                 <label>Supplier Name</label>
-                                                <select id="cars" name="sku" class="form-control">
-                                                <option value="volvo">Volvo</option>
-                                                <option value="saab">Saab</option>
-                                                <option value="fiat">Fiat</option>
-                                                <option value="audi">Audi</option>
+                                                <select id="cars" name="supplier" class="form-control">
+                                                    {{#each suppliers}}
+                                                    <option value="{{suppliers._id}}">{{company}}</option>
+                                                    {{/each}}
                                             </select><br>
                                             </div>
                                     </div>
                                     <div class="col">
                                         <label>Purchase Order #</label>
-                                            <input id="pname" name="name" type="text" class="form-control" minlength="3" maxlength="20" disabled><br>
+                                            <input value="" id="pname" name="name" type="text" class="form-control" minlength="3" maxlength="20" disabled><br>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -77,14 +76,14 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Order Date</label>
-                                            <input name="description" type="date" class="form-control" name="" id="" required></textarea>
+                                            <input name="orderDate" type="date" class="form-control" name="" id="" required></textarea>
                                         </div>
                                     </div>
 
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="cars">Expected Delivery Date</label>
-                                            <input name="description" type="date" class="form-control" name="" id="" required></textarea>
+                                            <input name="dueDate" type="date" class="form-control" name="" id="" required></textarea>
                                         </div>
                                     </div>
 

@@ -7,6 +7,7 @@ const productrawmaterialController = require('../controllers/productrawmaterialC
 const allRawMaterialController = require('../controllers/allRawMaterialController');
 const unitofmeasureController = require('../controllers/unitofmeasureController');
 const purchaseorderController = require('../controllers/purchaseorderController');
+const supplierController = require('../controllers/supplierController');
 
 const { registerValidation, loginValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -125,9 +126,12 @@ router.get('/productionorder', isPrivate, function(req, res) {
 router.get('/supplier', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  res.render('supplier', {
-    layout: 'main',
-    title: 'Suppliers'
+  supplierController.getAll(req, (allsupplier) =>{
+    res.render('supplier', {
+      layout: 'main',
+      title: 'Suppliers',
+      suppliers: allsupplier
+    })
   })
 });
 
