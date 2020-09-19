@@ -1,5 +1,6 @@
             <div class="container-fluid" style="padding-bottom: 70px;">
                 <h3 class="text-dark mb-4">Manage Users</h3>
+                {{> messages}}
 
                 {{!-- Nav Tabs --}}
                 <div class="card">
@@ -88,15 +89,16 @@
                                 <div class="up_profpic">
                                   <div >
                                     <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="250" height="250" />
-                                    {{!-- Start form --}}
-                                    <form method="POST" action="/register">
-                                    <input type="file" style="padding-left: 100px;"></input>
+                                    
+                                    {{!-- <input type="file" style="padding-left: 100px; outline: none"></input> --}}
                                   </div> 
                                 </div>
                             </div>
 
                             <div class="col" id="regform2">
                                 <h3 class="regheader">User Information</h3>
+                                  {{!-- Start form --}}
+                            <form oninput='password.setCustomValidity(up2.value != up.value ? "Passwords do not match." : "")' method="POST" action="/register">
                                 <div class="row">
                                     {{!-- First Column --}}
                                     <div class="col">
@@ -104,39 +106,47 @@
                                             <div class="form-group">
                                                 {{!-- First Name --}}
                                                 <label>First Name</label>
-                                                <input name="first_name" type="text" class="form-control" required/><br>
+                                                <input name="first_name" id="first_name"  placeholder="First Name" type="text" class="form-control" required/><br>
+
+                                                {{!-- Last Name --}}
+                                                <label>Last Name</label>
+                                                <input name="last_name" id="last_name" placeholder="Last Name" type="text" class="form-control" required/><br>
+
                                                 {{!-- Email --}}
                                                 <label>Email</label>
-                                                <input type="email" class="form-control" required/><br>
-                            
-                                                {{!-- Usertype --}}
-                                                <label for="usertypes">User Type</label>
-                                                    <select id="usertype" name="usertype" class="form-control">
-                                                         <option value="Admin">Admin</option>
-                                                        <option value="Branch Manager">Branch Manager</option>
-                                                        <option value="Clerk">Clerk</option>
-                                                    </select><br>
-
-                                                {{!-- Password --}}
-                                                <label>Password</label>
-                                                <input name="password" type="password" class="form-control" required name=up/><br>
+                                                <input name="email" id="email" type="email" placeholder="Email" class="form-control" required/><br>
+                                            
+                                                {{!-- Mobile Number --}}
+                                                <label>Mobile Number</label>
+                                                <input name= "mobileno" id="mobileno" type="tel" placeholder="09 _ _ _ _ _ _ _ _ _" pattern="[0]{1}[9]{1}[0-9]{9}" class="form-control" required/><br>
+                
                                             </div>
                                     </div>
                                     {{!-- Second Column --}}
                                     <div class="col">
                                             <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input name="last_name" type="text" class="form-control" required/><br>
-                                                <label>Mobile Number</label>
-                                                <input name= "mobileno" type="number"  pattern="[0]{1}[9]{1}[0-9]{9}" class="form-control" required/><br>
+
+                                                {{!-- Usertype --}}
+                                                <label for="usertype">User Type</label>
+                                                    <select id="usertype" name="usertype" class="form-control">
+                                                        <option value="Admin">Admin</option>
+                                                        <option value="Branch Manager">Branch Manager</option>
+                                                        <option value="Clerk">Clerk</option>
+                                                    </select><br>
+               
+                                                {{!-- Branches --}}
                                                 <label for="branches">Branch Assigned</label>
-                                                    <select id="branches" name="branch" class="form-control">
+                                                    <select id="branch" name="branch" class="form-control">
                                                         {{>branchList}}
                                                     </select><br>
 
+                                                {{!-- Password --}}
+                                                <label>Password</label>
+                                                <input name="password" id="password" placeholder="Password" type="password" class="form-control" required name=up/><br>
+
                                                 {{!-- Confirm Password --}}
                                                 <label>Confirm Password</label>
-                                                <input name="confirmpassword" type="text" class="form-control" required  required name=up2/><br>
+                                                <input name="confirmpassword" id="confirmpassword"placeholder="Confirm Password" type="password" class="form-control" required  required name=up2/><br>
                                             </div>
                                     </div>
                                   </div>
@@ -153,7 +163,7 @@
                                         <div class="text-md-right dataTables_filter" id="dataTable_filter">
                                             <label>
                                                 <button class="btn btn-secondary btn-sm" type="button">Cancel</button>
-                                                <button class="btn btn-primary btn-sm" type="submit">Register</button>
+                                                <button class="btn btn-primary btn-sm" id="addUser"type="submit">Register</button>
                                             </label>
                                         </div>
                                     </div>

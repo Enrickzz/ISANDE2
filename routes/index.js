@@ -38,7 +38,7 @@ router.get('/productgroup', isPrivate, function(req, res) {
   });
 });
 
-router.get('/productgroup/view/:id', (req, res) => {
+router.get('/productgroup/view/:id', isPrivate, (req, res) => {
   console.log("Read view successful!");
   
   productgroupsController.getID(req, (productGroup) => {
@@ -93,7 +93,7 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
 });
 
 
-router.get('/product/view/:id', (req, res) => {
+router.get('/product/view/:id', isPrivate, (req, res) => {
   console.log("Read view successful!");
   
   productController.getID(req, (prod) => {
@@ -216,7 +216,7 @@ router.get('/profile', isPrivate, function(req, res) {
 
 
 //.get/s below are redirected from other functions from specific controllers so that it will connect with other controllers
-router.get('/PGiterate/:id', (req, res) => {
+router.get('/PGiterate/:id', isPrivate, (req, res) => {
   productController.getID(req, (prod) => {
     var query = prod.product_groupID;
     productgroupsController.incrementNumProd(query, (counted) => {
@@ -238,7 +238,7 @@ router.get('/PGiterate/:id', (req, res) => {
     })
   });
 });
-router.get('/PGdecrementA/:id', (req, res) => {
+router.get('/PGdecrementA/:id', isPrivate, (req, res) => {
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id;
     productgroupsController.decrementNumProd(query, (counted) => {
@@ -256,7 +256,7 @@ router.get('/PGdecrementA/:id', (req, res) => {
   });
 });
 
-router.get('/PGincrement/:id', (req, res) => {
+router.get('/PGincrement/:id', isPrivate, (req, res) => {
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id;
     productgroupsController.incrementNumProd(query, (counted) => {
@@ -275,7 +275,7 @@ router.get('/PGincrement/:id', (req, res) => {
   });
 });
 
-router.get('/PGDecrement/:id', (req, res) => {
+router.get('/PGDecrement/:id', isPrivate, (req, res) => {
   
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id;
@@ -295,7 +295,7 @@ router.get('/PGDecrement/:id', (req, res) => {
   });
 });
 
-router.get('/deletefromProd/:id', (req,res) => {
+router.get('/deletefromProd/:id', isPrivate, (req,res) => {
   var query = req;
   console.log(query);
   productrawmaterialController.deleteMatNoLongerExists(req, (result) =>{
@@ -311,16 +311,16 @@ router.get('/deletefromProd/:id', (req,res) => {
 
 
 
-router.post('/addProduct' , productController.addProduct);
-router.post('/addMaterial', allRawMaterialController.addMaterial);
-router.post('/addGroup', productgroupsController.addGroup);
-router.post('/productNewMaterial', productrawmaterialController.addMaterial);
-router.post('/removeFrmProdGrp', productController.ungroup);
-router.post('/addProdtoPG', productController.assigngroup);
-router.post('/removematfromProduct',productrawmaterialController.delete);
-router.post('/deleteProduct',productController.delete);
-router.post('/deleteMaterial', allRawMaterialController.delete);
-router.post('/deleteGroup' , productgroupsController.delete);
-// router.post('/register', isPublic, registerValidation, userController.register);
+router.post('/addProduct' , isPrivate, productController.addProduct);
+router.post('/addMaterial', isPrivate, allRawMaterialController.addMaterial);
+router.post('/addGroup', isPrivate, productgroupsController.addGroup);
+router.post('/productNewMaterial', isPrivate, productrawmaterialController.addMaterial);
+router.post('/removeFrmProdGrp', isPrivate, productController.ungroup);
+router.post('/addProdtoPG', isPrivate, productController.assigngroup);
+router.post('/removematfromProduct', isPrivate, productrawmaterialController.delete);
+router.post('/deleteProduct', isPrivate, productController.delete);
+router.post('/deleteMaterial', isPrivate, allRawMaterialController.delete);
+router.post('/deleteGroup', isPrivate,productgroupsController.delete);
+router.post('/register', isPrivate, registerValidation, userController.register);
 
 module.exports = router;

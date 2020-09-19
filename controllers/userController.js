@@ -16,30 +16,30 @@ const { validationResult } = require('express-validator');
     // 3. If INVALID, redirect to register page with errors
     const errors = validationResult(req);
 
-    const { utype, uname, fname, lname, mnum, email, pword } = req.body;
+    const { usertype, first_name, last_name, mobileno, email, password, branch} = req.body;
       
       if (errors.isEmpty()) {      
-      userModel.getOne({ uname: uname }, (err, result) => {
+      userModel.getOne({ email: email }, (err, result) => {
         if (result) {
-          console.log("Username already taken!");
+          console.log("Email already taken!");
           // found a match, return to login with error
-        req.flash('error_msg', 'Username already taken.');
+        req.flash('error_msg', 'Email already taken.');
         //   req.session.save( function(){ res.redirect('/'); })
-        res.redirect('/');
+        res.redirect('/manageusers');
 
         } else {
           const saltRounds = 10;
   
           // Hash password
-          bcrypt.hash(pword, saltRounds, (err, hashed) => {
+          bcrypt.hash(password, saltRounds, (err, hashed) => {
             const newUser = {
-              utype,
-              uname,
-              fname,
-              lname,
-              mnum,
+              usertype,
+              first_name,
+              last_name,
+              mobileno,
               email,
-              pword: hashed
+              branch,
+              password: hashed
             };
           
             userModel.register(newUser, (err, user) => {
@@ -48,7 +48,7 @@ const { validationResult } = require('express-validator');
                 console.log(err.errors);
                 result = { success: false, message: "User was not created!" }
                 //res.send(result); this causes an error LOL :<
-                res.redirect('/');
+                res.redirect('/manageusers');
      
               } else {
                 console.log("Successfully added user!");
@@ -56,8 +56,8 @@ const { validationResult } = require('express-validator');
                 result = { success: true, message: "User created!" }
                 //res.send(result); this causes an error LOL :<
 
-                req.flash('success_msg', 'You are now registered.');
-                res.redirect('/');
+                req.flash('success_msg', 'User registered.');
+                res.redirect('/manageusers');
               }
             });
           });
@@ -68,7 +68,7 @@ const { validationResult } = require('express-validator');
       const messages = errors.array().map((item) => item.msg);
   
       req.flash('error_msg', messages.join(' '));
-      res.redirect('/contactus'); // making this redirect to / makes req.flash not appear
+      res.redirect('/manageusers'); // making this redirect to / makes req.flash not appear
     }
   };
 
@@ -113,6 +113,7 @@ const { validationResult } = require('express-validator');
                 req.session.first_name = user.first_name; 
                 req.session.last_name = user.last_name;
                 req.session.mobileno = user.mobileno;
+                req.session.branch = user.branch;
 
                 console.log(req.session);
                 // if (req.session.utype === 'Regular')
