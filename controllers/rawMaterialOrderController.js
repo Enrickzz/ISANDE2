@@ -1,5 +1,6 @@
 const rawMaterialOrderModel = require('../models/rawMaterialOrder');
 const { validationResult } = require('express-validator'); 
+const purchaseorderModel = require('../models/purchaseorder');
 
 exports.getAll = (param, callback) =>{
     rawMaterialOrderModel.getAll(param, (err, PO) => {
@@ -56,13 +57,15 @@ exports.fetchQuery = (req,res) => {
     }
    
     rawMaterialOrderModel.saveMaterial(RMO, function (err, RMO_result) {
-      if(err){
-        console.log(err);
-        res.redirect('/purchaseorder/view/' + POid);
-      }
-      else{
-        res.redirect('/purchaseorder/view/' + RMO_result.purchaseorderID);
-      }
+      purchaseorderModel.increasetotal(RMO_result.purchaseorderID, RMO_result.subtotal, function(err2, success){
+        if(err){
+          console.log(err);
+          res.redirect('/purchaseorder/view/' + POid);
+        }
+        else{
+          res.redirect('/purchaseorder/view/' + RMO_result.purchaseorderID);
+        }
+      })
     })
 };
 
@@ -70,12 +73,14 @@ exports.delete = (req, res) => {
   var id = req.body.RMOid;
   var POid = req.body.purchaseorderid;
   rawMaterialOrderModel.remove(id, (err, result) => {
-    if (err) {
-      throw err; 
-    } 
-    else {
-      res.redirect('/purchaseorder/view/' + POid)
-    }
+    purchaseorderModel.decreasetotal(result.purchaseorderID, result.subtotal, function (err2, decrease) {
+      if (err) {
+        throw err; 
+      } 
+      else {
+        res.redirect('/purchaseorder/view/' + POid)
+      }
+    })
   }); 
 };
   
