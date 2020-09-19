@@ -15,13 +15,14 @@ const rawMaterialOrderController = require('../controllers/rawMaterialOrderContr
 const { registerValidation, loginValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
 
-
 router.get('/home', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   res.render('home', {
     layout: 'main',
-    title: 'Dashboard'
+    title: 'Dashboard',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name,
   })
 });
 
@@ -33,6 +34,8 @@ router.get('/productgroup', isPrivate, function(req, res) {
       res.render('productgroup', {  
         layout: 'main',
         title: 'Product Groups',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
         pglist: productgroups,
         plist:products
       })
@@ -52,6 +55,8 @@ router.get('/productgroup/view/:id', isPrivate, (req, res) => {
         res.render('productgroup-card', { 
           layout:'main',
           title:"Product Groups",
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
           ungroupedProd: ungroupedProducts,
           pgroup: productGroup,
           plist: pgproducts
@@ -71,6 +76,8 @@ router.get('/allproducts', isPrivate, function(req, res) {
           res.render('products', { 
             layout: 'main',
             title: 'Products List',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
             plist: products,
             pglist: productgroups,
             allRawMat: allmaterials,
@@ -89,6 +96,8 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
     res.render('raw-materials', {
       layout: 'main',
       title: 'Raw Materials',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
       rawList: allmaterials
     });
   });
@@ -106,6 +115,8 @@ router.get('/product/view/:id', isPrivate, (req, res) => {
           res.render('product-card', { 
             layout:'main',
             title: prod.name,
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
             product: prod,
             rawList: materials,
             allMat: allMaterials,
@@ -122,7 +133,9 @@ router.get('/productionorder', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('production-orders', {
     layout: 'main',
-    title: 'Production Orders'
+    title: 'Production Orders',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name
   })
 });
 
@@ -133,6 +146,8 @@ router.get('/supplier', isPrivate, function(req, res) {
     res.render('supplier', {
       layout: 'main',
       title: 'Suppliers',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
       suppliers: allsupplier
     })
   })
@@ -146,6 +161,8 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
       res.render('purchase-orders', {
         layout: 'main',
         title: 'Purchase Orders',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
         purchaseorder: POs,
         supplier: allSuppliers
       })
@@ -164,6 +181,8 @@ router.get('/purchaseorder/view/:id', (req, res) => {
           res.render('purchaseorder-card', { 
             layout:'main',
             title: 'Purchase Order View',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
             purchaseorder: POs,
             supplyList: supplyListResult,
             supplier: supplierResult,
@@ -184,6 +203,8 @@ router.get('/manageusers', isPrivate, function(req, res) {
       res.render('manageusers', {
         layout: 'main',
         title: 'Manage Users',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
         userlist: users,
         branchlist: branches
       })
@@ -196,7 +217,9 @@ router.get('/productgroupcard', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('productgroup-card', {
     layout: 'main',
-    title: '{{ Product Group }}'
+    title: '{{ Product Group }}',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name
   })
 });
 
@@ -205,7 +228,9 @@ router.get('/productcard', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('product-card', {
     layout: 'main',
-    title: '{{ Product name}}'
+    title: '{{ Product name}}',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name
   })
 });
 
@@ -214,7 +239,9 @@ router.get('/purchaseordercard', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('purchaseorder-card', {
     layout: 'main',
-    title: '{{ Purchase Order }}'
+    title: '{{ Purchase Order }}',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name
   })
 });
 
@@ -223,7 +250,15 @@ router.get('/profile', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('profile', {
     layout: 'main',
-    title: 'My Profile'
+    title: 'My Profile',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name,
+    email:  req.session.email,
+    usertype:  req.session.email,
+    mnum: req.session.mobileno,
+    utype: req.session.usertype,
+    branch: req.session.branch
+    
   })
 });
 
@@ -241,6 +276,8 @@ router.get('/PGiterate/:id', isPrivate, (req, res) => {
             res.render('product-card', {
               layout: 'main',
               title: prod.name,
+              fname:  req.session.first_name,
+              lname:  req.session.last_name,
               product: prod,
               rawList: productRawMat,
               allMat: allmaterials,
@@ -261,6 +298,8 @@ router.get('/PGdecrementA/:id', isPrivate, (req, res) => {
           res.render('products', {
             layout: 'main',
             title: 'Product Groups',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
             pglist: productgroups,
             plist: productlist
           })
@@ -279,6 +318,8 @@ router.get('/PGincrement/:id', isPrivate, (req, res) => {
           res.render('productgroup-card', {
             layout: 'main',
             title: 'Product Groups',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
             pgroup: productGroup,
             ungroupedProd: ungroupedproducts,
             plist: productlist
@@ -299,6 +340,8 @@ router.get('/PGDecrement/:id', isPrivate, (req, res) => {
           res.render('productgroup-card', {
             layout: 'main',
             title: 'Product Groups',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
             pgroup: productGroup,
             ungroupedProd: ungroupedproducts,
             plist: productlist
@@ -317,6 +360,8 @@ router.get('/deletefromProd/:id', isPrivate, (req,res) => {
       res.render('raw-materials', {
         layout: 'main',
         title: 'Raw Materials',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
         rawList: allmaterials
       });
     })
@@ -335,7 +380,7 @@ router.post('/removematfromProduct',productrawmaterialController.delete);
 router.post('/deleteProduct',productController.delete);
 router.post('/deleteMaterial', allRawMaterialController.delete);
 router.post('/deleteGroup' , productgroupsController.delete);
-// router.post('/register', isPublic, registerValidation, userController.register);
+router.post('/register', registerValidation, userController.register);
 router.post('/addpurchaseorder' , purchaseorderController.addPurchaseOrder);
 router.post('/addRawMaterialOrder' , rawMaterialOrderController.addRMO);
 router.post('/deleteRMO', rawMaterialOrderController.delete)

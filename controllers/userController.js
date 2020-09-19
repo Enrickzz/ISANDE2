@@ -162,3 +162,16 @@ const { validationResult } = require('express-validator');
       callback(usersObj);
     });
   };
+
+  exports.getID = (req, res) => {
+    var id = req;
+    console.log(id);
+    userModel.getByID(id, (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        var userObj = result.toObject();
+        res(userObj);
+      }
+    });
+  };

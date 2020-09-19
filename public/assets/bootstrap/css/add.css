@@ -143,3 +143,7 @@ a.dropdown-item.active, a.dropdown-item.active:focus, a.dropdown-item:focus {
     text-align: center;
     font-size: large;
 }
+
+.text-primary {
+    color: #5AA5CD!important;
+}
