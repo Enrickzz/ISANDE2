@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const userController = require('../controllers/userController');
+const branchController = require('../controllers/branchController');
 const productgroupsController = require('../controllers/productgroupsController');
 const productconnectionController = require('../controllers/productconnectionController');
 const productController = require('../controllers/productController');
@@ -147,13 +148,20 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
   })
 });
 
-router.get('/manageusers', isPrivate, function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
-  res.render('manageusers', {
-    layout: 'main',
-    title: 'Manage Users'
-  })
+
+  router.get('/manageusers', isPrivate, function(req, res) {
+      // The render function takes the template filename (no extension - that's what the config is for!)
+      // and an object for what's needed in that template
+      userController.getAll(req, (users) =>{
+      branchController.getAll(req, (branches) =>{
+      res.render('manageusers', {
+        layout: 'main',
+        title: 'Manage Users',
+        userlist: users,
+        branchlist: branches
+      })
+    });
+  });
 });
 
 router.get('/productgroupcard', isPrivate, function(req, res) {
@@ -287,9 +295,10 @@ router.post('/addGroup', productgroupsController.addGroup);
 router.post('/productNewMaterial', productrawmaterialController.addMaterial);
 router.post('/removeFrmProdGrp', productController.ungroup);
 router.post('/addProdtoPG', productController.assigngroup);
-router.post('/removematfromProduct',productrawmaterialController.delete)
-router.post('/deleteProduct',productController.delete)
-router.post('/deleteMaterial', allRawMaterialController.delete)
-router.post('/deleteGroup' , productgroupsController.delete)
+router.post('/removematfromProduct',productrawmaterialController.delete);
+router.post('/deleteProduct',productController.delete);
+router.post('/deleteMaterial', allRawMaterialController.delete);
+router.post('/deleteGroup' , productgroupsController.delete);
+// router.post('/register', isPublic, registerValidation, userController.register);
 
 module.exports = router;

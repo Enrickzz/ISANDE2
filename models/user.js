@@ -36,3 +36,9 @@ exports.getOne = function(query, next) {
     next(err, user);
   });
 };
+
+exports.getAll = (param, next) => {
+  userModel.find({}, (err, pos) => {
+    next(err, pos);
+  });
+};

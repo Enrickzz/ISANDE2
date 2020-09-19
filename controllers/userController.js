@@ -148,3 +148,15 @@ const { validationResult } = require('express-validator');
         });
       }
     };
+
+    exports.getAll = (param, callback) =>{
+      userModel.getAll(param, (err, user) => {
+      if (err) throw err;
+      const usersObj =[];
+      user.forEach(function(doc) {
+          usersObj.push(doc.toObject());
+      });
+      console.log(usersObj);
+      callback(usersObj);
+    });
+  };
