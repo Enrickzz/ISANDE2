@@ -14,11 +14,16 @@ const purchaseOrderSchema = new mongoose.Schema(
 
 );
 
-
 const purchaseOrderModel = mongoose.model('purchaseorder', purchaseOrderSchema,'purchaseorder');
 
 exports.getAll = (param, next) => {
     purchaseOrderModel.find({}, (err, pos) => {
       next(err, pos);
+    });
+  };
+
+  exports.getByID = function(query, next) {
+    purchaseOrderModel.findById(query, function(err, post) {
+      next(err, post);
     });
   };

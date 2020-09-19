@@ -148,8 +148,21 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
   })
 });
 
+router.get('/purchaseorder/view/:id', (req, res) => {
+  console.log("Read view successful!");
+  
+  purchaseorderController.getID(req, (POs) => {
+    var query = POs._id;
+          res.render('purchaseorder-card', { 
+            layout:'main',
+            title: 'Purchase Order View',
+            purchaseorder: POs
+          });
+        });
+});
 
-  router.get('/manageusers', isPrivate, function(req, res) {
+
+router.get('/manageusers', isPrivate, function(req, res) {
       // The render function takes the template filename (no extension - that's what the config is for!)
       // and an object for what's needed in that template
       userController.getAll(req, (users) =>{
@@ -179,6 +192,15 @@ router.get('/productcard', isPrivate, function(req, res) {
   res.render('product-card', {
     layout: 'main',
     title: '{{ Product name}}'
+  })
+});
+
+router.get('/purchaseordercard', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  res.render('purchaseorder-card', {
+    layout: 'main',
+    title: '{{ Purchase Order }}'
   })
 });
 

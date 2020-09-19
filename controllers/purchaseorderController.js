@@ -13,3 +13,16 @@ exports.getAll = (param, callback) =>{
   });
 };
 
+exports.getID = (req, res) => {
+  var id = req.params.id;
+
+  purchaseorderModel.getByID(id, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      var POobj = result.toObject();
+      res(POobj);
+    }
+  });
+};
+

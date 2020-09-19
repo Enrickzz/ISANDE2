@@ -1,0 +1,9 @@
+{{#each purchaseorder}}
+    <tr class="clickable" onclick='window.location="/purchaseorder/view/{{this._id}}"'>
+        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{orderDate}}</td>
+        <td> {{this._id}}</td>
+        <td> {{dueDate}}</td>
+        <td>{{total}}</td>
+        <td>{{status}}</td>
+        </tr>
+{{/each}}
