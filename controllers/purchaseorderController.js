@@ -26,3 +26,24 @@ exports.getID = (req, res) => {
   });
 };
 
+exports.addPurchaseOrder = (req,res)=>{
+  var purchaseorder = {
+    supplierID: req.body.supplierid,
+    dueDate: req.body.duedate,
+    orderDate: req.body.orderdate,
+    status: req.body.status,
+    total: "0",
+    shippingaddress: req.body.billaddress
+  }
+  purchaseorderModel.createPurchaseOrder(purchaseorder, function (err, result_PO) {
+    if(err){
+      console.log(err);
+      res.redirect('/purchaseorder');
+    }
+    else{
+      console.log(result_PO);
+      res.redirect('/purchaseorder/view/' + result_PO._id)
+    }
+  })
+};
+

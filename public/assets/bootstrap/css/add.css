@@ -134,4 +134,12 @@ a.dropdown-item.active, a.dropdown-item.active:focus, a.dropdown-item:focus {
 .total-amt{
     color:#fff;
     background-color:#C0C0C0;
+    padding: 1.5rem;
+    min-width: 300px;
+    font-weight: 700;
+}
+
+.msginstruction{
+    text-align: center;
+    font-size: large;
 }

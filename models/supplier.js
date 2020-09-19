@@ -18,3 +18,9 @@ exports.getAll = (param, next) => {
       next(err, pos);
     });
   };
+
+  exports.getByID = function(query, next) {
+    supplierModel.findById(query, function(err, post) {
+      next(err, post);
+    });
+  };

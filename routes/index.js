@@ -9,6 +9,8 @@ const allRawMaterialController = require('../controllers/allRawMaterialControlle
 const unitofmeasureController = require('../controllers/unitofmeasureController');
 const purchaseorderController = require('../controllers/purchaseorderController');
 const supplierController = require('../controllers/supplierController');
+const supplierListController = require('../controllers/supplierListController');
+const rawMaterialOrderController = require('../controllers/rawMaterialOrderController');
 
 const { registerValidation, loginValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -140,25 +142,37 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   purchaseorderController.getAll(req, (POs) =>{
-    res.render('purchase-orders', {
-      layout: 'main',
-      title: 'Purchase Orders',
-      purchaseorder: POs
+    supplierController.getAll(req, (allSuppliers) =>{
+      res.render('purchase-orders', {
+        layout: 'main',
+        title: 'Purchase Orders',
+        purchaseorder: POs,
+        supplier: allSuppliers
+      })
     })
   })
 });
 
 router.get('/purchaseorder/view/:id', (req, res) => {
   console.log("Read view successful!");
-  
   purchaseorderController.getID(req, (POs) => {
-    var query = POs._id;
+    var query = POs.supplierID;
+    var purchaseorderID = POs._id;
+    supplierListController.fetchQuery(query, (supplyListResult) =>{
+      supplierController.getID(query, (supplierResult)=>{
+        rawMaterialOrderController.fetchQuery(purchaseorderID, (orderedList) =>{
           res.render('purchaseorder-card', { 
             layout:'main',
             title: 'Purchase Order View',
-            purchaseorder: POs
+            purchaseorder: POs,
+            supplyList: supplyListResult,
+            supplier: supplierResult,
+            rawMaterialOrders: orderedList
           });
-        });
+        })
+      })
+    })
+  });
 });
 
 
@@ -311,16 +325,19 @@ router.get('/deletefromProd/:id', isPrivate, (req,res) => {
 
 
 
-router.post('/addProduct' , isPrivate, productController.addProduct);
-router.post('/addMaterial', isPrivate, allRawMaterialController.addMaterial);
-router.post('/addGroup', isPrivate, productgroupsController.addGroup);
-router.post('/productNewMaterial', isPrivate, productrawmaterialController.addMaterial);
-router.post('/removeFrmProdGrp', isPrivate, productController.ungroup);
-router.post('/addProdtoPG', isPrivate, productController.assigngroup);
-router.post('/removematfromProduct', isPrivate, productrawmaterialController.delete);
-router.post('/deleteProduct', isPrivate, productController.delete);
-router.post('/deleteMaterial', isPrivate, allRawMaterialController.delete);
-router.post('/deleteGroup', isPrivate,productgroupsController.delete);
-router.post('/register', isPrivate, registerValidation, userController.register);
+router.post('/addProduct' , productController.addProduct);
+router.post('/addMaterial', allRawMaterialController.addMaterial);
+router.post('/addGroup', productgroupsController.addGroup);
+router.post('/productNewMaterial', productrawmaterialController.addMaterial);
+router.post('/removeFrmProdGrp', productController.ungroup);
+router.post('/addProdtoPG', productController.assigngroup);
+router.post('/removematfromProduct',productrawmaterialController.delete);
+router.post('/deleteProduct',productController.delete);
+router.post('/deleteMaterial', allRawMaterialController.delete);
+router.post('/deleteGroup' , productgroupsController.delete);
+// router.post('/register', isPublic, registerValidation, userController.register);
+router.post('/addpurchaseorder' , purchaseorderController.addPurchaseOrder);
+router.post('/addRawMaterialOrder' , rawMaterialOrderController.addRMO);
+router.post('/deleteRMO', rawMaterialOrderController.delete)
 
 module.exports = router;

@@ -47,7 +47,6 @@ exports.getGroupProducts = (req,res) => {
       }
     }
   })
-
 }
 
 

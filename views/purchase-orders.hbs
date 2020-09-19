@@ -49,33 +49,32 @@
                             <form  action="/addpurchaseorder" method="POST" > <!--ADDING PURCHASE ORDER// -->
                                 <div class="row">
                                     <div class="col">
-                                            <div class="form-group">
-                                                <label>Supplier Name</label>
-                                                <select id="cars" name="supplier" class="form-control">
-                                                    {{#each suppliers}}
-                                                    <option value="{{suppliers._id}}">{{company}}</option>
-                                                    {{/each}}
+                                        <div class="form-group">
+                                            <label>Supplier Name</label>
+                                            <select id="supplierid" name="supplierid" class="form-control">
+                                                {{#each supplier}}
+                                                <option value="{{this._id}}">{{company}}</option>
+                                                {{/each}}
                                             </select><br>
-                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col">
                                         <label>Purchase Order #</label>
-                                            <input value="" id="pname" name="name" type="text" class="form-control" minlength="3" maxlength="20" disabled><br>
+                                            <input value="Auto" id="pname" name="name" type="text" class="form-control" minlength="3" maxlength="20" disabled><br>
                                     </div>
                                 </div>
                                 <div class="row">
-
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Order Date</label>
-                                            <input name="orderDate" type="date" class="form-control" name="" id="" required></textarea>
+                                            <input name="orderdate" type="date" class="form-control"  id="" required></textarea>
                                         </div>
                                     </div>
 
                                      <div class="col">
                                         <div class="form-group">
                                             <label for="">Due Date</label>
-                                            <input name="description" type="date" class="form-control" name="" id="" required></textarea>
+                                            <input name="duedate" type="date" class="form-control" id="" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -84,65 +83,33 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="cars">Billing Address</label>
-                                            <input name="description" type="text" class="form-control" name="billaddress" id="billaddress"  required></textarea>
+                                            <input name="billaddress" type="text" class="form-control"  id="billaddress"  required></textarea>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
+                                <!--Hidden input fields for add purchase order form-->
+                                <input type="hidden" name="status" value="Incomplete">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="msginstruction">
+                                            <p>Click 'Next' to add Items in Purchase Order.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
                         </div>
 
                 {{!-- VIEW SUGGESTIONS PURCHASE ORDERS --}}
                 {{!-- END OF VIEW SUGGESTIONS --}} 
                         </div>
                         <br>
-                        <div class="table-responsive table mt-2" id="regproductlist"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
-                        <div class="col">
-                            <table class="table my-0" id="dataTable">
-                                <thead>
-                                    <tr class="tr-addproducts">
-                                        <th>#</th>
-                                        <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th>UOM</th>
-                                        <th>Rate</th>
-                                        <th>Amount</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="td-num-addproducts">1</td>
-                                        <td> <select id="cars" name="sku" class="form-control" placeholder="Item"></select></td>
-                                        <td> <input type="text" class="form-control" placeholder="Quantity"> </td>
-                                        <td> <input type="text" class="form-control" placeholder="UOM"> </td>
-                                        <td> <input type="text" class="form-control" placeholder="Rate"> </td>
-                                        <td> <input type="text" class="form-control" placeholder="Amount"> </td>                                   
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    
-                                </tfoot>
-                            </table>
-                            <div class="row">
-                                <div class="col" style="margin-left: 20px; margin-top: 10px">
-                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin-top: 2rem; justify-content: center;">
-                                <div class="total-amt" id="">
-                                    <label style="padding:10px; padding-right: 150px;" >
-                                        <span>TOTAL AMOUNT:</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        
                     <div class="row" style="margin-top: 2rem;">
                         <div class="col">
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                 <label>
                                     <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
-                                    <button class="btn btn-primary btn-sm" type="submit">Create</button>
+                                    <button class="btn btn-primary btn-sm" type="submit">Next</button>
                                 </label>
                             </div>
                         </div>
@@ -159,6 +126,9 @@
             </div>
             
         </div>
+
+
+
 <!-- Modal (TO BE CHANGED) -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
