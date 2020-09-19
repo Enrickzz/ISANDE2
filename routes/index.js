@@ -162,7 +162,7 @@ router.get('/purchaseorder/view/:id', (req, res) => {
 });
 
 
-router.get('/manageusers/view/:id', isPrivate, function(req, res) {
+router.get('/manageusers', isPrivate, function(req, res) {
       // The render function takes the template filename (no extension - that's what the config is for!)
       // and an object for what's needed in that template
       userController.getAll(req, (users) =>{
