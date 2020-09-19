@@ -130,3 +130,8 @@ a.dropdown-item.active, a.dropdown-item.active:focus, a.dropdown-item:focus {
     background-color:#26456E !important;
     color: white;
 }
+
+.total-amt{
+    color:#fff;
+    background-color:#C0C0C0;
+}

@@ -51,15 +51,16 @@
                             </table>
                         </div>
                     </div>
-                    {{!-- END OF ALL USERS --}}
+                    {{!-- END OF ALL SUPPLIER --}}
 
-                    {{!-- Register a User --}}
+                    {{!-- ADD SUPPLIER --}}
                     <div id="regsupplier" class="container tab-pane fade"><br>
                          <h3 class="text-dark mb-4">Add Supplier</h3>
                         <div class="row">
 
                             <div class="col" id="regform2">
                                 <h3 class="regheader">Supplier Information</h3>
+                                <p id="errormsg" style="color: red;"></p>
                                 <div class="row">
                                     {{!-- First Column --}}
                                     <div class="col">
@@ -68,14 +69,14 @@
                                             <div class="form-group">
                                                 {{!-- First Name --}}
                                                 <label>First Name</label>
-                                                <input name="first_name" type="text" class="form-control" /><br>
+                                                <input id="first_name" name="first_name" type="text" class="form-control" minlength="3" maxlength="15" required><br>
                                                 {{!-- Email --}}
                                                 <label>Email</label>
-                                                <input type="email" class="form-control" /><br>
+                                                <input type="email" class="form-control" required><br>
                             
                                                 {{!-- Company --}}
                                                 <label>Company</label>
-                                                <input type="company" class="form-control" /><br>
+                                                <input id="company" type="company" class="form-control" minlength="3" required><br>
 
                                             </div>
                                     </div>
@@ -83,9 +84,9 @@
                                     <div class="col">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input name="last_name" type="text" class="form-control" /><br>
+                                                <input id="last_name" name="last_name" type="text" class="form-control" minlength="2" maxlength="15" required><br>
                                                 <label>Mobile Number</label>
-                                                <input name= "mobileno" type="number" class="form-control" /><br>
+                                                <input id="mobileno" name= "mobileno" type="number" class="form-control" minlength="10" maxlength="11" required><br>
                                             </div>
                                         </form>
                                     </div>
@@ -112,13 +113,67 @@
 
                           
                     </div>
-                    {{!-- END OF REGUSER --}}
+                    {{!-- END OF REGSUPPLIER --}}
 
                        
                     </div>
                     {{!-- END TAB CONTENT --}}
                    
-                    <div class="card-body"></div>
+                <div class="card-body"></div>
                 </div>
                 <div class="card shadow"></div>
             </div>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+
+            function forceKeyPressUppercase(e){
+                var charInput = e.keyCode;
+                if((charInput >= 97) && (charInput <= 122)) { // lowercase
+                if(!e.ctrlKey && !e.metaKey && !e.altKey) { // no modifier key
+                var newChar = charInput - 32;
+                var start = e.target.selectionStart;
+                var end = e.target.selectionEnd;
+                e.target.value = e.target.value.substring(0, start) + String.fromCharCode(newChar) + e.target.value.substring(end);
+                e.target.setSelectionRange(start+1, start+1);
+                 e.preventDefault();
+                }
+                }   
+            };
+            
+           document.getElementById("first_name").addEventListener("keypress", function(e) {
+            if(this.selectionStart == 0) {
+            // uppercase first letter
+            forceKeyPressUppercase(e);
+            } else {
+            // lowercase other letters
+            forceKeyPressLowercase(e);
+            }
+            }, false);
+
+            document.getElementById("last_name").addEventListener("keypress", function(e) {
+            if(this.selectionStart == 0) {
+            // uppercase first letter
+            forceKeyPressUppercase(e);
+            } else {
+            // lowercase other letters
+            forceKeyPressLowercase(e);
+            }
+            }, false);
+
+            $(function() {
+                $('#first_name').add('#last_name').keydown(function (e) {
+
+                    var key = e.keyCode;
+      
+                    if (!((key == 8) || (key == 16) || (key == 32) || (key >= 65 && key <= 90))) {
+                        e.preventDefault();
+                         $('#errormsg').text('Invalid! Only character input accepted');
+                    }
+                    else{
+                        $('#errormsg').text('');
+                    }
+                });
+            });
+
+        </script>

@@ -17,7 +17,7 @@
                     </div>
                 
                 <div class="tab-content">
-                    {{!-- ALL PRODUCTION ORDERS --}}
+                    {{!-- ALL PURCHASE ORDERS --}}
                     <div class="container tab-pane active" id="purchase_order" style="padding-top: 30px;">
                         <div class="table-responsive">
                             <table class="table">
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                
-                {{!-- END OF ALL PRODUCTION ORDERS --}}
+                {{!-- END OF ALL PURCHASE ORDERS --}}
 
                  {{!-- ADD PURCHASE ORDERS --}}
                     <div class="container tab-pane fade" id="addpurchase_order" style="padding-top: 30px;">       
@@ -54,7 +54,7 @@
                         <div class="col" id="regform2">
                             <h3 class="regheader">Purchase Order Form</h3>
                             <p id="errormsg" style="color: red;"></p>
-                            <form  action="/addpurchaseorder" method="POST" > <!--ADDING PRODUCTS// -->
+                            <form  action="/addpurchaseorder" method="POST" > <!--ADDING PURCHASE ORDER// -->
                                 <div class="row">
                                     <div class="col">
                                             <div class="form-group">
@@ -77,13 +77,6 @@
                                         <div class="form-group">
                                             <label for="">Order Date</label>
                                             <input name="orderDate" type="date" class="form-control" name="" id="" required></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="cars">Expected Delivery Date</label>
-                                            <input name="dueDate" type="date" class="form-control" name="" id="" required></textarea>
                                         </div>
                                     </div>
 
@@ -143,10 +136,10 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="margin-top: 2rem;">
-                                <div class="" id="">
-                                    <label>
-                                        <span>TOTAL AMT:</span>
+                            <div class="row" style="margin-top: 2rem; justify-content: center;">
+                                <div class="total-amt" id="">
+                                    <label style="padding:10px; padding-right: 150px;" >
+                                        <span>TOTAL AMOUNT:</span>
                                     </label>
                                 </div>
                             </div>

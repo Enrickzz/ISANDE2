@@ -250,6 +250,7 @@
             };
             
            document.getElementById("pname").addEventListener("keypress", function(e) {
+            
             if(this.selectionStart == 0) {
             // uppercase first letter
             forceKeyPressUppercase(e);
@@ -257,6 +258,7 @@
             // lowercase other letters
             forceKeyPressLowercase(e);
             }
+            
             }, false);
 
             $(function() {
@@ -264,7 +266,7 @@
 
                     var key = e.keyCode;
       
-                    if (!((key == 8) || (key == 32) || (key >= 65 && key <= 90))) {
+                    if (!((key == 8) || (key == 16) || (key == 32) || (key >= 65 && key <= 90))) {
                         e.preventDefault();
                          $('#errormsg').text('Invalid! Only character input accepted');
                     }
