@@ -12,3 +12,16 @@ exports.getAll = (param, callback) =>{
     callback(branchesObj);
   });
 };
+
+exports.getID = (req, res) => {
+    var id = req.params.id;
+  
+    branchModel.getByID(id, (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        var branchesObj = result.toObject();
+        res( branchesObj);
+      }
+    });
+  };

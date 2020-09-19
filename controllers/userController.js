@@ -16,7 +16,7 @@ const { validationResult } = require('express-validator');
     // 3. If INVALID, redirect to register page with errors
     const errors = validationResult(req);
 
-    const { usertype, first_name, last_name, mobileno, email, password, branch} = req.body;
+    const { usertype, first_name, last_name, mobileno, email, password, branch, image} = req.body;
       
       if (errors.isEmpty()) {      
       userModel.getOne({ email: email }, (err, result) => {
@@ -39,7 +39,8 @@ const { validationResult } = require('express-validator');
               mobileno,
               email,
               branch,
-              password: hashed
+              password: hashed,
+              image
             };
           
             userModel.register(newUser, (err, user) => {

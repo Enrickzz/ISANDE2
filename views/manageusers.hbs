@@ -89,16 +89,15 @@
                                 <div class="up_profpic">
                                   <div >
                                     <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="250" height="250" />
-                                    
-                                    {{!-- <input type="file" style="padding-left: 100px; outline: none"></input> --}}
+                                {{!-- Start form --}}
+                                <form oninput='password.setCustomValidity(up2.value != up.value ? "Passwords do not match." : "")' method="POST" action="/register">    
+                                    <input type="file" name="image" id="image" style="padding-left: 100px; outline: none"></input>
                                   </div> 
                                 </div>
                             </div>
 
                             <div class="col" id="regform2">
                                 <h3 class="regheader">User Information</h3>
-                                  {{!-- Start form --}}
-                            <form oninput='password.setCustomValidity(up2.value != up.value ? "Passwords do not match." : "")' method="POST" action="/register">
                                 <div class="row">
                                     {{!-- First Column --}}
                                     <div class="col">
@@ -135,9 +134,9 @@
                                                     </select><br>
                
                                                 {{!-- Branches --}}
-                                                <label for="branches">Branch Assigned</label>
+                                                <label for="branch">Branch Assigned</label>
                                                     <select id="branch" name="branch" class="form-control">
-                                                        {{>branchList}}
+                                                        {{> branchList}}
                                                     </select><br>
 
                                                 {{!-- Password --}}

@@ -7,7 +7,8 @@ const UserSchema = new mongoose.Schema({
     last_name: { type: String, required: [true, "No Last Name provided"] },
     mobileno: { type: String, required: [true, "No Mobile Number provided"]},
     password: { type: String, required: [true, "No Password provided"]},
-    branch: {type: String, required: [true, "No Branch provided"]}
+    branch: {type: String, required: [true, "No Branch provided"]},
+    image: {type: String}
   }
 );
 
