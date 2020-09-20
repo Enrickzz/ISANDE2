@@ -4,10 +4,34 @@
                     console.log(x);
                     if (x == "Pending"){
                         document.getElementById('showstatus').style.color="red";
+                        var rm1 = document.getElementById('delivered');
+                        rm1.parentNode.removeChild(rm1);
                     }else if(x == "In Production"){
                         document.getElementById('showstatus').style.color="orange";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
                     }else if(x == "For Delivery"){
                         document.getElementById('showstatus').style.color="yellow";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                    }else if(x == "Rejected"){
+                        document.getElementById('showstatus').style.color="red";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                        var rm4 = document.getElementById('delivered');
+                        rm4.parentNode.removeChild(rm4);
                     }
                 }
                 window.onload = statuscheck;
@@ -22,9 +46,15 @@
                             </div>
                             <div class="col">
                                 <div class="buttonlist" style="float: right;">
-                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color:gray; border: 1px solid gray; ">Update</button>
-                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color:green; border: 1px solid green; ">Accept</button>
-                                    <button class="btn btn-primary btn-sm" type="submit" style="background-color:red; border: 1px solid red; ">Reject</button>
+                                    <form>
+                                    <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
+                                    <input type="hidden" name="branch" value="{{productionorder.branch}}">
+                                    <button id="update" class="btn btn-primary btn-sm" type="submit" formaction="/editproductionorder" style="background-color:gray; border: 1px solid gray; ">Update</button>
+                                    <button id="accept" class="btn btn-primary btn-sm" type="submit" formaction="/acceptproductionorder" formmethod="POST" style="background-color:green; border: 1px solid green; ">Accept</button>
+                                    <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectproductionorder" formmethod="POST" style="background-color:red; border: 1px solid red; ">Reject</button>
+                                    <button id="delivered" class="btn btn-primary btn-sm" type="submit" formaction="/updatebranchInv" formmethod="POST"> Delivered</button>
+                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -47,3 +47,33 @@ exports.addPurchaseOrder = (req,res)=>{
   })
 };
 
+exports.statuschangeAcc = (req,res) =>{
+  var change = {
+    $set: {
+      status: "In Production"
+    }
+  }
+  var id = req.body.productionorderID;
+  productionorderModel.update(id, change, (err, result)=>{
+    if(err){
+      throw err;
+    }else{
+      res.redirect('/productionorder/view/'+id);
+    }
+  })
+}
+exports.statuschangeRej = (req,res) =>{
+  var change = {
+    $set: {
+      status: "Rejected"
+    }
+  }
+  var id = req.body.productionorderID;
+  productionorderModel.update(id, change, (err, result)=>{
+    if(err){
+      throw err;
+    }else{
+      res.redirect('/productionorder/view/'+id);
+    }
+  })
+}
