@@ -28,13 +28,21 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Order Date  <i class="fa fa-sort"></i></th>
+                                        <th>Order Date  <i class="fa fa-sort"></i></th>               
+                                        <th>Branch  <i class="fa fa-sort"></i></th>
                                         <th>Request ID  <i class="fa fa-sort"></i></th>
                                         <th>Status <i class="fa fa-sort"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    TABLE
+                                    {{#each productionorders}}
+                                    <tr class="clickable">
+                                        <td>{{orderDate}}</td>
+                                        <td>{{branch}}</td>
+                                        <td>{{this._id}}</td>
+                                        <td>{{status}}</td>
+                                    </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </div>
