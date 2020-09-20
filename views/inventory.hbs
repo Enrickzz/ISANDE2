@@ -1,0 +1,87 @@
+            <div class="container-fluid">
+                <h3 class="text-dark mb-1">Inventory</h3>
+
+                {{!-- HEADER --}}
+                <div class="card">
+                    <div class="card-header">
+                                <div class="row">
+                                    <div style="text-align:center" class="col">
+                                          <div class="form-group">
+                                              {{!-- BRANCH --}}
+                                              <label for="branch">Branch</label>
+                                                    <select id="branch" name="branch" class="form-control">
+                                                        <option value="">Branch A</option>
+                                                        <option value="">Branch B</option>
+                                                        <option value="">Branch C</option>
+                                                    </select><br>
+                                          </div>
+                                    </div>
+
+                                    <div style="text-align:center" class="col">
+                                        <h4 >[[CURRENT DATE]]</h4>
+                                        <button class="btn btn-primary btn-sm" type="button"><i class="fas fa-arrow-left"></i> Previous</button>
+                                        <button class="btn btn-primary btn-sm" type="button">Next Day <i class="fas fa-arrow-right"></i></button>
+                                    </div>
+
+                                    <div style="text-align:center" class="col">
+                                        <div class="form-group">
+                                              {{!-- BRANCH --}}
+                                              <label for="branch">Date</label>
+                                                    <select id="branch" name="branch" class="form-control">
+                                                        <option value="">date1</option>
+                                                        <option value="">date2</option>
+                                                        <option value="">date3</option>
+                                                    </select><br>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                
+                <div class="tab-content">
+
+                    <div style="padding: 10px;">
+                    {{!-- PRODUCT/PROD GROUP --}}
+                    <label for="branch">Product Group </label>
+                    <select id="branch" name="branch" class="">
+                        <option value="">All</option>
+                        <option value="">option1</option>
+                        <option value="">option2</option>
+                    </select><br>
+                    </div>
+
+                    {{!-- ALL INVENTORY --}}
+                    <div class="container tab-pane active" id="product_group" style="padding-top: 30px;">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead style="text-align: center;">
+                                    <tr>
+                                        <th>Name  <i class="fa fa-sort"></i></th>
+                                        <th>Start Day Stock  <i class="fa fa-sort"></i></th>
+                                        <th>Restock Quantity  <i class="fa fa-sort"></i></th>
+                                        <th>Initial Stock  <i class="fa fa-sort"></i></th>
+                                        <th>Mid Day Count  <i class="fa fa-sort"></i></th>
+                                        <th>Mid Day Sales  <i class="fa fa-sort"></i></th>
+                                        <th>Additional Restock  <i class="fa fa-sort"></i></th>
+                                        <th>Pullout  <i class="fa fa-sort"></i></th>
+                                        <th>Changed Stock  <i class="fa fa-sort"></i></th>
+                                        <th>End Day Count  <i class="fa fa-sort"></i></th>
+                                        <th>End Day Sales  <i class="fa fa-sort"></i></th>
+                                        <th>Returns  <i class="fa fa-sort"></i></th>
+                                        <th>Overall Sales  <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    [[INSERT TABLE]]
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+               
+                {{!-- END OF ALL INVENTORY --}}
+               </div> 
+               {{!-- END TAB CONTENT --}} 
+
+            </div>
+            
+        </div>
+    

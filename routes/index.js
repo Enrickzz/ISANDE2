@@ -26,6 +26,15 @@ router.get('/home', isPrivate, function(req, res) {
   })
 });
 
+router.get('/inventory', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  res.render('inventory', {
+    layout: 'main',
+    title: 'Inventory'
+  })
+});
+
 router.get('/productgroup', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template //make productmodel function to return ungrouped products
