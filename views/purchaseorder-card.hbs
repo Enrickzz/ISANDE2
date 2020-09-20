@@ -1,4 +1,19 @@
-            <div class="container-fluid">
+            <script>
+                function statuscheck() {
+                    var x = document.getElementById('showstatus').innerText;
+                    console.log(x);
+                    if (x == "Incomplete"){
+                        document.getElementById('showstatus').style.color="red";
+                    }else if(x == "Ordered"){
+                        document.getElementById('showstatus').style.color="orange";
+                    }else if(x == "Completed"){
+                        document.getElementById('showstatus').style.color="green";
+                    }
+                }
+                window.onload = statuscheck;
+            </script>
+            
+            <div class="container-fluid" onload="statuscheck()" >
                 <h3 class="text-dark mb-1">Purchase Order</h3>
                 <div class="card">
                     <div class="card-header">
@@ -12,7 +27,7 @@
                             <div class="col" >
                                 <h2 class="regheader">PURCHASE ORDER</h2>
                                 <p><b>PO#</b>{{purchaseorder._id}}</p>      
-                                <p><b>Status: </b> <span style="font-weight: 800; color:coral">{{purchaseorder.status}}</span></p>
+                                <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{purchaseorder.status}}</span></p>
 
                                 <div class="row"> <!--ROW1-->
 
