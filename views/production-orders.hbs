@@ -36,7 +36,7 @@
                                 </thead>
                                 <tbody>
                                     {{#each productionorders}}
-                                    <tr class="clickable">
+                                    <tr class="clickable" onclick='window.location="/productionorder/view/{{this._id}}"'>
                                         <td>{{orderDate}}</td>
                                         <td>{{branch}}</td>
                                         <td>{{this._id}}</td>

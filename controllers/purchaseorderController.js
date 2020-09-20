@@ -47,3 +47,18 @@ exports.addPurchaseOrder = (req,res)=>{
   })
 };
 
+exports.statuschange = (req,res) =>{
+  var change = {
+    $set: {
+      status: req.body.changestatus
+    }
+  }
+  var id = req.body.purchaseorderID;
+  purchaseorderModel.update(id, change, (err, result)=>{
+    if(err){
+      throw err;
+    }else{
+      res.redirect('/purchaseorder/view/'+id);
+    }
+  })
+}

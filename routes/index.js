@@ -12,6 +12,7 @@ const supplierController = require('../controllers/supplierController');
 const supplierListController = require('../controllers/supplierListController');
 const rawMaterialOrderController = require('../controllers/rawMaterialOrderController');
 const productionOrderController = require('../controllers/productionOrderController');
+const branchOrderController = require('../controllers/branchorderController');
 
 const { registerValidation, loginValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -148,6 +149,24 @@ router.get('/productionorder', isPrivate, function(req, res) {
       fname:  req.session.first_name,
       lname:  req.session.last_name,
       productionorders: allprodords
+    })
+  })
+});
+
+router.get('/productionorder/view/:id', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  productionOrderController.getID(req, (thisPO) =>{
+    var query = thisPO._id;
+    branchOrderController.fetchQuery(query, (orders) =>{
+      res.render('productionorder-card', {
+        layout: 'main',
+        title: 'Production Orders',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        productionorder: thisPO,
+        branchorders: orders
+      })
     })
   })
 });
@@ -397,5 +416,6 @@ router.post('/register', registerValidation, userController.register);
 router.post('/addpurchaseorder' , purchaseorderController.addPurchaseOrder);
 router.post('/addRawMaterialOrder' , rawMaterialOrderController.addRMO);
 router.post('/deleteRMO', rawMaterialOrderController.delete)
+router.post('/status/ordered', purchaseorderController.statuschange)
 
 module.exports = router;

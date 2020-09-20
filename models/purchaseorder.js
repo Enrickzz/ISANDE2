@@ -46,3 +46,9 @@ exports.getAll = (param, next) => {
       next(err, pgroup);
     })
   };
+
+  exports.update = function(id, update, next) {
+    purchaseOrderModel.findOneAndUpdate({_id: id}, update, { new: true }, function(err, result) {
+      next(err, result);
+    })
+  };

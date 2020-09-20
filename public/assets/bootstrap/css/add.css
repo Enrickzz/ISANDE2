@@ -147,3 +147,8 @@ a.dropdown-item.active, a.dropdown-item.active:focus, a.dropdown-item:focus {
 .text-primary {
     color: #5AA5CD!important;
 }
+
+.buttonlist button{
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
