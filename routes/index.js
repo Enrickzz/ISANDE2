@@ -28,12 +28,21 @@ router.get('/home', isPrivate, function(req, res) {
   })
 });
 
-router.get('/inventory', isPrivate, function(req, res) {
+router.get('/inventory-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  res.render('inventory', {
+  res.render('inventory-admin', {
     layout: 'main',
     title: 'Inventory'
+  })
+});
+
+router.get('/pullout-bm', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  res.render('pullout-bm', {
+    layout: 'main',
+    title: 'Pull Out Products'
   })
 });
 

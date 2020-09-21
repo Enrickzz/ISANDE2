@@ -36,10 +36,10 @@
             </script>
             
             <div class="container-fluid" onload="statuscheck()" >
-                <h3 class="text-dark mb-1">Purchase Order</h3>
+                <h3 class="text-dark mb-1">Purchase Order Information</h3>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-dark mb-1">Purchase Order Information</h3>
+                        <h3 class="text-dark mb-1">PURCHASE REQUEST FORM</h3>
                     </div>
                 </div>
             
@@ -47,47 +47,44 @@
                     <div class="card-body" id="reguser">       
                         <div class="row"> 
                             <div class="col" >
-                                <h2 class="regheader">PURCHASE ORDER</h2>
-                                <p><b>PO#</b>{{purchaseorder._id}}</p>      
-                                <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{purchaseorder.status}}</span></p>
 
                                 <div class="row"> <!--ROW1-->
 
                                     <div class="col">
+                                        <h2 class="regheader">Details</h2>
                                         <form>
                                             <div class="form-group">
-                                                <label>Due Date</label>
-                                                <p>{{purchaseorder.dueDate}}</p>
-
-                                                <label>Order Date</label>
-                                                <p>{{purchaseorder.orderDate}}</p>
-                                                
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                 <div class="row"> <!--ROW2-->
-                                      <div class="col">
-                                        <form action="">
-                                            <div class="form-group">
-                                                <label for="">Billing Address</label>
-                                                <p>{{purchaseorder.shippingaddress}}</p>
-                                            </div>
-                                        </form>
-                                      </div>
-
-                                      <div class="col">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>Supplier Information</label>
+                                                <label>Supplier Information:</label>
                                                 <p>{{supplier.company}}</p>
                                                 <p>{{supplier.contactperson}}</p>
                                                 <p>{{supplier.mobile}}</p>
                                             </div>
                                         </form>
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label for="">Billing Address:</label>
+                                                <p>{{purchaseorder.shippingaddress}}</p>
+                                            </div>
+                                        </form>
+                                        
+                                    </div>
+
+                                    <div class="col">
+                                        <h2 class="regheader">PURCHASE ORDER</h2>
+                                        <p><b>PO#</b>{{purchaseorder._id}}</p>      
+                                        <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{purchaseorder.status}}</span></p>
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Order Date</label>
+                                                <p>{{purchaseorder.orderDate}}</p>
+
+                                                <label>Due Date</label>
+                                                <p>{{purchaseorder.dueDate}}</p>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
+
         
                             </div>
                         </div>
@@ -109,7 +106,7 @@
                                 <tbody>
                                     {{#each rawMaterialOrders}}
                                         <tr class="clickable" >
-                                            <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{product}}</td>
+                                            <td>{{product}}</td>
                                             <td> {{quantity}}</td>
                                             <td> {{uom}}</td>
                                             <td>{{supplyprice}}</td>
