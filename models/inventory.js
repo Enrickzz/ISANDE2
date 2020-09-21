@@ -4,17 +4,17 @@ const inventorySchema = new mongoose.Schema({
     inventorydate: { type: String, required: true },
     product: { type: String, required: true },
     startInv: { type: String, required:true},
-    restockQuantity: { type: String, required:false},
-    restockedInventory: { type: String, required:false},
-    midDayCount: { type: String, required:false},
-    midDaySales: { type: String, required:false},
-    additionalRestock: { type: String, required: false },
-    pulloutStock: { type: String, required:false},
-    runningInventory: { type: String, required:false},
-    endDayCount: { type: String, required:false},
-    endDaySales: { type: String, required:false},
-    returns: { type: String, required:false},
-    totsales:{type:String, required:false}
+    restockQuantity: { type: String, required:false, default:"0"},
+    restockedInventory: { type: String, required:false, default:"0"},
+    midDayCount: { type: String, required:false, default:"0"},
+    midDaySales: { type: String, required:false, default:"0"},
+    additionalRestock: { type: String, required: false , default:"0"},
+    pulloutStock: { type: String, required:false, default:"0"},
+    runningInventory: { type: String, required:false, default:"0"},
+    endDayCount: { type: String, required:false, default:"0"},
+    endDaySales: { type: String, required:false, default:"0"},
+    returns: { type: String, required:false, default:"0"},
+    totsales:{type:String, required:false, default:"0"}
   }
 );
 

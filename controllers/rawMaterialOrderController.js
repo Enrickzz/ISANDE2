@@ -110,7 +110,6 @@ exports.update = (req,res) =>{
           }
         })
       });
-
       var update = {
         $set: {
           status:"Completed"
