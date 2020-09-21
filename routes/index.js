@@ -32,7 +32,15 @@ router.get('/home', isPrivate, function(req, res) {
 router.get('/inventory-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  inventoryController.getAll(req, (allInventory) =>{
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
+  var datequery = today.toString();
+
+  inventoryController.fetchQuery({inventorydate : datequery}, (allInventory) =>{
     res.render('inventory-admin', {
       layout: 'main',
       title: 'Inventory',
@@ -432,5 +440,6 @@ router.post('/deleteRMO', rawMaterialOrderController.delete);
 router.post('/status/ordered', purchaseorderController.statuschange);
 router.post('/acceptproductionorder', productionOrderController.statuschangeAcc);
 router.post('/rejectproductionorder', productionOrderController.statuschangeRej);
+router.post('/updateRawMaterialsStock', rawMaterialOrderController.update);
 
 module.exports = router;

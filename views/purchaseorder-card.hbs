@@ -4,6 +4,9 @@
                     console.log(x);
                     if (x == "Incomplete"){
                         document.getElementById('showstatus').style.color="red";
+
+                        var removeButton1 = document.getElementById('Received');
+                        removeButton1.parentNode.removeChild(removeButton1);
                     }else if(x == "Ordered"){
                         document.getElementById('showstatus').style.color="orange";
                         var removeButton = document.getElementById('additem');
@@ -18,6 +21,8 @@
                         var exTH = document.getElementById('extraTH');
                         exTH.parentNode.removeChild(exTH);
 
+                        
+
                     }else if(x == "Completed"){
                         document.getElementById('showstatus').style.color="orange";
                         var removeButton = document.getElementById('additem');
@@ -29,6 +34,9 @@
                         }
                         var remove3 = document.getElementById('btns');
                         remove3.parentNode.removeChild(remove3);
+
+                        var removeButton4 = document.getElementById('Received');
+                        removeButton4.parentNode.removeChild(removeButton4);
                     }
                 }
                 
@@ -39,7 +47,20 @@
                 <h3 class="text-dark mb-1">Purchase Order Information</h3>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-dark mb-1">PURCHASE REQUEST FORM</h3>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="text-dark mb-1">PURCHASE REQUEST FORM</h3>
+                            </div>
+                            <div class="col">
+                                <div class="buttonlist" style="float: right;">
+                                    <form>
+                                    <input type="hidden" name="purchaseorderID" value="{{purchaseorder._id}}">
+                                    <button id="Received" class="btn btn-primary btn-sm" type="submit" formaction="/updateRawMaterialsStock" formmethod="POST"> Received</button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             

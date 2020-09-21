@@ -29,7 +29,7 @@ exports.getID = (req, res) => {
 
   exports.fetchQuery = (req,res) => {
     var query = req;
-    inventoryModel.fetchList({branch_id: query}, (err, result) => {
+    inventoryModel.fetchList(query, (err, result) => {
       if(err){
         throw err;
       }

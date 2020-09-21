@@ -3,7 +3,7 @@ const mongoose = require('./connection');
 const allRawMaterialsSchema = new mongoose.Schema(
   {
     name: { type: String, required:true},
-    stock:{type:String,required:false},
+    stock:{type:Number,required:false},
     UOM:{type:String,required:true},
     costperUnit: { type: String, required:true}
   }
@@ -41,4 +41,10 @@ exports.getByID = function(query, next) {
     rawMaterialModel.findByIdAndRemove(query, function(err, del){
       next(err, del);
     });
+  };
+
+  exports.updateStock = function(name, update , next) {
+    rawMaterialModel.findOneAndUpdate({name: name}, {$inc: {stock: update} },  function(err, pgroup) {
+      next(err, pgroup);
+    })
   };

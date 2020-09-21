@@ -1,6 +1,7 @@
 const rawMaterialOrderModel = require('../models/rawMaterialOrder');
 const { validationResult } = require('express-validator'); 
 const purchaseorderModel = require('../models/purchaseorder');
+const allRawMaterialModel = require('../models/allRawMaterials');
 
 exports.getAll = (param, callback) =>{
     rawMaterialOrderModel.getAll(param, (err, PO) => {
@@ -83,6 +84,48 @@ exports.delete = (req, res) => {
     })
   }); 
 };
+
+exports.update = (req,res) =>{
+  console.log("asdasdasdasdasd"+req.body.purchaseorderID);
+  var query =req.body.purchaseorderID;
+  rawMaterialOrderModel.fetch({purchaseorderID: query} , (err, result) =>{
+    if(err){
+      throw err;
+    }else{
+      console.log(result);
+      result.forEach(function(doc) {
+
+        //ordersfetched.push(doc.toObject());
+        var obj = doc.toObject();
+        var query = obj.product;
+        var x = obj.quantity;
+        var increase = parseFloat(x);
+
+        allRawMaterialModel.updateStock(query, increase ,function (err, counted){
+          if(err){
+            throw err;
+          }
+          else{
+            console.log(counted);
+          }
+        })
+      });
+
+      var update = {
+        $set: {
+          status:"Completed"
+        }
+      }
+      purchaseorderModel.update(query, update, (err, result) =>{
+        if(err){
+          throw err;
+        }else{
+          res.redirect('/purchaseorder/view/'+query);
+        }
+      })
+    }
+  })
+}
   
 
 
