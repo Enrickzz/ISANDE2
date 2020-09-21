@@ -4,37 +4,37 @@
                 {{!-- HEADER --}}
                 <div class="card">
                     <div class="card-header">
-                                <div class="row">
-                                    <div style="text-align:center" class="col">
-                                          <div class="form-group">
-                                              {{!-- BRANCH --}}
-                                              <label for="branch">Branch</label>
-                                                    <select id="branch" name="branch" class="form-control">
-                                                        <option value="">Branch A</option>
-                                                        <option value="">Branch B</option>
-                                                        <option value="">Branch C</option>
-                                                    </select><br>
-                                          </div>
+                        <div class="row">
+                            <div style="text-align:center" class="col">
+                                    <div class="form-group">
+                                        {{!-- BRANCH --}}
+                                        <label for="branch">Branch</label>
+                                            <select id="branch" name="branch" class="form-control">
+                                                <option value="">Branch A</option>
+                                                <option value="">Branch B</option>
+                                                <option value="">Branch C</option>
+                                            </select><br>
                                     </div>
+                            </div>
 
-                                    <div style="text-align:center" class="col">
-                                        <h4 >[[CURRENT DATE]]</h4>
-                                        <button class="btn btn-primary btn-sm" type="button"><i class="fas fa-arrow-left"></i> Previous</button>
-                                        <button class="btn btn-primary btn-sm" type="button">Next Day <i class="fas fa-arrow-right"></i></button>
-                                    </div>
+                            <div style="text-align:center" class="col">
+                                <h4 >[[CURRENT DATE]]</h4>
+                                <button class="btn btn-primary btn-sm" type="button"><i class="fas fa-arrow-left"></i> Previous</button>
+                                <button class="btn btn-primary btn-sm" type="button">Next Day <i class="fas fa-arrow-right"></i></button>
+                            </div>
 
-                                    <div style="text-align:center" class="col">
-                                        <div class="form-group">
-                                              {{!-- BRANCH --}}
-                                              <label for="branch">Date</label>
-                                                    <select id="branch" name="branch" class="form-control">
-                                                        <option value="">date1</option>
-                                                        <option value="">date2</option>
-                                                        <option value="">date3</option>
-                                                    </select><br>
-                                        </div>
-                                    </div>
+                            <div style="text-align:center" class="col">
+                                <div class="form-group">
+                                        {{!-- BRANCH --}}
+                                        <label for="branch">Date</label>
+                                            <select id="branch" name="branch" class="form-control">
+                                                <option value="">date1</option>
+                                                <option value="">date2</option>
+                                                <option value="">date3</option>
+                                            </select><br>
                                 </div>
+                            </div>
+                        </div>
                     </div>
                 
                 <div class="tab-content">
@@ -65,13 +65,27 @@
                                         <th>Pullout  <i class="fa fa-sort"></i></th>
                                         <th>Changed Stock  <i class="fa fa-sort"></i></th>
                                         <th>End Day Count  <i class="fa fa-sort"></i></th>
-                                        <th>End Day Sales  <i class="fa fa-sort"></i></th>
                                         <th>Returns  <i class="fa fa-sort"></i></th>
                                         <th>Overall Sales  <i class="fa fa-sort"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    [[INSERT TABLE]]
+                                    {{#each inventory}}
+                                        <tr class="clickable">
+                                            <td>{{product}}</td>
+                                            <td>{{startInv}}</td>
+                                            <td>{{restockQuantity}}</td>
+                                            <td>{{restockedInventory}}</td>
+                                            <td>{{midDayCount}}</td>
+                                            <td>{{midDaySales}}</td>
+                                            <td>{{additionalRestock}}</td>
+                                            <td>{{pulloutStock}}</td>
+                                            <td>{{runningInventory}}</td>
+                                            <td>{{endDayCount}}</td>
+                                            <td>{{returns}}</td>
+                                            <td>{{totsales}}</td>
+                                        </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </div>
