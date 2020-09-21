@@ -18,7 +18,7 @@
                             </div>
 
                             <div style="text-align:center" class="col">
-                                <h4 >[[CURRENT DATE]]</h4>
+                                <h4 >{{today}}</h4>
                                 <button class="btn btn-primary btn-sm" type="button"><i class="fas fa-arrow-left"></i> Previous</button>
                                 <button class="btn btn-primary btn-sm" type="button">Next Day <i class="fas fa-arrow-right"></i></button>
                             </div>
@@ -71,7 +71,7 @@
                                 </thead>
                                 <tbody>
                                     {{#each inventory}}
-                                        <tr class="clickable">
+                                        <tr class="clickable" style="text-align: center;">
                                             <td>{{product}}</td>
                                             <td>{{startInv}}</td>
                                             <td>{{restockQuantity}}</td>

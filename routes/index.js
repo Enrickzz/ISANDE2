@@ -44,7 +44,8 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     res.render('inventory-admin', {
       layout: 'main',
       title: 'Inventory',
-      inventory: allInventory
+      inventory: allInventory,
+      today: datequery
     })
   })
 });
