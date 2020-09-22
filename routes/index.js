@@ -66,7 +66,9 @@ router.get('/returns', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('returns', {
     layout: 'main',
-    title: 'Returns'
+    title: 'Returns',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name
   })
 });
 
@@ -74,7 +76,31 @@ router.get('/returns/view', isPrivate, function (req, res) {
   
   res.render('returns-card', {
     layout: 'main',
-    title: 'Returns View'
+    title: 'Returns View',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name
+  });
+});
+
+router.get('/delivery', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+    res.render('delivery', {
+      layout: 'main',
+      title: 'Deliveries',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
+    })
+});
+
+
+router.get('/delivery/view', isPrivate, function (req, res) {
+  
+  res.render('delivery-card', {
+    layout: 'main',
+    title: 'Delivery Information',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name
   });
 });
 

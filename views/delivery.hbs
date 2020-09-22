@@ -1,0 +1,58 @@
+        <div class="container-fluid">
+                <h3 class="text-dark mb-1">{{title}}</h3>
+
+                {{!-- Nav Tabs --}}
+                <div class="card">
+                    <div class="card-header">
+
+                         <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#deliverylist">All Deliveries</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                
+                <div class="tab-content">
+                    {{!-- DELIVERY LIST --}}
+                    <div class="container tab-pane active" id="pulloutlist" style="padding-top: 30px;">
+                        <div class="table-responsive">
+                        <label for="branch">Status</label>
+                            <select id="branch" name="branch" class="">
+                                <option value="">Shipped</option>
+                                <option value="">Delivered</option>
+                            </select>
+                            
+                            <div style="padding-bottom: 10px;"> </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Package Date  <i class="fa fa-sort"></i></th>
+                                        <th style="max-width: ;">Request ID  <i class="fa fa-sort"></i></th>
+                                        <th>Total Quantity <i class="fa fa-sort"></i></th>
+                                        <th>Total Amount<i class="fa fa-sort"></i></th>
+                                        <th>Status<i class="fa fa-sort"></i></th>
+                                        <th><span></span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="clickable" onclick='window.location="/delivery/view"'>
+                                        <td>Sample value</td>
+                                        <td> Sample value</td>
+                                        <td> Sample value</td>
+                                        <td>Sample value</td>
+                                        <td>Sample value</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+               
+                {{!-- END OF DELIVERY LIST --}}
+
+                </div>
+                    {{!-- END TAB CONTENT --}}
+
+            </div>
+            
+        </div>
