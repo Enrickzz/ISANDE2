@@ -1,0 +1,332 @@
+            <div class="container-fluid">
+                <h3 class="text-dark mb-1">Pull Out Products </h3>
+
+                {{!-- Nav Tabs --}}
+                <div class="card">
+                    <div class="card-header">
+
+                         <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#pulloutlist">Pull Out List</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#requestlist">Request List</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#pulloutorders">Pull Out Orders</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#createpullout">Create Pull Out Order</a>
+                            </li>
+                        </ul>
+                    </div>
+                
+                <div class="tab-content">
+                    {{!-- PULLOUT LIST --}}
+                    <div class="container tab-pane active" id="pulloutlist" style="padding-top: 30px;">
+                        <div class="table-responsive">
+                        <label for="branch">Branch </label>
+                            <select id="branch" name="branch" class="">
+                                <option value="">Branch A</option>
+                                <option value="">Branch B</option>
+                                <option value="">Branch C</option>
+                            </select>
+
+                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
+                            
+                            <div style="padding-bottom: 10px;"> </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name  <i class="fa fa-sort"></i></th>
+                                        <th style="max-width: ;">Product Group  <i class="fa fa-sort"></i></th>
+                                        <th>Cost Price <i class="fa fa-sort"></i></th>
+                                        <th>Current Stock <i class="fa fa-sort"></i></th>
+                                        <th><span></span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="clickable" >
+                                        <td>Sample value</td>
+                                        <td> Sample value</td>
+                                        <td> Sample value</td>
+                                        <td>Sample value</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+               
+                {{!-- END OF PULLOUT LIST --}}
+
+                 {{!-- REQUEST LIST --}}
+                <div class="container tab-pane fade" id="requestlist" style="padding-top: 30px;">
+                        <div class="table-responsive">
+                            <label for="branch">Branch </label>
+                            <select id="branch" name="branch" class="">
+                                <option value="">Branch A</option>
+                                <option value="">Branch B</option>
+                                <option value="">Branch C</option>
+                            </select>
+
+                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
+
+                            <div style="padding-bottom: 10px;"> </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name  <i class="fa fa-sort"></i></th>
+                                        <th style="max-width: ;">Product Group  <i class="fa fa-sort"></i></th>
+                                        <th>Cost Price <i class="fa fa-sort"></i></th>
+                                        <th>Current Stock <i class="fa fa-sort"></i></th>
+                                        <th><span></span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="clickable" >
+                                        <td>Sample value</td>
+                                        <td> Sample value</td>
+                                        <td> Sample value</td>
+                                        <td>Sample value</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    {{!-- END OF REQUEST LIST --}} 
+
+                {{!-- PULLOUT ORDERS--}}
+                <div class="container tab-pane fade" id="pulloutorders" style="padding-top: 30px;">
+                        <div class="table-responsive">
+                            <label for="branch">Branch </label>
+                            <select id="branch" name="branch" class="">
+                                <option value="">Branch A</option>
+                                <option value="">Branch B</option>
+                                <option value="">Branch C</option>
+                            </select>
+                            
+                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
+
+                            <div style="padding-bottom: 10px;"> </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Order Date  <i class="fa fa-sort"></i></th>
+                                        <th style="max-width: ;">Request ID  <i class="fa fa-sort"></i></th>
+                                        <th>From Branch <i class="fa fa-sort"></i></th>
+                                        <th>To Branch <i class="fa fa-sort"></i></th>
+                                        <th>Status <i class="fa fa-sort"></i></th>
+                                        <th><span></span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="clickable" >
+                                        <td>Sample value</td>
+                                        <td> Sample value</td>
+                                        <td> Sample value</td>
+                                        <td>Sample value</td>
+                                        <td>Sample value</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    {{!-- END OF PULLOUT ORDERS --}} 
+
+                {{!-- CREATE PULL OUT--}}
+                <div class="container tab-pane fade" id="createpullout" style="padding-top: 30px;">       
+                        <div class="row">
+                            <div class="col" id="regform2">
+                                <form action="/addGroup" method="POSt">
+                                <h3 class="regheader">Pull Out Form</h3>
+                                <p id="errormsg" style="color: red;"></p>
+
+                            <div class="row">
+
+                                <div class="col">
+                                        {{!-- Start form --}}
+                                            <div class="form-group">
+                                                <label>Request ID</label>
+                                                <input id="" type="text" name="" class="form-control" placehodler="auto-generate" disabled><br>
+                                            </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                
+                                <div class="col">
+                                        {{!-- Start form --}}
+                                        <div class="form-group">
+                                            <label for="cars">From Branch</label>
+                                                <select id="cars" name="UOM" class="form-control">
+                                                    <option value="">Branch A</option>
+                                                    <option value="">Branch B</option>
+                                                    <option value="">Branch C</option>
+                                                </select><br>
+                                        </div>
+                                </div>
+                                <div class="col">
+                                        {{!-- Start form --}}
+                                        <div class="form-group">
+                                            <label for="cars">To Branch</label>
+                                                <select id="cars" name="UOM" class="form-control">
+                                                    <option value="">Branch A</option>
+                                                    <option value="">Branch B</option>
+                                                     <option value="">Branch C</option>
+                                                </select><br>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Delivery Address</label>
+                                        <input id="" type="text" name="" class="form-control"><br>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="table-responsive table mt-2" id="regproductlist"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
+                        <div class="col">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr class="tr-addproducts">
+                                        <th>#</th>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>UOM</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="td-num-addproducts">1</td>
+                                        <td> <select id="cars" name="sku" class="form-control" placeholder="Item"></select></td>
+                                        <td> <input type="text" class="form-control" placeholder="Quantity"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="UOM"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="Rate"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="Amount"> </td>                                   
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    
+                                </tfoot>
+                            </table>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2rem; justify-content: center;">
+                                <div class="total-amt" id="">
+                                    <label style="padding:10px; padding-right: 150px;" >
+                                        <span>TOTAL AMOUNT:</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                        
+        
+                        <div class="row" style="margin-top: 2rem;">
+                            
+                            <div class="col">
+                                <div class="text-md-center dataTables_filter" id="dataTable_filter">
+                                    <label>
+                                        <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
+                                        <button class="btn btn-primary btn-sm" type="submit">Create</button>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>  
+                        {{!-- END OF ADD CANCEL --}} 
+                </div>
+                    {{!-- END OF CREATE PULLOUT --}} 
+
+                </div>
+                    {{!-- END TAB CONTENT --}}
+
+            </div>
+            
+        </div>
+
+
+
+<!-- Modal (TO BE CHANGED) -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Raw Materials</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr class="tr-addproducts">
+                            <th>Name </th>
+                            <th style="width: 25%;">Quantity </th>
+                            <th >Unit </th>
+                            <th style="width: 10%;"><span> </span></th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                         {{#each plist}}
+                         <form action="/productNewMaterial" method="POST">
+                            <tr class="clickable" >
+                                <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg"> {{name}} </td>
+                                <td><input required type="text" name="quantity" id="" class="form-control w-60" width="2"></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select id="cars" name="UOM" class="form-control">
+                                            <option value="gram/s">gram/s</option>
+                                            <option value="tbsp">tbsp</option>
+                                            <option value="tsp">tsp</option>
+                                        </select>
+                                    </div>
+                                    
+                                </td>
+                                <input type="hidden" name="rawMaterialID" value="{{this._id}}">
+                                <input type="hidden" name="productID" value="{{../product._id}}">
+                                <!-- #each disallows access to product._id-->
+                                <input type="hidden" name="name" value="{{name}}">
+                                
+
+                                <td style="width: 2%;">
+                                    <button class="btn btn-primary btn-sm" type="submit" >Add</button>
+                                </td>
+                            </tr>
+                        </form>
+                        {{/each}}
+                    </tbody>
+
+                    <tfoot>
+                        
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+
+        </div>
+    </div>        
