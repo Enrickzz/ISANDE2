@@ -1,0 +1,217 @@
+<!--          <script>
+                function statuscheck() {
+                    var x = document.getElementById('showstatus').innerText;
+                    console.log(x);
+                    if (x == "Incomplete"){
+                        document.getElementById('showstatus').style.color="red";
+
+                        var removeButton1 = document.getElementById('Received');
+                        removeButton1.parentNode.removeChild(removeButton1);
+                    }else if(x == "Ordered"){
+                        document.getElementById('showstatus').style.color="orange";
+                        var removeButton = document.getElementById('additem');
+                        removeButton.parentNode.removeChild(removeButton);
+                        var removeButton2 = document.getElementsByClassName('delete');
+                        var i;
+                        for(i=0 ; i < removeButton2.length; i++){
+                            removeButton2[i].style.display = "none";
+                        }
+                        var remove3 = document.getElementById('btns');
+                        remove3.parentNode.removeChild(remove3);
+                        var exTH = document.getElementById('extraTH');
+                        exTH.parentNode.removeChild(exTH);
+
+                        
+
+                    }else if(x == "Completed"){
+                        document.getElementById('showstatus').style.color="green";
+                        var removeButton = document.getElementById('additem');
+                        removeButton.parentNode.removeChild(removeButton);
+                        var removeButton2 = document.getElementsByClassName('delete');
+                        var i;
+                        for(i=0 ; i < removeButton2.length; i++){
+                            removeButton2[i].style.display = "none";
+                        }
+                        var remove3 = document.getElementById('btns');
+                        remove3.parentNode.removeChild(remove3);
+
+                        var removeButton4 = document.getElementById('Received');
+                        removeButton4.parentNode.removeChild(removeButton4);
+                    }
+                }
+                
+                window.onload = statuscheck;
+            </script>
+-->
+            
+            <div class="container-fluid" onload="statuscheck()" >
+                <h3 class="text-dark mb-1">Return Information</h3>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="text-dark mb-1">RETURN FORM</h3>
+                            </div>
+                            <div class="col">
+                                <div class="buttonlist" style="float: right;">
+                                    <form>
+                                    <input type="hidden" name="purchaseorderID" value="">
+                                    <button id="Received" class="btn btn-primary btn-sm" type="submit" formaction="" formmethod=""> button</button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card">
+                    <div class="card-body" id="reguser">       
+                        <div class="row"> 
+                            <div class="col" >
+
+                                <div class="row"> <!--ROW1-->
+
+                                    <div class="col">
+                                        <h2 class="regheader">RETURN</h2>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="row"> <!--ROW2-->
+                                    <div class="col">
+                                        <p><b>return#</b>[[returnID]]</p>    
+
+                                        <div class="form-group">
+                                                <label>Return Date</label>
+                                                <p>[[DATE]]</p>
+                                        </div>  
+                                    </div>
+
+                                    <div class="col">
+                                        <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">[[STATUS]]</span></p>
+                                    </div>
+                                    
+                                </div>
+                                
+                             </div>
+
+        
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive table mt-2" id="regproductlist"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
+                        <div class="col">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr class="tr-addproducts">
+                                        <th>Item  <i class="fa fa-sort"></i></th>               
+                                        <th>Quantity  <i class="fa fa-sort"></i></th>
+                                        <th>UOM  <i class="fa fa-sort"></i></th>
+                                        <th>Rate  <i class="fa fa-sort"></i></th>
+                                        <th>Amount <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr class="clickable" >
+                                        <td>Sample value</td>
+                                        <td> Sample value</td>
+                                        <td> Sample value</td>
+                                        <td>Sample value</td>
+                                        <td>Sample value</td>
+                                        </tr>
+                                </tbody>
+                                <tfoot>
+                                    
+                                </tfoot>
+                            </table>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                    <button id="additem" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2rem; justify-content: center; margin-bottom:1rem;">
+                                <div class="total-amt" id="">
+                                    <div class="row">
+                                        <div class="col" style="text-align: center; min-width:180px;">
+                                            <span>TOTAL AMOUNT:</span>
+                                        </div>
+                                        <div class="col" style="text-align: right;">
+                                            <span>Php [[Amount]]</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 2rem;">
+                        <div class="col">
+                            <div class="text-md-center dataTables_filter" id="dataTable_filter">
+                                <label id="btns">
+                                    <form action="" method="">
+                                        <a href="" class="btn btn-secondary btn-sm">Continue Later</a>
+                                        <input type="hidden" name="purchaseorderID" value="">
+                                        <input type="hidden" name="changestatus" value="Ordered">
+                                        <button class="btn btn-primary btn-sm" type="submit">Apply Changes</button>
+                                    </form>
+                                    
+                                </label>
+                            </div>
+                        </div>
+                    </div> 
+                    </div>
+                </div>
+            
+            
+        <!-- Modal TO BE CHANGED-->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Modal Header</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <table class="table my-0" id="dataTable">
+                <thead>
+                    <tr class="tr-addproducts">
+                        <th>Name</th>
+                        <th>UOM</th>
+                        <th>Price</th>
+                        <th>Order Quantity</th>
+                        <th style="width: 10%;"><span> </span></th>
+                        
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#each supplyList}}
+                    <tr class="clickable" >
+                        <form action="/addRawMaterialOrder" method="POST">
+                        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{product}}</td>
+                        <td> {{UOM}}</td>
+                        <td> {{price}}</td>
+                        <td><input  type="number" name="quantity" class="form-control" style="min-width: 40px;"  required></td>
+                        <td style="width: 2%;">
+                            <input type="hidden" name="product" value="{{product}}">
+                            <input type="hidden" name="unit" value="{{UOM}}">
+                            <input type="hidden" name="price" value="{{price}}">
+                            <input type="hidden" name="purchaseorderid" value="{{../purchaseorder._id}}">
+                            <button class="btn btn-primary btn-sm" type="submit" >Add</button>
+                        </td>
+                        </form>
+                    </tr>
+                    {{/each}}
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+
+    </div>
+</div>

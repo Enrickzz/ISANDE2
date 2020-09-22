@@ -61,6 +61,23 @@ router.get('/pullout', isPrivate, function(req, res) {
   })
 });
 
+router.get('/returns', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  res.render('returns', {
+    layout: 'main',
+    title: 'Returns'
+  })
+});
+
+router.get('/returns/view', isPrivate, function (req, res) {
+  
+  res.render('returns-card', {
+    layout: 'main',
+    title: 'Returns View'
+  });
+});
+
 router.get('/productgroup', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template //make productmodel function to return ungrouped products
