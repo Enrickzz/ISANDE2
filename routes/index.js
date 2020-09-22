@@ -444,5 +444,6 @@ router.post('/status/ordered', purchaseorderController.statuschange);
 router.post('/acceptproductionorder', productionOrderController.statuschangeAcc);
 router.post('/rejectproductionorder', productionOrderController.statuschangeRej);
 router.post('/updateRawMaterialsStock', rawMaterialOrderController.update);
+router.post('/midendCountUpdate', inventoryController.midendCountUpdate);
 
 module.exports = router;

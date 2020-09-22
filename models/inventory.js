@@ -6,15 +6,16 @@ const inventorySchema = new mongoose.Schema({
     startInv: { type: String, required:true},
     restockQuantity: { type: String, required:false, default:"0"},
     restockedInventory: { type: String, required:false, default:"0"},
-    midDayCount: { type: String, required:false, default:"0"},
-    midDaySales: { type: String, required:false, default:"0"},
+    midDayCount: { type: Number, required:false, default:"0"},
+    midDaySales: { type: Number, required:false, default:"0"},
     additionalRestock: { type: String, required: false , default:"0"},
     pulloutStock: { type: String, required:false, default:"0"},
     runningInventory: { type: String, required:false, default:"0"},
     endDayCount: { type: String, required:false, default:"0"},
     endDaySales: { type: String, required:false, default:"0"},
     returns: { type: String, required:false, default:"0"},
-    totsales:{type:String, required:false, default:"0"}
+    totsales:{type:String, required:false, default:"0"},
+    srp:{type:String, required:true}
   }
 );
 
@@ -31,3 +32,9 @@ exports.fetchList = function(query, next) {
       next(err, orders);
     });
   };
+
+exports.update = function(query, update, next) {
+  inventoryModel.findOneAndUpdate(query, update, { new: true }, function(err, res) {
+    next(err, res);
+  })
+};
