@@ -171,7 +171,7 @@
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                 <label id="btns">
                                     <form action="/status/ordered" method="POST">
-                                        <button class="btn btn-secondary btn-sm" type="button">Continue Later</button>
+                                        <a href="/purchaseorder" class="btn btn-secondary btn-sm">Continue Later</a>
                                         <input type="hidden" name="purchaseorderID" value="{{purchaseorder._id}}">
                                         <input type="hidden" name="changestatus" value="Ordered">
                                         <button class="btn btn-primary btn-sm" type="submit">Order</button>

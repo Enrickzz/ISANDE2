@@ -44,6 +44,8 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     res.render('inventory-admin', {
       layout: 'main',
       title: 'Inventory',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
       inventory: allInventory,
       today: datequery
     })

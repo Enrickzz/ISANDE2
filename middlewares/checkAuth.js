@@ -10,7 +10,7 @@ exports.isPrivate = (req, res, next) => {
   exports.isPublic = (req, res, next) => {
     // If authenticated, go to user's myaccount page
     if (req.session.user) {
-      res.redirect('/home'); // change path later
+      res.redirect('/inventory-admin'); // change path later
     } else {
       return next();
     }
