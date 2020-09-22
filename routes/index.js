@@ -15,7 +15,7 @@ const productionOrderController = require('../controllers/productionOrderControl
 const branchOrderController = require('../controllers/branchorderController');
 const inventoryController = require('../controllers/inventoryController');
 
-const { registerValidation, loginValidation } = require('../validators.js');
+const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
 
 router.get('/home', isPrivate, function(req, res) {
@@ -437,6 +437,7 @@ router.post('/deleteProduct',productController.delete);
 router.post('/deleteMaterial', allRawMaterialController.delete);
 router.post('/deleteGroup' , productgroupsController.delete);
 router.post('/register', registerValidation, userController.register);
+router.post('/supplierRegister', supplierRegisterValidation, supplierController.register);
 router.post('/addpurchaseorder' , purchaseorderController.addPurchaseOrder);
 router.post('/addRawMaterialOrder' , rawMaterialOrderController.addRMO);
 router.post('/deleteRMO', rawMaterialOrderController.delete);
