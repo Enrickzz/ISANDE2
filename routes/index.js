@@ -15,6 +15,7 @@ const productionOrderController = require('../controllers/productionOrderControl
 const branchOrderController = require('../controllers/branchorderController');
 const inventoryController = require('../controllers/inventoryController');
 const returnController = require('../controllers/returnController');
+const returnitemsController = require('../controllers/returnitemsController');
 
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -79,14 +80,18 @@ router.get('/returns', isPrivate, function(req, res) {
 router.get('/returns/view/:id', isPrivate, function (req, res) {
   returnController.getID(req, (returnObj)=>{
     productController.getAllproducts(req, (allproducts)=>{
-      res.render('returns-card', {
-        layout: 'main',
-        title: 'Returns View',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        return: returnObj,
-        products: allproducts
-      });
+      var query = returnObj._id;
+      returnitemsController.fetchQuery({returnID: query}, (thisIDreturns)=>{
+        res.render('returns-card', {
+          layout: 'main',
+          title: 'Returns View',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          return: returnObj,
+          products: allproducts,
+          returnitems: thisIDreturns
+        });
+      })
     })
   })
 });
@@ -498,5 +503,9 @@ router.post('/acceptproductionorder', productionOrderController.statuschangeAcc)
 router.post('/rejectproductionorder', productionOrderController.statuschangeRej);
 router.post('/updateRawMaterialsStock', rawMaterialOrderController.update);
 router.post('/midendCountUpdate', inventoryController.midendCountUpdate);
+router.post('/addreturnItem', returnitemsController.addreturnitem);
+router.post('/deleteReturnItem', returnitemsController.delete);
+router.post('/submitreturn', returnController.update);
+router.post('/addreturn', returnController.addreturn);
 
 module.exports = router

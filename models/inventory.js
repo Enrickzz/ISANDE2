@@ -1,6 +1,7 @@
 const mongoose = require('./connection');
 
 const inventorySchema = new mongoose.Schema({
+    branch_id: { type: String, required: true },
     inventorydate: { type: String, required: true },
     product: { type: String, required: true },
     startInv: { type: String, required:true},
@@ -35,6 +36,11 @@ exports.fetchList = function(query, next) {
 
 exports.update = function(query, update, next) {
   inventoryModel.findOneAndUpdate(query, update, { new: true }, function(err, res) {
+    next(err, res);
+  })
+};
+exports.updateFind = function(query, update, next) {
+  inventoryModel.findOneAndUpdate(query, update, function(err, res) {
     next(err, res);
   })
 };

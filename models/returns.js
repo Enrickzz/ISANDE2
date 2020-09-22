@@ -1,9 +1,10 @@
 const mongoose = require('./connection');
 
 const returnSchema = new mongoose.Schema({
+    branchID: { type: String, required: true },
     returndate: { type: String, required: true },
     type: { type: String, required:true},
-    amount: { type: String, required:false, default:"0"},
+    amount: { type: Number, required:false, default:"0"},
     status: { type: String, required:false, default:"For review"},
   }
 );
@@ -26,10 +27,25 @@ exports.fetchList = function(query, next) {
       next(err, res);
     });
   };
-
-exports.update = function(query, update, next) {
+  exports.create = function(obj, next) {
+    const returns = new returnModel(obj);
+    returns.save(function(err, returns) {
+      console.log(err);
+      next(err, returns);
+    });
+  };
+  exports.increaseTotal = function(id,inc, next) {
+    returnModel.findOneAndUpdate({_id: id}, {$inc: {amount: inc} },  function(err, pgroup) {
+      next(err, pgroup);
+    })
+  };
+  exports.decreasetotal = function(id,dec, next) {
+    returnModel.findOneAndUpdate({_id: id}, {$inc: {amount: -dec} },  function(err, pgroup) {
+      next(err, pgroup);
+    })
+  };
+  exports.update = function(query, update, next) {
     returnModel.findOneAndUpdate(query, update, { new: true }, function(err, res) {
-    next(err, res);
-  })
-};
-
+      next(err, res);
+    })
+  };

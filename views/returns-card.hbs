@@ -89,10 +89,10 @@
                                     </div>
 
                                     <div class="col">
-                                        <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">[[STATUS]]</span></p>
+                                        <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{return.status}}</span></p>
                                         <div class="form-group">
                                              <label>Return Type:</label>
-                                                <p>TYPE</p>
+                                                <p>{{return.type}}</p>
                                         </div>
                                         
                                     </div>
@@ -115,16 +115,26 @@
                                         <th>UOM  <i class="fa fa-sort"></i></th>
                                         <th>Rate  <i class="fa fa-sort"></i></th>
                                         <th>Amount <i class="fa fa-sort"></i></th>
+                                        <td><span></span></td>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {{#each returnitems}}
                                         <tr class="clickable" >
-                                        <td>Sample value</td>
-                                        <td> Sample value</td>
-                                        <td> Sample value</td>
-                                        <td>Sample value</td>
-                                        <td>Sample value</td>
+                                        <td>{{product}}</td>
+                                        <td>{{quantity}}</td>
+                                        <td> {{unit}}</td>
+                                        <td>{{sellingprice}}</td>
+                                        <td>{{amount}}</td>
+                                        <td>
+                                            <form action="/deleteReturnItem" method="POST">
+                                                <input type="hidden" name="returnitemID" value="{{this._id}}">
+                                                <input type="hidden" name="returnID" value="{{../return._id}}">
+                                                <input type="hidden" name="amount" value="{{amount}}">
+                                                <button id="delete" class="btn btn-primary btn-sm" type="submit">Delete</button>
+                                            </form>
+                                        </td>
                                         </tr>
                                     {{/each}}
                                 </tbody>
@@ -156,10 +166,12 @@
                         <div class="col">
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                 <label id="btns">
-                                    <form action="" method="">
+                                    <form action="/submitreturn" method="POST">
                                         <a href="" class="btn btn-secondary btn-sm">Continue Later</a>
                                         <input type="hidden" name="returnID" value="{{return._id}}">
                                         <input type="hidden" name="changestatus" value="For review">
+                                        <input type="hidden" name="currstat" value="{{return.type}}">
+                                        <input type="hidden" name="branch" value="{{return.branch}}">
                                         <button class="btn btn-primary btn-sm" type="submit">Submit</button>
                                     </form>
                                     
@@ -202,8 +214,9 @@
                         <td style="width: 2%;">
                             <input type="hidden" name="product" value="{{name}}">
                             <input type="hidden" name="unit" value="{{UOM}}">
-                            <input type="hidden" name="price" value="{{sellingprice}}">
-                            <input type="hidden" name="purchaseorderid" value="{{../return._id}}">
+                            <input type="hidden" name="sellingprice" value="{{sellingprice}}">
+                            <input type="hidden" name="returnID" value="{{../return._id}}">
+                            <input type="hidden" name="branchID" value="{{../return.branchID}}">
                             <button class="btn btn-primary btn-sm" type="submit" >Add</button>
                         </td>
                         </form>
