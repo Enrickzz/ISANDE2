@@ -1,5 +1,6 @@
             <div class="container-fluid" style="padding-bottom: 70px;">
                 <h3 class="text-dark mb-4">Supplier</h3>
+                {{> messages}}
 
                 {{!-- Nav Tabs --}}
                 <div class="card">
@@ -41,9 +42,9 @@
                                 <tfoot>
                                     {{#each suppliers}}
                                     <tr class="clickable" >
-                                        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{contactperson}}</td>
+                                        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{first_name}} {{last_name}}</td>
                                         <td> {{company}}</td>
-                                        <td> {{mobile}}</td>
+                                        <td> {{mobileno}}</td>
                                         <td>{{email}}</td>
                                     </tr>
                                     {{/each}}
@@ -65,30 +66,32 @@
                                     {{!-- First Column --}}
                                     <div class="col">
                                         {{!-- Start form --}}
-                                        <form method="POST" action="/register">
+                                        <form method="POST" action="/supplierRegister">
                                             <div class="form-group">
                                                 {{!-- First Name --}}
                                                 <label>First Name</label>
-                                                <input id="first_name" name="first_name" type="text" class="form-control" minlength="3" maxlength="15" required><br>
-                                                {{!-- Email --}}
-                                                <label>Email</label>
-                                                <input type="email" class="form-control" required><br>
-                            
+                                                <input id="first_name" name="first_name" type="text" placeholder="First Name" class="form-control" minlength="3" maxlength="15" required><br>
+                                                {{!-- Last Name --}}
+                                                 <label>Last Name</label>
+                                                <input id="last_name" name="last_name" type="text" placeholder="Last Name" class="form-control" minlength="2" maxlength="15" required><br>
+                                               
                                                 {{!-- Company --}}
                                                 <label>Company</label>
-                                                <input id="company" type="company" class="form-control" minlength="3" required><br>
+                                                <input id="company" name="company" type="text" placeholder="Company" class="form-control" minlength="3" required><br>
 
                                             </div>
                                     </div>
                                     {{!-- Second Column --}}
                                     <div class="col">
                                             <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input id="last_name" name="last_name" type="text" class="form-control" minlength="2" maxlength="15" required><br>
+                                                {{!-- Email --}}
+                                                <label>Email</label>
+                                                <input type="email" name="email" id="email" class="form-control" placeholder="Email"><br> {{! Not Required}}
+                                                {{!-- Mobile Number --}}
                                                 <label>Mobile Number</label>
-                                                <input id="mobileno" name= "mobileno" type="number" class="form-control" minlength="10" maxlength="11" required><br>
+                                                <input id="mobileno" name= "mobileno" type="tel" class="form-control"  placeholder="09 _ _ _ _ _ _ _ _ _" pattern="[0]{1}[9]{1}[0-9]{9}" 
+                                                    minlength="10" maxlength="11"><br> {{! Not Required}}
                                             </div>
-                                        </form>
                                     </div>
                                   </div>
                             </div>
@@ -102,15 +105,15 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="text-md-right dataTables_filter" id="dataTable_filter">
-                                            <label>
-                                                <button class="btn btn-secondary btn-sm" type="submit">Cancel</button>
-                                                <button class="btn btn-primary btn-sm" type="submit">Add</button>
-                                            </label>
+                                 
+                                                <a href="/supplier" type="button" class="btn btn-secondary btn-sm">Cancel</a>
+                                        
+                                             <button class="btn btn-primary btn-sm" type="submit">Add</button>
                                         </div>
                                     </div>
                                 </div>   
                                   {{!-- END OF SUBMIT CANCEL --}}
-
+                    </form>
                           
                     </div>
                     {{!-- END OF REGSUPPLIER --}}
@@ -161,6 +164,8 @@
             }
             }, false);
 
+    // This is causes form to be unresponsive
+    /*
             $(function() {
                 $('#first_name').add('#last_name').keydown(function (e) {
 
@@ -175,5 +180,6 @@
                     }
                 });
             });
+        */ 
 
         </script>
