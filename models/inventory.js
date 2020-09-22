@@ -14,8 +14,8 @@ const inventorySchema = new mongoose.Schema({
     runningInventory: { type: String, required:false, default:"0"},
     endDayCount: { type: String, required:false, default:"0"},
     endDaySales: { type: String, required:false, default:"0"},
-    returns: { type: String, required:false, default:"0"},
-    totsales:{type:String, required:false, default:"0"},
+    returns: { type: Number, required:false, default:"0"},
+    totsales:{type:Number, required:false, default:"0"},
     srp:{type:String, required:true}
   }
 );
@@ -40,7 +40,7 @@ exports.update = function(query, update, next) {
   })
 };
 exports.updateFind = function(query, update, next) {
-  inventoryModel.findOneAndUpdate(query, update, function(err, res) {
-    next(err, res);
+  inventoryModel.findOneAndUpdate(query, update, function(err, done) {
+    next(err, done);
   })
 };

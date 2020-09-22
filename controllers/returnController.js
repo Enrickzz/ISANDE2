@@ -1,6 +1,8 @@
 
 const returnModel = require('../models/returns');
 const { validationResult } = require('express-validator');
+const returnItemsModel = require('../models/returnitems');
+const inventoryModel = require('../models/inventory');
 
 exports.getAll = (param, callback) =>{
     returnModel.getAll(param, (err, returnList) => {
@@ -69,19 +71,46 @@ exports.getID = (req, res) => {
         }
     })
 };
-  exports.update = (req,res) =>{
+
+
+  exports.update = (req,resss) =>{
     var id = req.body.returnID;
     var change = req.body.changestatus;
-    var update = {
-      $set: {
-        status: change
-      }
+    
+    var branch = req.body.branch;
+    var curr = req.body.currstat;
+    if(curr == "Sales Return"){
+      returnItemsModel.fetchList({branchID: branch}, (err,result)=>{
+        result.forEach(function(doc) {
+          var obj = doc.toObject();
+          console.log(obj);
+          var update = {
+            $inc: {
+              returns: obj.quantity,
+              totsales: -obj.amount
+            }
+          }
+          inventoryModel.updateFind({branch_id: obj.branchID, product: obj.product}, update, function(error, success){
+            if(error){
+              console.log(error);
+              throw error;
+            }else{
+              console.log(success);
+            }
+          })
+        })
+        var changestatus = {
+          $set:{
+            status : "Done"
+          }
+        }
+        returnModel.update({_id:id}, changestatus, function (er, done){
+          if(er){
+            throw er;
+          }else{
+            resss.redirect('/returns/view/'+id)
+          }
+        })
+      })
     }
-    returnModel.update({_id:id}, update, (err, success) =>{
-      if(err){
-        throw err;
-      }else{
-        res.redirect('/returns/view/' + id);
-      }
-    })
   }
