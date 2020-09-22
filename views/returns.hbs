@@ -32,13 +32,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="clickable" onclick='window.location="/returns/view"'>
-                                        <td>Sample value</td>
-                                        <td> Sample value</td>
-                                        <td> Sample value</td>
-                                        <td>Sample value</td>
-                                        <td>Sample value</td>
+                                    {{#each returns}}
+                                    <tr class="clickable" onclick='window.location="/returns/view/{{this._id}}"'>
+                                        <td>{{returndate}}</td>
+                                        <td> {{this._id}}</td>
+                                        <td> {{type}}</td>
+                                        <td>{{amount}}</td>
+                                        <td>{{status}}</td>
                                     </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </div>

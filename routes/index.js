@@ -14,6 +14,7 @@ const rawMaterialOrderController = require('../controllers/rawMaterialOrderContr
 const productionOrderController = require('../controllers/productionOrderController');
 const branchOrderController = require('../controllers/branchorderController');
 const inventoryController = require('../controllers/inventoryController');
+const returnController = require('../controllers/returnController');
 
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -64,22 +65,30 @@ router.get('/pullout', isPrivate, function(req, res) {
 router.get('/returns', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  res.render('returns', {
-    layout: 'main',
-    title: 'Returns',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name
+  returnController.getAll(req, (allreturns)=>{
+    res.render('returns', {
+      layout: 'main',
+      title: 'Returns',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
+      returns: allreturns
+    })
   })
 });
 
-router.get('/returns/view', isPrivate, function (req, res) {
-  
-  res.render('returns-card', {
-    layout: 'main',
-    title: 'Returns View',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name
-  });
+router.get('/returns/view/:id', isPrivate, function (req, res) {
+  returnController.getID(req, (returnObj)=>{
+    productController.getAllproducts(req, (allproducts)=>{
+      res.render('returns-card', {
+        layout: 'main',
+        title: 'Returns View',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        return: returnObj,
+        products: allproducts
+      });
+    })
+  })
 });
 
 router.get('/delivery', isPrivate, function(req, res) {
@@ -490,4 +499,4 @@ router.post('/rejectproductionorder', productionOrderController.statuschangeRej)
 router.post('/updateRawMaterialsStock', rawMaterialOrderController.update);
 router.post('/midendCountUpdate', inventoryController.midendCountUpdate);
 
-module.exports = router;
+module.exports = router
