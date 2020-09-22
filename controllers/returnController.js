@@ -80,7 +80,7 @@ exports.getID = (req, res) => {
     var branch = req.body.branch;
     var curr = req.body.currstat;
     if(curr == "Sales Return"){
-      returnItemsModel.fetchList({branchID: branch}, (err,result)=>{
+      returnItemsModel.fetchList({branchID: branch, returnID:id}, (err,result)=>{
         result.forEach(function(doc) {
           var obj = doc.toObject();
           console.log(obj);
