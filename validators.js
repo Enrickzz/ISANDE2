@@ -1,5 +1,6 @@
 const { body } = require('express-validator');
 
+// User Registration
 const registerValidation = [
   // usertype should not be empty
   body('usertype').not().isEmpty().withMessage("Usertype is required."),
@@ -33,12 +34,27 @@ const registerValidation = [
     })
 ];
 
+// User Login
 const loginValidation = [
    // Email should not be empty
    body('email').not().isEmpty().withMessage("Email is required."),
     // Password should not be empty
     body('password').not().isEmpty().withMessage("Password is required")
   ];
+
+// Supplier Registration
+// User Registration
+const supplierRegisterValidation = [
+  // usertype should not be empty
+  body('company').not().isEmpty().withMessage("Company is required."),
+
+   // first_name should not be empty
+   body('first_name').not().isEmpty().withMessage("First name is required."),
+
+   // last_name should not be empty
+   body('last_name').not().isEmpty().withMessage("Last name is required."),
+   
+];
   
 // update exports
-module.exports = { registerValidation, loginValidation };
+module.exports = { registerValidation, loginValidation, supplierRegisterValidation};

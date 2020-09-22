@@ -48,3 +48,52 @@ exports.getID = (req, res) => {
       }
     })
   }
+exports.midendCountUpdate = (req,res) =>{
+  var mid = req.body.midDayCount;
+  var end = req.body.endDayCount;
+  var id = req.body.id;
+  var restocked = req.body.restocked;
+  var srp = req.body.srp;
+  var runninginv = req.body.changedStock;
+  var middaysales = req.body.middaysale;
+
+  if(mid > 0){
+    var midtoNum = parseFloat(mid);
+    var restockedtoNUm = parseFloat(restocked);
+    var srptoNum = parseFloat(srp);
+    var middaySale = (restockedtoNUm-midtoNum)*srptoNum;
+    var update = {
+      $set: {
+        midDayCount : mid,
+        midDaySales : middaySale,
+        runningInventory : mid
+      }
+    } 
+    inventoryModel.update({_id : id}, update, (err,res2) =>{
+      if(err){
+        throw err;
+      }else{
+        res.redirect('/inventory-admin');
+      }
+    })
+  }else if(end > 0){
+    var endtoNum = parseFloat(end);
+    var chngedstock = parseFloat(runninginv);
+    var srpfloat = parseFloat(srp);
+    var midsales = parseFloat(middaysales);
+    var enddaySale = ((chngedstock-endtoNum)*srpfloat) + midsales;
+    var update = {
+      $set: {
+        endDayCount : end,
+        totsales : enddaySale
+      }
+    }
+    inventoryModel.update({_id : id}, update, (err,res2) =>{
+      if(err){
+        throw err;
+      }else{
+        res.redirect('/inventory-admin');
+      }
+    }) 
+  }
+}

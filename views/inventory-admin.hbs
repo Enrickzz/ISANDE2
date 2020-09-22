@@ -1,3 +1,34 @@
+            <script>
+                function checkCount(){
+                    var x = document.getElementsByClassName('middayActual');
+                    var y = document.getElementsByClassName('boton');
+                    var z = document.getElementsByClassName('enddayActual');
+                    var w = document.getElementsByClassName('boton2');
+                    var save = document.getElementsByClassName('save');
+                    for(var i = 0; i < x.length ; i++){
+                        
+                        var check2 = z[i].value;
+                        if(check2==0){
+                            w[i].disabled=false;
+                            w[i].classList.add("form-control");
+                        }else{
+                            w[i].classList.add("form-control");
+                        }
+
+                        var check = x[i].value;
+                        if(check==0){
+                            y[i].disabled = false;
+                            y[i].classList.add("form-control");
+                            w[i].disabled =true;
+                        }else{
+                            y[i].classList.add("form-control");
+                            w[i].classList.add("form-control")
+                        }
+                    }
+                }
+                window.onload = checkCount;
+            </script>
+            
             <div class="container-fluid">
                 <h3 class="text-dark mb-1">Inventory</h3>
 
@@ -71,20 +102,30 @@
                                 </thead>
                                 <tbody>
                                     {{#each inventory}}
+                                    <form action="/midendCountUpdate" method="POST">
+                                        <input type="hidden" name="srp" value="{{srp}}">
                                         <tr class="clickable" style="text-align: center;">
-                                            <td>{{product}}</td>
-                                            <td>{{startInv}}</td>
-                                            <td>{{restockQuantity}}</td>
-                                            <td>{{restockedInventory}}</td>
-                                            <td><input type="text" class="form-control" value="{{midDayCount}}"> </td>
-                                            <td>{{midDaySales}}</td>
-                                            <td>{{additionalRestock}}</td>
-                                            <td>{{pulloutStock}}</td>
-                                            <td>{{runningInventory}}</td>
-                                            <td>{{endDayCount}}</td>
-                                            <td>{{returns}}</td>
-                                            <td>{{totsales}}</td>
+                                                <td>{{product}}</td>
+                                                <td>{{startInv}}</td>
+                                                <td>{{restockQuantity}}</td>
+                                                <td>{{restockedInventory}}</td>
+                                            <input type="hidden" name="restocked" value="{{restockedInventory}}">
+                                            <input type="hidden" class="middayActual" value="{{midDayCount}}">
+                                                <td><input type="text" name="midDayCount" class="boton" class="form-control" placeholder="{{midDayCount}}" disabled> </td>
+                                                <td>{{midDaySales}}</td>
+                                                <td>{{additionalRestock}}</td>
+                                                <td>{{pulloutStock}}</td>
+                                                <td>{{runningInventory}}</td>
+                                            <input type="hidden" name="changedStock" value="{{runningInventory}}">
+                                            <input type="hidden" name="middaysale" value="{{midDaySales}}">
+                                            <input type="hidden" class="enddayActual" value="{{endDayCount}}">
+                                                <td><input type="text" name="endDayCount" class="boton2" class="form-control" placeholder="{{endDayCount}}" disabled></td>
+                                                <td>{{returns}}</td>
+                                                <td>{{totsales}}</td>
+                                            <input type="hidden" name="id" value="{{this._id}}">
+                                                <td><button class="btn btn-primary" type="submit" >Save</button></td>
                                         </tr>
+                                    </form>
                                     {{/each}}
                                 </tbody>
                             </table>
