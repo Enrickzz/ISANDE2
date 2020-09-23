@@ -16,3 +16,23 @@ exports.fetchList = function(query, next) {
       next(err, orders);
     });
   };
+
+  exports.createBO = function(obj, next) {
+    const BO = new branchOrderModel(obj);
+    console.log(BO);
+    BO.save(function(err, BO) {
+      console.log(err);
+      next(err, BO);
+    });
+  };
+
+  exports.update = function(query, update, next) {
+    branchOrderModel.findByIdAndUpdate(query, update, function(err, done) {
+      next(err, done);
+    })
+  };
+  exports.remove = function(query, next) {
+    branchOrderModel.findByIdAndRemove(query, function(err, del){
+      next(err, del);
+    });
+  };

@@ -48,3 +48,39 @@ exports.getID = (req, res) => {
       }
     })
   }
+  exports.addBO = (req, res) =>{
+    var POID = "buffer";
+    var productname = req.body.productName;
+    var qua = req.body.quantity;
+    var price = req.body.price;
+
+    var a = parseFloat(qua);
+    var b = parseFloat(price);
+    var amount = a*b;
+
+    var newBO = {
+      productionorderID: POID,
+      product: productname,
+      quantity: qua,
+      rate : price,
+      amount: amount
+    }
+    branchOrderModel.createBO(newBO , function (err, result){
+      if (err){
+        throw err;
+      }else{
+        res.redirect('back');
+      }
+    })
+  }
+  exports.delete = (req, res) => {
+    var id = req.body.BOid;
+    branchOrderModel.remove(id, (err, result) => {
+      if (err) {
+        throw err; 
+      } 
+      else {
+        res.redirect('/productionorder');
+      }
+    }); 
+  };

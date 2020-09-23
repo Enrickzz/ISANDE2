@@ -3,10 +3,10 @@ const { query } = require('express-validator');
 
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    sku: { type: String, required:true},
+    sku: { type: String, required:false},
     sellingprice: { type: String, required:true},
-    stock:{type:String,required:true},
-    reorder: { type: String, required:true},
+    stock:{type:String,required:false},
+    reorder: { type: String, required:false},
     UOM: { type: String, required:true},
     description:{type:String, requireed:true},
     product_groupID: {type: String, required: false}

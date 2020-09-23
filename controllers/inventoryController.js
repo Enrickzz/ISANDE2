@@ -81,6 +81,7 @@ exports.midendCountUpdate = (req,res) =>{
     var chngedstock = parseFloat(runninginv);
     var srpfloat = parseFloat(srp);
     var midsales = parseFloat(middaysales);
+    
     var enddaySale = ((chngedstock-endtoNum)*srpfloat) + midsales;
     var update = {
       $set: {

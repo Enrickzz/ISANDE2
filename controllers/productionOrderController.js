@@ -1,4 +1,5 @@
 const productionorderModel = require('../models/productionorder');
+const branchorderModel = require('../models/branchorder'); 
 const { validationResult } = require('express-validator'); 
 
 exports.getAll = (param, callback) =>{
@@ -26,23 +27,41 @@ exports.getID = (req, res) => {
   });
 };
 
-exports.addPurchaseOrder = (req,res)=>{
-  var purchaseorder = {
-    supplierID: req.body.supplierid,
-    dueDate: req.body.duedate,
-    orderDate: req.body.orderdate,
-    status: req.body.status,
-    total: "0",
-    shippingaddress: req.body.billaddress
+exports.addproductionorder = (req,res)=>{
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
+
+  var date = today.toString();
+
+  var productionorder = {
+    orderDate: date,
+    branch: req.body.branch,
+    status: "Pending"
   }
-  productionorderModel.createPurchaseOrder(purchaseorder, function (err, result_PO) {
+  productionorderModel.create(productionorder, function (err, result_PO) {
     if(err){
       console.log(err);
-      res.redirect('/purchaseorder');
+      res.redirect('/productionorder');
     }
     else{
-      console.log(result_PO);
-      res.redirect('/purchaseorder/view/' + result_PO._id)
+      branchorderModel.fetchList({productionorderID:"buffer"}, (err, results) =>{
+        if(err){
+          throw err;
+        }else{
+          results.forEach(function(doc){
+            var obj = doc.toObject();
+            branchorderModel.update(obj._id, {productionorderID: result_PO._id}, (error, success)=>{
+              if(error){
+                throw error;
+              }
+            })
+          })
+        }
+      })
+      res.redirect('/productionorder/view/' + result_PO._id)
     }
   })
 };

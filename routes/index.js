@@ -224,12 +224,25 @@ router.get('/productionorder', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   productionOrderController.getAll(req, (allprodords) =>{
-    res.render('production-orders', {
-      layout: 'main',
-      title: 'Production Orders',
-      fname:  req.session.first_name,
-      lname:  req.session.last_name,
-      productionorders: allprodords
+    productController.getAllproducts(req, (allproducts)=>{
+      branchOrderController.fetchQuery("buffer", (buffer)=>{
+        //checker if buffer contains objs
+        var checker = "true";
+        if (Object.entries(buffer).length === 0) {
+          checker = "false";
+        }
+        console.log(buffer);
+        res.render('production-orders', {
+          layout: 'main',
+          title: 'Production Orders',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          productionorders: allprodords,
+          plist: allproducts,
+          bufferBO : buffer,
+          check: checker
+        })
+      })
     })
   })
 });
@@ -524,5 +537,8 @@ router.post('/addreturnItem', returnitemsController.addreturnitem);
 router.post('/deleteReturnItem', returnitemsController.delete);
 router.post('/submitreturn', returnController.update);
 router.post('/addreturn', returnController.addreturn);
+router.post('/addBranchOrder', branchOrderController.addBO);
+router.post('/addproductionorder', productionOrderController.addproductionorder);
+router.post('/deletebufferBO', branchOrderController.delete);
 
 module.exports = router

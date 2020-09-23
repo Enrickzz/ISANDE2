@@ -55,11 +55,9 @@ exports.addProduct = (req,res)=>{
     var product = {
       name: req.body.name,
       sku: req.body.sku,
-      stock: "0", //data processing by order table
-      reorder:"100", //idk if maglalagay tayo ng default reorder pt.
       description: req.body.description,
       UOM: req.body.UOM,
-      sellingprice: "0",
+      sellingprice: req.body.sellingprice,
       product_groupID: req.body.prodgroup
     }
    
