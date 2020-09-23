@@ -2,7 +2,6 @@ const router = require('express').Router();
 const userController = require('../controllers/userController');
 const branchController = require('../controllers/branchController');
 const productgroupsController = require('../controllers/productgroupsController');
-const productconnectionController = require('../controllers/productconnectionController');
 const productController = require('../controllers/productController');
 const productrawmaterialController = require('../controllers/productrawmaterialController');
 const allRawMaterialController = require('../controllers/allRawMaterialController');
@@ -329,8 +328,8 @@ router.get('/purchaseorder/view/:id', (req, res) => {
   purchaseorderController.getID(req, (POs) => {
     var query = POs.supplierID;
     var purchaseorderID = POs._id;
-    supplierListController.fetchQuery(query, (supplyListResult) =>{
-      supplierController.getID(query, (supplierResult)=>{
+    supplierController.getID(query, (supplierResult)=>{
+      supplierListController.fetchQuery(supplierResult.company, (supplyListResult) =>{
         rawMaterialOrderController.fetchQuery(purchaseorderID, (orderedList) =>{
           res.render('purchaseorder-card', { 
             layout:'main',
