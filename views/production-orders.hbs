@@ -64,7 +64,7 @@
                     <div class="container tab-pane fade" id="regproduct_group" style="padding-top: 30px;">       
                         <div class="row">
                             <div class="col" id="regform2">
-                                <form action="/addproductionorder" method="POSt">
+                <form action="/addproductionorder" method="POSt">
                                 <h3 class="regheader">Production Order Form</h3>
                                 <p id="errormsg" style="color: red;"></p>
                                 <div class="row">
@@ -111,10 +111,8 @@
                                             <td>{{rate}} </td>
                                             <td>{{amount}} </td> 
                                             <td style="max-width:50px;">
-                                                <form>
-                                                    <input type="hidden" name="BOid" value="{{this._id}}">
-                                                    <button class="btn btn-primary btn-sm" formaction="/deletebufferBO" formmethod="POST" type="submit">Delete</button>
-                                                </form>
+                                                <input type="hidden" name="BOid" value="{{this._id}}">
+                                                <button class="btn btn-primary btn-sm" formaction="/deletebufferBO" formmethod="POST" type="submit">Delete</button>
                                             </td>                                  
                                         </tr>
                                     {{/each}}
@@ -156,7 +154,7 @@
                 {{!-- END OF VIEW SUGGESTIONS --}} 
 
                </div> 
-               </form>
+            </form>
                {{!-- END TAB CONTENT --}} 
 
             </div>
