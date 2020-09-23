@@ -89,3 +89,36 @@ exports.register = (req, res) => {
     res.redirect('/supplier'); // making this redirect to / makes req.flash not appear
   }
 };
+
+exports.update  = (req, res) => {
+    var first_name = req.body.first_name;
+    var last_name = req.body.last_name;
+    var company = req.body.company;
+    var email = req.body.email;
+    var mobileno = req.body.mobileno;
+    var id = req.body.supplierID;
+    
+    query = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'company': company,
+        'email': email,
+        'mobileno': mobileno
+    }
+
+    supplierModel.update(id, query, function(err, update) {
+      if(err) {
+          console.log(err);
+          req.flash('error_msg', 'Cannot update supplier details.');
+              res.redirect('/supplier');
+      }
+     
+      else {
+          console.log('Successfully updated supplier details!');
+          console.log(update);
+          req.flash('success_msg', 'Updated supplier details.');
+  
+              res.redirect('/supplier');
+      }
+  });
+};
