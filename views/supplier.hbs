@@ -41,7 +41,7 @@
 
                                 <tfoot>
                                     {{#each suppliers}}
-                                    <tr class="clickable" >
+                                    <tr class="clickable" onclick='window.location="/supplier/view/{{this._id}}"'>
                                         <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{first_name}} {{last_name}}</td>
                                         <td> {{company}}</td>
                                         <td> {{mobileno}}</td>

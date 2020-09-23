@@ -1,0 +1,52 @@
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4"></h3>
+                <div class="row mb-3" style="padding-top: 40px;">
+                    <div class="col-lg-4">
+                        <div class="card mb-3">
+                            <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="/assets/img/dogs/image2.jpeg" width="160" height="160">
+                                <div class="mb-3">
+                                    {{!-- <button class="btn btn-primary btn-sm" type="button">Change Photo</button> --}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-8">
+               
+                        <div class="row">
+                            <div class="col">
+                                <div class="card shadow mb-3">
+                                    <div class="card-header py-3">
+                                        <p class="text-primary m-0 font-weight-bold">User Details</p>
+                                    </div>
+                                    <div class="card-body">
+                                    {{!-- Start Form --}}
+                                    <form method="POST" action="/supplierUpdate">
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input name="first_name"  placeholder="{{supplier.first_name}}" type="text" class="form-control" required/></div>
+                                                    <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input name="last_name"  placeholder="{{supplier.last_name}}" type="text" class="form-control" required/></div>
+                                                      <div class="form-group"><label for="company"><strong>Company</strong></label><input name="company" placeholder="{{supplier.company}}" type="text" class="form-control" required/></div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <div class="form-group"><label for="email"><strong>Email</strong></label><input class="form-control" type="text" placeholder="{{supplier.email}}" name="email"></div>
+                                                    <div class="form-group"><label for="mobileno"><strong>Mobile Number</strong></label><input class="form-control" type="text" placeholder="{{supplier.mobileno}}" name="mobileno"></div>
+                                                </div>
+                                            </div>
+                                            {{!-- Saved for future reference (update functionality) --}}
+                                            <br>
+                                            <center>
+                                            <div class="form-group"><button class="btn btn-primary btn-sm" type="submit" type="submit">Save Changes</button></div>  
+                                            </center>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+      

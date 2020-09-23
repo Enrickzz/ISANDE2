@@ -14,8 +14,8 @@ exports.getAll = (param, callback) =>{
 };
 
 exports.getID = (req, res) => {
-  var id = req;
-  console.log(id);
+  var id = req.params.id;
+
   supplierModel.getByID(id, (err, result) => {
     if (err) {
       throw err;

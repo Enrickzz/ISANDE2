@@ -266,6 +266,21 @@ router.get('/supplier', isPrivate, function(req, res) {
   })
 });
 
+router.get('/supplier/view/:id', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  supplierController.getID(req, (thisSupplier) =>{
+      res.render('supplier-card', {
+        layout: 'main',
+        title: 'Supplier Information',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        supplier: thisSupplier
+      })
+
+  })
+});
+
 router.get('/purchaseorder', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template

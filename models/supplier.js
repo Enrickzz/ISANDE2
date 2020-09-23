@@ -41,3 +41,8 @@ exports.register = function(obj, next) {
     next(err, supplier);
   });
 }
+
+// Updating a supplier
+exports.update = function(_id, query, next) {
+  supplierModel.findByIdAndUpdate(_id, query, next);
+}
