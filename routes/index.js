@@ -196,7 +196,7 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
 });
 
 
-router.get('/product/view/:id', isPrivate, (req, res) => {
+router.get('/allproducts/view/:id', isPrivate, (req, res) => {
   console.log("Read view successful!");
   
   productController.getID(req, (prod) => {
@@ -308,7 +308,7 @@ router.get('/purchaseorder/view/:id', (req, res) => {
         rawMaterialOrderController.fetchQuery(purchaseorderID, (orderedList) =>{
           res.render('purchaseorder-card', { 
             layout:'main',
-            title: 'Purchase Order View',
+            title: 'Purchase Order Information',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
             purchaseorder: POs,
