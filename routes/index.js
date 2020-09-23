@@ -16,6 +16,7 @@ const branchOrderController = require('../controllers/branchorderController');
 const inventoryController = require('../controllers/inventoryController');
 const returnController = require('../controllers/returnController');
 const returnitemsController = require('../controllers/returnitemsController');
+const deliveryController = require('../controllers/deliveryController');
 
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -99,23 +100,35 @@ router.get('/returns/view/:id', isPrivate, function (req, res) {
 router.get('/delivery', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
+  deliveryController.getAll(req, (alldeliveries)=>{
     res.render('delivery', {
       layout: 'main',
       title: 'Deliveries',
       fname:  req.session.first_name,
       lname:  req.session.last_name,
+      delivery: alldeliveries
     })
+  })
 });
 
 
-router.get('/delivery/view', isPrivate, function (req, res) {
+router.get('/delivery/view/:id', isPrivate, function (req, res) {
   
-  res.render('delivery-card', {
-    layout: 'main',
-    title: 'Delivery Information',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name
-  });
+  deliveryController.getID(req, (deliveryObj)=>{
+    branchOrderController.fetchQuery(deliveryObj.productionID, (thisdeliveryproducts)=>{
+      productionOrderController.paramgetID(deliveryObj.productionID, (POobj)=>{
+        res.render('delivery-card', {
+          layout: 'main',
+          title: 'Delivery Information',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          delivery: deliveryObj,
+          branchorders: thisdeliveryproducts,
+          productionorder: POobj
+        });
+      })
+    })
+  })
 });
 
 router.get('/productgroup', isPrivate, function(req, res) {
@@ -540,5 +553,6 @@ router.post('/addreturn', returnController.addreturn);
 router.post('/addBranchOrder', branchOrderController.addBO);
 router.post('/addproductionorder', productionOrderController.addproductionorder);
 router.post('/deletebufferBO', branchOrderController.delete);
+router.post('/updatebranchInv', productionOrderController.statuschange4deliver);
 
 module.exports = router

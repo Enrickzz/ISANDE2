@@ -4,7 +4,8 @@ const productionOrderSchema = new mongoose.Schema(
   {
     orderDate: {type: String, required: true},
     status: {type: String, required: true},
-    branch: {type: String, required: true}
+    branch: {type: String, required: true},
+    total: {type:Number, required:true}
     }   
 
 );

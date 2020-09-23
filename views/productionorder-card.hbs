@@ -59,10 +59,12 @@
                                     <form>
                                     <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
                                     <input type="hidden" name="branch" value="{{productionorder.branch}}">
+                                    <input type="hidden" name="date" value="{{productionorder.orderDate}}">
+                                    <input type="hidden" name="total" value="{{productionorder.total}}">
                                     <button id="update" class="btn btn-primary btn-sm" type="submit" formaction="/editproductionorder" style="background-color:gray; border: 1px solid gray; ">Update</button>
                                     <button id="accept" class="btn btn-primary btn-sm" type="submit" formaction="/acceptproductionorder" formmethod="POST" style="background-color:green; border: 1px solid green; ">Accept</button>
                                     <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectproductionorder" formmethod="POST" style="background-color:red; border: 1px solid red; ">Reject</button>
-                                    <button id="delivered" class="btn btn-primary btn-sm" type="submit" formaction="/updatebranchInv" formmethod="POST"> Delivered</button>
+                                    <button id="delivered" class="btn btn-primary btn-sm" type="submit" formaction="/updatebranchInv" formmethod="POST"> For Delivery</button>
                                     </form>
                                     
                                 </div>
@@ -166,16 +168,16 @@
                             </div>
 
                             <div class="row" style="margin-top: 2rem; justify-content: center; margin-bottom:1rem;">
-                                <!--<div class="total-amt" id="">
+                                <div class="total-amt" id="">
                                     <div class="row">
                                         <div class="col" style="text-align: center; min-width:180px;">
                                             <span>TOTAL AMOUNT:</span>
                                         </div>
                                         <div class="col" style="text-align: right;">
-                                            <span>Php {{purchaseorder.total}}</span>
+                                            <span>Php {{productionorder.total}}</span>
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
                             </div>
                         </div>
                     </div>

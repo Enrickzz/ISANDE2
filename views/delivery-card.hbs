@@ -12,7 +12,7 @@
                                     <form>
                                     <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
                                     <input type="hidden" name="branch" value="{{productionorder.branch}}">
-                                    <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectproductionorder" formmethod="POST" style="background-color:red; border: 1px solid red; ">Cancel Order</button>
+                                    <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectproductionorder" formmethod="POST">Recieved</button>
                                     </form>
                                     
                                 </div>
@@ -27,14 +27,14 @@
                         <div class="row"> 
                             <div class="col" >
                                 <h2 class="regheader">Details</h2>
-                                <p><b>From: </b>  Branch Name</p>      
+                                <p><b>From: </b> Central Branch </p>      
 
                                 <div class="row"> <!--ROW1-->
 
                                     <div class="col">
                                         <form>
                                             <div class="form-group">
-                                                <p><b>To: </b>  Branch Name</p>      
+                                                <p><b>To: </b>  {{productionorder.branch}}</p>      
                                             </div>
                                         </form>
                                     </div>
@@ -44,7 +44,7 @@
                                       <div class="col">
                                         <form action="">
                                             <div class="form-group">
-                                                <label for=""></label>
+                                                <label for="">Delivery Address</label>
                                                 <p>Delivery Address</p>
                                             </div>
                                         </form>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="col" >
                                 <h2 class="regheader">ORDER TYPE NAME</h2>
-                                <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">Status</span></p>
+                                <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{delivery.status}}</span></p>
 
                                 <div class="row"> <!--ROW1-->
 
@@ -63,13 +63,13 @@
                                             <div class="form-group">
                                                 
                                                 <label>Order Date</label>
-                                                <p>Order Date</p>
+                                                <p>{{productionorder.orderDate}}</p>
                                                 
                                             </div>
                                               <div class="form-group">
                                                 
                                                 <label>Delivery Date</label>
-                                                <p>Delivery Date</p>
+                                                <p>{{delivery.deliverydate}}</p>
                                                 
                                             </div>
                                         </form>
@@ -102,12 +102,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{#each branchorders}}
                                         <tr class="clickable" >
-                                            <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">product</td>
-                                            <td> quantity</td>
-                                            <td>rate</td>
-                                            <td>amount</td>
+                                            <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{product}}</td>
+                                            <td> {{quantity}}</td>
+                                            <td>{{rate}}</td>
+                                            <td>{{amount}}</td>
                                         </tr>
+                                    {{/each}}
                                 </tbody>
                                 <tfoot>
                                     

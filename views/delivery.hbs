@@ -36,13 +36,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="clickable" onclick='window.location="/delivery/view"'>
-                                        <td>Sample value</td>
-                                        <td> Sample value</td>
-                                        <td> Sample value</td>
-                                        <td>Sample value</td>
-                                        <td>Sample value</td>
-                                    </tr>
+                                    {{#each delivery}}
+                                        <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
+                                            <td>{{deliverydate}}</td>
+                                            <td>{{productionID}}</td>
+                                            <td> Sample value</td>
+                                            <td>{{total}}</td>
+                                            <td>{{status}}</td>
+                                        </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </div>
