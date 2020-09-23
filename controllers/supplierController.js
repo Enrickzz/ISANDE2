@@ -14,6 +14,20 @@ exports.getAll = (param, callback) =>{
 };
 
 exports.getID = (req, res) => {
+  var id = req;
+  console.log(id);
+
+  supplierModel.getByID(id, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      var supplierObj = result.toObject();
+      res(supplierObj);
+    }
+  });
+};
+
+exports.getUpdateID = (req, res) => {
   var id = req.params.id;
 
   supplierModel.getByID(id, (err, result) => {
@@ -121,4 +135,24 @@ exports.update  = (req, res) => {
               res.redirect('/supplier');
       }
   });
+};
+
+exports.delete = function(req, res) {
+
+  var id = req.body.supplierID;
+
+  supplierModel.delete({_id: id}, function(err, supplier) {
+      if(err) {
+          console.log(err);
+          req.flash('error_msg', 'Cannot delete supplier.');
+          res.redirect('/supplier');
+      }
+     
+      else {
+          console.log('Successfully deleted supplier!');
+          console.log(supplier);
+          req.flash('success_msg', 'Supplier deleted.');
+          res.redirect('/supplier');
+      }
+  })
 };

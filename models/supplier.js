@@ -46,3 +46,8 @@ exports.register = function(obj, next) {
 exports.update = function(_id, query, next) {
   supplierModel.findByIdAndUpdate(_id, query, next);
 }
+
+// Deleting a supplier
+exports.delete = function(_id, next) {
+  supplierModel.deleteOne({_id: _id}, next);
+};
