@@ -41,12 +41,14 @@
 
                                 <tfoot>
                                     {{#each suppliers}}
-                                    <form>
+                                    <form method="POST" action="/supplierDelete">
                                     <tr class="clickable" onclick='window.location="/supplier/view/{{this._id}}"'>
+                                        <input type="hidden" name="supplierID" value="{{this._id}}">
                                         <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{first_name}} {{last_name}}</td>
                                         <td> {{company}}</td>
                                         <td> {{mobileno}}</td>
                                         <td>{{email}}</td>
+                                        <td><button id="delete" class="btn btn-primary btn-sm" type="submit">Delete</button></td>
                                     </tr>
                                     </form>
                                     {{/each}}

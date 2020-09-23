@@ -511,6 +511,7 @@ router.post('/deleteGroup' , productgroupsController.delete);
 router.post('/register', registerValidation, userController.register);
 router.post('/supplierRegister', supplierRegisterValidation, supplierController.register);
 router.post('/supplierUpdate', supplierController.update);
+router.post('/supplierDelete', supplierController.delete);
 router.post('/addpurchaseorder' , purchaseorderController.addPurchaseOrder);
 router.post('/addRawMaterialOrder' , rawMaterialOrderController.addRMO);
 router.post('/deleteRMO', rawMaterialOrderController.delete);
