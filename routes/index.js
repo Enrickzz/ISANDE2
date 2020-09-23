@@ -554,5 +554,6 @@ router.post('/addBranchOrder', branchOrderController.addBO);
 router.post('/addproductionorder', productionOrderController.addproductionorder);
 router.post('/deletebufferBO', branchOrderController.delete);
 router.post('/updatebranchInv', productionOrderController.statuschange4deliver);
+router.post('/recieveproductionorders', inventoryController.addInventory);
 
 module.exports = router

@@ -4,7 +4,7 @@ const inventorySchema = new mongoose.Schema({
     branch_id: { type: String, required: true },
     inventorydate: { type: String, required: true },
     product: { type: String, required: true },
-    startInv: { type: String, required:true},
+    startInv: { type: String, required:false, default:"0"},
     restockQuantity: { type: String, required:false, default:"0"},
     restockedInventory: { type: String, required:false, default:"0"},
     midDayCount: { type: Number, required:false, default:"0"},
@@ -43,4 +43,12 @@ exports.updateFind = function(query, update, next) {
   inventoryModel.findOneAndUpdate(query, update, function(err, done) {
     next(err, done);
   })
+};
+exports.create = function(obj, next) {
+  const inv = new inventoryModel(obj);
+  console.log(inv);
+  inv.save(function(err, inv_result) {
+    console.log(err);
+    next(err, inv_result);
+  });
 };

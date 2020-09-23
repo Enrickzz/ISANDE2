@@ -1,5 +1,9 @@
 
 const inventoryModel = require('../models/inventory');
+const branchOrderModel = require('../models/branchorder');
+const productionOrderModel = require('../models/productionorder');
+const deliveryModel = require('../models/delivery');
+
 const { validationResult } = require('express-validator');
 
 exports.getAll = (param, callback) =>{
@@ -97,4 +101,61 @@ exports.midendCountUpdate = (req,res) =>{
       }
     }) 
   }
+}
+
+exports.addInventory = (req,res) =>{
+  var prodID = req.body.productionorderID;
+  
+  productionOrderModel.getByID(prodID, (er, POobj)=>{
+    branchOrderModel.fetchList({productionorderID:prodID }, (err, result)=>{
+      if (err) {
+        res.redirect('back');
+      }else{
+        result.forEach(function(doc){
+          var obj = doc.toObject();
+
+          var inventory ={
+            branch_id : POobj.branch,
+            inventorydate: POobj.orderDate,
+            product: obj.product,
+            //startInv: 
+            restockQuantity: obj.quantity,
+            restockedInventory: 0 + parseFloat(obj.quantity),
+            srp: obj.rate
+          }
+          inventoryModel.create(inventory, (err2,result2)=>{
+            if(err2){
+              console.log(err2);
+              throw err2;
+            }
+          })
+        })
+      }
+    })
+    var delID = req.body.deliveryID;
+    var update = {
+      $set: {
+        status: "Delivered"
+      }
+    }
+    deliveryModel.update({_id: delID},update, (errr, result3)=>{
+      if (errr) {
+        throw errr;
+      }else{
+        var status = {
+          $set:{
+            status:"Completed"
+          }
+        }
+        productionOrderModel.update(prodID,status, (e4,result4)=>{
+          if (e4) {
+            throw e4;
+          }else{
+            res.redirect('/inventory-admin');
+          }
+        })
+      }
+    })
+  })
+  
 }

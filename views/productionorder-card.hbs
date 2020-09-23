@@ -15,13 +15,15 @@
                         var rm3 = document.getElementById('reject');
                         rm3.parentNode.removeChild(rm3);
                     }else if(x == "For Delivery"){
-                        document.getElementById('showstatus').style.color="yellow";
+                        document.getElementById('showstatus').style.color="green";
                         var rm1 = document.getElementById('update');
                         rm1.parentNode.removeChild(rm1);
                         var rm2 = document.getElementById('accept');
                         rm2.parentNode.removeChild(rm2);
                         var rm3 = document.getElementById('reject');
                         rm3.parentNode.removeChild(rm3);
+                        var rm4 = document.getElementById('delivered');
+                        rm4.parentNode.removeChild(rm4);
                     }else if(x == "Rejected"){
                         document.getElementById('showstatus').style.color="red";
                         var rm1 = document.getElementById('update');

@@ -1,3 +1,21 @@
+   <script>
+       function statuscheck(){
+            var x = document.getElementById('showstatus').innerText;
+            console.log(x);
+            if (x == "Delivered"){
+                document.getElementById('showstatus').style.color="green";
+                var rm1 = document.getElementById('received');
+                rm1.parentNode.removeChild(rm1);
+            }else if (x == "In Transit"){
+                document.getElementById('showstatus').style.color="orange";
+            }else if (x == "In production"){
+                document.getElementById('showstatus').style.color="orange";
+                var rm1 = document.getElementById('received');
+                rm1.parentNode.removeChild(rm1);
+            }
+       }
+       window.onload = statuscheck;
+   </script>
    <div class="container-fluid">
                 <h3 class="text-dark mb-4">  <a href="/delivery" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;{{title}}</h3>
                 <br>
@@ -11,10 +29,9 @@
                                 <div class="buttonlist" style="float: right;">
                                     <form>
                                     <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
-                                    <input type="hidden" name="branch" value="{{productionorder.branch}}">
-                                    <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectproductionorder" formmethod="POST">Recieved</button>
+                                    <input type="hidden" name="deliveryID" value="{{delivery._id}}">
+                                    <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/recieveproductionorders" formmethod="POST">Recieved</button>
                                     </form>
-                                    
                                 </div>
                             </div>
                         </div>
