@@ -70,7 +70,7 @@
                                             <div class="form-group">
                                                 {{!-- First Name --}}
                                                 <label>First Name</label>
-                                                <input id="first_name" name="first_name" type="text" placeholder="First Name" class="form-control" minlength="3" maxlength="15" required><br>
+                                                <input id="first_name" name="first_name" type="text" placeholder="First Name" class="form-control" minlength="2" maxlength="15" required><br>
                                                 {{!-- Last Name --}}
                                                  <label>Last Name</label>
                                                 <input id="last_name" name="last_name" type="text" placeholder="Last Name" class="form-control" minlength="2" maxlength="15" required><br>
@@ -90,7 +90,7 @@
                                                 {{!-- Mobile Number --}}
                                                 <label>Mobile Number</label>
                                                 <input id="mobileno" name= "mobileno" type="tel" class="form-control"  placeholder="09 _ _ _ _ _ _ _ _ _" pattern="[0]{1}[9]{1}[0-9]{9}" 
-                                                    minlength="10" maxlength="11"><br> {{! Not Required}}
+                                                 maxlength="11"><br> {{! Not Required}}
                                             </div>
                                     </div>
                                   </div>
@@ -163,6 +163,16 @@
             forceKeyPressLowercase(e);
             }
             }, false);
+
+             $(function () {
+
+                     $("#mobileno").on("keypress keyup blur",function (event) {    
+                        $('#mobileno').val();
+                        if ((event.which < 48 || event.which > 57)) {
+                        event.preventDefault();
+                        }
+                    }); 
+            });
 
     // This is causes form to be unresponsive
     /*

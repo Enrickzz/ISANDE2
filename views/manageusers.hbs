@@ -1,3 +1,18 @@
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+            <script type="text/javascript">
+
+                $(function () {
+
+                     $("#mobileno").on("keypress keyup blur",function (event) {    
+                        $('#mobileno').val();
+                        if ((event.which < 48 || event.which > 57)) {
+                        event.preventDefault();
+                        }
+                    }); 
+                });
+
+            </script>
+            
             <div class="container-fluid" style="padding-bottom: 70px;">
                 <h3 class="text-dark mb-4">Manage Users</h3>
                 {{> messages}}
@@ -105,11 +120,11 @@
                                             <div class="form-group">
                                                 {{!-- First Name --}}
                                                 <label>First Name</label>
-                                                <input name="first_name" id="first_name"  placeholder="First Name" type="text" class="form-control" required/><br>
+                                                <input name="first_name" id="first_name"  placeholder="First Name" type="text" class="form-control" minlength="2" maxlength="15" required/><br>
 
                                                 {{!-- Last Name --}}
                                                 <label>Last Name</label>
-                                                <input name="last_name" id="last_name" placeholder="Last Name" type="text" class="form-control" required/><br>
+                                                <input name="last_name" id="last_name" placeholder="Last Name" type="text" class="form-control" minlength="2" maxlength="15" required/><br>
 
                                                 {{!-- Email --}}
                                                 <label>Email</label>
@@ -117,7 +132,7 @@
                                             
                                                 {{!-- Mobile Number --}}
                                                 <label>Mobile Number</label>
-                                                <input name= "mobileno" id="mobileno" type="tel" placeholder="09 _ _ _ _ _ _ _ _ _" pattern="[0]{1}[9]{1}[0-9]{9}" class="form-control" required/><br>
+                                                <input name= "mobileno" id="mobileno" type="tel" placeholder="09 _ _ _ _ _ _ _ _ _" pattern="[0]{1}[9]{1}[0-9]{9}" class="form-control" maxlength="11" required/><br>
                 
                                             </div>
                                     </div>
@@ -181,3 +196,5 @@
                 </div>
                 <div class="card shadow"></div>
             </div>
+
+            
