@@ -54,10 +54,10 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
   })
 });
 
-router.get('/pullout', isPrivate, function(req, res) {
+router.get('/pullout-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  res.render('pullout', {
+  res.render('pullout-admin', {
     layout: 'main',
     title: 'Pull Out Products'
   })
