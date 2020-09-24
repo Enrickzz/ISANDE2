@@ -18,79 +18,117 @@
                 
                 <div class="tab-content">
                     {{!-- PULLOUT LIST --}}
+                   
                     <div class="container tab-pane active" id="pulloutlist" style="padding-top: 30px;">
-                        <div class="table-responsive">
-                        <label for="branch">[Branch of BM]</label>
-
-                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
-                            
-                            <div style="padding-bottom: 10px;"> </div>
-                            <table class="table">
+                        <label style="padding-left: 20px; padding-top: 20px;">Branch of BM</label>
+                        <label style="padding-right: 20px; padding-top: 20px; float: right;">PULL OUT LIST</label>
+                    <div class="table-responsive table mt-2"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
+                        <div class="col" id="contents">
+                            <table class="table my-0" id="dataTable">
                                 <thead>
-                                    <tr>
-                                        <th>Name  <i class="fa fa-sort"></i></th>
+                                    <tr class="tr-addproducts">
+                                       <th>Item  <i class="fa fa-sort"></i></th>
                                         <th style="max-width: ;">Product Group  <i class="fa fa-sort"></i></th>
                                         <th>Cost Price <i class="fa fa-sort"></i></th>
                                         <th>Current Stock <i class="fa fa-sort"></i></th>
-                                        <th>Qty Needed <i class="fa fa-sort"></i></th>
+                                        <th>Transfer Qty <i class="fa fa-sort"></i></th>
                                         <th><span></span></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="clickable" >
-                                        <td>Sample value</td>
-                                        <td> Sample value</td>
-                                        <td> Sample value</td>
-                                        <td>Sample value</td>
-                                        <td>Sample value</td>
-                                    </tr>
+                                    {{#each bufferBO}}
+                                        <tr>
+                                            <td>{{product}} </td>
+                                            <td>{{quantity}} </td>
+                                            <td>{{UOM}} </td>
+                                            <td>{{rate}} </td>
+                                            <td>{{amount}} </td> 
+                                            <td style="max-width:50px;">
+                                                <input type="hidden" name="BOid" value="{{this._id}}">
+                                                <button class="btn btn-primary btn-sm" formaction="/deletebufferBO" formmethod="POST" type="submit">Delete</button>
+                                            </td>                                  
+                                        </tr>
+                                    {{/each}}
                                 </tbody>
+                                <tfoot>
+                                    
+                                </tfoot>
                             </table>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2rem; justify-content: center;">
+                                
+                            </div>
                         </div>
                     </div>
+                    </div>
+                    
                
                 {{!-- END OF PULLOUT LIST --}}
 
                  {{!-- REQUEST LIST --}}
                 <div class="container tab-pane fade" id="requestlist" style="padding-top: 30px;">
-                        <div class="table-responsive">
-                            <label for="branch">[Branch of BM]</label>
-
-                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
-
-                            <div style="padding-bottom: 10px;"> </div>
-                            <table class="table">
+                        <label style="padding-left: 20px; padding-top: 20px;">Branch of BM</label>
+                        <label style="padding-right: 20px; padding-top: 20px; float: right;">REQUEST LIST</label>
+                    <div class="table-responsive table mt-2"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
+                        <div class="col" id="contents">
+                            <table class="table my-0" id="dataTable">
                                 <thead>
-                                    <tr>
-                                        <th>Name  <i class="fa fa-sort"></i></th>
+                                    <tr class="tr-addproducts">
+                                       <th>Item  <i class="fa fa-sort"></i></th>
                                         <th style="max-width: ;">Product Group  <i class="fa fa-sort"></i></th>
                                         <th>Cost Price <i class="fa fa-sort"></i></th>
                                         <th>Current Stock <i class="fa fa-sort"></i></th>
-                                        <th>Qty Needed <i class="fa fa-sort"></i></th>
+                                        <th>Request Qty <i class="fa fa-sort"></i></th>
                                         <th><span></span></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="clickable" >
-                                        <td>Sample value</td>
-                                        <td> Sample value</td>
-                                        <td> Sample value</td>
-                                        <td>Sample value</td>
-                                        <td>Sample value</td>
-                                    </tr>
+                                    {{#each bufferBO}}
+                                        <tr>
+                                            <td>{{product}} </td>
+                                            <td>{{quantity}} </td>
+                                            <td>{{UOM}} </td>
+                                            <td>{{rate}} </td>
+                                            <td>{{amount}} </td> 
+                                            <td style="max-width:50px;">
+                                                <input type="hidden" name="BOid" value="{{this._id}}">
+                                                <button class="btn btn-primary btn-sm" formaction="/deletebufferBO" formmethod="POST" type="submit">Delete</button>
+                                            </td>                                  
+                                        </tr>
+                                    {{/each}}
                                 </tbody>
+                                <tfoot>
+                                    
+                                </tfoot>
                             </table>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2rem; justify-content: center;">
+                                
+                            </div>
                         </div>
+                    </div>
 
                     </div>
                     {{!-- END OF REQUEST LIST --}} 
 
                 </div>
-                    {{!-- END TAB CONTENT --}}
+                 {{!-- END TAB CONTENT --}}
+
+                </div>          
 
             </div>
-            
-        </div>
 
 
 
@@ -100,7 +138,7 @@
             <!-- Modal content-->
             <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Raw Materials</h4>
+                <h4 class="modal-title">Products</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
