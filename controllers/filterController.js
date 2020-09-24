@@ -46,7 +46,7 @@ exports.prevday = (req, res) =>{
     var query = req;
     var curr = req.body.currdate;
     var todate = new Date(curr);
-    todate.setDate(todate.getDate()-1)
+        todate.setDate(todate.getDate()-1)
 
     var dd = String(todate.getDate()).padStart(2, '0');
     var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!

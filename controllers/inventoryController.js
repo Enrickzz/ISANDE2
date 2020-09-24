@@ -108,27 +108,94 @@ exports.addInventory = (req,res) =>{
   
   productionOrderModel.getByID(prodID, (er, POobj)=>{
     branchOrderModel.fetchList({productionorderID:prodID }, (err, result)=>{
-      if (err) {
-        res.redirect('back');
+      if(err){
+        res.redirect('back')
       }else{
-        result.forEach(function(doc){
-          var obj = doc.toObject();
+        var curr = POobj.orderDate;
+        var todate = new Date(curr);
+        todate.setDate(todate.getDate()-1)
+        var dd = String(todate.getDate()).padStart(2, '0');
+        var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = todate.getFullYear();
+        todate = yyyy + '-' + mm + '-' + dd;
+        console.log(todate);
+        inventoryModel.fetchList({inventorydate: "" + todate}, (error, prevdayInv)=>{
+          if (error) {
+            res.redirect('back');
+          }else{
+            var counter2 =0;
+            prevdayInv.forEach(function(doc){
+              var prev = doc.toObject();
+              var obj;
+              var checker = 0;
+              var counter =0;
+              checker = 0;
+              result.forEach(function(doc2){
+                obj = doc2.toObject();
+                var restockedInv = parseFloat(obj.quantity);
+                var prevenddayCount ="0";
+                //console.log(prevdayInv.length +"  " + checker);
+                if(obj.product == prev.product){
+                  var a = parseFloat(obj.quantity) + parseFloat(prev.endDayCount);
+                  restockedInv = a;
+                  prevenddayCount = prev.endDayCount;
 
-          var inventory ={
-            branch_id : POobj.branch,
-            inventorydate: POobj.orderDate,
-            product: obj.product,
-            //startInv: 
-            restockQuantity: obj.quantity,
-            restockedInventory: 0 + parseFloat(obj.quantity),
-            srp: obj.rate
+                  var inventory ={
+                    branch_id : POobj.branch,
+                    inventorydate: POobj.orderDate,
+                    product: obj.product,
+                    startInv: prevenddayCount,
+                    restockQuantity: obj.quantity,
+                    restockedInventory: restockedInv,
+                    srp: obj.rate
+                  }
+                  inventoryModel.create(inventory, (err2,result2)=>{
+                    if(err2){
+                      console.log(err2);
+                      throw err2;
+                    }
+                  })
+                  checker = checker+1;
+                }else if(counter == result.length-1 && checker==0 && counter2 == prevdayInv.length-1){
+                  var inventory ={
+                    branch_id : POobj.branch,
+                    inventorydate: POobj.orderDate,
+                    product: obj.product,
+                    startInv: prevenddayCount,
+                    restockQuantity: obj.quantity,
+                    restockedInventory: restockedInv,
+                    srp: obj.rate
+                  }
+                  inventoryModel.create(inventory, (err2,result2)=>{
+                    if(err2){
+                      console.log(err2);
+                      throw err2;
+                    }
+                  })
+                }
+                counter = counter +1;
+              })
+              if(checker == 0){
+                var restockedInv = parseFloat(prev.endDayCount);
+                var inventory ={
+                  branch_id : POobj.branch,
+                  inventorydate: POobj.orderDate,
+                  product: prev.product,
+                  startInv: prev.endDayCount,
+                  restockQuantity: "0",
+                  restockedInventory: restockedInv,
+                  srp: prev.srp
+                }
+                inventoryModel.create(inventory, (err2,result2)=>{
+                  if(err2){
+                    console.log(err2);
+                    throw err2;
+                  }
+                })
+              }
+              counter2 = counter2+1;
+            })
           }
-          inventoryModel.create(inventory, (err2,result2)=>{
-            if(err2){
-              console.log(err2);
-              throw err2;
-            }
-          })
         })
       }
     })
