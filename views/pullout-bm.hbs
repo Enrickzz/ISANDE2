@@ -57,7 +57,7 @@
                             </table>
                             <div class="row">
                                 <div class="col" style="margin-left: 20px; margin-top: 10px">
-                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal2">Add Item</button>
                                 </div>
                             </div>
 
@@ -110,7 +110,7 @@
                             </table>
                             <div class="row">
                                 <div class="col" style="margin-left: 20px; margin-top: 10px">
-                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal1">Add Item</button>
                                 </div>
                             </div>
 
@@ -132,8 +132,72 @@
 
 
 
-<!-- Modal (TO BE CHANGED) -->
-    <div id="myModal" class="modal fade" role="dialog">
+<!-- Modal1 (TO BE CHANGED) -->
+    <div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Products</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr class="tr-addproducts">
+                            <th>Name </th>
+                            <th style="width: 25%;">Quantity </th>
+                            <th >Unit </th>
+                            <th style="width: 10%;"><span> </span></th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                         {{#each plist}}
+                         <form action="/productNewMaterial" method="POST">
+                            <tr class="clickable" >
+                                <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg"> {{name}} </td>
+                                <td><input required type="text" name="quantity" id="" class="form-control w-60" width="2"></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select id="cars" name="UOM" class="form-control">
+                                            <option value="gram/s">gram/s</option>
+                                            <option value="tbsp">tbsp</option>
+                                            <option value="tsp">tsp</option>
+                                        </select>
+                                    </div>
+                                    
+                                </td>
+                                <input type="hidden" name="rawMaterialID" value="{{this._id}}">
+                                <input type="hidden" name="productID" value="{{../product._id}}">
+                                <!-- #each disallows access to product._id-->
+                                <input type="hidden" name="name" value="{{name}}">
+                                
+
+                                <td style="width: 2%;">
+                                    <button class="btn btn-primary btn-sm" type="submit" >Add</button>
+                                </td>
+                            </tr>
+                        </form>
+                        {{/each}}
+                    </tbody>
+
+                    <tfoot>
+                        
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+
+        </div>
+    </div> 
+
+    <!-- Modal 2(TO BE CHANGED) -->
+    <div id="myModal2" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">

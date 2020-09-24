@@ -45,7 +45,8 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
         lname:  req.session.last_name,
         inventory: allInventory,
         today: filter.date,
-        whichbranch : filter.branch
+        whichbranch : filter.branch,
+        usertype: req.session.usertype
       })
     })
   })
