@@ -124,13 +124,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{#each pullouts}}
                                     <tr class="clickable" >
-                                        <td>Sample value</td>
-                                        <td> Sample value</td>
-                                        <td> Sample value</td>
-                                        <td>Sample value</td>
-                                        <td>Sample value</td>
+                                        <td>{{pulloutdate}}</td>
+                                        <td> {{this._id}}</td>
+                                        <td> {{FrombranchID}}</td>
+                                        <td>{{TobranchID}}</td>
+                                        <td>{{status}}</td>
                                     </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
                         </div>

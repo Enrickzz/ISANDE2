@@ -16,6 +16,7 @@ const inventoryController = require('../controllers/inventoryController');
 const returnController = require('../controllers/returnController');
 const returnitemsController = require('../controllers/returnitemsController');
 const deliveryController = require('../controllers/deliveryController');
+const pulloutorderController = require('../controllers/pulloutorderController');
 
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -57,7 +58,22 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
 router.get('/pullout-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  res.render('pullout-admin', {
+  
+  pulloutorderController.getAll(req, (allpullouts)=>{
+    res.render('pullout-admin', {
+      layout: 'main',
+      title: 'Pull Out',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
+      pullouts: allpullouts
+    })
+  })
+});
+
+router.get('/pullout-bm', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  res.render('pullout-bm', {
     layout: 'main',
     title: 'Pull Out Products'
   })
