@@ -30,6 +30,7 @@ router.get('/home', isPrivate, function(req, res) {
     title: 'Dashboard',
     fname:  req.session.first_name,
     lname:  req.session.last_name,
+    utype: req.session.usertype
   })
 });
 
@@ -43,6 +44,7 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
         title: 'Inventory',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
+        utype: req.session.usertype,
         inventory: allInventory,
         today: filter.date,
         whichbranch : filter.branch,
@@ -62,6 +64,7 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
       title: 'Pull Out',
       fname:  req.session.first_name,
       lname:  req.session.last_name,
+      utype: req.session.usertype,
       pullouts: allpullouts
     })
   })
@@ -72,7 +75,10 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   res.render('pullout-bm', {
     layout: 'main',
-    title: 'Pull Out Products'
+    title: 'Pull Out Products',
+    fname:  req.session.first_name,
+    lname:  req.session.last_name,
+    utype: req.session.usertype
   })
 });
 
@@ -85,6 +91,7 @@ router.get('/returns', isPrivate, function(req, res) {
       title: 'Returns',
       fname:  req.session.first_name,
       lname:  req.session.last_name,
+      utype: req.session.usertype,
       returns: allreturns
     })
   })
@@ -100,6 +107,7 @@ router.get('/returns/view/:id', isPrivate, function (req, res) {
           title: 'Returns View',
           fname:  req.session.first_name,
           lname:  req.session.last_name,
+          utype: req.session.usertype,
           return: returnObj,
           products: allproducts,
           returnitems: thisIDreturns
@@ -118,6 +126,7 @@ router.get('/delivery', isPrivate, function(req, res) {
       title: 'Deliveries',
       fname:  req.session.first_name,
       lname:  req.session.last_name,
+      utype: req.session.usertype,
       delivery: alldeliveries
     })
   })
@@ -134,6 +143,7 @@ router.get('/delivery/view/:id', isPrivate, function (req, res) {
           title: 'Delivery Information',
           fname:  req.session.first_name,
           lname:  req.session.last_name,
+          utype: req.session.usertype,
           delivery: deliveryObj,
           branchorders: thisdeliveryproducts,
           productionorder: POobj
@@ -153,6 +163,7 @@ router.get('/productgroup', isPrivate, function(req, res) {
         title: 'Product Groups',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
+        utype: req.session.usertype,
         pglist: productgroups,
         plist:products
       })
@@ -174,6 +185,7 @@ router.get('/productgroup/view/:id', isPrivate, (req, res) => {
           title:"Product Groups",
           fname:  req.session.first_name,
           lname:  req.session.last_name,
+          utype: req.session.usertype,
           ungroupedProd: ungroupedProducts,
           pgroup: productGroup,
           plist: pgproducts
@@ -195,6 +207,7 @@ router.get('/allproducts', isPrivate, function(req, res) {
             title: 'Products List',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
+            utype: req.session.usertype,
             plist: products,
             pglist: productgroups,
             allRawMat: allmaterials,
@@ -215,6 +228,7 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
       title: 'Raw Materials',
       fname:  req.session.first_name,
       lname:  req.session.last_name,
+      utype: req.session.usertype,
       rawList: allmaterials
     });
   });
@@ -234,6 +248,7 @@ router.get('/allproducts/view/:id', isPrivate, (req, res) => {
             title: prod.name,
             fname:  req.session.first_name,
             lname:  req.session.last_name,
+            utype: req.session.usertype,
             product: prod,
             rawList: materials,
             allMat: allMaterials,
@@ -262,6 +277,7 @@ router.get('/productionorder', isPrivate, function(req, res) {
           title: 'Production Orders',
           fname:  req.session.first_name,
           lname:  req.session.last_name,
+          utype: req.session.usertype,
           productionorders: allprodords,
           plist: allproducts,
           bufferBO : buffer,
@@ -283,6 +299,7 @@ router.get('/productionorder/view/:id', isPrivate, function(req, res) {
         title: 'Production Orders',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
+        utype: req.session.usertype,
         productionorder: thisPO,
         branchorders: orders
       })
@@ -299,6 +316,7 @@ router.get('/supplier', isPrivate, function(req, res) {
       title: 'Suppliers',
       fname:  req.session.first_name,
       lname:  req.session.last_name,
+      utype: req.session.usertype,
       suppliers: allsupplier
     })
   })
@@ -313,6 +331,7 @@ router.get('/supplier/view/:id', isPrivate, function(req, res) {
         title: 'Supplier Information',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
+        utype: req.session.usertype,
         supplier: thisSupplier
       })
 
@@ -329,6 +348,7 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
         title: 'Purchase Orders',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
+        utype: req.session.usertype,
         purchaseorder: POs,
         supplier: allSuppliers
       })
@@ -349,6 +369,7 @@ router.get('/purchaseorder/view/:id', (req, res) => {
             title: 'Purchase Order Information',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
+            utype: req.session.usertype,
             purchaseorder: POs,
             supplyList: supplyListResult,
             supplier: supplierResult,
@@ -371,6 +392,7 @@ router.get('/manageusers', isPrivate, function(req, res) {
         title: 'Manage Users',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
+        utype: req.session.usertype,
         userlist: users,
         branchlist: branches
       })
@@ -385,7 +407,8 @@ router.get('/productgroupcard', isPrivate, function(req, res) {
     layout: 'main',
     title: '{{ Product Group }}',
     fname:  req.session.first_name,
-    lname:  req.session.last_name
+    lname:  req.session.last_name,
+    utype: req.session.usertype
   })
 });
 
@@ -396,7 +419,8 @@ router.get('/productcard', isPrivate, function(req, res) {
     layout: 'main',
     title: '{{ Product name}}',
     fname:  req.session.first_name,
-    lname:  req.session.last_name
+    lname:  req.session.last_name,
+    utype: req.session.usertype,
   })
 });
 
@@ -407,7 +431,8 @@ router.get('/purchaseordercard', isPrivate, function(req, res) {
     layout: 'main',
     title: '{{ Purchase Order }}',
     fname:  req.session.first_name,
-    lname:  req.session.last_name
+    lname:  req.session.last_name,
+    utype: req.session.usertype
   })
 });
 
@@ -420,7 +445,6 @@ router.get('/profile', isPrivate, function(req, res) {
     fname:  req.session.first_name,
     lname:  req.session.last_name,
     email:  req.session.email,
-    usertype:  req.session.email,
     mnum: req.session.mobileno,
     utype: req.session.usertype,
     branch: req.session.branch
@@ -444,6 +468,7 @@ router.get('/PGiterate/:id', isPrivate, (req, res) => {
               title: prod.name,
               fname:  req.session.first_name,
               lname:  req.session.last_name,
+              utype: req.session.usertype,
               product: prod,
               rawList: productRawMat,
               allMat: allmaterials,
@@ -466,6 +491,7 @@ router.get('/PGdecrementA/:id', isPrivate, (req, res) => {
             title: 'Product Groups',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
+            utype: req.session.usertype,
             pglist: productgroups,
             plist: productlist
           })
@@ -486,6 +512,7 @@ router.get('/PGincrement/:id', isPrivate, (req, res) => {
             title: 'Product Groups',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
+            utype: req.session.usertype,
             pgroup: productGroup,
             ungroupedProd: ungroupedproducts,
             plist: productlist
@@ -508,6 +535,7 @@ router.get('/PGDecrement/:id', isPrivate, (req, res) => {
             title: 'Product Groups',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
+            utype: req.session.usertype,
             pgroup: productGroup,
             ungroupedProd: ungroupedproducts,
             plist: productlist
@@ -528,6 +556,7 @@ router.get('/deletefromProd/:id', isPrivate, (req,res) => {
         title: 'Raw Materials',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
+        utype: req.session.usertype,
         rawList: allmaterials
       });
     })

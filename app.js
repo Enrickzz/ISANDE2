@@ -31,6 +31,14 @@ app.engine('hbs', exphbs({
   defaultView: 'main',
   layoutsDir: path.join(__dirname, '/views/layouts'),
   partialsDir: path.join(__dirname, '/views/partials'),
+  helpers: {
+    if_eq: function(a, b, opts) {
+      if(a == b) // Or === depending on your needs
+        return opts.fn(this);
+      else
+       return opts.inverse(this);
+    }
+  }
 }));
 
 // Setting the view engine to the express-handlebars engine we created
