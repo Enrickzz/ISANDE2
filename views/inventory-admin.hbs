@@ -25,10 +25,20 @@
                             w[i].classList.add("form-control")
                         }
                     }
+                    var branch = document.getElementById('whichbranch').value;
+                    var select = document.getElementById('branch');
+                    var option;
+                    var i;
+                    for(i = 0; i< select.options.length ; i++){
+                        option = select.options[i];
+                        if(option.value == branch){
+                            option.setAttribute('selected',true);
+                        }
+                    }
                 }
                 window.onload = checkCount;
             </script>
-            
+            <input type="hidden" id="whichbranch" value="{{whichbranch}}">
             <div class="container-fluid">
                 <h3 class="text-dark mb-1">Inventory</h3>
 
@@ -40,18 +50,24 @@
                                     <div class="form-group">
                                         {{!-- BRANCH --}}
                                         <label for="branch">Branch</label>
-                                            <select id="branch" name="branch" class="form-control">
-                                                <option value="">Branch A</option>
-                                                <option value="">Branch B</option>
-                                                <option value="">Branch C</option>
+                                        <form action="/filterbranch" method="POST">
+                                            <select id="branch" name="branch" class="form-control" onchange="this.form.submit()">
+                                                <option value="Branch A">Branch A</option>
+                                                <option value="Branch B">Branch B</option>
+                                                <option value="Branch C">Branch C</option>
                                             </select><br>
+                                        </form>
                                     </div>
                             </div>
 
                             <div style="text-align:center" class="col">
-                                <h4 >{{today}}</h4>
-                                <button class="btn btn-primary btn-sm" type="button"><i class="fas fa-arrow-left"></i> Previous</button>
-                                <button class="btn btn-primary btn-sm" type="button">Next Day <i class="fas fa-arrow-right"></i></button>
+                                <form>
+                                    <h4 >{{today}}</h4>
+                                    <input type="hidden" name="currdate" value="{{today}}">
+                                    <button class="btn btn-primary btn-sm" formaction="/prevday" formmethod="POST" type="submit"><i class="fas fa-arrow-left"></i> Previous</button>
+                                    <button class="btn btn-primary btn-sm" formaction="/nextday" formmethod="POST" type="submit">Next Day <i class="fas fa-arrow-right"></i></button>
+                                </form>
+                                
                             </div>
 
                             <div style="text-align:center" class="col">

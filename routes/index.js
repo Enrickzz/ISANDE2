@@ -17,6 +17,7 @@ const returnController = require('../controllers/returnController');
 const returnitemsController = require('../controllers/returnitemsController');
 const deliveryController = require('../controllers/deliveryController');
 const pulloutorderController = require('../controllers/pulloutorderController');
+const filterController = require('../controllers/filterController');
 
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -35,22 +36,17 @@ router.get('/home', isPrivate, function(req, res) {
 router.get('/inventory-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = yyyy + '-' + mm + '-' + dd;
-  var datequery = today.toString();
-
-  inventoryController.fetchQuery({inventorydate : datequery}, (allInventory) =>{
-    res.render('inventory-admin', {
-      layout: 'main',
-      title: 'Inventory',
-      fname:  req.session.first_name,
-      lname:  req.session.last_name,
-      inventory: allInventory,
-      today: datequery
+  filterController.getfilter({for:"inventory"} , (filter) =>{
+    inventoryController.fetchQuery({inventorydate : filter.date , branch_id:filter.branch}, (allInventory) =>{
+      res.render('inventory-admin', {
+        layout: 'main',
+        title: 'Inventory',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        inventory: allInventory,
+        today: filter.date,
+        whichbranch : filter.branch
+      })
     })
   })
 });
@@ -570,5 +566,8 @@ router.post('/addproductionorder', productionOrderController.addproductionorder)
 router.post('/deletebufferBO', branchOrderController.delete);
 router.post('/updatebranchInv', productionOrderController.statuschange4deliver);
 router.post('/recieveproductionorders', inventoryController.addInventory);
+router.post('/nextday', filterController.nextday);
+router.post('/prevday', filterController.prevday);
+router.post('/filterbranch', filterController.changebranch);
 
 module.exports = router
