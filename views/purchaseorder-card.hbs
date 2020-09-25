@@ -7,6 +7,9 @@
 
                         var removeButton1 = document.getElementById('Received');
                         removeButton1.parentNode.removeChild(removeButton1);
+
+                        var removeButton5 = document.getElementById('generatePDF');
+                        removeButton5.parentNode.removeChild(removeButton5);
                     }else if(x == "Ordered"){
                         document.getElementById('showstatus').style.color="orange";
                         var removeButton = document.getElementById('additem');
@@ -21,7 +24,9 @@
                         var exTH = document.getElementById('extraTH');
                         exTH.parentNode.removeChild(exTH);
 
-                        
+                        //var removeButton5 = document.getElementById('generatePDF');
+                       //removeButton5.parentNode.removeChild(removeButton5);
+
 
                     }else if(x == "Completed"){
                         document.getElementById('showstatus').style.color="green";
@@ -39,10 +44,10 @@
                         removeButton4.parentNode.removeChild(removeButton4);
                     }
                 }
-                
+
                 window.onload = statuscheck;
             </script>
-            
+
             <div class="container-fluid" onload="statuscheck()" >
                  <h3 class="text-dark mb-4">  <a href="/purchaseorder" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;{{title}}</h3>
                 <div class="card">
@@ -57,16 +62,18 @@
                                     <input type="hidden" name="purchaseorderID" value="{{purchaseorder._id}}">
                                     <button id="Received" class="btn btn-primary btn-sm" type="submit" formaction="/updateRawMaterialsStock" formmethod="POST"> Received</button>
                                     </form>
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="card">
-                    <div class="card-body" id="reguser">       
-                        <div class="row"> 
+                    {{!-- START PRINT --}}
+                    <div class="print">
+                    <div class="card-body" id="reguser">
+                        <div class="row">
                             <div class="col" >
 
                                 <div class="row"> <!--ROW1-->
@@ -85,12 +92,12 @@
                                                 <p>{{purchaseorder.shippingaddress}}</p>
                                             </div>
                                         </form>
-                                        
+
                                     </div>
 
                                     <div class="col">
                                         <h2 class="regheader">PURCHASE ORDER</h2>
-                                        <p><b>PO#</b>{{purchaseorder._id}}</p>      
+                                        <p><b>PO#</b>&nbsp;&nbsp;{{purchaseorder._id}}</p>
                                         <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{purchaseorder.status}}</span></p>
                                         <form>
                                             <div class="form-group">
@@ -104,7 +111,7 @@
                                     </div>
                                 </div>
 
-        
+
                             </div>
                         </div>
                         <br>
@@ -141,7 +148,7 @@
                                     {{/each}}
                                 </tbody>
                                 <tfoot>
-                                    
+
                                 </tfoot>
                             </table>
                             <div class="row">
@@ -163,7 +170,9 @@
                                 </div>
                             </div>
                         </div>
+                     </div>
                     </div>
+                    {{!-- END PRINT --}}
                     <div class="row" style="margin-top: 2rem;">
                         <div class="col">
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
@@ -174,15 +183,16 @@
                                         <input type="hidden" name="changestatus" value="Ordered">
                                         <button class="btn btn-primary btn-sm" type="submit">Order</button>
                                     </form>
-                                    
+
                                 </label>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     </div>
                 </div>
             </div>
-            
+            <br><br>
+
         <!-- Modal TO BE CHANGED-->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -201,7 +211,7 @@
                         <th>Price</th>
                         <th>Order Quantity</th>
                         <th style="width: 10%;"><span> </span></th>
-                        
+
                     </tr>
                 </thead>
 
@@ -234,3 +244,33 @@
 
     </div>
 </div>
+{{!-- FOR PRINT --}}
+<center>
+<div style="padding-bottom: 50px;">
+     <br>
+ <button class="btn btn-primary btn-sm" type="button"
+    id="generatePDF"  onclick="window.print()">Generate PDF</button> <br>
+</div>
+</center>
+{{!-- END OF PRINT --}}
+
+<style type="text/css">
+@media print
+{
+body * { 
+    visibility: hidden; 
+}
+.card * { 
+    visibility: visible; 
+}
+.btn.btn-primary.btn-sm * {
+    visibility: hidden;
+}
+
+#Received {
+    display: none;
+}
+
+}
+</style>
+

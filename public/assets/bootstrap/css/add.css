@@ -152,3 +152,8 @@ a.dropdown-item.active, a.dropdown-item.active:focus, a.dropdown-item:focus {
     padding-right: 2rem;
     padding-left: 2rem;
 }
+
+.total-amt {
+    margin-left: 500px;
+    background-color: #F98C40;
+}

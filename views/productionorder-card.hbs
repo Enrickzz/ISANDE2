@@ -6,6 +6,8 @@
                         document.getElementById('showstatus').style.color="red";
                         var rm1 = document.getElementById('delivered');
                         rm1.parentNode.removeChild(rm1);
+                        var removeButton5 = document.getElementById('generateSlip');
+                        removeButton5.parentNode.removeChild(removeButton5);
                     }else if(x == "In Production"){
                         document.getElementById('showstatus').style.color="orange";
                         var rm1 = document.getElementById('update');
@@ -14,6 +16,7 @@
                         rm2.parentNode.removeChild(rm2);
                         var rm3 = document.getElementById('reject');
                         rm3.parentNode.removeChild(rm3);
+                        
                     }else if(x == "For Delivery"){
                         document.getElementById('showstatus').style.color="green";
                         var rm1 = document.getElementById('update');
@@ -34,6 +37,8 @@
                         rm3.parentNode.removeChild(rm3);
                         var rm4 = document.getElementById('delivered');
                         rm4.parentNode.removeChild(rm4);
+                        var removeButton5 = document.getElementById('generateSlip');
+                        removeButton5.parentNode.removeChild(removeButton5);
                     }else if(x == "Completed"){
                         document.getElementById('showstatus').style.color="green";
                         var rm1 = document.getElementById('update');
@@ -77,6 +82,8 @@
                 </div>
             
                 <div class="card">
+                    {{!-- START PRINT --}}
+                    <div class="print">
                     <div class="card-body" id="reguser">       
                         <div class="row"> 
                             <div class="col" >
@@ -248,3 +255,32 @@
 
     </div>
 </div>
+{{!-- FOR PRINT --}}
+<center>
+<div style="padding-bottom: 50px;">
+     <br>
+ <button class="btn btn-primary btn-sm" type="button"
+    id="generateSlip"  onclick="window.print()">Generate Order Slip</button> <br>
+</div>
+</center>
+{{!-- END OF PRINT --}}
+
+<style type="text/css">
+@media print
+{
+body * { 
+    visibility: hidden; 
+}
+.card * { 
+    visibility: visible; 
+}
+.btn.btn-primary.btn-sm * {
+    visibility: hidden;
+}
+
+#Received {
+    display: none;
+}
+
+}
+</style>
