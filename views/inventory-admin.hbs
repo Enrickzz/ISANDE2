@@ -35,10 +35,19 @@
                             option.setAttribute('selected',true);
                         }
                     }
+
+                    var user = document.getElementById('usertype').value;
+
+                    if(user == "Branch Manager"){
+                        document.getElementById('prev').parentNode.removeChild(document.getElementById('prev'))
+                        document.getElementById('next').parentNode.removeChild(document.getElementById('next'))
+                        document.getElementById('branch').disabled = true
+                    }
                 }
                 window.onload = checkCount;
             </script>
             <input type="hidden" id="whichbranch" value="{{whichbranch}}">
+            <input type="hidden" id="usertype" value="{{usertype}}">
             <div class="container-fluid">
                 <h3 class="text-dark mb-1">Inventory</h3>
 
@@ -52,7 +61,7 @@
                                         <label for="branch">Branch</label>
                                         <form action="/filterbranch" method="POST">
                                             <select id="branch" name="branch" class="form-control" onchange="this.form.submit()">
-                                                <option value="Branch A">Branch A</option>
+                                                <option value="Branch A">{{whichbranch}}</option>
                                                 <option value="Branch B">Branch B</option>
                                                 <option value="Branch C">Branch C</option>
                                             </select><br>
@@ -64,8 +73,8 @@
                                 <form>
                                     <h4 >{{today}}</h4>
                                     <input type="hidden" name="currdate" value="{{today}}">
-                                    <button class="btn btn-primary btn-sm" formaction="/prevday" formmethod="POST" type="submit"><i class="fas fa-arrow-left"></i> Previous</button>
-                                    <button class="btn btn-primary btn-sm" formaction="/nextday" formmethod="POST" type="submit">Next Day <i class="fas fa-arrow-right"></i></button>
+                                    <button id="prev" class="btn btn-primary btn-sm" formaction="/prevday" formmethod="POST" type="submit"><i class="fas fa-arrow-left"></i> Previous</button>
+                                    <button id="next" class="btn btn-primary btn-sm" formaction="/nextday" formmethod="POST" type="submit">Next Day <i class="fas fa-arrow-right"></i></button>
                                 </form>
                                 
                             </div>
@@ -73,8 +82,8 @@
                             <div style="text-align:center" class="col">
                                 <div class="form-group">
                                         {{!-- BRANCH --}}
-                                        <label for="branch">Date</label>
-                                            <select id="branch" name="branch" class="form-control">
+                                        <label for="a">Date</label>
+                                            <select id="a" name="a" class="form-control">
                                                 <option value="">date1</option>
                                                 <option value="">date2</option>
                                                 <option value="">date3</option>
@@ -88,8 +97,8 @@
 
                     <div style="padding: 10px;">
                     {{!-- PRODUCT/PROD GROUP --}}
-                    <label for="branch">Product Group </label>
-                    <select id="branch" name="branch" class="">
+                    <label for="asd">Product Group </label>
+                    <select id="gas" name="bgasdranch" class="">
                         <option value="">All</option>
                         <option value="">option1</option>
                         <option value="">option2</option>
