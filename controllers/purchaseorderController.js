@@ -28,7 +28,7 @@ exports.getID = (req, res) => {
 
 exports.addPurchaseOrder = (req,res)=>{
   var purchaseorder = {
-    supplierID: req.body.supplierid,
+    supplier: req.body.supplierid,
     dueDate: req.body.duedate,
     orderDate: req.body.orderdate,
     status: req.body.status,

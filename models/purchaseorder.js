@@ -2,7 +2,7 @@ const mongoose = require('./connection');
 
 const purchaseOrderSchema = new mongoose.Schema(
   {
-    supplierID: {type: String, required: true},
+    supplier: {type: String, required: true},
     dueDate: {type: String, required: true},
     orderDate: {type: String, required: true},
     shippingaddress: {type: String, required: true},

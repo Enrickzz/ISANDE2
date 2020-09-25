@@ -391,10 +391,10 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
 router.get('/purchaseorder/view/:id', (req, res) => {
   console.log("Read view successful!");
   purchaseorderController.getID(req, (POs) => {
-    var query = POs.supplierID;
+    // var query = POs.supplier;
     var purchaseorderID = POs._id;
-    supplierController.getID(query, (supplierResult)=>{
-      supplierListController.fetchQuery(supplierResult.company, (supplyListResult) =>{
+    // supplierController.getID(query, (supplierResult)=>{
+      supplierListController.fetchQuery(POs.supplier, (supplyListResult) =>{
         rawMaterialOrderController.fetchQuery(purchaseorderID, (orderedList) =>{
           res.render('purchaseorder-card', { 
             layout:'main',
@@ -404,11 +404,11 @@ router.get('/purchaseorder/view/:id', (req, res) => {
             utype: req.session.usertype,
             purchaseorder: POs,
             supplyList: supplyListResult,
-            supplier: supplierResult,
+            supplier: POs.supplier,
             rawMaterialOrders: orderedList
           });
         })
-      })
+      // })
     })
   });
 });
