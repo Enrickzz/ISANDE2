@@ -41,12 +41,21 @@
                     if(user == "Branch Manager"){
                         document.getElementById('prev').parentNode.removeChild(document.getElementById('prev'))
                         document.getElementById('next').parentNode.removeChild(document.getElementById('next'))
-                        document.getElementById('branch').disabled = true
+                        var branch = document.getElementById('whichbranch').value;
+                        var select =  document.getElementById('branch'); select.disabled=true;
+                        var option;
+                        for(i = 0; i< select.options.length ; i++){
+                            option = select.options[i];
+                            if(option.value == branch){
+                                option.setAttribute('selected',true);
+                            }
+                        }
                     }
                 }
                 window.onload = checkCount;
             </script>
             <input type="hidden" id="whichbranch" value="{{whichbranch}}">
+            <input type="hidden" id="usertype" value="{{usertype}}">
             <input type="hidden" id="usertype" value="{{usertype}}">
             <div class="container-fluid">
                 <h3 class="text-dark mb-1">Inventory</h3>
@@ -61,7 +70,7 @@
                                         <label for="branch">Branch</label>
                                         <form action="/filterbranch" method="POST">
                                             <select id="branch" name="branch" class="form-control" onchange="this.form.submit()">
-                                                <option value="Branch A">{{whichbranch}}</option>
+                                                <option value="Branch A">Branch A</option>
                                                 <option value="Branch B">Branch B</option>
                                                 <option value="Branch C">Branch C</option>
                                             </select><br>

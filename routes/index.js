@@ -38,7 +38,23 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   filterController.getfilter({for:"inventory"} , (filter) =>{
-    inventoryController.fetchQuery({inventorydate : filter.date , branch_id:filter.branch}, (allInventory) =>{
+    var branchquery;
+    var datequery;
+    if(req.session.usertype == "Branch Manager"){
+      var todate = new Date();
+      todate.setDate(todate.getDate()-1)
+      var dd = String(todate.getDate()).padStart(2, '0');
+      var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = todate.getFullYear();
+      todate = yyyy + '-' + mm + '-' + dd;
+
+      datequery = todate;
+      branchquery = req.session.branch;
+    }else{
+      datequery = filter.date;
+      branchquery = filter.branch;
+    }
+    inventoryController.fetchQuery({inventorydate : datequery , branch_id:branchquery}, (allInventory) =>{
       res.render('inventory-admin', {
         layout: 'main',
         title: 'Inventory',
@@ -47,7 +63,7 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
         utype: req.session.usertype,
         inventory: allInventory,
         today: filter.date,
-        whichbranch : filter.branch,
+        whichbranch : branchquery,
         usertype: req.session.usertype
       })
     })
