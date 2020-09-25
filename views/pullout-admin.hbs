@@ -34,8 +34,7 @@
                                 <option value="">Branch B</option>
                                 <option value="">Branch C</option>
                             </select>
-
-                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
+                            <label style="float: right;">PULL OUT LIST</label>
                             
                             <div style="padding-bottom: 10px;"> </div>
                             <table class="table">
@@ -55,6 +54,7 @@
                                         <td> Sample value</td>
                                         <td> Sample value</td>
                                         <td>Sample value</td>
+                                        <td>Sample value</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -73,7 +73,7 @@
                                 <option value="">Branch C</option>
                             </select>
 
-                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
+                            <label style="float: right;">REQUEST LIST</label>
 
                             <div style="padding-bottom: 10px;"> </div>
                             <table class="table">
@@ -93,6 +93,7 @@
                                         <td> Sample value</td>
                                         <td> Sample value</td>
                                         <td>Sample value</td>
+                                        <td>Sample value</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -111,14 +112,14 @@
                                 <option value="">Branch C</option>
                             </select>
                             
-                            <button class="btn btn-primary btn-sm" type="submit" style="float: right;">Add to List</button>
+                            <label style="float: right;">PULL OUT ORDERS</label>
 
                             <div style="padding-bottom: 10px;"> </div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Order Date  <i class="fa fa-sort"></i></th>
-                                        <th style="max-width: ;">Request ID  <i class="fa fa-sort"></i></th>
+                                        <th style="max-width: ;">Pull Out ID  <i class="fa fa-sort"></i></th>
                                         <th>From Branch <i class="fa fa-sort"></i></th>
                                         <th>To Branch <i class="fa fa-sort"></i></th>
                                         <th>Status <i class="fa fa-sort"></i></th>
@@ -127,7 +128,7 @@
                                 </thead>
                                 <tbody>
                                     {{#each pullouts}}
-                                    <tr class="clickable" >
+                                    <tr class="clickable" onclick='window.location="/pulloutorder/view/{{this._id}}"'>
                                         <td>{{pulloutdate}}</td>
                                         <td> {{this._id}}</td>
                                         <td> {{FrombranchID}}</td>
@@ -155,8 +156,8 @@
                                 <div class="col">
                                         {{!-- Start form --}}
                                             <div class="form-group">
-                                                <label>Request ID</label>
-                                                <input id="" type="text" name="" class="form-control" placehodler="auto-generate" disabled><br>
+                                                <label>Pull Out ID</label>
+                                                <input id="" type="text" name="" class="form-control" placeholder="auto-generate" disabled><br>
                                             </div>
                                 </div>
 
@@ -206,7 +207,6 @@
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                     <tr class="tr-addproducts">
-                                        <th>#</th>
                                         <th>Item</th>
                                         <th>Quantity</th>
                                         <th>UOM</th>
@@ -217,7 +217,6 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="td-num-addproducts">1</td>
                                         <td> <select id="cars" name="sku" class="form-control" placeholder="Item"></select></td>
                                         <td> <input type="text" class="form-control" placeholder="Quantity"> </td>
                                         <td> <input type="text" class="form-control" placeholder="UOM"> </td>

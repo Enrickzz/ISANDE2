@@ -82,6 +82,22 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
   })
 });
 
+router.get('/pulloutorder/view/:id', (req, res) => {
+  console.log("Read view successful!");
+
+  pulloutorderController.getID(req, (pullouts) => {
+    var query = pullouts._id;
+          res.render('pullout-card', { 
+            layout:'main',
+            title: 'Pullout Order View',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            pullouts: pullouts
+          });
+        });
+});
+
 router.get('/returns', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template

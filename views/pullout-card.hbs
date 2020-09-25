@@ -1,0 +1,228 @@
+<!--            <script>
+                function statuscheck() {
+                    var x = document.getElementById('showstatus').innerText;
+                    console.log(x);
+                    if (x == "Pending"){
+                        document.getElementById('showstatus').style.color="red";
+                        var rm1 = document.getElementById('delivered');
+                        rm1.parentNode.removeChild(rm1);
+                    }else if(x == "In Production"){
+                        document.getElementById('showstatus').style.color="orange";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                    }else if(x == "For Delivery"){
+                        document.getElementById('showstatus').style.color="green";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                        var rm4 = document.getElementById('delivered');
+                        rm4.parentNode.removeChild(rm4);
+                    }else if(x == "Rejected"){
+                        document.getElementById('showstatus').style.color="red";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                        var rm4 = document.getElementById('delivered');
+                        rm4.parentNode.removeChild(rm4);
+                    }else if(x == "Completed"){
+                        document.getElementById('showstatus').style.color="green";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                        var rm4 = document.getElementById('delivered');
+                        rm4.parentNode.removeChild(rm4);
+                    }
+                }
+                window.onload = statuscheck;
+            </script>
+-->
+            <div class="container-fluid" onload="statuscheck()" >
+               <h3 class="text-dark mb-4">  <a href="/pullout-admin" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;Pull Out Order Information</h3>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="text-dark mb-1">PULL OUT ORDER FORM</h3>
+                            </div>
+                        <!--
+                            <div class="col">
+                                <div class="buttonlist" style="float: right;">
+                                    <form>
+                                    <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
+                                    <input type="hidden" name="branch" value="{{productionorder.branch}}">
+                                    <input type="hidden" name="date" value="{{productionorder.orderDate}}">
+                                    <input type="hidden" name="total" value="{{productionorder.total}}">
+                                    <button id="update" class="btn btn-primary btn-sm" type="submit" formaction="/editproductionorder" style="background-color:gray; border: 1px solid gray; ">Update</button>
+                                    <button id="accept" class="btn btn-primary btn-sm" type="submit" formaction="/acceptproductionorder" formmethod="POST" style="background-color:green; border: 1px solid green; ">Accept</button>
+                                    <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectproductionorder" formmethod="POST" style="background-color:red; border: 1px solid red; ">Reject</button>
+                                    <button id="delivered" class="btn btn-primary btn-sm" type="submit" formaction="/updatebranchInv" formmethod="POST"> For Delivery</button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        -->
+                        </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="card">
+                    <div class="card-body" id="reguser">       
+                        <div class="row"> 
+                            <div class="col" >
+                                <h2 class="regheader">Details</h2>
+                                <p><b>From: </b> {{pullouts.FrombranchID}}</p>      
+
+                                <div class="row"> <!--ROW1-->
+
+                                    <div class="col">
+                                        <form>
+                                            <div class="form-group">
+                                                <p><b>To: </b> {{pullouts.TobranchID}}</p>      
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+        
+                            </div>
+                            <div class="col" >
+                                <h2 class="regheader">PULL OUT ORDER</h2>
+                                <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{pullouts.status}}</span></p>
+
+                                <div class="row"> <!--ROW1-->
+
+                                    <div class="col">
+                                        <form>
+                                            <div class="form-group">
+                                                
+                                                <label>Order Date</label>
+                                                <p>{{pullouts.pulloutdate}}</p>
+                                                
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive table mt-2" id="regproductlist"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
+                        <div class="col">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr class="tr-addproducts">
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>UOM</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> <select id="cars" name="sku" class="form-control" placeholder="Item"></select></td>
+                                        <td> <input type="text" class="form-control" placeholder="Quantity"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="UOM"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="Rate"> </td>
+                                        <td> <input type="text" class="form-control" placeholder="Amount"> </td>                                   
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    
+                                </tfoot>
+                            </table>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2rem; justify-content: center;">
+                                <div class="total-amt" id="">
+                                    <label style="padding:10px; padding-right: 150px;" >
+                                        <span>TOTAL AMOUNT:</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 2rem;">
+                        <div class="col">
+                            <div class="text-md-center dataTables_filter" id="dataTable_filter">
+                                <label>
+                                    <!--<button class="btn btn-secondary btn-sm" type="submit">Continue Later</button>
+                                    <button class="btn btn-primary btn-sm" type="submit">Order</button>-->
+                                </label>
+                            </div>
+                        </div>
+                    </div> 
+                    </div>
+                </div>
+            </div>
+            
+        <!-- Modal TO BE CHANGED-->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Modal Header</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <table class="table my-0" id="dataTable">
+                <thead>
+                    <tr class="tr-addproducts">
+                        <th>Name</th>
+                        <th>UOM</th>
+                        <th>Price</th>
+                        <th>Order Quantity</th>
+                        <th style="width: 10%;"><span> </span></th>
+                        
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#each supplyList}}
+                    <tr class="clickable" >
+                        <form action="/addRawMaterialOrder" method="POST">
+                        <td><img class="mini-pic-list" src="../../assets/img/dogs/image3.jpeg">{{product}}</td>
+                        <td> {{UOM}}</td>
+                        <td> {{price}}</td>
+                        <td><input  type="number" name="quantity" class="form-control" style="min-width: 40px;"  required></td>
+                        <td style="width: 2%;">
+                            <input type="hidden" name="product" value="{{product}}">
+                            <input type="hidden" name="unit" value="{{UOM}}">
+                            <input type="hidden" name="price" value="{{price}}">
+                            <input type="hidden" name="purchaseorderid" value="{{../purchaseorder._id}}">
+                            <button class="btn btn-primary btn-sm" type="submit" >Add</button>
+                        </td>
+                        </form>
+                    </tr>
+                    {{/each}}
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+
+    </div>
+</div>

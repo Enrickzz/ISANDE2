@@ -17,3 +17,8 @@ exports.getAll = (param, next) => {
     });
   };
 
+exports.getByID = function(query, next) {
+    pulloutorderModel.findById(query, function(err, post) {
+      next(err, post);
+    });
+  };
