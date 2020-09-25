@@ -45,8 +45,8 @@
                         <div id="users" class="container tab-pane active"><br>
                         <div class="row">
                             <div class="col-md-6 text-nowrap">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label style="padding: 11px;margin: -6px;margin-right: 20px;">Branch 
-                                    <select class="form-control form-control-sm custom-select custom-select-sm" style="padding-left: 10 px;margin-left: 20;">
+                                {{!-- <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label style="padding: 11px;margin: -6px;margin-right: 20px;">Branch 
+                                    <select class="form-control form-control-sm custom-select custom-select-sm" style="padding-left: 10 px;margin-left: 20;" id="filter" onkeyup="filter()">
                                         <option value="10" selected>Branch A</option>
                                         <option value="Branch B">Branch B</option>
                                         <option value="Branch C">Branch C</option>
@@ -54,22 +54,28 @@
                                         <option value="Branch D">Branch D</option>
                                         <option value="Branch D">Branch D</option>
                                     </select></label>
+                                </div> --}}
+
+                                {{!-- FILTER TABLE --}}
+                                <div class="dataTables_filter" id="dataTable_filter"> Branch: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter" onkeyup="filter()" placeholder="All Branches"></label>
                                 </div>
+                                {{!-- END FILTER --}}
+                               
                             </div>
-                            <div class="col-md-6">
-                                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search" /></label></div>
-                            </div>
+                         <div style="padding-bottom: 10px;"> </div>
                         </div>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" 
-                            style=" overflow-y:scroll; height:600px; display:block;">
-                            <table class="table my-0" id="dataTable">
+                            {{!-- style=" overflow-y:scroll; height:610px; display:block;"> --}}>
+                            <table class="table my-0" id="usersTable">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Role</th>
-                                        <th>Branch</th>
-                                        <th>Mobile Number</th>
-                                        <th>Email</th>
+                                        <th onclick="sortTable(0)"> Name <i class="fa fa-fw fa-sort"></i></th>
+                                        <th onclick="sortTable(1)">Role <i class="fa fa-fw fa-sort"></i></th>
+                                        <th onclick="sortTable(2)">Branch <i class="fa fa-fw fa-sort"></i></th>
+                                        <th >Mobile Number </th>
+                                        <th onclick="sortTable(4)">Email <i class="fa fa-fw fa-sort"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,15 +86,13 @@
                         </div>
                         {{!-- <div class="row">
                             <div class="col-md-6 align-self-center">
-                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10</p>
                             </div>
                             <div class="col-md-6">
                                 <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                     <ul class="pagination">
                                         <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
                                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                                         <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
                                     </ul>
                                 </nav>
@@ -198,5 +202,81 @@
                 <div class="card shadow"></div>
             </div>
             <br><br>
+
+    <script>
+        function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("usersTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc"; 
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch= true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+            }
+            }
+            if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;      
+            } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
+        }
+
+        function filter() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("usersTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+        }
+    </script>
 
             

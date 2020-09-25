@@ -29,13 +29,13 @@
                         {{!-- ALL USERS --}}
                         <div id="supplier" class="container tab-pane active"><br>
                         <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                            <table class="table my-0" id="dataTable">
+                            <table class="table my-0" id="supTable">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Company</th>
-                                        <th>Mobile no.</th>
-                                        <th>Email</th>
+                                        <th onclick="sortTable(0)">Name <i class="fa fa-fw fa-sort"></i></th>
+                                        <th onclick="sortTable(1)">Company <i class="fa fa-fw fa-sort"></i></th>
+                                        <th>Mobile Number</th>
+                                        <th onclick="sortTable(3)">Email <i class="fa fa-fw fa-sort"></i></th>
                                     </tr>
                                 </thead>
 
@@ -179,22 +179,79 @@
                     }); 
             });
 
-    // This is causes form to be unresponsive
-    /*
-            $(function() {
-                $('#first_name').add('#last_name').keydown(function (e) {
+        function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("supTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc"; 
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch= true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+            }
+            }
+            if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;      
+            } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
+        }
 
-                    var key = e.keyCode;
-      
-                    if (!((key == 8) || (key == 16) || (key == 32) || (key >= 65 && key <= 90))) {
-                        e.preventDefault();
-                         $('#errormsg').text('Invalid! Only character input accepted');
-                    }
-                    else{
-                        $('#errormsg').text('');
-                    }
-                });
-            });
-        */ 
+        function filter() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("POsTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[5];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+        }
 
         </script>
+

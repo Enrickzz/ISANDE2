@@ -20,13 +20,13 @@
                     {{!-- ALL RAW MATERIALS --}}
                 <div class="container tab-pane active" id="rawmaterials" style="padding-top: 30px;">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="rawTable">
                             <thead>
                                 <tr>
-                                    <th>Name  <i class="fa fa-sort"></i></th>
-                                    <th>UOM </th>
-                                    <th>Stock on Hand</th>
-                                    <th>Cost/Unit</th>
+                                    <th onclick="sortTable(0)">Name <i class="fa fa-sort"></i></th>
+                                    <th onclick="sortTable(1)">UOM  <i class="fa fa-sort"></i></th>
+                                    <th> Stock on Hand</th>
+                                    <th> Cost/Unit </th>
                                     <th style="min-width:40px;"><span></span></th>
                                     <th style="min-width:40px;"><span></span></th>
                                 </tr>
@@ -112,7 +112,7 @@
                                     </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="cars">Reorder Point</label>
+                                        <label for="cars" style="padding-bottom: 24px;">Reorder Point</label>
                                         <input name="reorder" type="number" class="form-control" /><br>
                                     </div>
                                 </div>
@@ -220,3 +220,60 @@
         </script>
         
 </div>
+
+    <script>
+        function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("rawTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc"; 
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch= true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+            }
+            }
+            if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;      
+            } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
+        }
+    </script>

@@ -158,3 +158,12 @@ a.dropdown-item.active, a.dropdown-item.active:focus, a.dropdown-item:focus {
     background-color: #F98C40;
     border: 1px solid #F98C40;
 }
+
+th {
+    cursor: pointer;
+    }
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
