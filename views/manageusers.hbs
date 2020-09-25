@@ -60,7 +60,8 @@
                                 <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search" /></label></div>
                             </div>
                         </div>
-                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" 
+                            style=" overflow-y:scroll; height:600px; display:block;">
                             <table class="table my-0" id="dataTable">
                                 <thead>
                                     <tr>
@@ -77,7 +78,7 @@
                             
                             </table>
                         </div>
-                        <div class="row">
+                        {{!-- <div class="row">
                             <div class="col-md-6 align-self-center">
                                 <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
                             </div>
@@ -92,7 +93,7 @@
                                     </ul>
                                 </nav>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     {{!-- END OF ALL USERS --}}
 
@@ -103,7 +104,7 @@
                             <div class="col-md-6">
                                 <div class="up_profpic">
                                   <div >
-                                    <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="250" height="250" />
+                                    <img class="rounded-circle mb-3 mt-4" src="assets/img/icons/guest.jpg" width="250" height="250" />
                                 {{!-- Start form --}}
                                 <form oninput='password.setCustomValidity(up2.value != up.value ? "Passwords do not match." : "")' method="POST" action="/register">    
                                     <input type="file" name="image" id="image" style="padding-left: 100px; outline: none"></input>
