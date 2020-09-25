@@ -9,9 +9,9 @@ const inventorySchema = new mongoose.Schema({
     restockedInventory: { type: String, required:false, default:"0"},
     midDayCount: { type: Number, required:false, default:"0"},
     midDaySales: { type: Number, required:false, default:"0"},
-    additionalRestock: { type: String, required: false , default:"0"},
-    pulloutStock: { type: String, required:false, default:"0"},
-    runningInventory: { type: String, required:false, default:"0"},
+    additionalRestock: { type: Number, required: false , default:"0"},
+    pulloutStock: { type: Number, required:false, default:"0"},
+    runningInventory: { type: Number, required:false, default:"0"},
     endDayCount: { type: String, required:false, default:"0"},
     endDaySales: { type: String, required:false, default:"0"},
     returns: { type: Number, required:false, default:"0"},
@@ -44,6 +44,7 @@ exports.updateFind = function(query, update, next) {
     next(err, done);
   })
 };
+
 exports.create = function(obj, next) {
   const inv = new inventoryModel(obj);
   console.log(inv);

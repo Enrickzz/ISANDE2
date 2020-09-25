@@ -37,17 +37,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each bufferBO}}
-                                        <tr>
-                                            <td>{{product}} </td>
-                                            <td>{{quantity}} </td>
-                                            <td>{{UOM}} </td>
-                                            <td>{{rate}} </td>
-                                            <td>{{amount}} </td> 
-                                            <td style="max-width:50px;">
-                                                <input type="hidden" name="BOid" value="{{this._id}}">
-                                                <button class="btn btn-primary btn-sm" formaction="/deletebufferBO" formmethod="POST" type="submit">Delete</button>
-                                            </td>                                  
+                                    {{#each reqpullout}}
+                                        <tr class="clickable" >
+                                            <td>{{product}}</td>
+                                            <td>{{from}}</td>
+                                            <td>{{cost}}</td>
+                                            <td>{{currInv}}</td>
+                                            <td>{{quantity}}</td>
                                         </tr>
                                     {{/each}}
                                 </tbody>
@@ -90,17 +86,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each bufferBO}}
-                                        <tr>
-                                            <td>{{product}} </td>
-                                            <td>{{quantity}} </td>
-                                            <td>{{UOM}} </td>
-                                            <td>{{rate}} </td>
-                                            <td>{{amount}} </td> 
-                                            <td style="max-width:50px;">
-                                                <input type="hidden" name="BOid" value="{{this._id}}">
-                                                <button class="btn btn-primary btn-sm" formaction="/deletebufferBO" formmethod="POST" type="submit">Delete</button>
-                                            </td>                                  
+                                    {{#each reqaddstock}}
+                                        <tr class="clickable" >
+                                            <td>{{product}}</td>
+                                            <td>{{from}}</td>
+                                            <td>{{cost}}</td>
+                                            <td>{{currInv}}</td>
+                                            <td>{{quantity}}</td>
                                         </tr>
                                     {{/each}}
                                 </tbody>
@@ -139,7 +131,7 @@
             <!-- Modal content-->
             <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Products</h4>
+                <h4 class="modal-title">Add to Request List</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -154,27 +146,18 @@
                     </thead>
             
                     <tbody>
-                         {{#each plist}}
-                         <form action="/productNewMaterial" method="POST">
+                         {{#each inventory}}
+                         <form action="/addtoreqlist" method="POST">
                             <tr class="clickable" >
-                                <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{name}} </td>
+                                <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{product}} </td>
                                 <td><input required type="text" name="quantity" id="" class="form-control w-60" width="2"></td>
-                                <td>
-                                    <div class="form-group">
-                                        <select id="cars" name="UOM" class="form-control">
-                                            <option value="gram/s">gram/s</option>
-                                            <option value="tbsp">tbsp</option>
-                                            <option value="tsp">tsp</option>
-                                        </select>
-                                    </div>
-                                    
-                                </td>
-                                <input type="hidden" name="rawMaterialID" value="{{this._id}}">
-                                <input type="hidden" name="productID" value="{{../product._id}}">
-                                <!-- #each disallows access to product._id-->
-                                <input type="hidden" name="name" value="{{name}}">
+                                <input type="hidden" name="from" value="{{../branch}}">
+                                <input type="hidden" name="product" value="{{product}}">
+                                <input type="hidden" name="cost" value="{{srp}}">
+                                <input type="hidden" name="currInv" value="{{runningInventory}}">
+                                <input type="hidden" name="type" value="addstock">
+                                <input type="hidden" name="date" value="{{inventorydate}}">
                                 
-
                                 <td style="width: 2%;">
                                     <button class="btn btn-primary btn-sm" type="submit" >Add</button>
                                 </td>
@@ -218,27 +201,18 @@
                     </thead>
             
                     <tbody>
-                         {{#each plist}}
-                         <form action="/productNewMaterial" method="POST">
+                         {{#each inventory}}
+                         <form action="/addtoreqlist" method="POST">
                             <tr class="clickable" >
-                                <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{name}} </td>
+                                <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{product}} </td>
                                 <td><input required type="text" name="quantity" id="" class="form-control w-60" width="2"></td>
-                                <td>
-                                    <div class="form-group">
-                                        <select id="cars" name="UOM" class="form-control">
-                                            <option value="gram/s">gram/s</option>
-                                            <option value="tbsp">tbsp</option>
-                                            <option value="tsp">tsp</option>
-                                        </select>
-                                    </div>
-                                    
-                                </td>
-                                <input type="hidden" name="rawMaterialID" value="{{this._id}}">
-                                <input type="hidden" name="productID" value="{{../product._id}}">
-                                <!-- #each disallows access to product._id-->
-                                <input type="hidden" name="name" value="{{name}}">
+                                <input type="hidden" name="from" value="{{../branch}}">
+                                <input type="hidden" name="product" value="{{product}}">
+                                <input type="hidden" name="cost" value="{{srp}}">
+                                <input type="hidden" name="currInv" value="{{runningInventory}}">
+                                <input type="hidden" name="type" value="pull-out">
+                                <input type="hidden" name="date" value="{{inventorydate}}">
                                 
-
                                 <td style="width: 2%;">
                                     <button class="btn btn-primary btn-sm" type="submit" >Add</button>
                                 </td>

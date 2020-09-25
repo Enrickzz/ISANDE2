@@ -28,9 +28,19 @@
                             <div class="col">
                                 <div class="buttonlist" style="float: right;">
                                     <form>
+                                    <!--add inventory-->
                                     <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
                                     <input type="hidden" name="deliveryID" value="{{delivery._id}}">
+                                    <!--add pullouts inventory-->
+                                    <input type="hidden" name="to" value="{{pulloutOrder.TobranchID}}">
+                                    <input type="hidden" name="from" value="{{pulloutOrder.FrombranchID}}">
+                                    <input type="hidden" name="requestID" value="{{request._id}}">
+                                    <input type="hidden" name="pulloutID" value="{{pulloutOrder._id}}"> 
+                                    {{#if branchorders}}
                                     <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/recieveproductionorders" formmethod="POST">Recieved</button>
+                                    {{else}}
+                                    <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/pulloutupdate" formmethod="POST">Recieved</button>
+                                    {{/if}}
                                     </form>
                                 </div>
                             </div>
@@ -44,14 +54,21 @@
                         <div class="row"> 
                             <div class="col" >
                                 <h2 class="regheader">Details</h2>
+                                {{#if branchorders}}
                                 <p><b>From: </b> Central Branch </p>      
-
+                                {{else}}
+                                <p><b>From: </b> {{pulloutOrder.FrombranchID}} </p>          
+                                {{/if}}
                                 <div class="row"> <!--ROW1-->
 
                                     <div class="col">
                                         <form>
                                             <div class="form-group">
-                                                <p><b>To: </b>  {{productionorder.branch}}</p>      
+                                                {{#if branchorders}}
+                                                <p><b>To: </b>{{productionorder.branch}} </p>      
+                                                {{else}}
+                                                <p><b>To: </b> {{pulloutOrder.TobranchID}} </p>          
+                                                {{/if}}    
                                             </div>
                                         </form>
                                     </div>
@@ -70,7 +87,8 @@
         
                             </div>
                             <div class="col" >
-                                <h2 class="regheader">ORDER TYPE NAME</h2>
+                                <h2 class="regheader">{{delivery.type}}</h2>
+                                
                                 <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{delivery.status}}</span></p>
 
                                 <div class="row"> <!--ROW1-->
@@ -78,10 +96,12 @@
                                     <div class="col">
                                         <form>
                                             <div class="form-group">
-                                                
                                                 <label>Order Date</label>
+                                                {{#if branchorders}}
                                                 <p>{{productionorder.orderDate}}</p>
-                                                
+                                                {{else}}
+                                                <p>{{delivery.deliverydate}}</p>
+                                                {{/if}}
                                             </div>
                                               <div class="form-group">
                                                 
@@ -119,14 +139,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each branchorders}}
+                                    {{#if branchorders}}
+                                        {{#each branchorders}}
+                                            <tr class="clickable" >
+                                                <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
+                                                <td> {{quantity}}</td>
+                                                <td>{{rate}}</td>
+                                                <td>{{amount}}</td>
+                                            </tr>
+                                        {{/each}}
+                                    {{else}}
                                         <tr class="clickable" >
-                                            <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
-                                            <td> {{quantity}}</td>
-                                            <td>{{rate}}</td>
-                                            <td>{{amount}}</td>
+                                            <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
+                                            <td> {{request.quantity}}</td>
+                                            <td>{{request.cost}}</td>
+                                            <td>{{request.cost}}</td>
                                         </tr>
-                                    {{/each}}
+                                    {{/if}}
                                 </tbody>
                                 <tfoot>
                                     

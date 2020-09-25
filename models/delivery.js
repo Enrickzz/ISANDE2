@@ -5,6 +5,7 @@ const deliverySchema = new mongoose.Schema({
     productionID: { type: String, required:true},
     total: { type: String, required:true},
     status: { type: String, required:true},
+    type: { type: String, required:false},
   }
 );
 

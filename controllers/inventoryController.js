@@ -3,6 +3,8 @@ const inventoryModel = require('../models/inventory');
 const branchOrderModel = require('../models/branchorder');
 const productionOrderModel = require('../models/productionorder');
 const deliveryModel = require('../models/delivery');
+const requestModel = require('../models/requestlist');
+const pulloutModel = require('../models/pulloutorders');
 
 const { validationResult } = require('express-validator');
 
@@ -105,7 +107,6 @@ exports.midendCountUpdate = (req,res) =>{
 
 exports.addInventory = (req,res) =>{
   var prodID = req.body.productionorderID;
-  
   productionOrderModel.getByID(prodID, (er, POobj)=>{
     branchOrderModel.fetchList({productionorderID:prodID }, (err, result)=>{
       if(err){
@@ -207,5 +208,71 @@ exports.addInventory = (req,res) =>{
         })
       }
     })
+  })
+}
+
+exports.pulloutUpdate = (req,res)=>{
+  var dest = req.body.to;
+  var origin = req.body.from;
+  var reqID = req.body.requestID;
+  var PulloutID = req.body.pulloutID;
+  var deliveryid = req.body.deliveryID
+
+  console.log(dest + "\n"+ origin +"\n"+ reqID +"\n"+ PulloutID +"\n"+deliveryid +"END");
+
+  var todate = new Date();
+  var dd = String(todate.getDate()).padStart(2, '0');
+  var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = todate.getFullYear();
+  todate = yyyy + '-' + mm + '-' + dd;
+  console.log(todate);
+
+  inventoryModel.fetchList({branch_id: dest, inventorydate:todate}, (err, updatethis)=>{
+    if(err){
+      throw err;
+    }else{
+      requestModel.getByID(reqID, (err2, withthis) =>{
+        updatethis.forEach(function(doc){
+          var inv = doc.toObject()
+          if(inv.product == withthis.product){
+            inventoryModel.updateFind({_id: inv._id}, {$inc: {additionalRestock: parseFloat(withthis.quantity), runningInventory:parseFloat(withthis.quantity) } }, (err3, result)=>{
+              if(err3){
+                throw err3;
+              }else{
+                var update = {
+                  $set: {
+                    status: "Delivered"
+                  }
+                }
+                deliveryModel.update({_id: deliveryid},update, (errr, result3)=>{
+                  if (errr) {
+                    throw errr;
+                  }else{
+                    var status = {
+                      $set:{
+                        status:"Done"
+                      }
+                    }
+                    pulloutModel.update({_id:PulloutID}, status, (eror, result4)=>{
+                      if(eror){
+                        throw eror;
+                      }else{
+                        requestModel.remove(reqID, (er, del)=>{
+                          if(er){
+                            throw er;
+                          }else{
+                            res.redirect('/inventory-admin');
+                          }
+                        })
+                      }
+                    })
+                  }
+                })
+              }
+            })
+          }
+        })
+      })
+    }
   })
 }

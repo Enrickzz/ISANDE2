@@ -1,54 +1,21 @@
-<!--            <script>
-                function statuscheck() {
-                    var x = document.getElementById('showstatus').innerText;
-                    console.log(x);
-                    if (x == "Pending"){
-                        document.getElementById('showstatus').style.color="red";
-                        var rm1 = document.getElementById('delivered');
-                        rm1.parentNode.removeChild(rm1);
-                    }else if(x == "In Production"){
-                        document.getElementById('showstatus').style.color="orange";
-                        var rm1 = document.getElementById('update');
-                        rm1.parentNode.removeChild(rm1);
-                        var rm2 = document.getElementById('accept');
-                        rm2.parentNode.removeChild(rm2);
-                        var rm3 = document.getElementById('reject');
-                        rm3.parentNode.removeChild(rm3);
-                    }else if(x == "For Delivery"){
-                        document.getElementById('showstatus').style.color="green";
-                        var rm1 = document.getElementById('update');
-                        rm1.parentNode.removeChild(rm1);
-                        var rm2 = document.getElementById('accept');
-                        rm2.parentNode.removeChild(rm2);
-                        var rm3 = document.getElementById('reject');
-                        rm3.parentNode.removeChild(rm3);
-                        var rm4 = document.getElementById('delivered');
-                        rm4.parentNode.removeChild(rm4);
-                    }else if(x == "Rejected"){
-                        document.getElementById('showstatus').style.color="red";
-                        var rm1 = document.getElementById('update');
-                        rm1.parentNode.removeChild(rm1);
-                        var rm2 = document.getElementById('accept');
-                        rm2.parentNode.removeChild(rm2);
-                        var rm3 = document.getElementById('reject');
-                        rm3.parentNode.removeChild(rm3);
-                        var rm4 = document.getElementById('delivered');
-                        rm4.parentNode.removeChild(rm4);
-                    }else if(x == "Completed"){
-                        document.getElementById('showstatus').style.color="green";
-                        var rm1 = document.getElementById('update');
-                        rm1.parentNode.removeChild(rm1);
-                        var rm2 = document.getElementById('accept');
-                        rm2.parentNode.removeChild(rm2);
-                        var rm3 = document.getElementById('reject');
-                        rm3.parentNode.removeChild(rm3);
-                        var rm4 = document.getElementById('delivered');
-                        rm4.parentNode.removeChild(rm4);
-                    }
-                }
-                window.onload = statuscheck;
-            </script>
--->
+ <script>
+       function statuscheck(){
+            var x = document.getElementById('showstatus').innerText;
+            console.log(x);
+            if (x == "Done"){
+                document.getElementById('showstatus').style.color="green";
+                //var rm1 = document.getElementById('received');
+                //rm1.parentNode.removeChild(rm1);
+            }else if (x == "In Transit"){
+                document.getElementById('showstatus').style.color="orange";
+            }else if (x == "In production"){
+                document.getElementById('showstatus').style.color="orange";
+                var rm1 = document.getElementById('received');
+                rm1.parentNode.removeChild(rm1);
+            }
+       }
+       window.onload = statuscheck;
+   </script>
             <div class="container-fluid" onload="statuscheck()" >
                <h3 class="text-dark mb-4">  <a href="/pullout-admin" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;Pull Out Order Information</h3>
                 <div class="card">

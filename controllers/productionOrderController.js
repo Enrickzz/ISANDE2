@@ -36,8 +36,12 @@ exports.paramgetID = (req, res) => {
   productionorderModel.getByID(id, (err, result) => {
     if (err) {
       throw err;
+      
     } else {
-      var POobj = result.toObject();
+      var POobj;
+      if(result){
+        POobj = result.toObject();
+      }
       res(POobj);
     }
   });
@@ -107,7 +111,8 @@ exports.statuschangeAcc = (req,res) =>{
         deliverydate: date,
         productionID: id,
         total: total,
-        status: "In production"
+        status: "In production",
+        type: "Production Order"
       }
       deliveryModel.create(delivery, (err2,result)=>{
         if (err2) {
