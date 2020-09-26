@@ -14,12 +14,11 @@
                         }else{
                             w[i].classList.add("form-control");
                         }
-
                         var check = x[i].value;
                         if(check==0){
                             y[i].disabled = false;
                             y[i].classList.add("form-control");
-                            w[i].disabled =true;
+                            //w[i].disabled =true;
                         }else{
                             y[i].classList.add("form-control");
                             w[i].classList.add("form-control")
@@ -144,16 +143,16 @@
                                                 <td>{{restockQuantity}}</td>
                                                 <td>{{restockedInventory}}</td>
                                             <input type="hidden" name="restocked" value="{{restockedInventory}}">
-                                            <input type="hidden" class="middayActual" value="{{midDayCount}}">
-                                                <td><input type="text" pattern="[0-9]+" name="midDayCount" class="boton" class="form-control" placeholder="{{midDayCount}}" style="width: 90px;" disabled> </td>
+                                            <input type="hidden" class="middayActual" value="{{midDaySales}}">
+                                                <td><input type="text" pattern="[0-9]{1}[0-9]+" name="midDayCount" class="boton" class="form-control" placeholder="{{midDayCount}}" style="width: 90px;" disabled> </td>
                                                 <td>{{midDaySales}}</td>
                                                 <td>{{additionalRestock}}</td>
                                                 <td>{{pulloutStock}}</td>
                                                 <td>{{runningInventory}}</td>
                                             <input type="hidden" name="changedStock" value="{{runningInventory}}">
                                             <input type="hidden" name="middaysale" value="{{midDaySales}}">
-                                            <input type="hidden" class="enddayActual" value="{{endDayCount}}">
-                                                <td><input type="text"  pattern="[0-9]+" name="endDayCount" class="boton2" class="form-control" placeholder="{{endDayCount}}"style="width: 90px;" disabled></td>
+                                            <input type="hidden" class="enddayActual" value="{{totsales}}">
+                                                <td><input type="text"  pattern="[0-9]{1}[0-9]+" name="endDayCount" class="boton2" class="form-control" placeholder="{{endDayCount}}"style="width: 90px;" disabled></td>
                                                 <td>{{returns}}</td>
                                                 <td>{{totsales}}</td>
                                             <input type="hidden" name="id" value="{{this._id}}">

@@ -239,35 +239,42 @@ exports.pulloutUpdate = (req,res)=>{
               if(err3){
                 throw err3;
               }else{
-                var update = {
-                  $set: {
-                    status: "Delivered"
-                  }
-                }
-                deliveryModel.update({_id: deliveryid},update, (errr, result3)=>{
-                  if (errr) {
-                    throw errr;
-                  }else{
-                    var status = {
-                      $set:{
-                        status:"Done"
+                inventoryModel.updateFind({branch_id: withthis.from, inventorydate: todate, product: withthis.product }, 
+                  {$inc:{ pulloutStock: -(parseFloat(withthis.quantity)), runningInventory: -(parseFloat(withthis.quantity)) }}, (err4, result4) =>{
+                    if(err4){
+                      throw err4
+                    }else{
+                      var update = {
+                        $set: {
+                          status: "Delivered"
+                        }
                       }
-                    }
-                    pulloutModel.update({_id:PulloutID}, status, (eror, result4)=>{
-                      if(eror){
-                        throw eror;
-                      }else{
-                        requestModel.remove(reqID, (er, del)=>{
-                          if(er){
-                            throw er;
-                          }else{
-                            res.redirect('/inventory-admin');
+                      deliveryModel.update({_id: deliveryid},update, (errr, result3)=>{
+                        if (errr) {
+                          throw errr;
+                        }else{
+                          var status = {
+                            $set:{
+                              status:"Done"
+                            }
                           }
-                        })
-                      }
-                    })
-                  }
-                })
+                          pulloutModel.update({_id:PulloutID}, status, (eror, result4)=>{
+                            if(eror){
+                              throw eror;
+                            }else{
+                              requestModel.remove(reqID, (er, del)=>{
+                                if(er){
+                                  throw er;
+                                }else{
+                                  res.redirect('/inventory-admin');
+                                }
+                              })
+                            }
+                          })
+                        }
+                      })
+                    }
+                  })
               }
             })
           }

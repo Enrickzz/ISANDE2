@@ -43,7 +43,7 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     var datequery;
     if(req.session.usertype == "Branch Manager"){
       var todate = new Date();
-      todate.setDate(todate.getDate()-1)
+      todate.setDate(todate.getDate())
       var dd = String(todate.getDate()).padStart(2, '0');
       var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
       var yyyy = todate.getFullYear();
