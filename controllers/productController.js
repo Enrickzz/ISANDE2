@@ -49,35 +49,91 @@ exports.getGroupProducts = (req,res) => {
   })
 }
 
-
-//No VALIDATORS 
-exports.addProduct = (req,res)=>{
-    var product = {
-      name: req.body.name,
-      sku: req.body.sku,
-      description: req.body.description,
-      UOM: req.body.UOM,
-      sellingprice: req.body.sellingprice,
-      product_groupID: req.body.prodgroup
-    }
+// //No VALIDATORS 
+// exports.addProduct = (req,res)=>{
+//     var product = {
+//       name: req.body.name,
+//       sku: req.body.sku,
+//       description: req.body.description,
+//       UOM: req.body.UOM,
+//       sellingprice: req.body.sellingprice,
+//       product_groupID: req.body.prodgroup
+//     }
    
-    productModel.createProduct(product, function (err, product_result) {
-      if(err){
-        console.log(err);
-        res.redirect('/allproducts');
-      }
-      else{
-        if(product_result.product_groupID != "Ungrouped"){
-          console.log(product_result);
-          res.redirect('/PGiterate/'+product_result._id);
-        }
-        else
-        {
-          res.redirect('/product/view/'+product_result._id);
-        }
+//     productModel.createProduct(product, function (err, product_result) {
+//       if(err){
+//         console.log(err);
+//         res.redirect('/allproducts');
+//       }
+//       else{
+//         if(product_result.product_groupID != "Ungrouped"){
+//           console.log(product_result);
+//           res.redirect('/PGiterate/'+product_result._id);
+//         }
+//         else
+//         {
+//           res.redirect('/product/view/'+product_result._id);
+//         }
         
+//       }
+//     })
+// };
+
+exports.addProduct = (req, res) => {
+  const errors = validationResult(req);
+
+  const { name, sku, description, UOM, prodgroup, sellingprice} = req.body;
+    
+    if (errors.isEmpty()) {      
+    productModel.getOne({ name: name }, (err, result) => {
+      if (result) {
+        console.log("Product already exists!");
+        // found a match, return to login with error
+      req.flash('error_msg', 'Product already exists.');
+      //   req.session.save( function(){ res.redirect('/'); })
+      res.redirect('/allproducts');
+
+      } else {
+
+          const newProduct = {
+            name,
+            sku,
+            description,
+            UOM,
+            prodgroup,
+            sellingprice
+          };
+
+          productModel.createProduct(newProduct, function (err, product_result) {
+            if(err){
+              req.flash('error_msg', 'Could not add product. Please try again.');
+              console.log(err.errors);
+              result = { success: false, message: "Product was not created!" }
+              res.redirect('/allproducts');
+            }
+            else{
+              if(product_result.prodgroup != "Ungrouped"){
+                console.log(product_result);
+                req.flash('success_msg', 'Product added.');
+                res.redirect('/PGiterate/'+product_result._id);
+              }
+              else
+              {
+                req.flash('success_msg', 'Product added.');
+                res.redirect('/product/view/'+product_result._id);
+              }
+              
+            }
+          })
       }
-    })
+    });
+  } 
+  else {
+    const messages = errors.array().map((item) => item.msg);
+
+    req.flash('error_msg', messages.join(' '));
+    res.redirect('/allproducts'); // making this redirect to / makes req.flash not appear
+  }
 };
 
 
@@ -148,14 +204,20 @@ exports.delete = (req, res) => {
   var groupid = req.body.groupID;
   productModel.remove(id, (err, result) => {
     if (err) {
-      throw err; 
+      console.log(err);
+      req.flash('error_msg', 'Cannot delete product.');
+      res.redirect('/allproducts');
     } 
     else {
       if(groupid != "Ungrouped"){
         console.log(result);
-        res.redirect('/PGdecrementA/'+groupid);
+        // res.redirect('/PGdecrementA/'+groupid); 
+        // this causes error in redirect
+        req.flash('success_msg', 'Product deleted.');
+        res.redirect('/allproducts');
       }
       else{
+        req.flash('success_msg', 'Product deleted.');
         res.redirect('/allproducts');
       }
       

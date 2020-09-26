@@ -64,3 +64,11 @@ exports.createProduct = function(obj, next) {
       next(err, del);
     });
   };
+
+// Retrieving just ONE product based on a query (first one)
+exports.getOne = function(query, next) {
+  productModel.findOne(query, function(err, product) {
+    next(err, product);
+  });
+};
+

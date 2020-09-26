@@ -1,4 +1,4 @@
-
+  {{> messages}}
          <div class="container-fluid">
             <h3 class="text-dark mb-1">Products</h3>
             <div class="card">
@@ -55,7 +55,7 @@
                                     <div class="col">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input id="pname" name="name" type="text" class="form-control" minlength="3" maxlength="20" required><br>
+                                                <input id="pname" placeholder="Name" name="name" type="text" class="form-control" minlength="3" maxlength="20" required><br>
                                             </div>
                                     </div>
                                     <div class="col">
@@ -72,7 +72,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Description</label>
-                                            <textarea name="description" class="form-control" name="" id="" cols="30" rows="6" required></textarea>
+                                            <textarea name="description" class="form-control" 
+                                                placeholder="Add description"id="" cols="30" rows="6" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +92,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="cars">Price</label>
-                                                <input type="number" name="sellingprice" class="form-control">
+                                                <input type="text" pattern="[1-9]{1}[0-9]+" 
+                                                    placeholder= "Price" name="sellingprice" class="form-control">
                                         </div>
                                     </div>
                             </div>
@@ -221,6 +223,7 @@
             
             }, false);
 
+    /*
             $(function() {
                 $('#pname').keydown(function (e) {
 
@@ -235,6 +238,7 @@
                     }
                 });
             });
+        */
 
         </script>
 
