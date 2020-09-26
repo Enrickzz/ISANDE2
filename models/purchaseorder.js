@@ -5,7 +5,7 @@ const purchaseOrderSchema = new mongoose.Schema(
     supplier: {type: String, required: true},
     dueDate: {type: String, required: true},
     orderDate: {type: String, required: true},
-    shippingaddress: {type: String, required: true},
+    shippingaddress: {type: String, required: true, default: "48 Burgos St., Lingayen"},
     status: {type: String, required: true},
     total: {type:Number, required: true},
   }

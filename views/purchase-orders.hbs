@@ -77,14 +77,14 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Order Date</label>
-                                            <input name="orderdate" type="date" class="form-control"  id="" required></textarea>
+                                            <input name="orderdate" type="date" class="form-control"  id="orderdate" disabled></textarea>
                                         </div>
                                     </div>
 
                                      <div class="col">
                                         <div class="form-group">
                                             <label for="">Due Date</label>
-                                            <input name="duedate" type="date" class="form-control" id="" required></textarea>
+                                            <input name="duedate" type="date" class="form-control" id="duedate" disabled></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +93,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="cars">Billing Address</label>
-                                            <input name="billaddress" type="text" class="form-control"  id="billaddress"  required></textarea>
+                                            <input name="billaddress" type="text" class="form-control"  id="billaddress"  
+                                            value="48 Burgos St., Lingayen" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -307,4 +308,9 @@
             }       
         }
         }
+
+        let today = new Date().toISOString().substr(0, 10);
+        document.querySelector("#orderdate").value = today;
+
+        document.querySelector("#duedate").valueAsDate = new Date();
     </script>
