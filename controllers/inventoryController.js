@@ -262,11 +262,21 @@ exports.pulloutUpdate = (req,res)=>{
                             if(eror){
                               throw eror;
                             }else{
-                              requestModel.remove(reqID, (er, del)=>{
-                                if(er){
-                                  throw er;
+                              requestModel.update({_id: result4.item}, {$set: {status: "Pulled"} } ,(t,r1)=>{
+                                if(t){
+                                  throw t;
                                 }else{
-                                  res.redirect('/inventory-admin');
+                                  if(result4.destitem != "override"){
+                                    requestModel.update({_id: result4.destitem}, {$set: {status: "Fulfilled"} }, (t2,r2)=>{
+                                      if(t2){
+                                        throw t2;
+                                      }else{
+                                        res.redirect('inventory-admin');
+                                      }
+                                    })
+                                  }else{
+                                    res.redirect('inventory-admin');
+                                  }
                                 }
                               })
                             }

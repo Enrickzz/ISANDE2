@@ -107,7 +107,8 @@ exports.create= (req,res)=>{
           pulloutdate: datequery,
           amount: total,
           status:"Approved",
-          item: reqpulloutid
+          item: reqpulloutid,
+          destitem: reqaddstockPick
         }
         pulloutorderModel.create(POorder, (error, POOobj)=>{
           if(error){

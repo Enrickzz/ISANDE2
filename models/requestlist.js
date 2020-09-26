@@ -8,7 +8,8 @@ const requestlistSchema = new mongoose.Schema(
     from:{type:String,required:true},
     cost: { type: String, required:true},
     currInv: { type: String, required:true},
-    quantity: { type: String, required:true}
+    quantity: { type: String, required:true},
+    status:{ type: String, required:false}
   }
 );
 
@@ -36,4 +37,9 @@ exports.remove = function(query, next) {
     requestListModel.findByIdAndRemove(query, function(err, del){
       next(err, del);
     });
+  };
+  exports.update = function(query, update, next) {
+    requestListModel.findOneAndUpdate(query, update, { new: true }, function(err, res) {
+      next(err, res);
+    })
   };

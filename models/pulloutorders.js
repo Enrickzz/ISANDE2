@@ -7,6 +7,7 @@ const pulloutorderSchema = new mongoose.Schema({
     amount: { type: Number, required:false, default:"0"},
     status: { type: String, required:false, default:"For review"},
     item: { type: String, required:false},
+    destitem:{ type: String, required:false, default:"override"},
   }
 );
 

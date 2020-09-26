@@ -119,8 +119,8 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
     todate = yyyy + '-' + mm + '-' + dd;
     var datequery = todate;
     console.log(datequery);
-    requestController.fetchList({type: "pull-out" , date: datequery}, (reqpullout)=>{
-      requestController.fetchList({type: "addstock", date: datequery}, (reqaddstock)=>{
+    requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
+      requestController.fetchList({type: "addstock", date: datequery,status: "Requested"}, (reqaddstock)=>{
         res.render('pullout-admin', {
           layout: 'main',
           title: 'Pull Out',
@@ -145,8 +145,8 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
   var yyyy = todate.getFullYear();
   todate = yyyy + '-' + mm + '-' + dd;
   var datequery = todate;
-  requestController.fetchList({type: "pull-out" , date: datequery}, (reqpullout)=>{
-    requestController.fetchList({type: "addstock" , date: datequery}, (reqaddstock)=>{
+  requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
+    requestController.fetchList({type: "addstock" , date: datequery, status: "Requested"}, (reqaddstock)=>{
       inventoryController.fetchQuery({inventorydate : datequery , branch_id: req.session.branch}, (myinv)=>{
         res.render('pullout-bm', {
           layout: 'main',

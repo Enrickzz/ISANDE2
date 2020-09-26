@@ -49,6 +49,7 @@ exports.create = (req,res)=>{
     cost: req.body.cost,
     currInv: req.body.currInv,
     quantity:req.body.quantity,
+    status : "Requested"
   }
   requestListModel.create(request, function (err, res2) {
       if(err){
