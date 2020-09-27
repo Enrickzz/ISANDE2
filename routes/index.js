@@ -674,12 +674,48 @@ router.get('/deletefromProd/:id', isPrivate, (req,res) => {
   })
 })
 
+var getDates = function(startDate, endDate) {
+  var dates = [],
+      currentDate = startDate,
+      addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+  while (currentDate <= endDate) {
+    var todate = new Date();
+    todate.setDate(currentDate.getDate())
+    var dd = String(todate.getDate()).padStart(2, '0');
+    var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = todate.getFullYear();
+    todate = yyyy + '-' + mm + '-' + dd;
+    dates.push(todate);
+    currentDate = addDays.call(currentDate, 1);
+  }
+  return dates;
+};
+
 router.get('/processinventory/:id', isPrivate, (req,res) => {
   var totquantity = parseFloat("0");
   var BO;
   var poid = req.session.POid;
   console.log("\n\n\n\n===========\n"+poid)
-  var daterange = ["2020-09-26","2020-09-25","2020-09-24","2020-09-23"];
+  //var daterange = ["2020-09-26","2020-09-25","2020-09-24","2020-09-23"];
+  var todate = new Date();
+  todate.setDate(todate.getDate()-1)
+  var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var dd = String(todate.getDate()).padStart(2, '0');
+  var yyyy = todate.getFullYear();
+
+  var start = new Date()
+  start.setDate(start.getDate()-7);
+  var sM = String(start.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var sD = String(start.getDate()).padStart(2, '0');
+  var sY = start.getFullYear();
+  
+  
+  var daterange = getDates(new Date(sY,sM,sD), new Date(yyyy,mm,dd));
+  console.log(daterange);
   productionOrderController.getID(req, (thisPO)=>{
     console.log(thisPO);
     branchOrderController.fetchQuery(thisPO._id, (thisPObranchorders)=>{
@@ -689,12 +725,17 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
           for(var i = 0 ; i < result.length; i++){
             totquantity = totquantity+ parseFloat(result[i].restockedInventory) + parseFloat(result[i].additionalRestock) 
                           + parseFloat(result[i].pulloutStock) - parseFloat(result[i].endDayCount);
-            console.log("loop tot: "+totquantity);
+            console.log(result[i].inventorydate +"loop tot: "+totquantity);
           }
           console.log(totquantity);
-          var average = totquantity/daterange.length;
-          console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
-          console.log("Recommendation: Change quantity of order to " +average +". (Kulang)"   );
+          var average = totquantity/result.length;
+          var basis =average - obj.quantity; console.log(basis);
+          if(basis > 30 || basis < -30){
+            console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
+            console.log("Recommendation: Change quantity of order to " +average +"."   );
+          }else{
+            console.log("NO NEED")
+          }
           totquantity= parseFloat("0");
         })
       })

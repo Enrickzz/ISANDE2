@@ -12,4 +12,11 @@ const suggestionSchema = new mongoose.Schema({
 const suggestionModel = mongoose.model('suggestions', suggestionSchema, 'suggestions');
 
 
-
+exports.create = function(obj, next) {
+    const createthis = new suggestionModel(obj);
+    console.log(createthis);
+    createthis.save(function(err, result) {
+      console.log(err);
+      next(err, result);
+    });
+  };
