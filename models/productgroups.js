@@ -2,7 +2,7 @@ const mongoose = require('./connection');
 
 const productgroupSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    num_products: { type:Number, required:false},
+    num_products: { type:Number, required:false, default:"0"},
     description:{type:String,required:true},
     UOM: { type: String, required:true}
   }
@@ -51,6 +51,13 @@ exports.decreaseOne = function(id, next) {
 exports.remove = function(query, next) {
   productgroupModel.findByIdAndRemove(query, function(err, del){
     next(err, del);
+  });
+};
+
+// Retrieving just ONE product based on a query (first one)
+exports.getOne = function(query, next) {
+  productgroupModel.findOne(query, function(err, product) {
+    next(err, product);
   });
 };
 

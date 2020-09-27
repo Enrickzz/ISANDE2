@@ -72,7 +72,7 @@
                                             <div class="form-group">
                                                 {{!-- Raw Material Name --}}
                                                 <label>Name</label>
-                                                <input id="rmname" name="name" type="text" class="form-control" minlength="3" maxlength="20" required><br>
+                                                <input id="rmname" name="name" type="text" class="form-control" pattern="^[A-Za-z\s]+$" minlength="3" maxlength="20" required><br>
                                             </div>
                                     </div>
                                 </div>
@@ -110,23 +110,14 @@
                                             <input id="rmcost" name="costperUnit" type="number" class="form-control" required><br>
                                         </div>
                                     </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="cars" style="padding-bottom: 24px;">Reorder Point</label>
-                                        <input name="reorder" type="number" class="form-control" /><br>
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="cars">Reorder Point</label>
+                                            <input name="reorder" type="number" class="form-control" /><br>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                       <!-- <label for="cars">Reorder Point UOM</label>
-                                        <select id="cars" name="" class="form-control">
-                                                    <option value="volvo">uom1</option>
-                                                    <option value="saab">uom2</option>
-                                                    <option value="fiat">uom3</option>
-                                                    <option value="audi">uom4</option>
-                                                </select><br>-->
-                                    </div>
-                                </div>
+                              
                             </div>
                         </div>
                         <div class="col-md-6" id="prof-pic-card"> <!--UPLOAD PHOTO-->
@@ -202,7 +193,7 @@
 
             });
 
-            $(function() {
+/*            $(function() {
                 $('#rmname').keydown(function (e) {
 
                     var key = e.keyCode;
@@ -216,6 +207,7 @@
                     }
                 });
             });
+*/
 
         </script>
         
