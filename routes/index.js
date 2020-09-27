@@ -674,6 +674,37 @@ router.get('/deletefromProd/:id', isPrivate, (req,res) => {
   })
 })
 
+router.get('/processinventory/:id', isPrivate, (req,res) => {
+  var totquantity = parseFloat("0");
+  var BO;
+  var poid = req.session.POid;
+  console.log("\n\n\n\n===========\n"+poid)
+  var daterange = ["2020-09-26","2020-09-25","2020-09-24","2020-09-23"];
+  productionOrderController.getID(req, (thisPO)=>{
+    console.log(thisPO);
+    branchOrderController.fetchQuery(thisPO._id, (thisPObranchorders)=>{
+      console.log(thisPObranchorders);
+      for(var x = 0 ; x < thisPObranchorders.length; x++){
+        BO = thisPObranchorders[x];
+        inventoryController.fetchQuery({branch_id: thisPO.branch,product: BO.product, inventorydate: daterange}, (result)=>{
+          for(var i = 0 ; i < result.length; i++){
+            totquantity = totquantity+ parseFloat(result[i].restockedInventory) + parseFloat(result[i].additionalRestock) 
+                          + parseFloat(result[i].pulloutStock) - parseFloat(result[i].endDayCount);
+            console.log("loop tot: "+totquantity);
+          }
+          console.log(totquantity);
+          var average = totquantity/datequery.length;
+          console.log("LOG: " + thisPO.branch+" ordered " + BO.quantity + " Piece/s " +BO.product+". Average sold quantity: "+average);
+          console.log("Recommendation: Change quantity of order to " +average +". (Kulang)"   );
+            //console.log("LOG: " +thisPO.branch+" ordered " + BO.quantity + " Piece/s " +BO.product+". Average sold quantity: "+average);
+            //console.log("Recommendation: Change quantity of order to " +average +".(sobra)"   );
+        })
+      }
+    })
+  })
+  res.redirect('/inventory-admin');
+})
+
 
 
 router.post('/addProduct' , productController.addProduct);
