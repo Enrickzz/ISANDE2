@@ -122,7 +122,7 @@ const { validationResult } = require('express-validator');
                 if (req.session.usertype === "Admin")
                    res.redirect('/inventory-admin'); //change path later
                   else if (req.session.usertype === "Branch Manager")
-                   res.redirect('/inventory-bm'); 
+                   res.redirect('/inventory-admin'); 
               } else {
                 // passwords don't match
                 req.flash('error_msg', 'Incorrect password.');

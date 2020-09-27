@@ -44,6 +44,11 @@ exports.updateFind = function(query, update, next) {
     next(err, done);
   })
 };
+exports.findone = function(query, next){
+  inventoryModel.findOne(query, (err,res)=>{
+    next(err,res);
+  })
+}
 
 exports.create = function(obj, next) {
   const inv = new inventoryModel(obj);

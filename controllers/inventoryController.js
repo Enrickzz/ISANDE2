@@ -54,6 +54,24 @@ exports.getID = (req, res) => {
       }
     })
   }
+  exports.find1 = (req,res) => {
+    var query = req;
+    inventoryModel.findone(query, (err, result) => {
+      if(err){
+        throw err;
+      }
+      else{
+        if(result){
+          var inventoryObj = result.toObject();
+          res(inventoryObj);
+        }
+        else{
+          console.log("No inventory for this branch!");
+          res(result);
+        }
+      }
+    })
+  }
 exports.midendCountUpdate = (req,res) =>{
   var mid = req.body.midDayCount;
   var end = req.body.endDayCount;
