@@ -1,6 +1,7 @@
             <script>
                 function statuscheck() {
                     var x = document.getElementById('showstatus').innerText;
+                    var y = document.getElementById('showtotal').innerText;
                     console.log("run" + x);
                     if (x == "Incomplete"){
                         document.getElementById('showstatus').style.color="red";
@@ -10,6 +11,11 @@
 
                         var removeButton5 = document.getElementById('generatePDF');
                         removeButton5.parentNode.removeChild(removeButton5);
+
+                        if (y == "Php 0"){
+                            var removeButton6 = document.getElementById('orderPO');
+                            removeButton6.parentNode.removeChild(removeButton6);
+                     }
                     }else if(x == "Ordered"){
                         document.getElementById('showstatus').style.color="orange";
                         var removeButton = document.getElementById('additem');
@@ -46,6 +52,8 @@
                 }
 
                 window.onload = statuscheck;
+
+
             </script>
 
             <div class="container-fluid" onload="statuscheck()" >
@@ -164,7 +172,7 @@
                                             <span>TOTAL AMOUNT:</span>
                                         </div>
                                         <div class="col" style="text-align: right;">
-                                            <span>Php {{purchaseorder.total}}</span>
+                                            <span id="showtotal">Php {{purchaseorder.total}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -177,11 +185,11 @@
                         <div class="col">
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                 <label id="btns">
-                                    <form action="/status/ordered" method="POST">
+                                    <form id="total" action="/status/ordered" method="POST">
                                         <a href="/purchaseorder" class="btn btn-secondary btn-sm">Continue Later</a>
                                         <input type="hidden" name="purchaseorderID" value="{{purchaseorder._id}}">
                                         <input type="hidden" name="changestatus" value="Ordered">
-                                        <button class="btn btn-primary btn-sm" type="submit">Order</button>
+                                        <button class="btn btn-primary btn-sm" id="orderPO" type="submit">Order</button>
                                     </form>
 
                                 </label>
@@ -221,7 +229,8 @@
                         <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
                         <td> {{UOM}}</td>
                         <td> {{price}}</td>
-                        <td><input  type="number" name="quantity" class="form-control" style="min-width: 40px;"  required></td>
+                        <td><input  type="text" name="quantity" class="form-control" 
+                             pattern="[1-9]+" style="min-width: 40px;"  required></td>
                         <td style="width: 2%;">
                             <input type="hidden" name="product" value="{{product}}">
                             <input type="hidden" name="unit" value="{{UOM}}">
@@ -272,4 +281,35 @@ body * {
 
 }
 </style>
+
+<script>
+                   
+    // at least 1 checked
+    /*
+        $('#orderPO').click(function() {
+            
+            ordered = $('input[name="orders"]:checked').val;
+                if(ordered == 0) {
+                alert("You must order at least one item.");
+                return false;
+                }
+                else {
+                 alert("You must order at least one item.");
+                return false;
+                }
+        });
+     
+
+    $('#total').on('submit', function() {
+    // do validation here
+    ordered = $('input[name="orders"]').val;
+    if(ordered == 0) {
+        alert("You must order at least one item.");
+        return false;
+    }
+    */
+        
+});
+
+</script>
 
