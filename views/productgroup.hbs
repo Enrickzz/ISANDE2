@@ -1,3 +1,4 @@
+            {{> messages}}
             <div class="container-fluid">
                 <h3 class="text-dark mb-1">Product Groups</h3>
 
@@ -57,7 +58,7 @@
                                             <div class="form-group">
                                                 {{!-- Product Name --}}
                                                 <label>Name</label>
-                                                <input id="pgname" type="text" name="name" class="form-control" minlength="3" maxlength="20" required><br>
+                                                <input id="pgname" type="text" name="name" class="form-control" pattern="^[A-Za-z\s]+$" minlength="3" maxlength="20" required><br>
                                             </div>
                                     </div>
         
@@ -77,11 +78,11 @@
                                           <div class="form-group">
                                               {{!-- UOM --}}
                                               <label for="cars">UOM</label>
-                                                    <select id="cars" name="UOM" class="form-control">
-                                                        <option value="volvo">uom1</option>
-                                                        <option value="saab">uom2</option>
-                                                        <option value="fiat">uom3</option>
-                                                    </select><br>
+                                                <select id="cars" name="UOM" class="form-control">
+                                                    <option value="Piece/s">Piece/s</option>
+                                                    <option value="Tray/s">Tray/s</option>
+                                                    <option value="Sack/s">Sack/s</option>
+                                                </select><br>
                                           </div>
                                     </div>
                                     <div class="col">
@@ -212,21 +213,6 @@
             forceKeyPressLowercase(e);
             }
             }, false);
-
-            $(function() {
-                $('#pgname').keydown(function (e) {
-
-                    var key = e.keyCode;
-      
-                    if (!((key == 8) || (key == 32) || (key >= 65 && key <= 90))) {
-                        e.preventDefault();
-                         $('#errormsg').text('Invalid! Only character input accepted');
-                    }
-                    else{
-                        $('#errormsg').text('');
-                    }
-                });
-            });
 
         </script>
 
