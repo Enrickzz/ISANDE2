@@ -68,7 +68,8 @@
                                     <input type="hidden" name="branch" value="{{productionorder.branch}}">
                                     <input type="hidden" name="date" value="{{productionorder.orderDate}}">
                                     <input type="hidden" name="total" value="{{productionorder.total}}">
-                                    <button id="update" class="btn btn-primary btn-sm" type="submit" formaction="/editproductionorder" style="background-color:gray; border: 1px solid gray; ">Update</button>
+                                     <button id="update" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#updateModal" style="background-color:gray; border: 1px solid gray; ">Update</button>
+                                    {{!-- <button id="update" class="btn btn-primary btn-sm" type="submit" formaction="/editproductionorder" style="background-color:gray; border: 1px solid gray; ">Update</button> --}}
                                     <button id="accept" class="btn btn-primary btn-sm" type="submit" formaction="/acceptproductionorder" formmethod="POST" style="background-color:green; border: 1px solid green; ">Accept</button>
                                     <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectproductionorder" formmethod="POST" style="background-color:red; border: 1px solid red; ">Reject</button>
                                     <button id="delivered" class="btn btn-primary btn-sm" type="submit" formaction="/updatebranchInv" formmethod="POST"> For Delivery</button>
@@ -264,6 +265,67 @@
 </div>
 </center>
 {{!-- END OF PRINT --}}
+
+
+<!-- Update Modal -->
+    <div id="updateModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Production Order</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr class="tr-addproducts">
+                            <th>Name </th>
+                            <th style="width: 25%;">Quantity </th>
+                            <th >Rate </th>
+                            <th >Amount </th>
+                            <th style="width: 10%;"><span> </span></th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                         {{#each branchorders}}
+                         {{!-- <form action="/editproductionorder" method="POST"> --}}
+                          <form action="/updateBranchOrder" method="POST">
+                            <tr class="clickable" >
+                                <td><input name="product" class="form-control w-60" width="50" placeholder="{{product}}" value="{{product}}"readonly> </td>
+                                <td><input required type="text" name="quantity" placeholder="{{quantity}}" class="form-control w-60" width="2"></td>
+                                <td><input name="rate" class="form-control w-60" width="2" placeholder="{{rate}}" value="{{rate}}" readonly></td>
+                                 <td><input name="amount" class="form-control w-60" width="2" placeholder="{{amount}}" value="{{amount}}" readonly></td>
+                                <input type="hidden" name="productionorderid" value="{{../productionorder._id}}">
+                                 <input type="hidden" name="branchorderid" value="{{this._id}}">
+                                <td style="width: 2%;">
+                                    <button class="btn btn-primary btn-sm" type="submit">Update</button>
+                                </td>
+                            </tr>
+                            </form>
+                            {{/each}}
+                            <br>                  
+                   
+                    </tbody>
+
+                    <tfoot>
+                    </tfoot>
+
+                  
+
+                </table>
+                <br>
+                  {{!-- <center><button class="btn btn-primary btn-sm" type="submit">Update</button></center>
+                </form> --}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+        </div>
+    </div>       
 
 <style type="text/css">
 @media print

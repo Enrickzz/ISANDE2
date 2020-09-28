@@ -1,5 +1,6 @@
-
+const productionorderModel = require('../models/productionorder');
 const branchOrderModel = require('../models/branchorder');
+const deliveryModel = require('../models/delivery'); 
 const { validationResult } = require('express-validator');
 
 exports.getAll = (param, callback) =>{
@@ -84,3 +85,59 @@ exports.getID = (req, res) => {
       }
     }); 
   };
+
+  exports.updateBO = (req,res) =>{
+    var POID = req.body.productionorderid;
+
+    var id = req.body.branchorderid;
+    var product = req.body.product;
+    var qua = req.body.quantity;
+    var rate = req.body.rate;
+
+    console.log("BO: "+ id);
+
+
+          var a = parseFloat(qua);
+          var b = parseFloat(rate);
+          var newamount = (a*b);
+          
+          var newBO = {
+            productionorderID: POID,
+            product: product,
+            quantity: qua,
+            rate : rate,
+            amount: newamount
+          }
+  
+          branchOrderModel.update(id, newBO ,function (err, counted){
+            if(err){
+              throw err;
+            }
+            else{
+              console.log(counted);
+
+              // This increments the total every update :< 
+              productionorderModel.increasetotal(POID, newamount ,(error2,success2) =>{
+                if(error2){
+                  throw error2;
+                }else{
+                  
+                }
+              })
+            }
+          })
+
+            var update ={
+              $set:{
+                status: "In Transit"
+              }
+            }
+            deliveryModel.update({productionID: POID}, update, (error, success)=>{
+              if (error) {
+                throw error;
+              }else{
+                res.redirect('/productionorder/view/'+POID);
+              }
+            })
+
+  }

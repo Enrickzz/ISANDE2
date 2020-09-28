@@ -936,6 +936,7 @@ router.post('/deleteReturnItem', returnitemsController.delete);
 router.post('/submitreturn', returnController.update);
 router.post('/addreturn', returnController.addreturn);
 router.post('/addBranchOrder', branchOrderController.addBO);
+router.post('/updateBranchOrder', branchOrderController.updateBO);
 router.post('/addproductionorder', productionOrderController.addproductionorder);
 router.post('/deletebufferBO', branchOrderController.delete);
 router.post('/updatebranchInv', productionOrderController.statuschange4deliver);
