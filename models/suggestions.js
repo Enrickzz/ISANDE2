@@ -2,10 +2,10 @@ const mongoose = require('./connection');
 
 const suggestionSchema = new mongoose.Schema({
     date: { type: String, required: true },
-    for: { type: String, required: true },
-    tobranch: { type: String, required:false, default:"N/A"},
-    suggestion: { type: String, required:true},
-    status: { type: String, required:false, default:"Unresolved"},
+    for: { type: String, required: true },//pullout or production
+    tobranch: { type: String, required:false, default:"N/A"},//suggested action for branch
+    suggestion: { type: String, required:true},//system will display/store this string
+    status: { type: String, required:false, default:"Unresolved"},//"resolved" after actions
   }
 );
 
@@ -19,4 +19,21 @@ exports.create = function(obj, next) {
       console.log(err);
       next(err, result);
     });
+  };
+
+  exports.getAll = (param, next) => {
+    suggestionModel.find({}, (err, ret) => {
+      next(err, ret);
+    });
+  };
+
+  exports.fetchList = function(query, next) {
+    suggestionModel.find(query, function(err, ress) {
+      next(err, ress);
+    });
+  };
+  exports.delete = function(query, next) {
+    suggestionModel.remove(query, function(err, res) {
+      next(err, res);
+    })
   };

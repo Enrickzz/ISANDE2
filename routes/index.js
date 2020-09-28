@@ -19,6 +19,7 @@ const deliveryController = require('../controllers/deliveryController');
 const pulloutorderController = require('../controllers/pulloutorderController');
 const filterController = require('../controllers/filterController');
 const requestController = require('../controllers/requestController');
+const suggestionsController = require('../controllers/suggestionsController');
 
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -55,17 +56,22 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
       datequery = filter.date;
       branchquery = filter.branch;
     }
+    var branch="";
     inventoryController.fetchQuery({inventorydate : datequery , branch_id:branchquery}, (allInventory) =>{
-      res.render('inventory-admin', {
-        layout: 'main',
-        title: 'Inventory',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        inventory: allInventory,
-        today: filter.date,
-        whichbranch : branchquery,
-        usertype: req.session.usertype
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (suggestionlist)=>{
+        res.render('inventory-admin', {
+          layout: 'main',
+          title: 'Inventory',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          utype: req.session.usertype,
+          inventory: allInventory,
+          today: filter.date,
+          whichbranch : branchquery,
+          usertype: req.session.usertype,
+          suggestions:suggestionlist,
+          num_suggestions: suggestionlist.length
+        })
       })
     })
   })
@@ -112,6 +118,7 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   
   pulloutorderController.getAll(req, (allpullouts)=>{
+    
     var todate = new Date();
     var dd = String(todate.getDate()).padStart(2, '0');
     var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -119,17 +126,22 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
     todate = yyyy + '-' + mm + '-' + dd;
     var datequery = todate;
     console.log(datequery);
+    var branch="";
     requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
       requestController.fetchList({type: "addstock", date: datequery,status: "Requested"}, (reqaddstock)=>{
-        res.render('pullout-admin', {
-          layout: 'main',
-          title: 'Pull Out',
-          fname:  req.session.first_name,
-          lname:  req.session.last_name,
-          utype: req.session.usertype,
-          pullouts: allpullouts,
-          reqpullout: reqpullout,
-          reqaddstock: reqaddstock
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          res.render('pullout-admin', {
+            layout: 'main',
+            title: 'Pull Out',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            pullouts: allpullouts,
+            reqpullout: reqpullout,
+            reqaddstock: reqaddstock,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length
+          })
         })
       })
     })
@@ -148,16 +160,20 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
   requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
     requestController.fetchList({type: "addstock" , date: datequery, status: "Requested"}, (reqaddstock)=>{
       inventoryController.fetchQuery({inventorydate : datequery , branch_id: req.session.branch}, (myinv)=>{
-        res.render('pullout-bm', {
-          layout: 'main',
-          title: 'Pull Out Products',
-          fname:  req.session.first_name,
-          lname:  req.session.last_name,
-          utype: req.session.usertype,
-          branch: req.session.branch,
-          reqpullout: reqpullout,
-          reqaddstock: reqaddstock,
-          inventory: myinv
+        suggestionsController.fetchList({status:"Unresolved", tobranch:{$regex: req.session.branch}, for:"BM"}, (allsuggestions)=>{
+          res.render('pullout-bm', {
+            layout: 'main',
+            title: 'Pull Out Products',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            branch: req.session.branch,
+            reqpullout: reqpullout,
+            reqaddstock: reqaddstock,
+            inventory: myinv,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length
+          })
         })
       })
     })
@@ -167,15 +183,20 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
 router.get('/pulloutorder/view/:id', (req, res) => {
   console.log("Read view successful!");
   pulloutorderController.getID(req, (pullouts) => {
-    var query = pullouts._id;
-    res.render('pullout-card', { 
-      layout:'main',
-      title: 'Pullout Order View',
-      fname:  req.session.first_name,
-      lname:  req.session.last_name,
-      utype: req.session.usertype,
-      pullouts: pullouts
-    });
+    var branch ="";
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+      var query = pullouts._id;
+      res.render('pullout-card', { 
+        layout:'main',
+        title: 'Pullout Order View',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        utype: req.session.usertype,
+        pullouts: pullouts,
+        suggestions: allsuggestions,
+        num_suggestions: allsuggestions.length
+      });
+    })
   });
 });
 
@@ -183,13 +204,18 @@ router.get('/returns', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   returnController.getAll(req, (allreturns)=>{
-    res.render('returns', {
-      layout: 'main',
-      title: 'Returns',
-      fname:  req.session.first_name,
-      lname:  req.session.last_name,
-      utype: req.session.usertype,
-      returns: allreturns
+    var branch="";
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+      res.render('returns', {
+        layout: 'main',
+        title: 'Returns',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        utype: req.session.usertype,
+        returns: allreturns,
+        suggestions: allsuggestions,
+        num_suggestions: allsuggestions.length
+      })
     })
   })
 });
@@ -199,16 +225,21 @@ router.get('/returns/view/:id', isPrivate, function (req, res) {
     productController.getAllproducts(req, (allproducts)=>{
       var query = returnObj._id;
       returnitemsController.fetchQuery({returnID: query}, (thisIDreturns)=>{
-        res.render('returns-card', {
-          layout: 'main',
-          title: 'Returns View',
-          fname:  req.session.first_name,
-          lname:  req.session.last_name,
-          utype: req.session.usertype,
-          return: returnObj,
-          products: allproducts,
-          returnitems: thisIDreturns
-        });
+        var branch="";
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          res.render('returns-card', {
+            layout: 'main',
+            title: 'Returns View',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            return: returnObj,
+            products: allproducts,
+            returnitems: thisIDreturns,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length
+          });
+        })
       })
     })
   })
@@ -218,13 +249,18 @@ router.get('/delivery', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   deliveryController.getAll(req, (alldeliveries)=>{
-    res.render('delivery', {
-      layout: 'main',
-      title: 'Deliveries',
-      fname:  req.session.first_name,
-      lname:  req.session.last_name,
-      utype: req.session.usertype,
-      delivery: alldeliveries
+    var branch="";
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        res.render('delivery', {
+        layout: 'main',
+        title: 'Deliveries',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        utype: req.session.usertype,
+        delivery: alldeliveries,
+        suggestions: allsuggestions,
+        num_suggestions: allsuggestions.length
+      })
     })
   })
 });
@@ -244,19 +280,22 @@ router.get('/delivery/view/:id', isPrivate, function (req, res) {
           }
           console.log(reqid);
           pulloutorderController.fetchOne({item: reqid}, (POorder)=>{
-            console.log("THIS IS IT \n" + POorder);
-            res.render('delivery-card', {
-              layout: 'main',
-              title: 'Delivery Information',
-              fname:  req.session.first_name,
-              lname:  req.session.last_name,
-              utype: req.session.usertype,
-              delivery: deliveryObj,
-              branchorders: thisdeliveryproducts,
-              productionorder: POobj,
-              request: requestdelivery,
-              pulloutOrder: POorder,
-            });
+            suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+              res.render('delivery-card', {
+                layout: 'main',
+                title: 'Delivery Information',
+                fname:  req.session.first_name,
+                lname:  req.session.last_name,
+                utype: req.session.usertype,
+                delivery: deliveryObj,
+                branchorders: thisdeliveryproducts,
+                productionorder: POobj,
+                request: requestdelivery,
+                pulloutOrder: POorder,
+                suggestions: allsuggestions,
+                num_suggestions: allsuggestions.length  
+              });
+            })
           })
         })
       })
@@ -269,14 +308,19 @@ router.get('/productgroup', isPrivate, function(req, res) {
   // and an object for what's needed in that template //make productmodel function to return ungrouped products
   productgroupsController.getAllpg(req, (productgroups) => { 
     productController.getAllproducts(req, (products) => {
-      res.render('productgroup', {  
-        layout: 'main',
-        title: 'Product Groups',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        pglist: productgroups,
-        plist:products
+      var branch="";
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        res.render('productgroup', {  
+          layout: 'main',
+          title: 'Product Groups',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          utype: req.session.usertype,
+          pglist: productgroups,
+          plist:products,
+          suggestions: allsuggestions,
+          num_suggestions: allsuggestions.length
+        })
       })
     })
   });
@@ -291,16 +335,21 @@ router.get('/productgroup/view/:id', isPrivate, (req, res) => {
       console.log("LIST OF CONNECTIONS : ");
       console.log(pgproducts); 
       productController.getGroupProducts("Ungrouped", (ungroupedProducts) => {
-        res.render('productgroup-card', { 
-          layout:'main',
-          title:"Product Groups",
-          fname:  req.session.first_name,
-          lname:  req.session.last_name,
-          utype: req.session.usertype,
-          ungroupedProd: ungroupedProducts,
-          pgroup: productGroup,
-          plist: pgproducts
-        });
+        var branch="";
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          res.render('productgroup-card', { 
+            layout:'main',
+            title:"Product Groups",
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            ungroupedProd: ungroupedProducts,
+            pgroup: productGroup,
+            plist: pgproducts,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length
+          });
+        })
       })
     })
   });
@@ -313,16 +362,21 @@ router.get('/allproducts', isPrivate, function(req, res) {
     productgroupsController.getAllpg(req,(productgroups) =>{
       allRawMaterialController.getAllmaterials(req, (allmaterials) => {
         unitofmeasureController.getAll(req, (allUOM) => {
-          res.render('products', { 
-            layout: 'main',
-            title: 'Products List',
-            fname:  req.session.first_name,
-            lname:  req.session.last_name,
-            utype: req.session.usertype,
-            plist: products,
-            pglist: productgroups,
-            allRawMat: allmaterials,
-            unitofmeasure: allUOM
+          var branch="";
+          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+            res.render('products', { 
+              layout: 'main',
+              title: 'Products List',
+              fname:  req.session.first_name,
+              lname:  req.session.last_name,
+              utype: req.session.usertype,
+              plist: products,
+              pglist: productgroups,
+              allRawMat: allmaterials,
+              unitofmeasure: allUOM,
+              suggestions: allsuggestions,
+              num_suggestions: allsuggestions.length
+            })
           })
         })
       })
@@ -334,14 +388,19 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   allRawMaterialController.getAllmaterials(req, (allmaterials) =>{
-    res.render('raw-materials', {
-      layout: 'main',
-      title: 'Raw Materials',
-      fname:  req.session.first_name,
-      lname:  req.session.last_name,
-      utype: req.session.usertype,
-      rawList: allmaterials
-    });
+    var branch="";
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+      res.render('raw-materials', {
+        layout: 'main',
+        title: 'Raw Materials',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        utype: req.session.usertype,
+        rawList: allmaterials,
+        suggestions: allsuggestions,
+        num_suggestions: allsuggestions.length
+      });
+    })
   });
 });
 
@@ -354,17 +413,22 @@ router.get('/allproducts/view/:id', isPrivate, (req, res) => {
     productrawmaterialController.getRawMaterials(query,(materials) => {
       allRawMaterialController.getAllmaterials(req,(allMaterials) => {
         unitofmeasureController.getAll(req, (allUOM) => {
-          res.render('product-card', { 
-            layout:'main',
-            title: prod.name,
-            fname:  req.session.first_name,
-            lname:  req.session.last_name,
-            utype: req.session.usertype,
-            product: prod,
-            rawList: materials,
-            allMat: allMaterials,
-            unitofmeasure: allUOM
-          });
+          var branch="";
+          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+            res.render('product-card', { 
+              layout:'main',
+              title: prod.name,
+              fname:  req.session.first_name,
+              lname:  req.session.last_name,
+              utype: req.session.usertype,
+              product: prod,
+              rawList: materials,
+              allMat: allMaterials,
+              unitofmeasure: allUOM,
+              suggestions: allsuggestions,
+              num_suggestions: allsuggestions.length
+            });
+          })
         })
       });
     })
@@ -377,23 +441,29 @@ router.get('/productionorder', isPrivate, function(req, res) {
   productionOrderController.getAll(req, (allprodords) =>{
     productController.getAllproducts(req, (allproducts)=>{
       branchOrderController.fetchQuery("buffer", (buffer)=>{
-        //checker if buffer contains objs
-        var checker = "true";
-        if (Object.entries(buffer).length === 0) {
-          checker = "false";
-        }
-        console.log(buffer);
-        res.render('production-orders', {
-          layout: 'main',
-          title: 'Production Orders',
-          fname:  req.session.first_name,
-          lname:  req.session.last_name,
-          utype: req.session.usertype,
-          productionorders: allprodords,
-          plist: allproducts,
-          bufferBO : buffer,
-          check: checker
+        var branch="";
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          //checker if buffer contains objs
+          var checker = "true";
+          if (Object.entries(buffer).length === 0) {
+            checker = "false";
+          }
+          console.log(buffer);
+          res.render('production-orders', {
+            layout: 'main',
+            title: 'Production Orders',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            productionorders: allprodords,
+            plist: allproducts,
+            bufferBO : buffer,
+            check: checker,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length
+          })
         })
+        
       })
     })
   })
@@ -405,14 +475,19 @@ router.get('/productionorder/view/:id', isPrivate, function(req, res) {
   productionOrderController.getID(req, (thisPO) =>{
     var query = thisPO._id;
     branchOrderController.fetchQuery(query, (orders) =>{
-      res.render('productionorder-card', {
-        layout: 'main',
-        title: 'Production Orders',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        productionorder: thisPO,
-        branchorders: orders
+      var branch="";
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        res.render('productionorder-card', {
+          layout: 'main',
+          title: 'Production Orders',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          utype: req.session.usertype,
+          productionorder: thisPO,
+          branchorders: orders,
+          suggestions: allsuggestions,
+          num_suggestions: allsuggestions.length
+        })
       })
     })
   })
@@ -422,13 +497,18 @@ router.get('/supplier', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   supplierController.getAll(req, (allsupplier) =>{
-    res.render('supplier', {
-      layout: 'main',
-      title: 'Suppliers',
-      fname:  req.session.first_name,
-      lname:  req.session.last_name,
-      utype: req.session.usertype,
-      suppliers: allsupplier
+    var branch="";
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+      res.render('supplier', {
+        layout: 'main',
+        title: 'Suppliers',
+        fname:  req.session.first_name,
+        lname:  req.session.last_name,
+        utype: req.session.usertype,
+        suppliers: allsupplier,
+        suggestions: allsuggestions,
+        num_suggestions: allsuggestions.length
+      })
     })
   })
 });
@@ -437,15 +517,19 @@ router.get('/supplier/view/:id', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   supplierController.getUpdateID(req, (thisSupplier) =>{
+    var branch="";
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
       res.render('supplier-card', {
         layout: 'main',
         title: 'Supplier Information',
         fname:  req.session.first_name,
         lname:  req.session.last_name,
         utype: req.session.usertype,
-        supplier: thisSupplier
+        supplier: thisSupplier,
+        suggestions: allsuggestions,
+        num_suggestions: allsuggestions.length
       })
-
+    })
   })
 });
 
@@ -454,14 +538,19 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   purchaseorderController.getAll(req, (POs) =>{
     supplierController.getAll(req, (allSuppliers) =>{
-      res.render('purchase-orders', {
-        layout: 'main',
-        title: 'Purchase Orders',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        purchaseorder: POs,
-        supplier: allSuppliers
+      var branch="";
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        res.render('purchase-orders', {
+          layout: 'main',
+          title: 'Purchase Orders',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          utype: req.session.usertype,
+          purchaseorder: POs,
+          supplier: allSuppliers,
+          suggestions: allsuggestions,
+          num_suggestions: allsuggestions.length
+        })
       })
     })
   })
@@ -475,17 +564,22 @@ router.get('/purchaseorder/view/:id', (req, res) => {
     // supplierController.getID(query, (supplierResult)=>{
       supplierListController.fetchQuery(POs.supplier, (supplyListResult) =>{
         rawMaterialOrderController.fetchQuery(purchaseorderID, (orderedList) =>{
-          res.render('purchaseorder-card', { 
-            layout:'main',
-            title: 'Purchase Order Information',
-            fname:  req.session.first_name,
-            lname:  req.session.last_name,
-            utype: req.session.usertype,
-            purchaseorder: POs,
-            supplyList: supplyListResult,
-            supplier: POs.supplier,
-            rawMaterialOrders: orderedList
-          });
+          var branch="";
+          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+            res.render('purchaseorder-card', { 
+              layout:'main',
+              title: 'Purchase Order Information',
+              fname:  req.session.first_name,
+              lname:  req.session.last_name,
+              utype: req.session.usertype,
+              purchaseorder: POs,
+              supplyList: supplyListResult,
+              supplier: POs.supplier,
+              rawMaterialOrders: orderedList,
+              suggestions: allsuggestions,
+              num_suggestions: allsuggestions.length
+            });
+          })
         })
       // })
     })
@@ -498,15 +592,20 @@ router.get('/manageusers', isPrivate, function(req, res) {
       // and an object for what's needed in that template
       userController.getAll(req, (users) =>{
       branchController.getAll(req, (branches) =>{
-      res.render('manageusers', {
-        layout: 'main',
-        title: 'Manage Users',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        userlist: users,
-        branchlist: branches
-      })
+        var branch= "";
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          res.render('manageusers', {
+            layout: 'main',
+            title: 'Manage Users',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            userlist: users,
+            branchlist: branches,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length
+          })
+        })
     });
   });
 });
@@ -700,8 +799,10 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
   var BO;
   var poid = req.session.POid;
   console.log("\n\n\n\n===========\n"+poid)
-  //var daterange = ["2020-09-26","2020-09-25","2020-09-24","2020-09-23"];
+
+  
   var todate = new Date();
+  var y = todate.getFullYear(), m =String(todate.getMonth() + 1).padStart(2, '0'), d=String(todate.getDate()).padStart(2, '0');
   todate.setDate(todate.getDate()-1)
   var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
   var dd = String(todate.getDate()).padStart(2, '0');
@@ -730,9 +831,21 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
           console.log(totquantity);
           var average = totquantity/result.length;
           var basis =average - obj.quantity; console.log(basis);
-          if(basis > 30 || basis < -30){
-            console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
-            console.log("Recommendation: Change quantity of order to " +average +"."   );
+          if(basis > obj.quantity*.10 || basis < (obj.quantity*.10)*-1){
+            
+            var makesuggestion={
+              date: y+"-"+m+"-"+d,
+              for: "production orders",
+              tobranch: thisPO.branch,
+              suggestion: thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average,
+              status: "Unresolved"
+            }
+            suggestionsController.makesuggestions(makesuggestion, (suggestion)=>{
+              console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
+              console.log("Recommendation: Change quantity of order to " +average +"."   );
+            })
+            //console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
+            //console.log("Recommendation: Change quantity of order to " +average +"."   );
           }else{
             console.log("NO NEED")
           }

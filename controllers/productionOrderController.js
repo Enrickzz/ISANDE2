@@ -1,7 +1,7 @@
 const productionorderModel = require('../models/productionorder');
 const branchorderModel = require('../models/branchorder'); 
-const inventoryModel = require('../models/inventory'); 
 const deliveryModel = require('../models/delivery'); 
+const suggestionsModel = require('../models/suggestions'); 
 
 const { validationResult } = require('express-validator'); 
 const { addPurchaseOrder } = require('./purchaseorderController');
@@ -107,7 +107,7 @@ exports.statuschangeAcc = (req,res) =>{
   var branch = req.body.branch;
   var date = req.body.date;
   var total = req.body.total;
-  productionorderModel.update(id, change, (err, result)=>{
+  productionorderModel.update(id, change, (err, resultPO)=>{
     if(err){
       throw err;
     }else{
@@ -118,11 +118,17 @@ exports.statuschangeAcc = (req,res) =>{
         status: "In production",
         type: "Production Order"
       }
-      deliveryModel.create(delivery, (err2,result)=>{
+      deliveryModel.create(delivery, (err2,resultDE)=>{
         if (err2) {
           throw err2;
         }else{
-          res.redirect('/productionorder/view/'+id);
+          suggestionsModel.delete({tobranch: resultPO.branch, date: resultPO.orderDate}, (err3, resultSM)=>{
+            if(err3){
+              throw err3;
+            }else{
+              res.redirect('/productionorder/view/'+id);
+            }
+          })
         }
       })
     }
@@ -136,11 +142,17 @@ exports.statuschangeRej = (req,res) =>{
     }
   }
   var id = req.body.productionorderID;
-  productionorderModel.update(id, change, (err, result)=>{
+  productionorderModel.update(id, change, (err, resultPO)=>{
     if(err){
       throw err;
     }else{
-      res.redirect('/productionorder/view/'+id);
+      suggestionsModel.delete({tobranch: resultPO.branch, date: resultPO.orderDate}, (err3, resultSM)=>{
+        if(err3){
+          throw err3;
+        }else{
+          res.redirect('/productionorder/view/'+id);
+        }
+      })
     }
   })
 }
@@ -151,7 +163,7 @@ exports.statuschange4deliver = (req,res) =>{
     }
   }
   var id = req.body.productionorderID;
-  productionorderModel.update(id, change, (err, result)=>{
+  productionorderModel.update(id, change, (err, resultPO)=>{
     if(err){
       throw err;
     }else{
