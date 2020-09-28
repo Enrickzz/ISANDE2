@@ -92,7 +92,7 @@ exports.addproductionorder = (req,res)=>{
       })
       //res.redirect('/productionorder/view/' + result_PO._id)
     }
-    req.session.POid = result_PO._id;
+    //req.session.POid = result_PO._id;
     res.redirect('/processinventory/'+ result_PO._id);
   })
 };

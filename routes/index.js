@@ -42,6 +42,8 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
   filterController.getfilter({for:"inventory"} , (filter) =>{
     var branchquery;
     var datequery;
+    var branch="";
+    var utype;
     if(req.session.usertype == "Branch Manager"){
       var todate = new Date();
       todate.setDate(todate.getDate())
@@ -52,13 +54,19 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
 
       datequery = todate;
       branchquery = req.session.branch;
+      branch = req.session.branch;
+      utype = "BM"
     }else{
       datequery = filter.date;
       branchquery = filter.branch;
+      utype = "Admin"
     }
-    var branch="";
+    
     inventoryController.fetchQuery({inventorydate : datequery , branch_id:branchquery}, (allInventory) =>{
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (suggestionlist)=>{
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for: utype}, (suggestionlist)=>{
+        if(Object.entries(suggestionlist).length ===0 && Object.entries(allInventory).length ===0 && req.session.usertype== "Branch Manager"){
+          res.redirect('/processinventoryforBM');
+        }
         res.render('inventory-admin', {
           layout: 'main',
           title: 'Inventory',
@@ -160,7 +168,7 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
   requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
     requestController.fetchList({type: "addstock" , date: datequery, status: "Requested"}, (reqaddstock)=>{
       inventoryController.fetchQuery({inventorydate : datequery , branch_id: req.session.branch}, (myinv)=>{
-        suggestionsController.fetchList({status:"Unresolved", tobranch:{$regex: req.session.branch}, for:"BM"}, (allsuggestions)=>{
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: req.session.branch} }, (allsuggestions)=>{
           res.render('pullout-bm', {
             layout: 'main',
             title: 'Pull Out Products',
@@ -280,6 +288,7 @@ router.get('/delivery/view/:id', isPrivate, function (req, res) {
           }
           console.log(reqid);
           pulloutorderController.fetchOne({item: reqid}, (POorder)=>{
+            var branch="";
             suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
               res.render('delivery-card', {
                 layout: 'main',
@@ -796,11 +805,7 @@ var getDates = function(startDate, endDate) {
 
 router.get('/processinventory/:id', isPrivate, (req,res) => {
   var totquantity = parseFloat("0");
-  var BO;
-  var poid = req.session.POid;
-  console.log("\n\n\n\n===========\n"+poid)
-
-  
+  //var poid = req.session.POid;
   var todate = new Date();
   var y = todate.getFullYear(), m =String(todate.getMonth() + 1).padStart(2, '0'), d=String(todate.getDate()).padStart(2, '0');
   todate.setDate(todate.getDate()-1)
@@ -835,7 +840,7 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
             
             var makesuggestion={
               date: y+"-"+m+"-"+d,
-              for: "production orders",
+              for: "Admin",
               tobranch: thisPO.branch,
               suggestion: thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average,
               status: "Unresolved"
@@ -851,6 +856,51 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
           }
           totquantity= parseFloat("0");
         })
+      })
+    })
+  })
+  res.redirect('/inventory-admin');
+})
+
+router.get('/processinventoryforBM', isPrivate, (req,res)=>{
+  var totquantity = parseFloat("0");
+  var todate = new Date();
+  var y = todate.getFullYear(), m =String(todate.getMonth() + 1).padStart(2, '0'), d=String(todate.getDate()).padStart(2, '0');
+  todate.setDate(todate.getDate()-1)
+  var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var dd = String(todate.getDate()).padStart(2, '0');
+  var yyyy = todate.getFullYear();
+
+  var start = new Date()
+  start.setDate(start.getDate()-7);
+  var sM = String(start.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var sD = String(start.getDate()).padStart(2, '0');
+  var sY = start.getFullYear();
+  var daterange = getDates(new Date(sY,sM,sD), new Date(yyyy,mm,dd));
+  
+  inventoryController.fetchProducts({branch_id: req.session.branch, inventorydate: yyyy+"-"+mm+"-"+dd }, (productlist)=>{
+    productlist.forEach(function(obj){
+      inventoryController.fetchQuery({branch_id: req.session.branch,product: obj, inventorydate: daterange}, (result)=>{
+        for(var i = 0 ; i < result.length; i++){
+          totquantity = totquantity+ parseFloat(result[i].restockedInventory) + parseFloat(result[i].additionalRestock) 
+                        + parseFloat(result[i].pulloutStock) - parseFloat(result[i].endDayCount);
+          console.log(result[i].inventorydate +"loop tot: "+totquantity);
+        }
+        console.log(totquantity);
+        var average = totquantity/result.length;
+        //var basis =average - obj.quantity; console.log(basis);
+        var makesuggestion={
+          date: y+"-"+m+"-"+d,
+          for: "BM",
+          tobranch: req.session.branch,
+          suggestion: req.session.branch+" has sold " + average + " Piece/s of " +obj+" in the last 7 days. Order "+average+" Piece/s.",
+          status: "Unresolved"
+        }
+        suggestionsController.makesuggestions(makesuggestion, (suggestion)=>{
+          console.log(result.branch_id+" has sold " + average + " Piece/s of " +result.product+" in the last 7 days. Order "+average+" Piece/s.");
+          //console.log("Recommendation: Change quantity of order to " +average +"."   );
+        })
+        totquantity= parseFloat("0");
       })
     })
   })

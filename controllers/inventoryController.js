@@ -5,6 +5,7 @@ const productionOrderModel = require('../models/productionorder');
 const deliveryModel = require('../models/delivery');
 const requestModel = require('../models/requestlist');
 const pulloutModel = require('../models/pulloutorders');
+const suggestionsModel = require('../models/suggestions');
 
 const { validationResult } = require('express-validator');
 
@@ -44,6 +45,28 @@ exports.getID = (req, res) => {
           const inventoryfetched = [];
           result.forEach(function(doc) {
             inventoryfetched.push(doc.toObject());
+          });
+          res(inventoryfetched);
+        }
+        else{
+          console.log("No inventory for this branch!");
+          res(result);
+        }
+      }
+    })
+  }
+  exports.fetchProducts = (req,res) => {
+    var query = req;
+    inventoryModel.fetchList(query, (err, result) => {
+      if(err){
+        throw err;
+      }
+      else{
+        if(result){
+          const inventoryfetched = [];
+          result.forEach(function(doc) {
+            var p = doc.toObject();
+            inventoryfetched.push(p.product);
           });
           res(inventoryfetched);
         }
@@ -218,7 +241,13 @@ exports.addInventory = (req,res) =>{
                 if (e4) {
                   throw e4;
                 }else{
-                  res.redirect('/inventory-admin');
+                  suggestionsModel.delete({tobranch:req.session.branch, date:result4.orderDate, for:"BM"}, (error3,success3)=>{
+                    if(error3){
+                      throw error3;
+                    }else{
+                      res.redirect('/inventory-admin');
+                    }
+                  })
                 }
               })
             }

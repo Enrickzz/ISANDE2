@@ -43,7 +43,7 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow mx-1" role="presentation">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="">production</i><span style="margin-bottom: 10px;" class="badge badge-danger badge-counter">{{num_suggestions}}</span></a>
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="">production</i><span style="margin-bottom: 10px;" class="badge badge-danger badge-counter">{{#if num_suggestions}} {{num_suggestions}} {{/if}}</span></a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
                                         role="menu" style="min-width: 600px;">
                                         <h6 class="dropdown-header">Production Suggestions</h6>
