@@ -88,8 +88,8 @@
                             </div>
 
                             <div style="text-align:center" class="col">
-                                <div class="form-group">
-                                        {{!-- BRANCH --}}
+                                <div class="dataTables_filter" id="dataTable_filter">
+                                        {{!-- Date --}}
                                         <label for="a">Date</label>
                                             <select id="a" name="a" class="form-control">
                                                 <option value="">date1</option>
@@ -103,18 +103,16 @@
                 
                 <div class="tab-content">
 
-                    <div style="padding: 10px;">
-                    {{!-- PRODUCT/PROD GROUP --}}
-                    <label for="asd">Product Group </label>
-                    <select id="gas" name="bgasdranch" class="">
-                        <option value="">All</option>
-                        <option value="">option1</option>
-                        <option value="">option2</option>
-                    </select><br>
-                    </div>
-
                     {{!-- ALL INVENTORY --}}
                     <div class="container tab-pane active" id="product_group" style="padding-top: 30px;">
+
+                        {{!-- FILTER TABLE --}}
+                        <div class="dataTables_filter" id="dataTable_filter"> Product: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter" onkeyup="filter()" placeholder="All"></label>
+                        </div>
+                        {{!-- END OF FILTER TABLE --}}
+                        <div style="padding-bottom: 10px;"> </div>
                         <div class="table-responsive">
                             <table class="table" id="invTable">
                                 <thead style="text-align: center;">
@@ -172,7 +170,7 @@
             
         </div>
 
-           <script>
+    <script>
         function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("invTable");
@@ -225,6 +223,25 @@
                 switching = true;
             }
             }
+        }
+        }
+
+        function filter() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("invTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
         }
         }
 
