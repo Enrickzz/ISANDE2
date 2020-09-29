@@ -283,7 +283,7 @@
                             <th>Name </th>
                             <th style="width: 25%;">Quantity </th>
                             <th >Rate </th>
-                            <th >Amount </th>
+                            <th >Total Amount </th>
                             <th style="width: 10%;"><span> </span></th>
                         </tr>
                     </thead>
@@ -299,6 +299,7 @@
                                  <td><input name="amount" class="form-control w-60" width="2" placeholder="{{amount}}" value="{{amount}}" readonly></td>
                                 <input type="hidden" name="productionorderid" value="{{../productionorder._id}}">
                                  <input type="hidden" name="branchorderid" value="{{this._id}}">
+                                 <input type="hidden" name="prevTotal" value="{{../productionorder.total}}">
                                 <td style="width: 2%;">
                                     <button class="btn btn-primary btn-sm" type="submit">Update</button>
                                 </td>

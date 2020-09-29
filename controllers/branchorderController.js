@@ -2,6 +2,7 @@ const productionorderModel = require('../models/productionorder');
 const branchOrderModel = require('../models/branchorder');
 const deliveryModel = require('../models/delivery'); 
 const { validationResult } = require('express-validator');
+const { parse } = require('handlebars');
 
 exports.getAll = (param, callback) =>{
     branchOrderModel.getAll(param, (err, branches) => {
@@ -93,7 +94,8 @@ exports.getID = (req, res) => {
     var product = req.body.product;
     var qua = req.body.quantity;
     var rate = req.body.rate;
-
+    var prevtot = req.body.prevTotal;
+    var prevamount = req.body.amount;
     console.log("BO: "+ id);
 
 
@@ -115,15 +117,20 @@ exports.getID = (req, res) => {
             }
             else{
               console.log(counted);
-
-              // This increments the total every update :< 
-              productionorderModel.increasetotal(POID, newamount ,(error2,success2) =>{
+              var newtotal = parseFloat(prevtot) - parseFloat(prevamount) + parseFloat(newamount); // PO total - amountBeforeUpdate + newAmount
+              var update = {
+                $set:{
+                  total: newtotal
+                }
+              }
+              productionorderModel.update(POID, update ,(error2,success2) =>{
                 if(error2){
                   throw error2;
                 }else{
                   
                 }
               })
+              // This increments the total every update :< 
             }
           })
 

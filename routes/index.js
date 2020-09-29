@@ -41,23 +41,24 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   filterController.getfilter({for:"inventory"} , (filter) =>{
     var branchquery;
-    var datequery;
+    var datequery=filter.date;
     var branch="";
     var utype;
-    if(req.session.usertype == "Branch Manager"){
+    if(req.session.usertype === "Branch Manager"){
       var todate = new Date();
       todate.setDate(todate.getDate())
       var dd = String(todate.getDate()).padStart(2, '0');
       var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
       var yyyy = todate.getFullYear();
       todate = yyyy + '-' + mm + '-' + dd;
-
+      
       datequery = todate;
       branchquery = req.session.branch;
       branch = req.session.branch;
-      utype = "BM"
+      utype = "Branch Manager";
+      console.log(datequery);
     }else{
-      datequery = filter.date;
+      //datequery = filter.date;
       branchquery = filter.branch;
       utype = "Admin"
     }
@@ -74,7 +75,7 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
           lname:  req.session.last_name,
           utype: req.session.usertype,
           inventory: allInventory,
-          today: filter.date,
+          today: datequery,
           whichbranch : branchquery,
           usertype: req.session.usertype,
           suggestions:suggestionlist,
@@ -135,9 +136,12 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
     var datequery = todate;
     console.log(datequery);
     var branch="";
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
     requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
       requestController.fetchList({type: "addstock", date: datequery,status: "Requested"}, (reqaddstock)=>{
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('pullout-admin', {
             layout: 'main',
             title: 'Pull Out',
@@ -168,7 +172,7 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
   requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
     requestController.fetchList({type: "addstock" , date: datequery, status: "Requested"}, (reqaddstock)=>{
       inventoryController.fetchQuery({inventorydate : datequery , branch_id: req.session.branch}, (myinv)=>{
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: req.session.branch} }, (allsuggestions)=>{
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: req.session.branch}, for:req.session.usertype }, (allsuggestions)=>{
           res.render('pullout-bm', {
             layout: 'main',
             title: 'Pull Out Products',
@@ -191,8 +195,11 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
 router.get('/pulloutorder/view/:id', (req, res) => {
   console.log("Read view successful!");
   pulloutorderController.getID(req, (pullouts) => {
-    var branch ="";
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+    var branch="";
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       var query = pullouts._id;
       res.render('pullout-card', { 
         layout:'main',
@@ -213,7 +220,10 @@ router.get('/returns', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   returnController.getAll(req, (allreturns)=>{
     var branch="";
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       res.render('returns', {
         layout: 'main',
         title: 'Returns',
@@ -234,7 +244,10 @@ router.get('/returns/view/:id', isPrivate, function (req, res) {
       var query = returnObj._id;
       returnitemsController.fetchQuery({returnID: query}, (thisIDreturns)=>{
         var branch="";
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        if(req.session.usertype === "Branch Manager"){
+          branch = req.session.branch;
+        }
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('returns-card', {
             layout: 'main',
             title: 'Returns View',
@@ -258,7 +271,10 @@ router.get('/delivery', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   deliveryController.getAll(req, (alldeliveries)=>{
     var branch="";
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
         res.render('delivery', {
         layout: 'main',
         title: 'Deliveries',
@@ -289,7 +305,10 @@ router.get('/delivery/view/:id', isPrivate, function (req, res) {
           console.log(reqid);
           pulloutorderController.fetchOne({item: reqid}, (POorder)=>{
             var branch="";
-            suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+            if(req.session.usertype === "Branch Manager"){
+              branch = req.session.branch;
+            }
+            suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
               res.render('delivery-card', {
                 layout: 'main',
                 title: 'Delivery Information',
@@ -318,7 +337,10 @@ router.get('/productgroup', isPrivate, function(req, res) {
   productgroupsController.getAllpg(req, (productgroups) => { 
     productController.getAllproducts(req, (products) => {
       var branch="";
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+      if(req.session.usertype === "Branch Manager"){
+        branch = req.session.branch;
+      }
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
         res.render('productgroup', {  
           layout: 'main',
           title: 'Product Groups',
@@ -345,7 +367,10 @@ router.get('/productgroup/view/:id', isPrivate, (req, res) => {
       console.log(pgproducts); 
       productController.getGroupProducts("Ungrouped", (ungroupedProducts) => {
         var branch="";
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        if(req.session.usertype === "Branch Manager"){
+          branch = req.session.branch;
+        }
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('productgroup-card', { 
             layout:'main',
             title:"Product Groups",
@@ -372,7 +397,10 @@ router.get('/allproducts', isPrivate, function(req, res) {
       allRawMaterialController.getAllmaterials(req, (allmaterials) => {
         unitofmeasureController.getAll(req, (allUOM) => {
           var branch="";
-          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          if(req.session.usertype === "Branch Manager"){
+            branch = req.session.branch;
+          }
+          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
             res.render('products', { 
               layout: 'main',
               title: 'Products List',
@@ -398,7 +426,10 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   allRawMaterialController.getAllmaterials(req, (allmaterials) =>{
     var branch="";
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       res.render('raw-materials', {
         layout: 'main',
         title: 'Raw Materials',
@@ -423,7 +454,10 @@ router.get('/allproducts/view/:id', isPrivate, (req, res) => {
       allRawMaterialController.getAllmaterials(req,(allMaterials) => {
         unitofmeasureController.getAll(req, (allUOM) => {
           var branch="";
-          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          if(req.session.usertype === "Branch Manager"){
+            branch = req.session.branch;
+          }
+          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
             res.render('product-card', { 
               layout:'main',
               title: prod.name,
@@ -451,7 +485,10 @@ router.get('/productionorder', isPrivate, function(req, res) {
     productController.getAllproducts(req, (allproducts)=>{
       branchOrderController.fetchQuery("buffer", (buffer)=>{
         var branch="";
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        if(req.session.usertype === "Branch Manager"){
+          branch = req.session.branch;
+        }
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           //checker if buffer contains objs
           var checker = "true";
           if (Object.entries(buffer).length === 0) {
@@ -485,7 +522,10 @@ router.get('/productionorder/view/:id', isPrivate, function(req, res) {
     var query = thisPO._id;
     branchOrderController.fetchQuery(query, (orders) =>{
       var branch="";
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+      if(req.session.usertype === "Branch Manager"){
+        branch = req.session.branch;
+      }
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
         res.render('productionorder-card', {
           layout: 'main',
           title: 'Production Orders',
@@ -507,7 +547,10 @@ router.get('/supplier', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   supplierController.getAll(req, (allsupplier) =>{
     var branch="";
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       res.render('supplier', {
         layout: 'main',
         title: 'Suppliers',
@@ -527,7 +570,10 @@ router.get('/supplier/view/:id', isPrivate, function(req, res) {
   // and an object for what's needed in that template
   supplierController.getUpdateID(req, (thisSupplier) =>{
     var branch="";
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
+    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       res.render('supplier-card', {
         layout: 'main',
         title: 'Supplier Information',
@@ -548,7 +594,10 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
   purchaseorderController.getAll(req, (POs) =>{
     supplierController.getAll(req, (allSuppliers) =>{
       var branch="";
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+      if(req.session.usertype === "Branch Manager"){
+        branch = req.session.branch;
+      }
+      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
         res.render('purchase-orders', {
           layout: 'main',
           title: 'Purchase Orders',
@@ -574,7 +623,10 @@ router.get('/purchaseorder/view/:id', (req, res) => {
       supplierListController.fetchQuery(POs.supplier, (supplyListResult) =>{
         rawMaterialOrderController.fetchQuery(purchaseorderID, (orderedList) =>{
           var branch="";
-          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+          if(req.session.usertype === "Branch Manager"){
+            branch = req.session.branch;
+          }
+          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
             res.render('purchaseorder-card', { 
               layout:'main',
               title: 'Purchase Order Information',
@@ -601,8 +653,11 @@ router.get('/manageusers', isPrivate, function(req, res) {
       // and an object for what's needed in that template
       userController.getAll(req, (users) =>{
       branchController.getAll(req, (branches) =>{
-        var branch= "";
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}}, (allsuggestions)=>{
+        var branch="";
+        if(req.session.usertype === "Branch Manager"){
+          branch = req.session.branch;
+        }
+        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('manageusers', {
             layout: 'main',
             title: 'Manage Users',
@@ -743,7 +798,6 @@ router.get('/PGincrement/:id', isPrivate, (req, res) => {
 });
 
 router.get('/PGDecrement/:id', isPrivate, (req, res) => {
-  
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id;
     productgroupsController.decrementNumProd(query, (counted) => {
@@ -805,7 +859,6 @@ var getDates = function(startDate, endDate) {
 
 router.get('/processinventory/:id', isPrivate, (req,res) => {
   var totquantity = parseFloat("0");
-  //var poid = req.session.POid;
   var todate = new Date();
   var y = todate.getFullYear(), m =String(todate.getMonth() + 1).padStart(2, '0'), d=String(todate.getDate()).padStart(2, '0');
   todate.setDate(todate.getDate()-1)
@@ -842,11 +895,12 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
               date: y+"-"+m+"-"+d,
               for: "Admin",
               tobranch: thisPO.branch,
-              suggestion: thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average,
-              status: "Unresolved"
+              suggestion: thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+Math.floor(average),
+              status: "Unresolved",
+              type:"Production"
             }
             suggestionsController.makesuggestions(makesuggestion, (suggestion)=>{
-              console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
+              console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+Math.floor(average));
               console.log("Recommendation: Change quantity of order to " +average +"."   );
             })
             //console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
@@ -891,10 +945,11 @@ router.get('/processinventoryforBM', isPrivate, (req,res)=>{
         //var basis =average - obj.quantity; console.log(basis);
         var makesuggestion={
           date: y+"-"+m+"-"+d,
-          for: "BM",
+          for: "Branch Manager",
           tobranch: req.session.branch,
-          suggestion: req.session.branch+" has sold " + average + " Piece/s of " +obj+" in the last 7 days. Order "+average+" Piece/s.",
-          status: "Unresolved"
+          suggestion: req.session.branch+" has sold " + Math.floor(average) + " Piece/s of " +obj+" in the last 7 days. Order "+Math.floor(average)+" Piece/s.",
+          status: "Unresolved",
+          type: "Production"
         }
         suggestionsController.makesuggestions(makesuggestion, (suggestion)=>{
           console.log(result.branch_id+" has sold " + average + " Piece/s of " +result.product+" in the last 7 days. Order "+average+" Piece/s.");

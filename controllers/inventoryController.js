@@ -95,7 +95,44 @@ exports.getID = (req, res) => {
       }
     })
   }
+  var getDates = function(startDate, endDate) {
+    var dates = [],
+        currentDate = startDate,
+        addDays = function(days) {
+          var date = new Date(this.valueOf());
+          date.setDate(date.getDate() + days);
+          return date;
+        };
+    while (currentDate <= endDate) {
+      var todate = new Date();
+      todate.setDate(currentDate.getDate())
+      var dd = String(todate.getDate()).padStart(2, '0');
+      var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = todate.getFullYear();
+      todate = yyyy + '-' + mm + '-' + dd;
+      dates.push(todate);
+      currentDate = addDays.call(currentDate, 1);
+    }
+    return dates;
+  };
+
 exports.midendCountUpdate = (req,res) =>{
+  var todate = new Date();
+  //var y = todate.getFullYear(), m =String(todate.getMonth() + 1).padStart(2, '0'), d=String(todate.getDate()).padStart(2, '0');
+  todate.setDate(todate.getDate()-1)
+  var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var dd = String(todate.getDate()).padStart(2, '0');
+  var yyyy = todate.getFullYear();
+
+  var start = new Date()
+  start.setDate(start.getDate()-7);
+  var sM = String(start.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var sD = String(start.getDate()).padStart(2, '0');
+  var sY = start.getFullYear();
+  
+  
+  var daterange = getDates(new Date(sY,sM,sD), new Date(yyyy,mm,dd));
+
   var mid = req.body.midDayCount;
   var end = req.body.endDayCount;
   var id = req.body.id;
@@ -103,7 +140,9 @@ exports.midendCountUpdate = (req,res) =>{
   var srp = req.body.srp;
   var runninginv = req.body.changedStock;
   var middaysales = req.body.middaysale;
-
+  var invDate = req.body.thisdate;
+  var thisbranch = req.body.branch;
+  var product = req.body.product;
   if(mid > 0){
     var midtoNum = parseFloat(mid);
     var restockedtoNUm = parseFloat(restocked);
@@ -116,10 +155,54 @@ exports.midendCountUpdate = (req,res) =>{
         runningInventory : mid
       }
     } 
+    var totmiddaytoendday = parseFloat(0);
+    var averagemidtoend;
     inventoryModel.update({_id : id}, update, (err,res2) =>{
       if(err){
         throw err;
       }else{
+        inventoryModel.fetchList({branch_id: thisbranch,product: product, inventorydate: daterange}, (invErr, inv)=>{
+          if(invErr){
+            throw invErr;
+          }else{
+            for(var i = 0; i< inv.length; i++){
+              totmiddaytoendday = totmiddaytoendday + parseFloat(inv[i].runningInventory) - parseFloat(inv[i].endDayCount); 
+              console.log(totmiddaytoendday);
+            }
+            averagemidtoend = totmiddaytoendday/inv.length;
+            var todate = new Date();
+            var y = todate.getFullYear(), m =String(todate.getMonth() + 1).padStart(2, '0'), d=String(todate.getDate()).padStart(2, '0');
+            if(mid > averagemidtoend*.80){
+              var makesuggestion={
+                date: y+"-"+m+"-"+d,
+                for: "Branch Manager",
+                tobranch: req.session.branch,
+                suggestion: res2.branch_id+" has sold on average " + Math.floor(averagemidtoend)  + " Piece/s of " +product+" from middle to end of the day. \nPullout "+ Math.floor((mid-averagemidtoend)*.80)+" Piece/s of "+product+".",
+                status: "Unresolved",
+                type: "Pullout"
+              }
+              console.log(res2.branch_id+" has sold " + averagemidtoend + " Piece/s of " +product+" at the middle of the day. Pullout "+(mid-averagemidtoend)*.80+" Piece/s.");
+              suggestionsModel.create(makesuggestion, (sErr, sResult)=>{
+                if(sErr){
+                  throw sErr;
+                }else{
+                  console.log(sResult);
+                }
+              })
+             }else if(mid < averagemidtoend*.80){
+               //request list suggestion
+               var makesuggestion={
+                  date: y+"-"+m+"-"+d,
+                  for: "Branch Manager",
+                  tobranch: req.session.branch,
+                  suggestion: res2.branch_id+" has sold on average " + Math.floor(averagemidtoend)  + " Piece/s of " +product+" from middle to end of the day. \nPullout "+ Math.floor((mid-averagemidtoend)*.80)+" Piece/s of "+product+".",
+                  status: "Unresolved",
+                  type: "Request"
+                }
+             }
+            totmiddaytoendday = parseFloat(0);
+          }
+        })
         res.redirect('/inventory-admin');
       }
     })
@@ -332,11 +415,11 @@ exports.pulloutUpdate = (req,res)=>{
                       })
                     }
                   })
-              }
-            })
-          }
+                }
+              })
+            }
+          })
         })
-      })
-    }
-  })
-}
+      }
+    })
+  }
