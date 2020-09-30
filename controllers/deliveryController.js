@@ -25,3 +25,24 @@ exports.getID = (req, res) => {
       }
     });
   };
+  exports.fetchQuery = (req,res) => {
+    var query = req;
+    deliveryModel.fetchList(query, (err, result) => {
+      if(err){
+        throw err;
+      }
+      else{
+        if(result){
+          const fetched = [];
+          result.forEach(function(doc) {
+            fetched.push(doc.toObject());
+          });
+          res(fetched);
+        }
+        else{
+          console.log("No inventory for this branch!");
+          res(result);
+        }
+      }
+    })
+  }

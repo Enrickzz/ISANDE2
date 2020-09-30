@@ -1,3 +1,22 @@
+        <script>
+                function trytab(){
+                    var bufferBO= document.getElementById('checkthis').value;
+                    if(bufferBO == 'true'){
+                        document.getElementById('create').click();
+                    }
+                }
+                window.onload = trytab;
+
+
+                $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                    localStorage.setItem('activeTab', $(e.target).attr('href'));
+                });
+                var activeTab = localStorage.getItem('activeTab');
+                if(activeTab){
+                    $('#myTab a[href="' + activeTab + '"]').tab('show');
+                }
+
+            </script>
         <div class="container-fluid">
                 <h3 class="text-dark mb-1">{{title}}</h3>
 
@@ -7,7 +26,10 @@
 
                          <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#deliverylist">All Deliveries</a>
+                            <a class="nav-link active" id="one" data-toggle="tab" href="#deliverylist">Today Deliveries</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" id="two" data-toggle="tab" href="#archive">Archive</a>
                             </li>
 
                         </ul>
@@ -15,7 +37,43 @@
                 
                 <div class="tab-content">
                     {{!-- DELIVERY LIST --}}
-                    <div class="container tab-pane active" id="pulloutlist" style="padding-top: 30px;">
+                    <div class="container tab-pane active" id="deliverylist" style="padding-top: 30px;">
+                            {{!-- FILTER TABLE --}}
+                                <div class="dataTables_filter" id="dataTable_filter"> Status: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter" onkeyup="filter()" placeholder="All"></label>
+                                </div>
+                            {{!-- END FILTER --}}
+                            <div style="padding-bottom: 10px;"> </div>
+                        <div class="table-responsive">            
+                            <table class="table" id="delTable">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTable(0)">Package Date  <i class="fa fa-sort"></i></th>
+                                        <th>Order ID</th>
+                                        {{!-- <th onclick="sortTable(2)">Total Quantity <i class="fa fa-sort"></i></th> --}}
+                                        <th>Total Amount </th>
+                                        <th onclick="sortTable(4)">Status <i class="fa fa-sort"></i></th>
+                                        <th><span></span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each todaydelivery}}
+                                        <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
+                                            <td>{{deliverydate}}</td>
+                                            <td>{{productionID}}</td>
+                                            {{!-- <td> Sample value</td> --}}
+                                            <td>{{total}}</td>
+                                            <td>{{status}}</td>
+                                        </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+               
+                {{!-- END OF DELIVERY LIST --}}
+                <div class="container tab-pane fade" id="archive" style="padding-top: 30px;">
                             {{!-- FILTER TABLE --}}
                                 <div class="dataTables_filter" id="dataTable_filter"> Status: <label> 
                                     <input type="text" class="form-control form-control-sm" 
@@ -49,8 +107,6 @@
                             </table>
                         </div>
                     </div>
-               
-                {{!-- END OF DELIVERY LIST --}}
 
                 </div>
                     {{!-- END TAB CONTENT --}}

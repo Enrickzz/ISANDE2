@@ -36,3 +36,8 @@ exports.create = function(obj, next) {
       next(err, res);
     })
   };
+  exports.fetchList = function(query, next) {
+    deliveryModel.find(query, function(err, ress) {
+      next(err, ress);
+    });
+  };

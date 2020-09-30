@@ -270,21 +270,30 @@ router.get('/returns/view/:id', isPrivate, function (req, res) {
 router.get('/delivery', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
+  var todate = new Date();
+  todate.setDate(todate.getDate())
+  var dd = String(todate.getDate()).padStart(2, '0');
+  var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = todate.getFullYear();
+  todate = yyyy + '-' + mm + '-' + dd;
   deliveryController.getAll(req, (alldeliveries)=>{
     var branch="";
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
     }
     suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+      deliveryController.fetchQuery({deliverydate:todate}, (todayDeliveries)=>{
         res.render('delivery', {
-        layout: 'main',
-        title: 'Deliveries',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        delivery: alldeliveries,
-        suggestions: allsuggestions,
-        num_suggestions: allsuggestions.length
+          layout: 'main',
+          title: 'Deliveries',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          utype: req.session.usertype,
+          delivery: alldeliveries,
+          suggestions: allsuggestions,
+          num_suggestions: allsuggestions.length,
+          todaydelivery: todayDeliveries
+        })
       })
     })
   })
