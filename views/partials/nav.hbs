@@ -78,19 +78,46 @@
                                     <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
                                         role="menu" style="min-width: 600px;">
                                         <h6 class="dropdown-header">Suggestions</h6>
+
+                                        {{!-- NAV LINKS --}}
                                         <ul class="nav nav-tabs" role="tablist" style="height: 2rem;">
                                             <li class="nav-item" >
-                                                <a class="nav-link active"  href="" style="height: 2rem;">Production</a>
+                                                <a class="nav-link active"  data-toggle="tab" href="#production" style="height: 2rem;">Production</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link"  href="" style="height: 2rem;">Pullout</a>
+                                                <a class="nav-link" data-toggle="tab"  href="#pullout" style="height: 2rem;">Pullout</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link"  href="" style="height: 2rem;">Request</a>
+                                                <a class="nav-link"  data-toggle="tab" href="#request" style="height: 2rem;">Request</a>
                                             </li>
                                         </ul>
+                                        {{!-- END OF NAV LINKS --}}
+                                      
+                                        {{!-- NAV TABS --}}
+
+                                        {{!-- PRODUCTION --}}
+                                        <div id="production" class="tab-pane fade show active">
                                         {{#each suggestions}}
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
+                                        {{#if_eq type "Production"}}
+                                        <a class="d-flex align-items-center dropdown-item">
+                                            <div class="mr-3">
+                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">{{date}}</span>
+                                                <p style="color: white;">{{suggestion}}</p>
+                                            </div>
+                                        </a>
+                                        {{/if_eq}}
+                                        {{/each}}
+                                        </div>
+                                        {{!-- END OF PRODUCTION --}}
+                                     
+                                       
+                                        {{!-- PULL OUT --}}
+                                        <div id="pullout" class="tab-pane fade">
+                                        {{#each suggestions}} 
+                                        {{#if_eq type "Pull Out"}}
+                                        <a class="d-flex align-items-center dropdown-item">
                                             <div class="mr-3">
                                                 <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
                                             </div>
@@ -98,10 +125,35 @@
                                                 <p>{{suggestion}}</p>
                                             </div>
                                         </a>
+                                         {{/if_eq}}
                                         {{/each}}
+                                        </div>
+                                        {{!-- END OF PULL OUT --}}
+
+                                    
+                                        {{!-- REQUEST --}}
+                                        <div id="request" class="tab-pane fade">
+                                        {{#each suggestions}}
+                                        {{#if_eq type "Request"}}
+                                        <a class="d-flex align-items-center dropdown-item">
+                                            <div class="mr-3">
+                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">{{date}}</span>
+                                                <p>{{suggestion}}</p>
+                                            </div>
+                                        </a>
+                                        {{/if_eq}}
+                                        {{/each}}
+                                        </div>
+                                        {{!-- END OF REQUEST --}}
+                                        
+                                        {{!-- END OF NAV TABS --}}
+
                                        <!--<a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a>-->
                                     </div>
                                 </div>
+                                
                                 <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
