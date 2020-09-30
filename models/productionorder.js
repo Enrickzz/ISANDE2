@@ -24,6 +24,11 @@ exports.getAll = (param, next) => {
     });
   };
 
+  exports.fetchList = function(query, next) {
+    productionorderModel.find(query, function(err, ress) {
+      next(err, ress);
+    });
+  };
 
   exports.create = function(obj, next) {
     const purchaseorder = new productionorderModel(obj);

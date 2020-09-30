@@ -47,6 +47,28 @@ exports.paramgetID = (req, res) => {
   });
 };
 
+exports.fetchQuery = (req,res) => {
+  var query = req;
+  productionorderModel.fetchList(query, (err, result) => {
+    if(err){
+      throw err;
+    }
+    else{
+      if(result){
+        const fetched = [];
+        result.forEach(function(doc) {
+          fetched.push(doc.toObject());
+        });
+        res(fetched);
+      }
+      else{
+        console.log("No inventory for this branch!");
+        res(result);
+      }
+    }
+  })
+}
+
 exports.addproductionorder = (req,res)=>{
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');

@@ -482,6 +482,12 @@ router.get('/allproducts/view/:id', isPrivate, (req, res) => {
 router.get('/productionorder', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
+  var todate = new Date();
+  todate.setDate(todate.getDate())
+  var dd = String(todate.getDate()).padStart(2, '0');
+  var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = todate.getFullYear();
+  todate = yyyy + '-' + mm + '-' + dd;
   productionOrderController.getAll(req, (allprodords) =>{
     productController.getAllproducts(req, (allproducts)=>{
       branchOrderController.fetchQuery("buffer", (buffer)=>{
@@ -490,24 +496,26 @@ router.get('/productionorder', isPrivate, function(req, res) {
           branch = req.session.branch;
         }
         suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
-          //checker if buffer contains objs
-          var checker = "true";
-          if (Object.entries(buffer).length === 0) {
-            checker = "false";
-          }
-          console.log(buffer);
-          res.render('production-orders', {
-            layout: 'main',
-            title: 'Production Orders',
-            fname:  req.session.first_name,
-            lname:  req.session.last_name,
-            utype: req.session.usertype,
-            productionorders: allprodords,
-            plist: allproducts,
-            bufferBO : buffer,
-            check: checker,
-            suggestions: allsuggestions,
-            num_suggestions: allsuggestions.length
+          productionOrderController.fetchQuery({orderDate: todate}, (todayProdords)=>{
+            var checker = "true";
+            if (Object.entries(buffer).length === 0) {
+              checker = "false";
+            }//checker if buffer contains objs
+            console.log(buffer);
+            res.render('production-orders', {
+              layout: 'main',
+              title: 'Production Orders',
+              fname:  req.session.first_name,
+              lname:  req.session.last_name,
+              utype: req.session.usertype,
+              productionorders: allprodords,
+              plist: allproducts,
+              bufferBO : buffer,
+              check: checker,
+              suggestions: allsuggestions,
+              num_suggestions: allsuggestions.length,
+              todayprodorders:todayProdords
+            })
           })
         })
         

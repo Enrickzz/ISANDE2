@@ -28,7 +28,7 @@
 
                          <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                            <a class="nav-link active" id="lnk1" data-toggle="tab" href="#production_order">All Production Orders</a>
+                            <a class="nav-link active" id="lnk1" data-toggle="tab" href="#production_order">Today Production Orders</a>
                             </li>
 
                             <li class="nav-item">
@@ -36,7 +36,7 @@
                             </li>
 
                             <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#regproduct_group">View Suggestions</a>
+                            <a class="nav-link" data-toggle="tab" href="#archived">Archive</a>
                             </li>
 
                             </ul>
@@ -45,6 +45,38 @@
                 <div class="tab-content">
                     {{!-- ALL PRODUCTION ORDERS --}}
                     <div class="container tab-pane active" id="production_order" style="padding-top: 30px;">
+                        {{!-- FILTER TABLE --}}
+                                <div class="dataTables_filter" id="dataTable_filter"> Status: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter" onkeyup="filter()" placeholder="All"></label>
+                                </div>
+                        {{!-- END FILTER --}}
+                            <div style="padding-bottom: 10px;"> </div>
+                        <div class="table-responsive">
+                            <table class="table" id="proTable">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTable(0)">Order Date  <i class="fa fa-sort"></i></th>               
+                                        <th onclick="sortTable(1)">Branch  <i class="fa fa-sort"></i></th>
+                                        <th>Order ID </i></th>
+                                        <th onclick="sortTable(3)">Status <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each todayprodorders}}
+                                    <tr class="clickable" onclick='window.location="/productionorder/view/{{this._id}}"'>
+                                        <td>{{orderDate}}</td>
+                                        <td>{{branch}}</td>
+                                        <td>{{this._id}}</td>
+                                        <td>{{status}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="container tab-pane fade" id="archived" style="padding-top: 30px;">
                         {{!-- FILTER TABLE --}}
                                 <div class="dataTables_filter" id="dataTable_filter"> Status: <label> 
                                     <input type="text" class="form-control form-control-sm" 
