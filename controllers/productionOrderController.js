@@ -80,16 +80,18 @@ exports.addproductionorder = (req,res)=>{
 
   var productionorder = {
     orderDate: date,
-    branch: req.body.branch,
+    branch: req.session.branch,
     status: "Pending",
     total: "0"
   }
+  var poid;
   productionorderModel.create(productionorder, function (err, result_PO) {
     if(err){
       console.log(err);
       res.redirect('/productionorder');
     }
     else{
+      poid = result_PO._id;
       branchorderModel.fetchList({productionorderID:"buffer"}, (err, results) =>{
         if(err){
           throw err;
@@ -104,7 +106,7 @@ exports.addproductionorder = (req,res)=>{
                   if(error2){
                     throw error2;
                   }else{
-                    
+                    res.redirect('/processinventory/'+ poid);
                   }
                 })
               }
@@ -115,7 +117,7 @@ exports.addproductionorder = (req,res)=>{
       //res.redirect('/productionorder/view/' + result_PO._id)
     }
     //req.session.POid = result_PO._id;
-    res.redirect('/processinventory/'+ result_PO._id);
+    
   })
 };
 

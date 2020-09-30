@@ -535,7 +535,8 @@ router.get('/productionorder', isPrivate, function(req, res) {
               check: checker,
               suggestions: allsuggestions,
               num_suggestions: allsuggestions.length,
-              todayprodorders:todayProdords
+              todayprodorders:todayProdords,
+              todayprodordcount : todayProdords.length
             })
           })
         })
@@ -744,16 +745,24 @@ router.get('/purchaseordercard', isPrivate, function(req, res) {
 router.get('/profile', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  res.render('profile', {
-    layout: 'main',
-    title: 'My Profile',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name,
-    email:  req.session.email,
-    mnum: req.session.mobileno,
-    utype: req.session.usertype,
-    branch: req.session.branch
-    
+  var branch="";
+  if(req.session.usertype === "Branch Manager"){
+    branch = req.session.branch;
+  }
+  suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+    res.render('profile', {
+      layout: 'main',
+      title: 'My Profile',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
+      email:  req.session.email,
+      mnum: req.session.mobileno,
+      utype: req.session.usertype,
+      branch: req.session.branch,
+      suggestions: allsuggestions,
+      num_suggestions: allsuggestions.length
+      
+    })
   })
 });
 

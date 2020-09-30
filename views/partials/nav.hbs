@@ -1,6 +1,6 @@
   <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <button class="btn btn-primary" type="button">Create <i class="fa fa-edit"></i></button>
+                        <!--<button class="btn btn-primary" type="button">Create <i class="fa fa-edit"></i></button>--> <h2 style="color: #f98c40; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{title}} </h2>
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
@@ -82,13 +82,13 @@
                                         {{!-- NAV LINKS --}}
                                         <ul class="nav nav-tabs" role="tablist" style="height: 2rem;">
                                             <li class="nav-item" >
-                                                <a class="nav-link active"  data-toggle="tab" href="#production" style="height: 2rem;">Production</a>
+                                                <a class="nav-link active"  data-toggle="tab" data-target="#production" style="height: 2rem;">Production</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab"  href="#pullout" style="height: 2rem;">Pullout</a>
+                                                <a class="nav-link" data-toggle="tab"  data-target="#pullout" style="height: 2rem;" >Pullout</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link"  data-toggle="tab" href="#request" style="height: 2rem;">Request</a>
+                                                <a class="nav-link"  data-toggle="tab" data-target="#request" style="height: 2rem;">Request</a>
                                             </li>
                                         </ul>
                                         {{!-- END OF NAV LINKS --}}
@@ -150,7 +150,7 @@
                                         
                                         {{!-- END OF NAV TABS --}}
 
-                                       <!--<a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a>-->
+                                       <a class="text-center dropdown-item small text-gray-500" href="#">Close</a>
                                     </div>
                                 </div>
                                 

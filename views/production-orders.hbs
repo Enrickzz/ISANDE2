@@ -17,6 +17,10 @@
                                 option.setAttribute('selected',true);
                             }
                         }
+                        if(document.getElementById('prodordcount').value > 0){
+                           // document.getElementById('add').disabled = true;
+                        }
+                        
                     }
 
                 }
@@ -34,10 +38,10 @@
             </script>
 
             <input type="hidden" id="checkthis" name="buffer" value="{{check}}">
+            <input type="hidden" id="prodordcount" name="prodordcount" value="{{todayprodordcount}}">
             <input type="hidden" id="utype" name="utype" value="{{utype}}">
             <input type="hidden" id="whichbranch" name="whichbranch" value="{{whichbranch}}">
             <div class="container-fluid" style="padding-bottom: 50px;">
-                <h3 class="text-dark mb-1">Production Orders</h3>
 
                 {{!-- Nav Tabs --}}
                 <div class="card">
@@ -48,8 +52,8 @@
                             <a class="nav-link active" id="lnk1" data-toggle="tab" href="#production_order">Today Production Orders</a>
                             </li>
 
-                            <li class="nav-item">
-                            <a class="nav-link" id="create" data-toggle="tab" href="#regproduct_group">Create Production Order</a>
+                            <li class="nav-item" >
+                            <a class="nav-link" id="create" data-toggle="tab" href="#regproduct_group" >Create Production Order</a>
                             </li>
 
                             <li class="nav-item">
@@ -194,7 +198,7 @@
 
                             <div class="row">
                                 <div class="col" style="margin-left: 20px; margin-top: 10px">
-                                    <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
+                                    <button id="add" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#myModal">Add Item</button>
                                 </div>
                             </div>
 
