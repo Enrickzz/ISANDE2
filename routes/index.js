@@ -77,6 +77,7 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
           utype: req.session.usertype,
           inventory: allInventory,
           today: datequery,
+          realtoday: todate,
           whichbranch : branchquery,
           usertype: req.session.usertype,
           suggestions:suggestionlist,
@@ -1028,6 +1029,7 @@ router.post('/updatebranchInv', productionOrderController.statuschange4deliver);
 router.post('/recieveproductionorders', inventoryController.addInventory);
 router.post('/nextday', filterController.nextday);
 router.post('/prevday', filterController.prevday);
+router.post('/today', filterController.today);
 router.post('/filterbranch', filterController.changebranch);
 router.post('/pulloutorder', pulloutorderController.create);
 router.post('/pulloutupdate', inventoryController.pulloutUpdate);

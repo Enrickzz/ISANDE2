@@ -14,7 +14,23 @@ exports.getfilter= (req, res) =>{
         }
     })
 }
-
+exports.today = (req, res) =>{
+    var today = req.body.realdate;
+    
+    var update = {
+        $set: {
+            date: today 
+        }
+    }
+    filterModel.update({for: "inventory"}, update , (err, result) =>{
+        if(err){
+            res.redirect('inventory-admin')
+            throw err;
+        }else{
+            res.redirect('inventory-admin')
+        }
+    })
+}
 exports.nextday = (req, res) =>{
     var query = req;
     var curr = req.body.currdate;

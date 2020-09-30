@@ -50,6 +50,10 @@
                             }
                         }
                     }
+
+                    if(document.getElementById('realdate').value == document.getElementById('currdate').value){
+                        document.getElementById('today').parentNode.removeChild(document.getElementById('today'));
+                    }
                 }
                 window.onload = checkCount;
             </script>
@@ -80,22 +84,21 @@
                             <div style="text-align:center" class="col">
                                 <form>
                                     <h4 >{{today}}</h4>
-                                    <input type="hidden" name="currdate" value="{{today}}">
+                                    <input type="hidden" name="currdate" id="currdate" value="{{today}}">
+                                    <input type="hidden" name="realdate" id="realdate" value="{{realtoday}}">
                                     <button id="prev" class="btn btn-primary btn-sm" formaction="/prevday" formmethod="POST" type="submit"><i class="fas fa-arrow-left"></i> Previous</button>
                                     <button id="next" class="btn btn-primary btn-sm" formaction="/nextday" formmethod="POST" type="submit">Next Day <i class="fas fa-arrow-right"></i></button>
+                                    <br><br>
+                                    <button id="today" class="btn btn-primary btn-sm" formaction="/today" formmethod="POST" type="submit"><i class=""></i> Back to Today ({{realtoday}})</button>
                                 </form>
                                 
                             </div>
 
                             <div style="text-align:center" class="col">
                                 <div class="dataTables_filter" id="dataTable_filter">
-                                        {{!-- Date --}}
+                                        {{!-- Date 
                                         <label for="a">Date</label>
-                                            <select id="a" name="a" class="form-control">
-                                                <option value="">date1</option>
-                                                <option value="">date2</option>
-                                                <option value="">date3</option>
-                                            </select><br>
+                                            <input type="date" name="thisdate" id="thisdate" class="form-control">--}}
                                 </div>
                             </div>
                         </div>
