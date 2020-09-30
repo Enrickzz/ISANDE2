@@ -88,7 +88,8 @@ exports.addproductionorder = (req,res)=>{
   productionorderModel.create(productionorder, function (err, result_PO) {
     if(err){
       console.log(err);
-      res.redirect('/productionorder');
+      //res.redirect('/productionorder');
+      throw err;
     }
     else{
       poid = result_PO._id;
@@ -106,7 +107,7 @@ exports.addproductionorder = (req,res)=>{
                   if(error2){
                     throw error2;
                   }else{
-                    res.redirect('/processinventory/'+ poid);
+                    
                   }
                 })
               }
@@ -117,7 +118,7 @@ exports.addproductionorder = (req,res)=>{
       //res.redirect('/productionorder/view/' + result_PO._id)
     }
     //req.session.POid = result_PO._id;
-    
+    res.redirect('/processinventory/'+ poid);
   })
 };
 

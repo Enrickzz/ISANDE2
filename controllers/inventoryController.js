@@ -343,7 +343,7 @@ exports.addInventory = (req,res) =>{
                 if (e4) {
                   throw e4;
                 }else{
-                  suggestionsModel.delete({tobranch:req.session.branch, date:result4.orderDate, for:"BM"}, (error3,success3)=>{
+                  suggestionsModel.delete({tobranch:req.session.branch, date:result4.orderDate, for:"Branch Manager"}, (error3,success3)=>{
                     if(error3){
                       throw error3;
                     }else{

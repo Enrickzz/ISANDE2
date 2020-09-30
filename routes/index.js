@@ -885,10 +885,10 @@ var getDates = function(startDate, endDate) {
         return date;
       };
   while (currentDate <= endDate) {
-    var todate = new Date();
-    todate.setDate(currentDate.getDate())
+    var todate = new Date(currentDate);
+    //todate.setDate(currentDate.getDate())
     var dd = String(todate.getDate()).padStart(2, '0');
-    var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var mm = String(todate.getMonth()).padStart(2, '0'); //January is 0!
     var yyyy = todate.getFullYear();
     todate = yyyy + '-' + mm + '-' + dd;
     dates.push(todate);
@@ -914,6 +914,7 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
   
   
   var daterange = getDates(new Date(sY,sM,sD), new Date(yyyy,mm,dd));
+  //var daterange =["2020-09-24","2020-09-25","2020-09-26","2020-09-27","2020-09-28","2020-09-29","2020-09-30"]
   console.log(daterange);
   productionOrderController.getID(req, (thisPO)=>{
     console.log(thisPO);
@@ -970,8 +971,11 @@ router.get('/processinventoryforBM', isPrivate, (req,res)=>{
   var sM = String(start.getMonth() + 1).padStart(2, '0'); //January is 0!
   var sD = String(start.getDate()).padStart(2, '0');
   var sY = start.getFullYear();
+  console.log(sY+"-"+sM+"-"+sD);
+  console.log(yyyy+"-"+mm+"-"+dd);
   var daterange = getDates(new Date(sY,sM,sD), new Date(yyyy,mm,dd));
-  
+  //console.log(daterange1);
+  //var daterange =["2020-09-24","2020-09-25","2020-09-26","2020-09-27","2020-09-28","2020-09-29","2020-09-30"]
   inventoryController.fetchProducts({branch_id: req.session.branch, inventorydate: yyyy+"-"+mm+"-"+dd }, (productlist)=>{
     productlist.forEach(function(obj){
       inventoryController.fetchQuery({branch_id: req.session.branch,product: obj, inventorydate: daterange}, (result)=>{
@@ -999,6 +1003,7 @@ router.get('/processinventoryforBM', isPrivate, (req,res)=>{
       })
     })
   })
+  console.log(daterange)
   res.redirect('/inventory-admin');
 })
 
