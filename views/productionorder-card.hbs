@@ -50,9 +50,22 @@
                         var rm4 = document.getElementById('delivered');
                         rm4.parentNode.removeChild(rm4);
                     }
+                    
+                    if(document.getElementById('utype').value == "Branch Manager"){
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                        var rm4 = document.getElementById('delivered');
+                        rm4.parentNode.removeChild(rm4);
+                    }
                 }
                 window.onload = statuscheck;
             </script>
+            <input type="hidden" id="utype" name="utype" value="{{utype}}">
+            <input type="hidden" id="whichbranch" name="whichbranch" value="{{whichbranch}}">
             <div class="container-fluid" onload="statuscheck()" >
                <h3 class="text-dark mb-4">  <a href="/productionorder" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;Production Order Information</h3>
                 <div class="card">

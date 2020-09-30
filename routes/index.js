@@ -289,6 +289,7 @@ router.get('/delivery', isPrivate, function(req, res) {
           fname:  req.session.first_name,
           lname:  req.session.last_name,
           utype: req.session.usertype,
+          whichbranch: req.session.branch,
           delivery: alldeliveries,
           suggestions: allsuggestions,
           num_suggestions: allsuggestions.length,
@@ -497,15 +498,16 @@ router.get('/productionorder', isPrivate, function(req, res) {
   var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = todate.getFullYear();
   todate = yyyy + '-' + mm + '-' + dd;
-  productionOrderController.getAll(req, (allprodords) =>{
+  var branch="";
+  if(req.session.usertype === "Branch Manager"){
+    branch = req.session.branch;
+  }
+  productionOrderController.fetchQuery({branch:{$regex:branch}}, (allprodords) =>{
     productController.getAllproducts(req, (allproducts)=>{
       branchOrderController.fetchQuery("buffer", (buffer)=>{
-        var branch="";
-        if(req.session.usertype === "Branch Manager"){
-          branch = req.session.branch;
-        }
+        
         suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
-          productionOrderController.fetchQuery({orderDate: todate}, (todayProdords)=>{
+          productionOrderController.fetchQuery({orderDate: todate,branch:{$regex: branch}}, (todayProdords)=>{
             var checker = "true";
             if (Object.entries(buffer).length === 0) {
               checker = "false";
@@ -517,6 +519,7 @@ router.get('/productionorder', isPrivate, function(req, res) {
               fname:  req.session.first_name,
               lname:  req.session.last_name,
               utype: req.session.usertype,
+              whichbranch: req.session.branch,
               productionorders: allprodords,
               plist: allproducts,
               bufferBO : buffer,
@@ -550,6 +553,7 @@ router.get('/productionorder/view/:id', isPrivate, function(req, res) {
           fname:  req.session.first_name,
           lname:  req.session.last_name,
           utype: req.session.usertype,
+          whichbranch: req.session.branch,
           productionorder: thisPO,
           branchorders: orders,
           suggestions: allsuggestions,

@@ -4,6 +4,21 @@
                     if(bufferBO == 'true'){
                         document.getElementById('create').click();
                     }
+
+                    var utype = document.getElementById('utype').value;
+                    
+                    if(utype == "Branch Manager"){
+                        var branch = document.getElementById('whichbranch').value;
+                        var select =  document.getElementById('branch'); select.disabled=true;
+                        var option;
+                        for(i = 0; i< select.options.length ; i++){
+                            option = select.options[i];
+                            if(option.value == branch){
+                                option.setAttribute('selected',true);
+                            }
+                        }
+                    }
+
                 }
                 window.onload = trytab;
 
@@ -19,6 +34,8 @@
             </script>
 
             <input type="hidden" id="checkthis" name="buffer" value="{{check}}">
+            <input type="hidden" id="utype" name="utype" value="{{utype}}">
+            <input type="hidden" id="whichbranch" name="whichbranch" value="{{whichbranch}}">
             <div class="container-fluid" style="padding-bottom: 50px;">
                 <h3 class="text-dark mb-1">Production Orders</h3>
 
@@ -130,7 +147,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Branch</label>
-                                            <select name="branch" id="" class="form-control">
+                                            <select name="branch" id="branch" class="form-control">
                                                 <option value="Branch A">Branch A</option>
                                                 <option value="Branch B">Branch B</option>
                                                 <option value="Branch C">Branch C</option>
