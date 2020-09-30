@@ -171,3 +171,7 @@ th, td {
 .nav-item:hover{
     cursor: pointer;
 }
+
+option:disabled {
+    background-color:#D5D8DC ;
+  }
