@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
     reorder: { type: String, required:false},
     UOM: { type: String, required:true},
     description:{type:String, requireed:true},
-    product_groupID: {type: String, required: false}
+    product_groupID: {type: String, required: false, default:"Ungrouped"}
   }
 );
 

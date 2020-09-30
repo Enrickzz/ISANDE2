@@ -96,12 +96,12 @@ exports.addProduct = (req, res) => {
       } else {
 
           const newProduct = {
-            name,
-            sku,
-            description,
-            UOM,
-            prodgroup,
-            sellingprice
+            name: name,
+            sku: sku,
+            description: description,
+            UOM: UOM,
+            product_groupID: prodgroup,
+            sellingprice: sellingprice
           };
 
           productModel.createProduct(newProduct, function (err, product_result) {
@@ -209,12 +209,13 @@ exports.delete = (req, res) => {
       res.redirect('/allproducts');
     } 
     else {
-      if(groupid != "Ungrouped"){
+      if(result.product_groupID != "Ungrouped"){
         console.log(result);
         // res.redirect('/PGdecrementA/'+groupid); 
         // this causes error in redirect
         req.flash('success_msg', 'Product deleted.');
-        res.redirect('/allproducts');
+        res.redirect('/PGdecrementA/'+groupid);
+        
       }
       else{
         req.flash('success_msg', 'Product deleted.');
