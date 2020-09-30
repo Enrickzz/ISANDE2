@@ -126,10 +126,7 @@ router.get('/inventory-bm', isPrivate, function(req, res) {
 router.get('/pullout-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  
-  pulloutorderController.getAll(req, (allpullouts)=>{
-    
-    var todate = new Date();
+  var todate = new Date();
     var dd = String(todate.getDate()).padStart(2, '0');
     var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = todate.getFullYear();
@@ -140,6 +137,7 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
     }
+  pulloutorderController.fetchQuery({pulloutdate:datequery}, (allpullouts)=>{
     requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
       requestController.fetchList({type: "addstock", date: datequery,status: "Requested"}, (reqaddstock)=>{
         suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
@@ -149,6 +147,7 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
             fname:  req.session.first_name,
             lname:  req.session.last_name,
             utype: req.session.usertype,
+            today: todate,
             pullouts: allpullouts,
             reqpullout: reqpullout,
             reqaddstock: reqaddstock,
@@ -219,21 +218,30 @@ router.get('/pulloutorder/view/:id', (req, res) => {
 router.get('/returns', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
-  returnController.getAll(req, (allreturns)=>{
-    var branch="";
-    if(req.session.usertype === "Branch Manager"){
-      branch = req.session.branch;
-    }
+  var todate = new Date();
+  todate.setDate(todate.getDate())
+  var dd = String(todate.getDate()).padStart(2, '0');
+  var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = todate.getFullYear();
+  todate = yyyy + '-' + mm + '-' + dd;
+  var branch="";
+  if(req.session.usertype === "Branch Manager"){
+    branch = req.session.branch;
+  }
+  returnController.fetchQuery({returndate: todate, branchID: {$regex: branch}}, (allreturns)=>{
     suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
-      res.render('returns', {
-        layout: 'main',
-        title: 'Returns',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        returns: allreturns,
-        suggestions: allsuggestions,
-        num_suggestions: allsuggestions.length
+      returnController.fetchQuery({branchID: {$regex: branch}} , (archive)=>{
+        res.render('returns', {
+          layout: 'main',
+          title: 'Returns',
+          fname:  req.session.first_name,
+          lname:  req.session.last_name,
+          utype: req.session.usertype,
+          returns: allreturns,
+          archivedreturn: archive,
+          suggestions: allsuggestions,
+          num_suggestions: allsuggestions.length
+        })
       })
     })
   })

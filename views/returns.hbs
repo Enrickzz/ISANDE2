@@ -7,11 +7,14 @@
 
                          <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#allreturns">All Returns</a>
+                            <a class="nav-link active" data-toggle="tab" href="#allreturns">Today Returns</a>
                             </li>
 
                             <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#addreturn">Add Return</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#archived">Archive</a>
                             </li>
 
                             </ul>
@@ -54,7 +57,39 @@
                     </div>
                
                 {{!-- END OF ALL RETURNS--}}
-
+                    <div class="container tab-pane fade" id="archived" style="padding-top: 30px;">
+                            {{!-- FILTER TABLE --}}
+                                <div class="dataTables_filter" id="dataTable_filter"> Status: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter" onkeyup="filter()" placeholder="All"></label>
+                                </div>
+                        {{!-- END FILTER --}}
+                         <div style="padding-bottom: 10px;"> </div>
+                        <div class="table-responsive">
+                            <table class="table" id="retTable">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTable(0)">Return Date  <i class="fa fa-sort"></i></th>               
+                                        <th>Return # </th>
+                                        <th onclick="sortTable(2)">Type  <i class="fa fa-sort"></i></th>
+                                        <th>Amount  </th>
+                                        <th onclick="sortTable(4)">Status <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each archivedreturn}}
+                                    <tr class="clickable" onclick='window.location="/returns/view/{{this._id}}"'>
+                                        <td>{{returndate}}</td>
+                                        <td> {{this._id}}</td>
+                                        <td> {{type}}</td>
+                                        <td>{{amount}}</td>
+                                        <td>{{status}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                  {{!-- ADD RETURN --}}
                     <div class="container tab-pane fade" id="addreturn" style="padding-top: 30px;">       
                         <div class="row">

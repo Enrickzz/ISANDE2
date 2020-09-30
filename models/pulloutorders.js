@@ -18,7 +18,11 @@ exports.getAll = (param, next) => {
       next(err, res);
     });
   };
-
+  exports.fetchList = function(query, next) {
+    pulloutorderModel.find(query, function(err, ress) {
+      next(err, ress);
+    });
+  };
 exports.getByID = function(query, next) {
     pulloutorderModel.findById(query, function(err, post) {
       next(err, post);

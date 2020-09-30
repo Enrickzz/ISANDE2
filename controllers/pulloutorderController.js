@@ -1,7 +1,6 @@
 
 const pulloutorderModel = require('../models/pulloutorders');
 const { validationResult } = require('express-validator');
-const inventoryModel = require('../models/inventory');
 const requestModel = require('../models/requestlist');
 const deliveryModel = require('../models/delivery');
 
@@ -43,6 +42,27 @@ exports.fetchOne = (req, res) =>{
       }
       else{
         console.log("No products for this group!");
+        res(result);
+      }
+    }
+  })
+}
+exports.fetchQuery = (req,res) => {
+  var query = req;
+  pulloutorderModel.fetchList(query, (err, result) => {
+    if(err){
+      throw err;
+    }
+    else{
+      if(result){
+        const fetched = [];
+        result.forEach(function(doc) {
+          fetched.push(doc.toObject());
+        });
+        res(fetched);
+      }
+      else{
+        console.log("No inventory for this branch!");
         res(result);
       }
     }
