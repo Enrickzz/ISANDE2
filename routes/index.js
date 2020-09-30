@@ -44,13 +44,14 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     var datequery=filter.date;
     var branch="";
     var utype;
+    var todate = new Date();
+    todate.setDate(todate.getDate())
+    var dd = String(todate.getDate()).padStart(2, '0');
+    var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = todate.getFullYear();
+    todate = yyyy + '-' + mm + '-' + dd;
     if(req.session.usertype === "Branch Manager"){
-      var todate = new Date();
-      todate.setDate(todate.getDate())
-      var dd = String(todate.getDate()).padStart(2, '0');
-      var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = todate.getFullYear();
-      todate = yyyy + '-' + mm + '-' + dd;
+     
       
       datequery = todate;
       branchquery = req.session.branch;
@@ -64,7 +65,7 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     }
     
     inventoryController.fetchQuery({inventorydate : datequery , branch_id:branchquery}, (allInventory) =>{
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for: utype}, (suggestionlist)=>{
+      suggestionsController.fetchQuery({date: todate, status:"Unresolved", tobranch:{$regex: branch}, for: utype}, (suggestionlist)=>{
         if(Object.entries(suggestionlist).length ===0 && Object.entries(allInventory).length ===0 && req.session.usertype== "Branch Manager"){
           res.redirect('/processinventoryforBM');
         }

@@ -2,11 +2,13 @@ const mongoose = require('./connection');
 
 const suggestionSchema = new mongoose.Schema({
     date: { type: String, required: true },
-    for: { type: String, required: true },//pullout or production
+    for: { type: String, required: true },//Admin or Branc Manager
     type: { type: String, required: false },//pullout or production
     tobranch: { type: String, required:false, default:"N/A"},//suggested action for branch
     suggestion: { type: String, required:true},//system will display/store this string
     status: { type: String, required:false, default:"Unresolved"},//"resolved" after actions
+    inventoryReference: { type: String, required:false, default:"N/A"},//pullout reference to inventory
+    
   }
 );
 
@@ -34,7 +36,12 @@ exports.create = function(obj, next) {
     });
   };
   exports.delete = function(query, next) {
-    suggestionModel.remove(query, function(err, res) {
+    suggestionModel.deleteMany(query, function(err, res) {
+      next(err, res);
+    })
+  };
+  exports.delete1 = function(query, next) {
+    suggestionModel.deleteOne(query, function(err, res) {
       next(err, res);
     })
   };

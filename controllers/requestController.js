@@ -1,4 +1,5 @@
 const requestListModel = require('../models/requestlist');
+const suggestionsModel = require('../models/suggestions');
 const { validationResult } = require('express-validator'); 
 
 exports.getID = (req, res) => {
@@ -41,6 +42,7 @@ exports.fetchList = (req,res)=>{
 }
 
 exports.create = (req,res)=>{
+  var invID = req.body.invID;
   var request = {
     date: req.body.date,
     type: req.body.type, 
@@ -49,13 +51,20 @@ exports.create = (req,res)=>{
     cost: req.body.cost,
     currInv: req.body.currInv,
     quantity:req.body.quantity,
-    status : "Requested"
+    status : "Requested",
   }
   requestListModel.create(request, function (err, res2) {
       if(err){
         throw err;
       }else{
-        res.redirect('/pullout-bm');
+        suggestionsModel.delete({inventoryReference:invID}, (delEr, delRes)=>{
+          if(delEr){
+            throw delEr;
+          }else{
+            res.redirect('/pullout-bm');
+          }
+        })
+        
       }
   })
 };

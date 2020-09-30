@@ -173,32 +173,45 @@ exports.midendCountUpdate = (req,res) =>{
             var todate = new Date();
             var y = todate.getFullYear(), m =String(todate.getMonth() + 1).padStart(2, '0'), d=String(todate.getDate()).padStart(2, '0');
             if(mid > averagemidtoend*.80){
-              var makesuggestion={
-                date: y+"-"+m+"-"+d,
-                for: "Branch Manager",
-                tobranch: req.session.branch,
-                suggestion: res2.branch_id+" has sold on average " + Math.floor(averagemidtoend)  + " Piece/s of " +product+" from middle to end of the day. \nPullout "+ Math.floor((mid-averagemidtoend)*.80)+" Piece/s of "+product+".",
-                status: "Unresolved",
-                type: "Pullout"
-              }
-              console.log(res2.branch_id+" has sold " + averagemidtoend + " Piece/s of " +product+" at the middle of the day. Pullout "+(mid-averagemidtoend)*.80+" Piece/s.");
-              suggestionsModel.create(makesuggestion, (sErr, sResult)=>{
-                if(sErr){
-                  throw sErr;
-                }else{
-                  console.log(sResult);
-                }
-              })
-             }else if(mid < averagemidtoend*.80){
-               //request list suggestion
-               var makesuggestion={
+              if(Math.floor((mid-averagemidtoend)*.80) > 2){
+                var makesuggestion={
                   date: y+"-"+m+"-"+d,
                   for: "Branch Manager",
                   tobranch: req.session.branch,
-                  suggestion: res2.branch_id+" has sold on average " + Math.floor(averagemidtoend)  + " Piece/s of " +product+" from middle to end of the day. \nPullout "+ Math.floor((mid-averagemidtoend)*.80)+" Piece/s of "+product+".",
+                  suggestion: res2.branch_id+" has sold on average " + Math.floor(averagemidtoend)  + " Piece/s of " +product+" from middle to end of the day. \nPULLOUT "+ Math.floor((mid-averagemidtoend)*.80)+" Piece/s of "+product+".",
                   status: "Unresolved",
-                  type: "Request"
+                  type: "Pullout",
+                  inventoryReference: id,
                 }
+                console.log(res2.branch_id+" has sold " + averagemidtoend + " Piece/s of " +product+" at the middle of the day. Pullout "+(mid-averagemidtoend)*.80+" Piece/s.");
+                suggestionsModel.create(makesuggestion, (sErr, sResult)=>{
+                  if(sErr){
+                    throw sErr;
+                  }else{
+                    console.log(sResult);
+                  }
+                })
+              }
+             }else if(mid < averagemidtoend*.80){
+               //request list suggestion
+               if(Math.floor((mid-averagemidtoend)*.80)*-1 > 2){ //doesnt make request less than 1
+                var makesuggestion={
+                  date: y+"-"+m+"-"+d,
+                  for: "Branch Manager",
+                  tobranch: req.session.branch,
+                  suggestion: res2.branch_id+" has sold on average " + Math.floor(averagemidtoend)  + " Piece/s of " +product+" from middle to end of the day. \nREQUEST "+ Math.floor((mid-averagemidtoend)*.80)*-1+" Piece/s of "+product+".",
+                  status: "Unresolved",
+                  type: "Request",
+                  inventoryReference: id,
+                }
+                suggestionsModel.create(makesuggestion, (sErr, sResult)=>{
+                  if(sErr){
+                    throw sErr;
+                  }else{
+                    console.log(sResult);
+                  }
+                })
+               }
              }
             totmiddaytoendday = parseFloat(0);
           }
@@ -223,7 +236,13 @@ exports.midendCountUpdate = (req,res) =>{
       if(err){
         throw err;
       }else{
-        res.redirect('/inventory-admin');
+        suggestionsModel.delete1({inventoryReference: id}, (er,del)=>{
+          if (er){
+            throw er;
+          }else{
+            res.redirect('/inventory-admin');
+          }
+        })
       }
     }) 
   }
@@ -370,7 +389,7 @@ exports.pulloutUpdate = (req,res)=>{
                 throw err3;
               }else{
                 inventoryModel.updateFind({branch_id: withthis.from, inventorydate: todate, product: withthis.product }, 
-                  {$inc:{ pulloutStock: -(parseFloat(withthis.quantity)), runningInventory: -(parseFloat(withthis.quantity)) }}, (err4, result4) =>{
+                  {$inc:{ pulloutStock: -(parseFloat(withthis.quantity)), runningInventory: -(parseFloat(withthis.quantity)) }}, (err4, invresult) =>{
                     if(err4){
                       throw err4
                     }else{

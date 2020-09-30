@@ -9,7 +9,7 @@ const requestlistSchema = new mongoose.Schema(
     cost: { type: String, required:true},
     currInv: { type: String, required:true},
     quantity: { type: String, required:true},
-    status:{ type: String, required:false}
+    status:{ type: String, required:false},
   }
 );
 
