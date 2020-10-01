@@ -37,13 +37,8 @@
                                         <td> {{UOM}}</td>
                                         <td> {{stock}} </td>
                                         <td> {{costperUnit}} </td>
-                                        <td style="max-width:40px;">                                            
-                                            <form action="/" method="POST">
-                                                <input type="hidden" name="productID" value="{{this._id}}">
-                                                <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
-                                            </form>
-                                        </td>
-                                        <td style="max-width:40px;">
+                                        <td style="max-width:40px;"></td>                                          
+                                        <td>
                                             <form action="/deleteMaterial" method="POST">
                                                 <input type="hidden" name="rawID" value="{{this._id}}">
                                                 <button class="btn btn-primary btn-sm" type="submit">Delete</button>
@@ -111,15 +106,12 @@
                                     </div>
 
                                     <div class="col">
-                                        <div class="form-group">
-                                            <label for="cars">Reorder Point</label>
-                                            <input name="reorder" type="number" class="form-control" /><br>
-                                        </div>
+                                        
                                     </div>
                               
                             </div>
                         </div>
-                        <div class="col-md-6" id="prof-pic-card"> <!--UPLOAD PHOTO-->
+                        <div class="col-md-6" id="prof-pic-card"> 
                                 <div class="up_profpic">
                                     <img class="rounded-circle mb-3 mt-4" src="assets/img/icons/box-2.png" id="prof-pic-cont" />
                                 </div> 
