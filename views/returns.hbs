@@ -1,3 +1,39 @@
+            <script>
+                function trytab(){
+                   
+                    var utype = document.getElementById('utype').value;
+                    
+                    if(utype == "Branch Manager"){
+                        var branch = document.getElementById('whichbranch').value;
+                        var select =  document.getElementById('branch'); select.disabled=true;
+                        var option;
+                        for(i = 0; i< select.options.length ; i++){
+                            option = select.options[i];
+                            if(option.value == branch){
+                                option.setAttribute('selected',true);
+                            }
+                        }
+                        if(document.getElementById('prodordcount').value > 0){
+                           // document.getElementById('add').disabled = true;
+                        }
+                        
+                    }
+
+                }
+                window.onload = trytab;
+
+
+                $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                    localStorage.setItem('activeTab', $(e.target).attr('href'));
+                });
+                var activeTab = localStorage.getItem('activeTab');
+                if(activeTab){
+                    $('#myTab a[href="' + activeTab + '"]').tab('show');
+                }
+
+            </script>
+            <input type="hidden" id="utype" name="utype" value="{{utype}}">
+            <input type="hidden" id="whichbranch" name="whichbranch" value="{{whichbranch}}">
             <div class="container-fluid">
 
                 {{!-- Nav Tabs --}}
@@ -111,8 +147,10 @@
                                         <div class="form-group">
                                                 {{!-- Product Name --}}
                                                 <label>Branch</label>
-                                                <select name="branch" id="" class="form-control">
+                                                <select name="branch" id="branch" class="form-control">
                                                     <option value="Branch A"> Branch A</option>
+                                                    <option value="Branch B"> Branch B</option>
+                                                    <option value="Branch C"> Branch C</option>
                                                 </select>
                                             </div>
                                     </div>

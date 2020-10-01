@@ -238,6 +238,7 @@ router.get('/returns', isPrivate, function(req, res) {
           fname:  req.session.first_name,
           lname:  req.session.last_name,
           utype: req.session.usertype,
+          whichbranch: req.session.branch,
           returns: allreturns,
           archivedreturn: archive,
           suggestions: allsuggestions,

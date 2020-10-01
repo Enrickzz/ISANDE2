@@ -27,7 +27,6 @@
                                     <th> Stock on Hand</th>
                                     <th> Cost/Unit </th>
                                     <th style="min-width:40px;"><span></span></th>
-                                    <th style="min-width:40px;"><span></span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,8 +36,8 @@
                                         <td> {{UOM}}</td>
                                         <td> {{stock}} </td>
                                         <td> {{costperUnit}} </td>
-                                        <td style="max-width:40px;"></td>                                          
-                                        <td>
+                                        
+                                        <td style="max-width:40px;">
                                             <form action="/deleteMaterial" method="POST">
                                                 <input type="hidden" name="rawID" value="{{this._id}}">
                                                 <button class="btn btn-primary btn-sm" type="submit">Delete</button>
