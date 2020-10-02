@@ -36,7 +36,7 @@
                             <label style="float: right;">PULL OUT LIST</label>
                             
                             <div style="padding-bottom: 10px;"> </div>
-                            <table class="table">
+                            <table class="table" id="pulltable">
                                 <thead>
                                     <tr>
                                         <th>Name  <i class="fa fa-sort"></i></th>
@@ -70,18 +70,18 @@
                             {{!-- FILTER TABLE --}}
                                 <div class="dataTables_filter" id="dataTable_filter"> Branch: <label> 
                                     <input type="text" class="form-control form-control-sm" 
-                                        id="filter" onkeyup="filter()" placeholder="All Branches"></label>
+                                        id="filter2" onkeyup="filter2()" placeholder="All Branches"></label>
                                 </div>
                             {{!-- END FILTER --}}
 
                             <label style="float: right;">REQUEST LIST</label>
 
                             <div style="padding-bottom: 10px;"> </div>
-                            <table class="table">
+                            <table class="table" id="requesttable">
                                 <thead>
                                     <tr>
                                         <th>Name  <i class="fa fa-sort"></i></th>
-                                        <th>From  <i class="fa fa-sort"></i></th>
+                                        <th onclick="sortTable2(1)">From  <i class="fa fa-sort"></i></th>
                                         <th>Cost Price <i class="fa fa-sort"></i></th>
                                         <th>Current Stock <i class="fa fa-sort"></i></th>
                                         <th>Transfer Qty <i class="fa fa-sort"></i></th>
@@ -108,12 +108,6 @@
                 {{!-- PULLOUT ORDERS--}}
                 <div class="container tab-pane fade" id="pulloutorders" style="padding-top: 30px;">
                         <div class="table-responsive">
-                            {{!-- FILTER TABLE --}}
-                                <div class="dataTables_filter" id="dataTable_filter"> Branch: <label> 
-                                    <input type="text" class="form-control form-control-sm" 
-                                        id="filter" onkeyup="filter()" placeholder="All Branches"></label>
-                                </div>
-                            {{!-- END FILTER --}}
                             
                             <label style="float: right;">PULL OUT ORDERS</label>
 
@@ -332,7 +326,62 @@
     <script>
         function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("usersTable");
+        table = document.getElementById("pulltable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc"; 
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch= true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+            }
+            }
+            if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;      
+            } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
+        }
+
+        function sortTable2(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("requesttable");
         switching = true;
         //Set the sorting direction to ascending:
         dir = "asc"; 
@@ -389,10 +438,29 @@
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("filter");
         filter = input.value.toUpperCase();
-        table = document.getElementById("usersTable");
+        table = document.getElementById("pulltable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[2];
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+        }
+
+        function filter2() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("requesttable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
