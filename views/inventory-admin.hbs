@@ -1,21 +1,23 @@
             <script>
                 function checkCount(){
-                    var x = document.getElementsByClassName('middayActual');
+                    var x = document.getElementsByClassName('middaybasis');//midDaySales
                     var y = document.getElementsByClassName('boton');
-                    var z = document.getElementsByClassName('enddayActual');
+                    var z = document.getElementsByClassName('enddaybasis');//totsales
+                    var z2 = document.getElementsByClassName('enddaybasis2');//midDaySales
                     var w = document.getElementsByClassName('boton2');
                     var save = document.getElementsByClassName('save');
                     for(var i = 0; i < x.length ; i++){
                         
                         var check2 = z[i].value;
-                        if(check2==0){
+                        var check2a = z2[i].value;
+                        if(check2==0 && check2a > 0){
                             w[i].disabled=false;
                             w[i].classList.add("form-control");
                         }else{
                             w[i].classList.add("form-control");
                         }
                         var check = x[i].value;
-                        if(check==0){
+                        if(check ==0){
                             y[i].disabled = false;
                             y[i].classList.add("form-control");
                             //w[i].disabled =true;
@@ -144,15 +146,16 @@
                                                 <td>{{restockQuantity}}</td>
                                                 <td>{{restockedInventory}}</td>
                                             <input type="hidden" name="restocked" value="{{restockedInventory}}">
-                                            <input type="hidden" class="middayActual" value="{{midDaySales}}" >
+                                            <input type="hidden" class="middaybasis" value="{{midDaySales}}" >
                                                 <td><input type="number" pattern="[0-9]{1}[0-9]+" name="midDayCount" class="boton" class="form-control" placeholder="{{midDayCount}}"  max="{{restockedInventory}}"style="width: 90px;" disabled> </td>
                                                 <td>{{midDaySales}}</td>
                                                 <td>{{additionalRestock}}</td>
                                                 <td>{{pulloutStock}}</td>
                                                 <td>{{runningInventory}}</td>
                                             <input type="hidden" name="changedStock" value="{{runningInventory}}">
-                                            <input type="hidden" name="middaysale" value="{{midDaySales}}">
-                                            <input type="hidden" class="enddayActual" value="{{totsales}}">
+                                            <input type="hidden" class="middaysale" value="{{midDaySales}}">
+                                            <input type="hidden" class="enddaybasis2" value="{{midDaySales}}">
+                                            <input type="hidden" class="enddaybasis" value="{{totsales}}">
                                                 <td><input type="number"  pattern="[0-9]{1}[0-9]+" name="endDayCount" class="boton2" class="form-control" placeholder="{{endDayCount}}" max="{{runningInventory}}" style="width: 90px;" disabled></td>
                                                 <td>{{returns}}</td>
                                                 <td>{{totsales}}</td>

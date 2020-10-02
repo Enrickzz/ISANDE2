@@ -143,6 +143,7 @@ exports.midendCountUpdate = (req,res) =>{
   var invDate = req.body.thisdate;
   var thisbranch = req.body.branch;
   var product = req.body.product;
+  
   if(mid > 0){
     var midtoNum = parseFloat(mid);
     var restockedtoNUm = parseFloat(restocked);
