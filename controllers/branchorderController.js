@@ -51,7 +51,7 @@ exports.getID = (req, res) => {
     })
   }
   exports.addBO = (req, res) =>{
-    var POID = "buffer";
+    var POID = req.session.branch;
     var productname = req.body.productName;
     var qua = req.body.quantity;
     var price = req.body.price;

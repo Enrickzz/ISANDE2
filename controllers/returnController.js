@@ -53,9 +53,10 @@ exports.getID = (req, res) => {
 
   exports.addreturn = (req,res)=>{
     var date = req.body.returndate;
-    
+    var todate = new Date();
+  
     var type = req.body.type;
-    var branch = req.body.branch;
+    var branch = req.session.branch;
     var returns = {
       branchID: branch,
       returndate: date, 
@@ -76,9 +77,15 @@ exports.getID = (req, res) => {
   exports.update = (req,resss) =>{
     var id = req.body.returnID;
     var change = req.body.changestatus;
-    
     var branch = req.body.branch;
     var curr = req.body.currstat;
+    var todate = new Date();
+    todate.setDate(todate.getDate())
+    var dd = String(todate.getDate()).padStart(2, '0');
+    var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = todate.getFullYear();
+    todate = yyyy + '-' + mm + '-' + dd;
+
     if(curr == "Sales Return"){
       returnItemsModel.fetchList({branchID: branch, returnID:id}, (err,result)=>{
         result.forEach(function(doc) {
@@ -90,7 +97,7 @@ exports.getID = (req, res) => {
               totsales: -obj.amount
             }
           }
-          inventoryModel.updateFind({branch_id: obj.branchID, product: obj.product}, update, function(error, success){
+          inventoryModel.updateFind({branch_id: obj.branchID, product: obj.product, inventorydate: todate }, update, function(error, success){
             if(error){
               console.log(error);
               throw error;

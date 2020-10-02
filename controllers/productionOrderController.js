@@ -93,7 +93,7 @@ exports.addproductionorder = (req,res)=>{
     }
     else{
       poid = result_PO._id;
-      branchorderModel.fetchList({productionorderID:"buffer"}, (err, results) =>{
+      branchorderModel.fetchList({productionorderID:req.session.branch}, (err, results) =>{
         if(err){
           throw err;
         }else{

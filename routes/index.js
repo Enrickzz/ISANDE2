@@ -514,7 +514,7 @@ router.get('/productionorder', isPrivate, function(req, res) {
   }
   productionOrderController.fetchQuery({branch:{$regex:branch}}, (allprodords) =>{
     productController.getAllproducts(req, (allproducts)=>{
-      branchOrderController.fetchQuery("buffer", (buffer)=>{
+      branchOrderController.fetchQuery(req.session.branch, (buffer)=>{
         
         suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           productionOrderController.fetchQuery({orderDate: todate,branch:{$regex: branch}}, (todayProdords)=>{
