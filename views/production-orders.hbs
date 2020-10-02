@@ -262,7 +262,7 @@
                          <form action="/addBranchOrder" method="POST">
                             <tr class="clickable" >
                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{name}} </td>
-                                <td><input required type="text" name="quantity" id="" class="form-control w-60" width="2"></td>
+                                <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="quantity" id="" class="form-control w-60" width="2" min="1"></td>
                                 <td>{{sellingprice}}</td>
                                 <input type="hidden" name="productName" value="{{name}}">
                                 <input type="hidden" name="price" value="{{sellingprice}}">

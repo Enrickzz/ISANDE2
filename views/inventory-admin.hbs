@@ -147,7 +147,7 @@
                                                 <td>{{restockedInventory}}</td>
                                             <input type="hidden" name="restocked" value="{{restockedInventory}}">
                                             <input type="hidden" class="middaybasis" value="{{midDaySales}}" >
-                                                <td><input type="number" pattern="[0-9]{1}[0-9]+" name="midDayCount" class="boton" class="form-control" placeholder="{{midDayCount}}"  max="{{restockedInventory}}"style="width: 90px;" disabled> </td>
+                                                <td><input type="number" pattern="[0-9]{0}[0-9]+" name="midDayCount" class="boton" class="form-control" placeholder="{{midDayCount}}"  max="{{restockedInventory}}"style="width: 90px;" disabled> </td>
                                                 <td>{{midDaySales}}</td>
                                                 <td>{{additionalRestock}}</td>
                                                 <td>{{pulloutStock}}</td>
@@ -156,7 +156,7 @@
                                             <input type="hidden" class="middaysale" value="{{midDaySales}}">
                                             <input type="hidden" class="enddaybasis2" value="{{midDaySales}}">
                                             <input type="hidden" class="enddaybasis" value="{{totsales}}">
-                                                <td><input type="number"  pattern="[0-9]{1}[0-9]+" name="endDayCount" class="boton2" class="form-control" placeholder="{{endDayCount}}" max="{{runningInventory}}" style="width: 90px;" disabled></td>
+                                                <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="endDayCount" class="boton2" class="form-control" placeholder="{{endDayCount}}" max="{{runningInventory}}" style="width: 90px;" disabled></td>
                                                 <td>{{returns}}</td>
                                                 <td>{{totsales}}</td>
                                             <input type="hidden" name="id" value="{{this._id}}">

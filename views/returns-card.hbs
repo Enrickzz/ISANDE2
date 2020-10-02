@@ -142,7 +142,7 @@
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                 <label id="btns">
                                     <form action="/submitreturn" method="POST">
-                                        <a id="back" class="btn btn-secondary btn-sm">Continue Later</a>
+                                        <a href="/returns" id="back" class="btn btn-secondary btn-sm">Continue Later</a>
                                         <input type="hidden" name="returnID" value="{{return._id}}">
                                         <input type="hidden" name="changestatus" value="For review">
                                         <input type="hidden" name="currstat" value="{{return.type}}">
@@ -166,7 +166,7 @@
         <!-- Modal content-->
         <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Modal Header</h4>
+            <h4 class="modal-title">Products</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
@@ -187,7 +187,7 @@
                         <form action="/addreturnItem" method="POST">
                         <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{name}}</td>
                         <td> {{sellingprice}}</td>
-                        <td><input  type="number" name="quantity" class="form-control" style="min-width: 40px;"  required></td>
+                        <td><input  type="number" type="number"  pattern="[0-9]{0}[0-9]+" name="quantity" class="form-control" style="min-width: 40px;"  min="1" required></td>
                         <td style="width: 2%;">
                             <input type="hidden" name="product" value="{{name}}">
                             <input type="hidden" name="unit" value="{{UOM}}">
