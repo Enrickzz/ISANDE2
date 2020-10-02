@@ -4,7 +4,6 @@ const { validationResult } = require('express-validator');
 
 exports.getID = (req, res) => {
     var id = req;
-    console.log(id);
     requestListModel.getByID(id, (err, result) => {
       if (err) {
         throw err;
@@ -34,7 +33,7 @@ exports.fetchList = (req,res)=>{
         res(fetched);
       }
       else{
-        console.log("No products for this group!");
+        //console.log("No products for this group!");
         res.redirect('/pullout-admin');
       }
     }

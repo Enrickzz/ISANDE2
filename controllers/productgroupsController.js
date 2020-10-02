@@ -100,7 +100,6 @@ exports.incrementNumProd = (req,res)=>{
       throw err;
     }
     else{
-      console.log("INCREASE successful!");
       res(counted);
     }
   })
@@ -113,7 +112,6 @@ exports.decrementNumProd = (req,res)=>{
       throw err;
     }
     else{
-      console.log("DECREASE successful!");
       res(counted);
     }
   })
@@ -134,12 +132,10 @@ exports.delete = (req, res) => {
       } 
       productModel.updatemany({product_groupID: groupid}, update, (err, result) =>{
         if(err){
-          console.log("NAGERROR");
           console.log(err);
           res.redirect('back');
         }
         else{
-          console.log(result);
           res.redirect('/productgroup');
         }
       })

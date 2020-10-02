@@ -8,7 +8,6 @@ exports.getAll = (param, callback) =>{
     PO.forEach(function(doc) {
         POobj.push(doc.toObject());
     });
-    console.log(POobj);
     callback(POobj);
   });
 };
@@ -41,7 +40,6 @@ exports.addPurchaseOrder = (req,res)=>{
       res.redirect('/purchaseorder');
     }
     else{
-      console.log(result_PO);
       res.redirect('/purchaseorder/view/' + result_PO._id)
     }
   })

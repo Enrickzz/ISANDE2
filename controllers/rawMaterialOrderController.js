@@ -10,7 +10,6 @@ exports.getAll = (param, callback) =>{
     PO.forEach(function(doc) {
         POobj.push(doc.toObject());
     });
-    console.log(POobj);
     callback(POobj);
   });
 };
@@ -18,8 +17,6 @@ exports.getAll = (param, callback) =>{
 
 exports.fetchQuery = (req,res) => {
     var query = req;
-  
-    console.log("FETCHING ORDER LIST WITH QUERY PO ID = " + query);
     rawMaterialOrderModel.fetch({purchaseorderID: query}, (err, result) => {
       if(err){
         throw err;
@@ -33,7 +30,7 @@ exports.fetchQuery = (req,res) => {
           res(ordersfetched);
         }
         else{
-          console.log("No Orders for this supplier!");
+          //console.log("No Orders for this supplier!");
           res(result);
         }
       }
@@ -86,13 +83,11 @@ exports.delete = (req, res) => {
 };
 
 exports.update = (req,res) =>{
-  console.log("asdasdasdasdasd"+req.body.purchaseorderID);
   var query =req.body.purchaseorderID;
   rawMaterialOrderModel.fetch({purchaseorderID: query} , (err, result) =>{
     if(err){
       throw err;
     }else{
-      console.log(result);
       result.forEach(function(doc) {
 
         //ordersfetched.push(doc.toObject());
@@ -106,7 +101,7 @@ exports.update = (req,res) =>{
             throw err;
           }
           else{
-            console.log(counted);
+
           }
         })
       });

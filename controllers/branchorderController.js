@@ -11,7 +11,6 @@ exports.getAll = (param, callback) =>{
     branches.forEach(function(doc) {
         branchesObj.push(doc.toObject());
     });
-    console.log(branchesObj);
     callback(branchesObj);
   });
 };
@@ -44,7 +43,7 @@ exports.getID = (req, res) => {
           res(productsfetched);
         }
         else{
-          console.log("No orders for this branch!");
+          //console.log("No orders for this branch!");
           res(result);
         }
       }
@@ -96,7 +95,6 @@ exports.getID = (req, res) => {
     var rate = req.body.rate;
     var prevtot = req.body.prevTotal;
     var prevamount = req.body.amount;
-    console.log("BO: "+ id);
 
 
           var a = parseFloat(qua);
@@ -116,7 +114,6 @@ exports.getID = (req, res) => {
               throw err;
             }
             else{
-              console.log(counted);
               var newtotal = parseFloat(prevtot) - parseFloat(prevamount) + parseFloat(newamount); // PO total - amountBeforeUpdate + newAmount
               var update = {
                 $set:{

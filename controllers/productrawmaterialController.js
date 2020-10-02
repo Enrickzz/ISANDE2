@@ -15,8 +15,6 @@ exports.getAllmaterials = (param, callback) =>{
 
 exports.getRawMaterials = (req,res) => {
     var query = req;
-  
-    console.log("find raw materials by productID ID : " + query);
     productmaterialModel.fetchMaterials({ productID : query }, (err, result) => {
       if(err){
         throw err;
@@ -30,7 +28,7 @@ exports.getRawMaterials = (req,res) => {
           res(materialsfetched);
         }
         else{
-          console.log("No  for this product!");
+          //console.log("No  for this product!");
           res.redirect('/allproduct');
         }
       }
@@ -62,16 +60,12 @@ exports.getRawMaterials = (req,res) => {
         var unitIngrams = parseFloat(unit1);
         var quantity = parseFloat(qua);
         var totalUsed = unitIngrams*quantity; //final used raw material (deduct in raw materials inventory)
-
-        console.log(totalUsed);
-        
         productmaterialModel.saveMaterial(material, function (err, result) {
           if(err){
             console.log(err);
             res.redirect('/product/view/'+material.productID);
           }
           else{
-            console.log(result);
             res.redirect('/product/view/'+material.productID);
           }
         })
@@ -104,12 +98,10 @@ exports.getRawMaterials = (req,res) => {
     var productID = req.body.productID;
     productmaterialModel.update(productID, update, (err, result) =>{
       if(err){
-        console.log("NAGERROR");
         console.log(err);
         res.redirect('back');
       }
       else{
-        console.log(result);
         res.redirect('/PGIncrement/'+ req.body.groupID);
       }
     })
@@ -123,7 +115,6 @@ exports.getRawMaterials = (req,res) => {
         throw err; 
       } 
       else {
-        console.log(result);
         res.redirect('/product/view/'+pageid);
       }
     }); 
@@ -131,13 +122,11 @@ exports.getRawMaterials = (req,res) => {
 
   exports.deleteMatNoLongerExists = (req,res) =>{
     var query = req;
-    console.log("DELETEING tHIS : " + query);
     productmaterialModel.removeDeletedMaterial(query, (err,result) =>{
       if(err) {
         throw err;
       }
       else{
-        console.log(result);
         res(result);
       }
     })

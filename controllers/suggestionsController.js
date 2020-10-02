@@ -20,7 +20,6 @@ exports.getAll = (param, callback) =>{
     list.forEach(function(doc) {
         listobj.push(doc.toObject());
     });
-    console.log(listobj);
     callback(listobj);
   });
 };
@@ -40,7 +39,6 @@ exports.fetchQuery = (req,res) => {
           res(obj);
         }
         else{
-          console.log("No suggestions!");
           res(result);
         }
       }

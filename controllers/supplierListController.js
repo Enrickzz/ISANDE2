@@ -8,7 +8,6 @@ exports.getAll = (param, callback) =>{
     PO.forEach(function(doc) {
         POobj.push(doc.toObject());
     });
-    console.log(POobj);
     callback(POobj);
   });
 };
@@ -16,9 +15,7 @@ exports.getAll = (param, callback) =>{
 
 exports.fetchQuery = (req,res) => {
     var query = req;
-  
-    console.log("FETCHING SUPPLIER LIST WITH QUERY SUPPLIERID = " + query);
-    supplierListModel.fetchList({supplierID: query}, (err, result) => {
+   supplierListModel.fetchList({supplierID: query}, (err, result) => {
       if(err){
         throw err;
       }
@@ -31,7 +28,6 @@ exports.fetchQuery = (req,res) => {
           res(suppliesfetched);
         }
         else{
-          console.log("No supplylist for this supplier!");
           res(result);
         }
       }

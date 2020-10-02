@@ -51,13 +51,10 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     var yyyy = todate.getFullYear();
     todate = yyyy + '-' + mm + '-' + dd;
     if(req.session.usertype === "Branch Manager"){
-     
-      
       datequery = todate;
       branchquery = req.session.branch;
       branch = req.session.branch;
       utype = "Branch Manager";
-      console.log(datequery);
     }else{
       //datequery = filter.date;
       branchquery = filter.branch;
@@ -133,7 +130,6 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
     var yyyy = todate.getFullYear();
     todate = yyyy + '-' + mm + '-' + dd;
     var datequery = todate;
-    console.log(datequery);
     var branch="";
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
@@ -194,7 +190,6 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
 });
 
 router.get('/pulloutorder/view/:id', (req, res) => {
-  console.log("Read view successful!");
   pulloutorderController.getID(req, (pullouts) => {
     var branch="";
     if(req.session.usertype === "Branch Manager"){
@@ -323,7 +318,6 @@ router.get('/delivery/view/:id', isPrivate, function (req, res) {
           }else{
             reqid="0";
           }
-          console.log(reqid);
           pulloutorderController.fetchOne({item: reqid}, (POorder)=>{
             var branch="";
             if(req.session.usertype === "Branch Manager"){
@@ -378,14 +372,10 @@ router.get('/productgroup', isPrivate, function(req, res) {
   });
 });
 
-router.get('/productgroup/view/:id', isPrivate, (req, res) => {
-  console.log("Read view successful!");
-  
+router.get('/productgroup/view/:id', isPrivate, (req, res) => {  
   productgroupsController.getID(req, (productGroup) => {
     var query = productGroup._id; // this is the connection of products to its group
     productController.getGroupProducts(query,(pgproducts)=>{
-      console.log("LIST OF CONNECTIONS : ");
-      console.log(pgproducts); 
       productController.getGroupProducts("Ungrouped", (ungroupedProducts) => {
         var branch="";
         if(req.session.usertype === "Branch Manager"){
@@ -466,9 +456,7 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
 });
 
 
-router.get('/allproducts/view/:id', isPrivate, (req, res) => {
-  console.log("Read view successful!");
-  
+router.get('/allproducts/view/:id', isPrivate, (req, res) => {  
   productController.getID(req, (prod) => {
     var query = prod._id;
     productrawmaterialController.getRawMaterials(query,(materials) => {
@@ -522,7 +510,6 @@ router.get('/productionorder', isPrivate, function(req, res) {
             if (Object.entries(buffer).length === 0) {
               checker = "false";
             }//checker if buffer contains objs
-            console.log(buffer);
             res.render('production-orders', {
               layout: 'main',
               title: 'Production Orders',
@@ -648,7 +635,6 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
 });
 
 router.get('/purchaseorder/view/:id', (req, res) => {
-  console.log("Read view successful!");
   purchaseorderController.getID(req, (POs) => {
     // var query = POs.supplier;
     var purchaseorderID = POs._id;
@@ -824,7 +810,6 @@ router.get('/PGDecrement/:id', isPrivate, (req, res) => {
 
 router.get('/deletefromProd/:id', isPrivate, (req,res) => {
   var query = req;
-  console.log(query);
   productrawmaterialController.deleteMatNoLongerExists(req, (result) =>{
     allRawMaterialController.getAllmaterials(req, (allmaterials) =>{
       res.render('raw-materials', {
@@ -878,21 +863,16 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
   
   var daterange = getDates(new Date(sY,sM,sD), new Date(yyyy,mm,dd));
   //var daterange =["2020-09-24","2020-09-25","2020-09-26","2020-09-27","2020-09-28","2020-09-29","2020-09-30"]
-  console.log(daterange);
   productionOrderController.getID(req, (thisPO)=>{
-    console.log(thisPO);
     branchOrderController.fetchQuery(thisPO._id, (thisPObranchorders)=>{
-      console.log(thisPObranchorders);
       thisPObranchorders.forEach(function(obj){
         inventoryController.fetchQuery({branch_id: thisPO.branch,product: obj.product, inventorydate: daterange}, (result)=>{
           for(var i = 0 ; i < result.length; i++){
             totquantity = totquantity+ parseFloat(result[i].restockedInventory) + parseFloat(result[i].additionalRestock) 
                           + parseFloat(result[i].pulloutStock) - parseFloat(result[i].endDayCount);
-            console.log(result[i].inventorydate +"loop tot: "+totquantity);
           }
-          console.log(totquantity);
           var average = totquantity/result.length;
-          var basis =average - obj.quantity; console.log(basis);
+          var basis =average - obj.quantity; 
           if(basis > obj.quantity*.10 || basis < (obj.quantity*.10)*-1){
             
             var makesuggestion={
@@ -904,11 +884,8 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
               type:"Production"
             }
             suggestionsController.makesuggestions(makesuggestion, (suggestion)=>{
-              console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+Math.floor(average));
-              console.log("Recommendation: Change quantity of order to " +average +"."   );
             })
           }else{
-            console.log("NO NEED")
           }
           totquantity= parseFloat("0");
         })
@@ -932,10 +909,7 @@ router.get('/processinventoryforBM', isPrivate, (req,res)=>{
   var sM = String(start.getMonth() + 1).padStart(2, '0'); //January is 0!
   var sD = String(start.getDate()).padStart(2, '0');
   var sY = start.getFullYear();
-  console.log(sY+"-"+sM+"-"+sD);
-  console.log(yyyy+"-"+mm+"-"+dd);
   var daterange = getDates(new Date(sY,sM,sD), new Date(yyyy,mm,dd));
-  //console.log(daterange1);
   //var daterange =["2020-09-24","2020-09-25","2020-09-26","2020-09-27","2020-09-28","2020-09-29","2020-09-30"]
   inventoryController.fetchProducts({branch_id: req.session.branch, inventorydate: yyyy+"-"+mm+"-"+dd }, (productlist)=>{
     productlist.forEach(function(obj){
@@ -943,11 +917,8 @@ router.get('/processinventoryforBM', isPrivate, (req,res)=>{
         for(var i = 0 ; i < result.length; i++){
           totquantity = totquantity+ parseFloat(result[i].restockedInventory) + parseFloat(result[i].additionalRestock) 
                         + parseFloat(result[i].pulloutStock) - parseFloat(result[i].endDayCount);
-          console.log(result[i].inventorydate +"loop tot: "+totquantity);
         }
-        console.log(totquantity);
         var average = totquantity/result.length;
-        //var basis =average - obj.quantity; console.log(basis);
         var makesuggestion={
           date: y+"-"+m+"-"+d,
           for: "Branch Manager",
@@ -957,14 +928,11 @@ router.get('/processinventoryforBM', isPrivate, (req,res)=>{
           type: "Production"
         }
         suggestionsController.makesuggestions(makesuggestion, (suggestion)=>{
-          console.log(result.branch_id+" has sold " + average + " Piece/s of " +result.product+" in the last 7 days. Order "+average+" Piece/s.");
-          //console.log("Recommendation: Change quantity of order to " +average +"."   );
         })
         totquantity= parseFloat("0");
       })
     })
   })
-  console.log(daterange)
   res.redirect('/inventory-admin');
 })
 

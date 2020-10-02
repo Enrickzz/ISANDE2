@@ -13,7 +13,6 @@ exports.getAll = (param, callback) =>{
     PO.forEach(function(doc) {
         POobj.push(doc.toObject());
     });
-    console.log(POobj);
     callback(POobj);
   });
 };
@@ -62,7 +61,7 @@ exports.fetchQuery = (req,res) => {
         res(fetched);
       }
       else{
-        console.log("No inventory for this branch!");
+        //console.log("No inventory for this branch!");
         res(result);
       }
     }

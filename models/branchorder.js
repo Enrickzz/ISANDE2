@@ -19,7 +19,6 @@ exports.fetchList = function(query, next) {
 
   exports.createBO = function(obj, next) {
     const BO = new branchOrderModel(obj);
-    console.log(BO);
     BO.save(function(err, BO) {
       console.log(err);
       next(err, BO);

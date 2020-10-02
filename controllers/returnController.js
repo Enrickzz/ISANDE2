@@ -11,7 +11,6 @@ exports.getAll = (param, callback) =>{
     returnList.forEach(function(doc) {
         returnsObk.push(doc.toObject());
     });
-    console.log(returnsObk);
     callback(returnsObk);
   });
 };
@@ -44,7 +43,7 @@ exports.getID = (req, res) => {
           res(returnObj);
         }
         else{
-          console.log("No returns for this branch!");
+          //console.log("No returns for this branch!");
           res(result);
         }
       }
@@ -90,7 +89,6 @@ exports.getID = (req, res) => {
       returnItemsModel.fetchList({branchID: branch, returnID:id}, (err,result)=>{
         result.forEach(function(doc) {
           var obj = doc.toObject();
-          console.log(obj);
           var update = {
             $inc: {
               returns: obj.quantity,
@@ -102,7 +100,7 @@ exports.getID = (req, res) => {
               console.log(error);
               throw error;
             }else{
-              console.log(success);
+
             }
           })
         })
@@ -123,7 +121,6 @@ exports.getID = (req, res) => {
       returnItemsModel.fetchList({branchID: branch, returnID:id}, (err,result)=>{
         result.forEach(function(doc) {
           var obj = doc.toObject();
-          console.log(obj);
           var update = {
             $inc: {
               returns: obj.quantity,
@@ -135,7 +132,7 @@ exports.getID = (req, res) => {
               console.log(error);
               throw error;
             }else{
-              console.log(success);
+
             }
           })
         })

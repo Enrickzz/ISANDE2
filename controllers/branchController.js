@@ -8,7 +8,6 @@ exports.getAll = (param, callback) =>{
     branches.forEach(function(doc) {
         branchesObj.push(doc.toObject());
     });
-    console.log(branchesObj);
     callback(branchesObj);
   });
 };

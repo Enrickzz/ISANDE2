@@ -25,7 +25,6 @@ exports.getAll = (param, next) => {
   };
 exports.create = function(obj, next) {
     const delivery = new deliveryModel(obj);
-    console.log(delivery);
     delivery.save(function(err, delivery_result) {
       console.log(err);
       next(err, delivery_result);

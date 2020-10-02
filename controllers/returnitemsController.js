@@ -19,7 +19,7 @@ const { validationResult } = require('express-validator');
           res(returnObj);
         }
         else{
-          console.log("No returns for this branch!");
+          //console.log("No returns for this branch!");
           res(result);
         }
       }

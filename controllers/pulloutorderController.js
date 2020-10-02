@@ -11,7 +11,6 @@ exports.getAll = (param, callback) =>{
     pulloutorderList.forEach(function(doc) {
         pulloutsObk.push(doc.toObject());
     });
-    console.log(pulloutsObk);
     callback(pulloutsObk);
   });
 };
@@ -41,7 +40,7 @@ exports.fetchOne = (req, res) =>{
         res(fetched);
       }
       else{
-        console.log("No products for this group!");
+        //console.log("No products for this group!");
         res(result);
       }
     }
@@ -62,7 +61,7 @@ exports.fetchQuery = (req,res) => {
         res(fetched);
       }
       else{
-        console.log("No inventory for this branch!");
+        //console.log("No inventory for this branch!");
         res(result);
       }
     }
@@ -76,15 +75,11 @@ exports.create= (req,res)=>{
   var yyyy = todate.getFullYear();
   todate = yyyy + '-' + mm + '-' + dd;
   var datequery = todate;
-
-  console.log("PULLOUT ORDER TODAY ( " + datequery + " )");
-  console.log("Coming from: "+req.body.from);
   var reqpulloutid = req.body.from
   var picked =req.body.tobranch;
   var reqaddstockPick = req.body.to;
 
   if(req.body.to == "dropdown"){//if radio selection is dropdown list
-    console.log("Deliver to: " + picked);
     requestModel.getByID(reqpulloutid, (err, reqobj)=>{
       var total = parseFloat(reqobj.quantity) *parseFloat(reqobj.cost);
       var POorder = {
@@ -117,7 +112,6 @@ exports.create= (req,res)=>{
       })
     })
   }else{ //if radio selection is request list
-    console.log("Deliver to: " +reqaddstockPick);
     requestModel.getByID(reqaddstockPick, (e, tobranch)=>{
       requestModel.getByID(reqpulloutid, (e1, frombranch)=>{
         var total = parseFloat(frombranch.quantity) *parseFloat(frombranch.cost);

@@ -33,7 +33,6 @@ exports.getByID = function(query, next) {
 
   exports.saveMaterial = function(obj, next) {
     const rawMaterial = new rawMaterialOrderModel(obj);
-    console.log(rawMaterial);
     rawMaterial.save(function(err, save) {
       console.log(err);
       next(err, save);

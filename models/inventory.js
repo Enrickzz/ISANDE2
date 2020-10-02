@@ -52,7 +52,6 @@ exports.findone = function(query, next){
 
 exports.create = function(obj, next) {
   const inv = new inventoryModel(obj);
-  console.log(inv);
   inv.save(function(err, inv_result) {
     console.log(err);
     next(err, inv_result);

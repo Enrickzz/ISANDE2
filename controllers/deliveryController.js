@@ -8,7 +8,6 @@ exports.getAll = (param, callback) =>{
     branches.forEach(function(doc) {
         deliveryObj.push(doc.toObject());
     });
-    console.log(deliveryObj);
     callback(deliveryObj);
   });
 };
@@ -40,7 +39,7 @@ exports.getID = (req, res) => {
           res(fetched);
         }
         else{
-          console.log("No inventory for this branch!");
+          //console.log("No inventory for this branch!");
           res(result);
         }
       }

@@ -21,7 +21,6 @@ const { validationResult } = require('express-validator');
       if (errors.isEmpty()) {      
       userModel.getOne({ email: email }, (err, result) => {
         if (result) {
-          console.log("Email already taken!");
           // found a match, return to login with error
         req.flash('error_msg', 'Email already taken.');
         //   req.session.save( function(){ res.redirect('/'); })
@@ -52,8 +51,6 @@ const { validationResult } = require('express-validator');
                 res.redirect('/manageusers');
      
               } else {
-                console.log("Successfully added user!");
-                console.log(user);
                 result = { success: true, message: "User created!" }
                 //res.send(result); this causes an error LOL :<
 
@@ -116,7 +113,6 @@ const { validationResult } = require('express-validator');
                 req.session.mobileno = user.mobileno;
                 req.session.branch = user.branch;
 
-                console.log(req.session);
                 // if (req.session.utype === 'Regular')
                 //   res.redirect('/myaccount');
                 if (req.session.usertype === "Admin")
@@ -160,14 +156,12 @@ const { validationResult } = require('express-validator');
       user.forEach(function(doc) {
           usersObj.push(doc.toObject());
       });
-      console.log(usersObj);
       callback(usersObj);
     });
   };
 
   exports.getID = (req, res) => {
     var id = req;
-    console.log(id);
     userModel.getByID(id, (err, result) => {
       if (err) {
         throw err;

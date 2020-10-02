@@ -49,10 +49,3 @@ exports.delete = (req,res)=>{
     }
   }); 
 };
-
-exports.update = (req,res) =>{
-  console.log(req.body.productionorderID);
-
-  
-  
-}

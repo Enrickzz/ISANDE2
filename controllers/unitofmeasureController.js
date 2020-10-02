@@ -8,7 +8,6 @@ exports.getAll = (param, callback) =>{
     units.forEach(function(doc) {
       unitObj.push(doc.toObject());
     });
-    console.log(unitObj);
     callback(unitObj);
   });
 };

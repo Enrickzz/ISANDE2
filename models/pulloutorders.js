@@ -35,7 +35,6 @@ exports.getByID = function(query, next) {
 }
   exports.create = function(obj, next) {
     const pulloutOrder = new pulloutorderModel(obj);
-    console.log(pulloutOrder);
     pulloutOrder.save(function(err, result) {
       console.log(err);
       next(err, result);

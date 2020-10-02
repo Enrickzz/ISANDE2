@@ -8,15 +8,12 @@ exports.getAll = (param, callback) =>{
     suppliers.forEach(function(doc) {
         suppliersObj.push(doc.toObject());
     });
-    console.log(suppliersObj);
     callback(suppliersObj);
   });
 };
 
 exports.getID = (req, res) => {
   var id = req;
-  console.log(id);
-
   supplierModel.getByID(id, (err, result) => {
     if (err) {
       throw err;
@@ -59,7 +56,6 @@ exports.register = (req, res) => {
     if (errors.isEmpty()) {      
     supplierModel.getOne({ company: company }, (err, result) => {
       if (result) {
-        console.log("Company already taken!");
         // found a match, return to login with error
       req.flash('error_msg', 'Company already taken.');
       //   req.session.save( function(){ res.redirect('/'); })
@@ -84,8 +80,6 @@ exports.register = (req, res) => {
               res.redirect('/supplier');
    
             } else {
-              console.log("Successfully added supplier!");
-              console.log(supplier);
               result = { success: true, message: "Supplier created!" }
               //res.send(result); this causes an error LOL :<
 
@@ -128,8 +122,6 @@ exports.update  = (req, res) => {
       }
      
       else {
-          console.log('Successfully updated supplier details!');
-          console.log(update);
           req.flash('success_msg', 'Updated supplier details.');
   
               res.redirect('/supplier');
@@ -149,8 +141,6 @@ exports.delete = function(req, res) {
       }
      
       else {
-          console.log('Successfully deleted supplier!');
-          console.log(supplier);
           req.flash('success_msg', 'Supplier deleted.');
           res.redirect('/supplier');
       }

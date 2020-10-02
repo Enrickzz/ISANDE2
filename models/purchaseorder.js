@@ -29,7 +29,6 @@ exports.getAll = (param, next) => {
 
   exports.createPurchaseOrder = function(obj, next) {
     const purchaseorder = new purchaseOrderModel(obj);
-    console.log(purchaseorder);
     purchaseorder.save(function(err, purchaseorder_result) {
       console.log(err);
       next(err, purchaseorder_result);

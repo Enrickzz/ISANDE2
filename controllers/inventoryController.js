@@ -16,7 +16,6 @@ exports.getAll = (param, callback) =>{
     inventoryList.forEach(function(doc) {
         inventoryObj.push(doc.toObject());
     });
-    console.log(inventoryObj);
     callback(inventoryObj);
   });
 };
@@ -49,7 +48,7 @@ exports.getID = (req, res) => {
           res(inventoryfetched);
         }
         else{
-          console.log("No inventory for this branch!");
+          //console.log("No inventory for this branch!");
           res(result);
         }
       }
@@ -71,7 +70,7 @@ exports.getID = (req, res) => {
           res(inventoryfetched);
         }
         else{
-          console.log("No inventory for this branch!");
+          //console.log("No inventory for this branch!");
           res(result);
         }
       }
@@ -89,7 +88,7 @@ exports.getID = (req, res) => {
           res(inventoryObj);
         }
         else{
-          console.log("No inventory for this branch!");
+          //console.log("No inventory for this branch!");
           res(result);
         }
       }
@@ -168,7 +167,6 @@ exports.midendCountUpdate = (req,res) =>{
           }else{
             for(var i = 0; i< inv.length; i++){
               totmiddaytoendday = totmiddaytoendday + parseFloat(inv[i].runningInventory) - parseFloat(inv[i].endDayCount); 
-              console.log(totmiddaytoendday);
             }
             averagemidtoend = totmiddaytoendday/inv.length;
             var todate = new Date();
@@ -184,12 +182,10 @@ exports.midendCountUpdate = (req,res) =>{
                   type: "Pullout",
                   inventoryReference: id,
                 }
-                console.log(res2.branch_id+" has sold " + averagemidtoend + " Piece/s of " +product+" at the middle of the day. Pullout "+(mid-averagemidtoend)*.80+" Piece/s.");
                 suggestionsModel.create(makesuggestion, (sErr, sResult)=>{
                   if(sErr){
                     throw sErr;
                   }else{
-                    console.log(sResult);
                   }
                 })
               }
@@ -209,7 +205,6 @@ exports.midendCountUpdate = (req,res) =>{
                   if(sErr){
                     throw sErr;
                   }else{
-                    console.log(sResult);
                   }
                 })
                }
@@ -221,11 +216,10 @@ exports.midendCountUpdate = (req,res) =>{
       }
     })
   }else if(end > 0){
-    var endtoNum = parseFloat(end);
-    var chngedstock = parseFloat(runninginv);
-    var srpfloat = parseFloat(srp);
-    var midsales = parseFloat(middaysales);
-    
+    var endtoNum = parseFloat(req.body.endDayCount);
+    var chngedstock = parseFloat(req.body.changedStock);
+    var srpfloat = parseFloat(req.body.srp);
+    var midsales = parseFloat(req.body.middaysale);
     var enddaySale = ((chngedstock-endtoNum)*srpfloat) + midsales;
     var update = {
       $set: {
@@ -263,7 +257,6 @@ exports.addInventory = (req,res) =>{
         var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = todate.getFullYear();
         todate = yyyy + '-' + mm + '-' + dd;
-        console.log(todate);
         inventoryModel.fetchList({inventorydate: "" + todate , branch_id: POobj.branch}, (error, prevdayInv)=>{
           if (error) {
             console.log(error);
@@ -279,12 +272,10 @@ exports.addInventory = (req,res) =>{
                 obj = doc2.toObject();
                 var restockedInv = parseFloat(obj.quantity);
                 var prevenddayCount ="0";
-                //console.log(prevdayInv.length +"  " + checker);
                 if(obj.product == prev.product){
                   var a = parseFloat(obj.quantity) + parseFloat(prev.endDayCount);
                   restockedInv = a;
                   prevenddayCount = prev.endDayCount;
-                  console.log(obj.product + "==" + prev.product)
                   var inventory ={
                     branch_id : POobj.branch,
                     inventorydate: POobj.orderDate,
@@ -304,7 +295,6 @@ exports.addInventory = (req,res) =>{
                 }
               })
               if(checker == 0){ //if not exists in orders
-                console.log(checker);
                 var restockedInv = parseFloat(prev.endDayCount);
                 var inventory ={
                   branch_id : POobj.branch,
@@ -367,16 +357,11 @@ exports.pulloutUpdate = (req,res)=>{
   var reqID = req.body.requestID;
   var PulloutID = req.body.pulloutID;
   var deliveryid = req.body.deliveryID
-
-  console.log(dest + "\n"+ origin +"\n"+ reqID +"\n"+ PulloutID +"\n"+deliveryid +"END");
-
   var todate = new Date();
   var dd = String(todate.getDate()).padStart(2, '0');
   var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = todate.getFullYear();
   todate = yyyy + '-' + mm + '-' + dd;
-  console.log(todate);
-
   inventoryModel.fetchList({branch_id: dest, inventorydate:todate}, (err, updatethis)=>{
     if(err){
       throw err;
