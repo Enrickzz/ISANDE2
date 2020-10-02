@@ -24,6 +24,12 @@ const suggestionsController = require('../controllers/suggestionsController');
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
 
+var todate = new Date();
+var dd = String(todate.getDate()).padStart(2, '0');
+var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = todate.getFullYear();
+todate = yyyy + '-' + mm + '-' + dd;
+
 router.get('/home', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
@@ -85,42 +91,6 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
   })
 });
 
-router.get('/inventory-bm', isPrivate, function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
-  filterController.getfilter({for:"inventory"} , (filter) =>{
-    var branchquery;
-    var datequery;
-    if(req.session.usertype == "Branch Manager"){
-      var todate = new Date();
-      todate.setDate(todate.getDate()-1)
-      var dd = String(todate.getDate()).padStart(2, '0');
-      var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = todate.getFullYear();
-      todate = yyyy + '-' + mm + '-' + dd;
-
-      datequery = todate;
-      branchquery = req.session.branch;
-    }else{
-      datequery = filter.date;
-      branchquery = filter.branch;
-    }
-    inventoryController.fetchQuery({inventorydate : datequery , branch_id:branchquery}, (allInventory) =>{
-      res.render('inventory-bm', {
-        layout: 'main',
-        title: 'Inventory',
-        fname:  req.session.first_name,
-        lname:  req.session.last_name,
-        utype: req.session.usertype,
-        inventory: allInventory,
-        today: filter.date,
-        whichbranch : branchquery,
-        usertype: req.session.usertype
-      })
-    })
-  })
-});
-
 router.get('/pullout-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
@@ -137,7 +107,7 @@ router.get('/pullout-admin', isPrivate, function(req, res) {
   pulloutorderController.fetchQuery({pulloutdate:datequery}, (allpullouts)=>{
     requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
       requestController.fetchList({type: "addstock", date: datequery,status: "Requested"}, (reqaddstock)=>{
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+        suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('pullout-admin', {
             layout: 'main',
             title: 'Pull Out',
@@ -169,7 +139,7 @@ router.get('/pullout-bm', isPrivate, function(req, res) {
   requestController.fetchList({type: "pull-out" , date: datequery, status: "Requested"}, (reqpullout)=>{
     requestController.fetchList({type: "addstock" , date: datequery, status: "Requested"}, (reqaddstock)=>{
       inventoryController.fetchQuery({inventorydate : datequery , branch_id: req.session.branch}, (myinv)=>{
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: req.session.branch}, for:req.session.usertype }, (allsuggestions)=>{
+        suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: req.session.branch}, for:req.session.usertype }, (allsuggestions)=>{
           res.render('pullout-bm', {
             layout: 'main',
             title: 'Pull Out Products',
@@ -195,7 +165,7 @@ router.get('/pulloutorder/view/:id', (req, res) => {
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
     }
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       var query = pullouts._id;
       res.render('pullout-card', { 
         layout:'main',
@@ -225,7 +195,7 @@ router.get('/returns', isPrivate, function(req, res) {
     branch = req.session.branch;
   }
   returnController.fetchQuery({returndate: todate, branchID: {$regex: branch}}, (allreturns)=>{
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       returnController.fetchQuery({branchID: {$regex: branch}} , (archive)=>{
         res.render('returns', {
           layout: 'main',
@@ -253,7 +223,7 @@ router.get('/returns/view/:id', isPrivate, function (req, res) {
         if(req.session.usertype === "Branch Manager"){
           branch = req.session.branch;
         }
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+        suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('returns-card', {
             layout: 'main',
             title: 'Returns View',
@@ -286,7 +256,7 @@ router.get('/delivery', isPrivate, function(req, res) {
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
     }
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       deliveryController.fetchQuery({deliverydate:todate}, (todayDeliveries)=>{
         res.render('delivery', {
           layout: 'main',
@@ -323,7 +293,7 @@ router.get('/delivery/view/:id', isPrivate, function (req, res) {
             if(req.session.usertype === "Branch Manager"){
               branch = req.session.branch;
             }
-            suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+            suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
               res.render('delivery-card', {
                 layout: 'main',
                 title: 'Delivery Information',
@@ -355,7 +325,7 @@ router.get('/productgroup', isPrivate, function(req, res) {
       if(req.session.usertype === "Branch Manager"){
         branch = req.session.branch;
       }
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+      suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
         res.render('productgroup', {  
           layout: 'main',
           title: 'Product Groups',
@@ -381,7 +351,7 @@ router.get('/productgroup/view/:id', isPrivate, (req, res) => {
         if(req.session.usertype === "Branch Manager"){
           branch = req.session.branch;
         }
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+        suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('productgroup-card', { 
             layout:'main',
             title:"Product Groups",
@@ -411,7 +381,7 @@ router.get('/allproducts', isPrivate, function(req, res) {
           if(req.session.usertype === "Branch Manager"){
             branch = req.session.branch;
           }
-          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+          suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
             res.render('products', { 
               layout: 'main',
               title: 'Products List',
@@ -440,7 +410,7 @@ router.get('/rawmaterials', isPrivate, function(req, res) {
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
     }
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       res.render('raw-materials', {
         layout: 'main',
         title: 'Raw Materials',
@@ -466,7 +436,7 @@ router.get('/allproducts/view/:id', isPrivate, (req, res) => {
           if(req.session.usertype === "Branch Manager"){
             branch = req.session.branch;
           }
-          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+          suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
             res.render('product-card', { 
               layout:'main',
               title: prod.name,
@@ -504,7 +474,7 @@ router.get('/productionorder', isPrivate, function(req, res) {
     productController.getAllproducts(req, (allproducts)=>{
       branchOrderController.fetchQuery(req.session.branch, (buffer)=>{
         
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+        suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           productionOrderController.fetchQuery({orderDate: todate,branch:{$regex: branch}}, (todayProdords)=>{
             var checker = "true";
             if (Object.entries(buffer).length === 0) {
@@ -544,7 +514,7 @@ router.get('/productionorder/view/:id', isPrivate, function(req, res) {
       if(req.session.usertype === "Branch Manager"){
         branch = req.session.branch;
       }
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+      suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
         res.render('productionorder-card', {
           layout: 'main',
           title: 'Production Orders',
@@ -570,7 +540,7 @@ router.get('/supplier', isPrivate, function(req, res) {
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
     }
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       res.render('supplier', {
         layout: 'main',
         title: 'Suppliers',
@@ -593,7 +563,7 @@ router.get('/supplier/view/:id', isPrivate, function(req, res) {
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
     }
-    suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       res.render('supplier-card', {
         layout: 'main',
         title: 'Supplier Information',
@@ -617,7 +587,7 @@ router.get('/purchaseorder', isPrivate, function(req, res) {
       if(req.session.usertype === "Branch Manager"){
         branch = req.session.branch;
       }
-      suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+      suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
         res.render('purchase-orders', {
           layout: 'main',
           title: 'Purchase Orders',
@@ -645,7 +615,7 @@ router.get('/purchaseorder/view/:id', (req, res) => {
           if(req.session.usertype === "Branch Manager"){
             branch = req.session.branch;
           }
-          suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+          suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
             res.render('purchaseorder-card', { 
               layout:'main',
               title: 'Purchase Order Information',
@@ -676,7 +646,7 @@ router.get('/manageusers', isPrivate, function(req, res) {
         if(req.session.usertype === "Branch Manager"){
           branch = req.session.branch;
         }
-        suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+        suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('manageusers', {
             layout: 'main',
             title: 'Manage Users',
@@ -700,7 +670,7 @@ router.get('/profile', isPrivate, function(req, res) {
   if(req.session.usertype === "Branch Manager"){
     branch = req.session.branch;
   }
-  suggestionsController.fetchQuery({status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+  suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
     res.render('profile', {
       layout: 'main',
       title: 'My Profile',
