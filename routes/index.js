@@ -30,18 +30,6 @@ var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = todate.getFullYear();
 todate = yyyy + '-' + mm + '-' + dd;
 
-router.get('/home', isPrivate, function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
-  res.render('home', {
-    layout: 'main',
-    title: 'Dashboard',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name,
-    utype: req.session.usertype
-  })
-});
-
 router.get('/inventory-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
@@ -473,7 +461,6 @@ router.get('/productionorder', isPrivate, function(req, res) {
   productionOrderController.fetchQuery({branch:{$regex:branch}}, (allprodords) =>{
     productController.getAllproducts(req, (allproducts)=>{
       branchOrderController.fetchQuery(req.session.branch, (buffer)=>{
-        
         suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           productionOrderController.fetchQuery({orderDate: todate,branch:{$regex: branch}}, (todayProdords)=>{
             var checker = "true";
