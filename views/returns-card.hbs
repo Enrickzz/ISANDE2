@@ -1,48 +1,27 @@
-<!--          <script>
-                function statuscheck() {
-                    var x = document.getElementById('showstatus').innerText;
-                    console.log(x);
-                    if (x == "Incomplete"){
-                        document.getElementById('showstatus').style.color="red";
+    <script>
+        function statuscheck() {
+            var status = document.getElementById('showstatus').innerText
+            if(status == "Done"){
+                document.getElementById('additem').parentNode.removeChild(document.getElementById('additem'));
+                //document.getElementById('delete').parentNode.removeChild(document.getElementById('delete'));
+                document.getElementById('back').parentNode.removeChild(document.getElementById('back'));
+                document.getElementById('send').parentNode.removeChild(document.getElementById('send'));
+                document.getElementById('showstatus').style.color="green";
 
-                        var removeButton1 = document.getElementById('Received');
-                        removeButton1.parentNode.removeChild(removeButton1);
-                    }else if(x == "Ordered"){
-                        document.getElementById('showstatus').style.color="orange";
-                        var removeButton = document.getElementById('additem');
-                        removeButton.parentNode.removeChild(removeButton);
-                        var removeButton2 = document.getElementsByClassName('delete');
-                        var i;
-                        for(i=0 ; i < removeButton2.length; i++){
-                            removeButton2[i].style.display = "none";
-                        }
-                        var remove3 = document.getElementById('btns');
-                        remove3.parentNode.removeChild(remove3);
-                        var exTH = document.getElementById('extraTH');
-                        exTH.parentNode.removeChild(exTH);
-
-                        
-
-                    }else if(x == "Completed"){
-                        document.getElementById('showstatus').style.color="green";
-                        var removeButton = document.getElementById('additem');
-                        removeButton.parentNode.removeChild(removeButton);
-                        var removeButton2 = document.getElementsByClassName('delete');
-                        var i;
-                        for(i=0 ; i < removeButton2.length; i++){
-                            removeButton2[i].style.display = "none";
-                        }
-                        var remove3 = document.getElementById('btns');
-                        remove3.parentNode.removeChild(remove3);
-
-                        var removeButton4 = document.getElementById('Received');
-                        removeButton4.parentNode.removeChild(removeButton4);
-                    }
+                var removeButton2 = document.getElementsByClassName('delete');
+                var i;
+                for(i=0 ; i < removeButton2.length; i++){
+                    removeButton2[i].style.display = "none";
                 }
-                
-                window.onload = statuscheck;
-            </script>
--->
+            }else if(status == "Unsent"){
+                document.getElementById('showstatus').style.color="orange";
+            }
+           
+        }
+        
+        window.onload = statuscheck;
+    </script>
+
             
             <div class="container-fluid" onload="statuscheck()" >
                 <h3 class="text-dark mb-4">  <a href="/returns" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;Return Information</h3>
@@ -54,11 +33,7 @@
                             </div>
                             <div class="col">
                                 <div class="buttonlist" style="float: right;">
-                                    <form>
-                                    <input type="hidden" name="purchaseorderID" value="">
-                                    <button id="Received" class="btn btn-primary btn-sm" type="submit" formaction="" formmethod=""> button</button>
-                                    </form>
-                                    
+                                   
                                 </div>
                             </div>
                         </div>
@@ -132,7 +107,7 @@
                                                 <input type="hidden" name="returnitemID" value="{{this._id}}">
                                                 <input type="hidden" name="returnID" value="{{../return._id}}">
                                                 <input type="hidden" name="amount" value="{{amount}}">
-                                                <button id="delete" class="btn btn-primary btn-sm" type="submit">Delete</button>
+                                                <button class="delete" class="btn btn-primary btn-sm" type="submit">Delete</button>
                                             </form>
                                         </td>
                                         </tr>
@@ -167,13 +142,13 @@
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
                                 <label id="btns">
                                     <form action="/submitreturn" method="POST">
-                                        <a href="" class="btn btn-secondary btn-sm">Continue Later</a>
+                                        <a id="back" class="btn btn-secondary btn-sm">Continue Later</a>
                                         <input type="hidden" name="returnID" value="{{return._id}}">
                                         <input type="hidden" name="changestatus" value="For review">
                                         <input type="hidden" name="currstat" value="{{return.type}}">
                                         <input type="hidden" name="branch" value="{{return.branchID}}">
                                         <input type="hidden" name="date" value="{{return.returndate}}">
-                                        <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                                        <button id="send" class="btn btn-primary btn-sm" type="submit">Submit</button>
                                     </form>
                                     
                                 </label>

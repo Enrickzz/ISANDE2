@@ -119,5 +119,39 @@ exports.getID = (req, res) => {
           }
         })
       })
+    }else if(curr == "Damaged Goods"){
+      returnItemsModel.fetchList({branchID: branch, returnID:id}, (err,result)=>{
+        result.forEach(function(doc) {
+          var obj = doc.toObject();
+          console.log(obj);
+          var update = {
+            $inc: {
+              returns: obj.quantity,
+              totsales: -obj.amount
+            }
+          }
+          inventoryModel.updateFind({branch_id: obj.branchID, product: obj.product, inventorydate: todate }, update, function(error, success){
+            if(error){
+              console.log(error);
+              throw error;
+            }else{
+              console.log(success);
+            }
+          })
+        })
+        var changestatus = {
+          $set:{
+            status : "Done"
+          }
+        }
+        returnModel.update({_id:id}, changestatus, function (er, done){
+          if(er){
+            throw er;
+          }else{
+            resss.redirect('/returns/view/'+id)
+          }
+        })
+      })
+
     }
   }

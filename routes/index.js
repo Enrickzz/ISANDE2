@@ -707,42 +707,6 @@ router.get('/manageusers', isPrivate, function(req, res) {
   });
 });
 
-router.get('/productgroupcard', isPrivate, function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
-  res.render('productgroup-card', {
-    layout: 'main',
-    title: '{{ Product Group }}',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name,
-    utype: req.session.usertype
-  })
-});
-
-router.get('/productcard', isPrivate, function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
-  res.render('product-card', {
-    layout: 'main',
-    title: '{{ Product name}}',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name,
-    utype: req.session.usertype,
-  })
-});
-
-router.get('/purchaseordercard', isPrivate, function(req, res) {
-  // The render function takes the template filename (no extension - that's what the config is for!)
-  // and an object for what's needed in that template
-  res.render('purchaseorder-card', {
-    layout: 'main',
-    title: '{{ Purchase Order }}',
-    fname:  req.session.first_name,
-    lname:  req.session.last_name,
-    utype: req.session.usertype
-  })
-});
-
 router.get('/profile', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
@@ -766,8 +730,6 @@ router.get('/profile', isPrivate, function(req, res) {
     })
   })
 });
-
-
 
 //.get/s below are redirected from other functions from specific controllers so that it will connect with other controllers
 router.get('/PGiterate/:id', isPrivate, (req, res) => {
@@ -945,8 +907,6 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
               console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+Math.floor(average));
               console.log("Recommendation: Change quantity of order to " +average +"."   );
             })
-            //console.log("LOG: " + thisPO.branch+" ordered " + obj.quantity + " Piece/s " +obj.product+". Average sold quantity: "+average);
-            //console.log("Recommendation: Change quantity of order to " +average +"."   );
           }else{
             console.log("NO NEED")
           }
@@ -992,7 +952,7 @@ router.get('/processinventoryforBM', isPrivate, (req,res)=>{
           date: y+"-"+m+"-"+d,
           for: "Branch Manager",
           tobranch: req.session.branch,
-          suggestion: req.session.branch+" has sold " + Math.floor(average) + " Piece/s of " +obj+" in the last 7 days. Order "+Math.floor(average)+" Piece/s.",
+          suggestion: req.session.branch+" has sold on average " + Math.floor(average) + " Piece/s of " +obj+" in the last 7 days. Order "+Math.floor(average)+" Piece/s.",
           status: "Unresolved",
           type: "Production"
         }

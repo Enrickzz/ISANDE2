@@ -149,7 +149,7 @@
                          <form action="/addtoreqlist" method="POST">
                             <tr class="clickable" >
                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{product}} </td>
-                                <td><input required type="text" name="quantity" id="" class="form-control w-60" width="2"></td>
+                                <td><input required type="number" name="quantity" id="" class="form-control w-60" width="2"></td>
                                 <input type="hidden" name="from" value="{{../branch}}">
                                 <input type="hidden" name="product" value="{{product}}">
                                 <input type="hidden" name="cost" value="{{srp}}">
@@ -205,7 +205,7 @@
                          <form action="/addtoreqlist" method="POST">
                             <tr class="clickable" >
                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{product}} </td>
-                                <td><input required type="text" name="quantity" id="" class="form-control w-60" width="2"></td>
+                                <td><input required type="number" name="quantity" id="" class="form-control w-60" width="2" max="{{runningInventory}}"></td>
                             <input type="hidden" name="from" value="{{../branch}}">
                             <input type="hidden" name="product" value="{{product}}">
                             <input type="hidden" name="cost" value="{{srp}}">
