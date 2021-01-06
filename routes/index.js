@@ -30,6 +30,30 @@ var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = todate.getFullYear();
 todate = yyyy + '-' + mm + '-' + dd;
 
+router.get('/home', isPrivate, function(req, res) {
+  // The render function takes the template filename (no extension - that's what the config is for!)
+  // and an object for what's needed in that template
+  var todate = new Date();
+    var dd = String(todate.getDate()).padStart(2, '0');
+    var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = todate.getFullYear();
+    todate = yyyy + '-' + mm + '-' + dd;
+    var datequery = todate;
+    var branch="";
+    if(req.session.usertype === "Branch Manager"){
+      branch = req.session.branch;
+    }
+    res.render('home', {
+      layout: 'main',
+      title: 'Dashboard',
+      fname:  req.session.first_name,
+      lname:  req.session.last_name,
+      utype: req.session.usertype,
+      today: todate,
+      
+    })
+});
+
 router.get('/inventory-admin', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
@@ -57,9 +81,9 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     
     inventoryController.fetchQuery({inventorydate : datequery , branch_id:branchquery}, (allInventory) =>{
       suggestionsController.fetchQuery({date: todate, status:"Unresolved", tobranch:{$regex: branch}, for: utype}, (suggestionlist)=>{
-        if(Object.entries(suggestionlist).length ===0 && Object.entries(allInventory).length ===0 && req.session.usertype== "Branch Manager"){
-          res.redirect('/processinventoryforBM');
-        }
+        //if(Object.entries(suggestionlist).length ===0 && Object.entries(allInventory).length ===0 && req.session.usertype== "Branch Manager"){
+        //  res.redirect('/processinventoryforBM');
+       // }
         res.render('inventory-admin', {
           layout: 'main',
           title: 'Inventory',
