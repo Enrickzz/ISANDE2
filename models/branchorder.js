@@ -6,6 +6,7 @@ const branchOrderSchema = new mongoose.Schema({
     quantity: { type: String, required:true},
     rate: { type: String, required:true},
     amount: { type: String, required:true},
+    systemsuggest: {type: String, required:false, default:"0"},
   }
 );
 

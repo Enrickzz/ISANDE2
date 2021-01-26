@@ -166,6 +166,7 @@
                                     <tr class="tr-addproducts">
                                         <th>Item</th>
                                         <th>Quantity</th>
+                                        <th>Suggestion <span style="color: red;">(!)</span></th>
                                         <th>Rate</th>
                                         <th>Amount</th>
                                     </tr>
@@ -174,7 +175,18 @@
                                     {{#each branchorders}}
                                         <tr class="clickable" >
                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
-                                            <td> {{quantity}}</td>
+                                            <td>{{quantity}}</td>
+                                            <td><form action="/updateBranchOrder" method="POST">
+                                                    <input name="product" type="hidden" class="form-control w-60" width="50" placeholder="{{product}}" value="{{product}}"readonly> 
+                                                    <input required type="hidden" name="quantity" placeholder="{{quantity}}" value="{{systemsuggest}}" class="form-control w-60" width="2">
+                                                    <input name="rate" type="hidden" class="form-control w-60" width="2" placeholder="{{rate}}" value="{{rate}}" readonly>
+                                                    <input name="amount" type="hidden" class="form-control w-60" width="2" placeholder="{{amount}}" value="{{amount}}" readonly>
+                                                    <input type="hidden" name="productionorderid" value="{{../productionorder._id}}">
+                                                    <input type="hidden" name="branchorderid" value="{{this._id}}">
+                                                    <input type="hidden" name="prevTotal" value="{{../productionorder.total}}">
+                                                    <button class="btn btn-primary btn-sm" type="submit">{{systemsuggest}}</button>
+                                                </form>
+                                            </td>
                                             <td>{{rate}}</td>
                                             <td>{{amount}}</td>
                                         </tr>

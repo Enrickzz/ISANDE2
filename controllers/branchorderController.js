@@ -86,6 +86,16 @@ exports.getID = (req, res) => {
     }); 
   };
 
+  exports.update1 =(req,res) => {
+    var update = req[0];
+    var id = req[1];
+    branchOrderModel.update(id, {$set: {systemsuggest: update}}, function (err, change){
+        if(err) throw err;
+      else{
+        res(change);
+      }
+    })
+  }
   exports.updateBO = (req,res) =>{
     var POID = req.body.productionorderid;
 

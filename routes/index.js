@@ -866,6 +866,16 @@ router.get('/processinventory/:id', isPrivate, (req,res) => {
             }
             suggestionsController.makesuggestions(makesuggestion, (suggestion)=>{
             })
+            var update1 ={ 
+              $set: {
+                systemsuggest: Math.floor(average)
+              }
+            }
+            var syssugg =Math.floor(average);
+            var update= [syssugg, obj._id]
+            branchOrderController.update1(update, (updated)=>{
+
+            })
           }else{
           }
           totquantity= parseFloat("0");
