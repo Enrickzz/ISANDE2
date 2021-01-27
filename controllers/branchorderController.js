@@ -51,29 +51,34 @@ exports.getID = (req, res) => {
   }
   exports.addBO = (req, res) =>{
     var POID = req.session.branch;
-    var productname = req.body.productName;
-    var qua = req.body.quantity;
-    var price = req.body.price;
-
-    var a = parseFloat(qua);
-    var b = parseFloat(price);
-    var amount = a*b;
-
-    var newBO = {
-      productionorderID: POID,
-      product: productname,
-      quantity: qua,
-      rate : price,
-      amount: amount
-    }
-    branchOrderModel.createBO(newBO , function (err, result){
-      if (err){
-        throw err;
-      }else{
-        res.redirect('back');
+    //console.log(req.body)
+    var productname = req.body.prod2arr;
+    var qua = req.body.qua2arr;
+    var price = req.body.price2arr;
+    for(var i =0 ; i < productname.length ; i++){
+      //console.log(productname[i]);
+      var a = parseFloat(qua[i]);
+      var b = parseFloat(price[i]);
+      var amount = a*b;
+      var newBO = {
+        productionorderID: POID,
+        product: productname[i],
+        quantity: qua[i],
+        rate : price[i],
+        amount: amount
       }
-    })
+      if(qua[i] > 0){
+        branchOrderModel.createBO(newBO , function (err, result){
+          if (err){
+            throw err;
+          }else{
+          }
+        })
+      }
+    }
+    res.redirect('back');
   }
+  
   exports.delete = (req, res) => {
     var id = req.body.BOid;
     branchOrderModel.remove(id, (err, result) => {

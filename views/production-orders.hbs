@@ -258,29 +258,35 @@
                     </thead>
             
                     <tbody>
+                        <form name="orderforms" action="/addBranchOrder" method="POST" class="orderforms" id="submitthis">
                          {{#each plist}}
-                         <form action="/addBranchOrder" method="POST">
                             <tr class="clickable" >
                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{name}} </td>
-                                <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="quantity" id="" class="form-control w-60" width="2" min="1"></td>
+                                <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1"></td>
                                 <td>{{sellingprice}}</td>
-                                <input type="hidden" name="productName" value="{{name}}">
-                                <input type="hidden" name="price" value="{{sellingprice}}">
+                                <input type="hidden" class="productName" name="prod2arr" value="{{name}}">
+                                <input type="hidden" class="price" name="price2arr" value="{{sellingprice}}">
                                 <td style="width: 2%;">
-                                    <button class="btn btn-primary btn-sm" type="submit">Add</button>
                                 </td>
                             </tr>
-                        </form>
                         {{/each}}
+                        </form>
                     </tbody>
-
+                        
                     <tfoot>
                         
                     </tfoot>
                 </table>
             </div>
             <div class="modal-footer">
+                <button class="btn btn-primary btn-sm" type="button" onclick='submitall()'>Add</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                <script>
+                      function submitall(){
+                        $('#submitthis').submit();
+                      }
+                </script>
             </div>
             </div>
 
