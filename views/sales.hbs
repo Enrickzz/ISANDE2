@@ -277,7 +277,7 @@
                                                                     {{#if_eq this.name ../this.product }}
                                                                         <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
-                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1"></td>
+                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1" max='{{../this.restockedInventory}}'></td>
                                                                             <td>{{this.sellingprice}}</td>
                                                                             <input type="hidden" class="productName" name="prod2arr" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="price2arr" value="{{this.sellingprice}}">
@@ -321,7 +321,7 @@
                                                                     {{#if_eq this.name ../this.product }}
                                                                         <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
-                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1"></td>
+                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1" max='{{../this.restockedInventory}}'></td>
                                                                             <td>{{this.sellingprice}}</td>
                                                                             <input type="hidden" class="productName" name="prod2arr" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="price2arr" value="{{this.sellingprice}}">
@@ -364,7 +364,7 @@
                                                                     {{#if_eq this.name ../this.product }}
                                                                         <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
-                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1"></td>
+                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1" max='{{../this.restockedInventory}}'></td>
                                                                             <td>{{this.sellingprice}}</td>
                                                                             <input type="hidden" class="productName" name="prod2arr" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="price2arr" value="{{this.sellingprice}}">
