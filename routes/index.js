@@ -556,22 +556,29 @@ router.get('/salesrecords', isPrivate, function(req, res) {
   if(req.session.usertype === "Branch Manager"){
     branch = req.session.branch;
   }
-        productController.getAllproducts(req, (allproducts)=>{
-        suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
-            res.render('sales', {
-              layout: 'main',
-              title: 'Sales Records',
-              fname:  req.session.first_name,
-              lname:  req.session.last_name,
-              utype: req.session.usertype,
-              whichbranch: req.session.branch,
-              plist: allproducts,
-              realtoday: todate,
-              suggestions: allsuggestions,
-              num_suggestions: allsuggestions.length
-            })
-        })  
-      }) 
+  productController.getAllproducts(req, (allproducts)=>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
+      inventoryController.fetchQuery({branch_id: branch, inventorydate: todate}, (inventory) =>{
+        productgroupsController.getAllpg(req, (allproductgroups) =>{
+          res.render('sales', {
+            layout: 'main',
+            title: 'Sales Records',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            whichbranch: req.session.branch,
+            plist: allproducts,
+            realtoday: todate,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length,
+            thisInventory: inventory,
+            pglist: allproductgroups
+          })
+        })
+        console.log(inventory);
+      })
+    })  
+  }) 
 });
 
 router.get('/supplier', isPrivate, function(req, res) {
