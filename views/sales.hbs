@@ -35,6 +35,66 @@
                     $('#myTab a[href="' + activeTab + '"]').tab('show');
                 }
 
+                    function checkCount(){
+                    var x = document.getElementsByClassName('middaybasis');//midDaySales
+                    var y = document.getElementsByClassName('boton');
+                    var z = document.getElementsByClassName('enddaybasis');//totsales
+                    var z2 = document.getElementsByClassName('enddaybasis2');//midDaySales
+                    var w = document.getElementsByClassName('boton2');
+                    var save = document.getElementsByClassName('save');
+                    for(var i = 0; i < x.length ; i++){
+                        
+                        var check2 = z[i].value;
+                        var check2a = z2[i].value;
+                        if(check2==0 && check2a > 0){
+                            w[i].disabled=false;
+                            w[i].classList.add("form-control");
+                        }else{
+                            w[i].classList.add("form-control");
+                        }
+                        var check = x[i].value;
+                        if(check ==0){
+                            y[i].disabled = false;
+                            y[i].classList.add("form-control");
+                            //w[i].disabled =true;
+                        }else{
+                            y[i].classList.add("form-control");
+                            w[i].classList.add("form-control")
+                        }
+                    }
+                    var branch = document.getElementById('whichbranch').value;
+                    var select = document.getElementById('branch');
+                    var option;
+                    var i;
+                    for(i = 0; i< select.options.length ; i++){
+                        option = select.options[i];
+                        if(option.value == branch){
+                            option.setAttribute('selected',true);
+                        }
+                    }
+
+                    var user = document.getElementById('usertype').value;
+
+                    if(user == "Branch Manager"){
+                        document.getElementById('prev').parentNode.removeChild(document.getElementById('prev'))
+                        document.getElementById('next').parentNode.removeChild(document.getElementById('next'))
+                        var branch = document.getElementById('whichbranch').value;
+                        var select =  document.getElementById('branch'); select.disabled=true;
+                        var option;
+                        for(i = 0; i< select.options.length ; i++){
+                            option = select.options[i];
+                            if(option.value == branch){
+                                option.setAttribute('selected',true);
+                            }
+                        }
+                    }
+
+                    if(document.getElementById('realdate').value == document.getElementById('currdate').value){
+                        document.getElementById('today').parentNode.removeChild(document.getElementById('today'));
+                    }
+                }
+                window.onload = checkCount;
+
             </script>
 
             {{!-- <input type="hidden" id="checkthis" name="buffer" value="{{check}}"> --}}
@@ -201,7 +261,154 @@
 
             </div>
             {{!-- END OF POS --}} 
-                    
+
+             {{!-- POS HISTORY --}}
+                    <div class="container tab-pane fade" id="poshistory" style="padding-top: 30px;">
+                        {{!-- FILTER TABLE --}}
+                                <div class="dataTables_filter" id="dataTable_filter"> Date: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter" onkeyup="filter()" placeholder="All"></label>
+                                </div>
+                        {{!-- END FILTER --}}
+                            <div style="padding-bottom: 10px;"> </div>
+                        <div class="table-responsive">
+                            <table class="table" id="posHistoryTable">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTable(0)">Transaction ID <i class="fa fa-sort"></i></th>               
+                                        <th onclick="sortTable(1)">Sales <i class="fa fa-sort"></i></th>
+                                        <th onclick="sortTable(2)">Staff Name <i class="fa fa-sort"> </i></th>
+                                        <th onclick="sortTable(3)">Time of Transaction <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{!-- {{#each todayprodorders}} --}}
+                                    {{!-- <tr class="clickable" onclick='window.location="/productionorder/view/{{this._id}}"'> --}}
+                                    <tr class="clickable">
+                                        <td>TID</td>
+                                        <td>sales</td>
+                                        <td>staff name</td>
+                                        <td>time</td>
+                                    </tr>
+                                    {{!-- {{/each}} --}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {{!-- END OF ALL PRODUCTION ORDERS --}}
+
+                    {{!-- ARCHIVED --}}
+                    <div class="container tab-pane fade" id="archived" style="padding-top: 30px;">
+                        {{!-- FILTER TABLE --}}
+                                <div class="dataTables_filter" id="dataTable_filter">Date: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter2" onkeyup="filter2()" placeholder="All"></label>
+                                </div>
+                        {{!-- END FILTER --}}
+                            <div style="padding-bottom: 10px;"> </div>
+                        <div class="table-responsive">
+                            <table class="table" id="archivedPosHistoryTable">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTable2(0)">Transaction ID  <i class="fa fa-sort"></i></th>               
+                                        <th onclick="sortTable2(1)">Sales  <i class="fa fa-sort"></i></th>
+                                        <th>Staff Name </i></th>
+                                        <th onclick="sortTable2(3)">Time of Transaction <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{!-- {{#each productionorders}} --}}
+                                    {{!-- <tr class="clickable" onclick='window.location="/productionorder/view/{{this._id}}"'> --}}
+                                    <tr class="clickable">
+                                        <td>Archived TID</td>
+                                        <td>Archived Sales</td>
+                                        <td>Archived staff name</td>
+                                        <td>Archived Time of Transaction</td>
+                                    </tr>
+                                    {{!-- {{/each}} --}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {{!-- END OF ARCHIVED --}}      
+
+                {{!-- SALES RECORDS --}}
+                <div class="container tab-pane fade" id="salesrecords" style="padding-top: 30px;">
+                         <div class="card-header">
+                         <div class="row">
+
+                           {{!-- FILTER TABLE --}}
+                               <div style="text-align:center" class="col">
+                                <div class="dataTables_filter" id="dataTable_filter">Product Group: <label> 
+                                    <input type="text" class="form-control form-control-sm" 
+                                        id="filter3" onkeyup="filter3()" placeholder="All"></label>
+                                </div>
+                                </div>
+                        {{!-- END FILTER --}}
+                     
+                            <div style="text-align:center" class="col">
+                                <form>
+                                    <h4 >{{today}}</h4>
+                                    <input type="hidden" name="currdate" id="currdate" value="{{today}}">
+                                    <input type="hidden" name="realdate" id="realdate" value="{{realtoday}}">
+                                    <button id="prev" class="btn btn-primary btn-sm" formaction="/prevday" formmethod="POST" type="submit"><i class="fas fa-arrow-left"></i> Previous</button>
+                                    <button id="next" class="btn btn-primary btn-sm" formaction="/nextday" formmethod="POST" type="submit">Next Day <i class="fas fa-arrow-right"></i></button>
+                                    <br><br>
+                                    <button id="today" class="btn btn-primary btn-sm" formaction="/today" formmethod="POST" type="submit"><i class=""></i> Back to Today ({{realtoday}})</button>
+                                </form>
+                                
+                            </div>
+
+                            <div style="text-align:center" class="col">
+                                <div class="dataTables_filter" id="dataTable_filter">
+                                        {{!-- Date 
+                                        <label for="a">Date</label>
+                                            <input type="date" name="thisdate" id="thisdate" class="form-control">--}}
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    <div class="table-responsive">
+                        <table class="table" id="srTable">
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable(0)">Item  <i class="fa fa-sort"></i></th>
+                                    <th onclick="sortTable(1)">Product Group  <i class="fa fa-sort"></i></th>
+                                    <th>Sales</th>
+                                     <th>Returns</th>
+                                      <th>Net Sales</th>
+                                       <th>% of Total</th>
+                                        <th>Return Rate</th>
+                                    <th><span></span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{!-- {{>productTableDelete}} --}}
+                                <tr class="clickable">
+                                        <td>Sample</td>
+                                        <td>Sample</td>
+                                        <td>Sample</td>
+                                        <td>Sample</td>
+                                        <td>Sample</td>
+                                        <td>Sample</td>
+                                        <td>Sample</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="background-color: #F98C40; color: white">
+                                <th>Footer 1</th>
+                                <th>Footer 2</th>
+                                <th>Footer 3</th>
+                                <th>Footer 4</th>
+                                <th>Footer 5</th>
+                                <th>Footer 6</th>
+                                <th>Footer 7</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                {{!-- END OF SALES RECORDS --}}      
 
                     </div>
                     {{!-- END OF TAB CONTENT --}}
@@ -262,3 +469,171 @@
     </div>  
     {{!-- End of Modal --}}
             
+    <script>
+        function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("posHistoryTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc"; 
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch= true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+            }
+            }
+            if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;      
+            } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
+        }
+
+        function sortTable2(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("archivedPosHistoryTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc"; 
+        /*Make a loop that will continue until
+        no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /*Loop through all table rows (except the
+            first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch= true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+            }
+            }
+            if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;      
+            } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
+        }
+
+        function filter() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("posHistoryTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[3];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+        }
+
+        function filter2() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("archivedPosHistoryTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[3];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+        }
+
+        function filter3() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("filter3");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("srTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }       
+        }
+        }
+    </script>
