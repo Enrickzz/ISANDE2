@@ -566,7 +566,6 @@ router.get('/salesrecords', isPrivate, function(req, res) {
               utype: req.session.usertype,
               whichbranch: req.session.branch,
               plist: allproducts,
-              today: datequery,
               realtoday: todate,
               suggestions: allsuggestions,
               num_suggestions: allsuggestions.length
