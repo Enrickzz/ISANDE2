@@ -61,6 +61,42 @@
     padding: .6rem;
 }
 
+#poslist
+{
+    margin-top: 1rem;
+    padding-top: .5rem;
+    padding: .6rem;
+}
+
+.tr-addposproducts{
+    background-color: white;
+}
+
+.tr-addposproducts th{
+    color: #858796;
+}
+
+#poscheckout 
+{
+    position: relative;
+    margin-left: 0px;
+    align-content: center;
+    width: 100%;
+    bottom: 10px;
+}
+
+#receipt 
+{
+    width: 95%; 
+    height: 80%; 
+    margin-left: 10px; 
+    padding-top: 5%; 
+    padding-bottom: 5%;
+    background-color: rgba(90,165,205,0.2);
+    opacity: inherit;
+    color: #333333;
+}
+
 .tr-addproducts{
     background-color: #858796;
 }
