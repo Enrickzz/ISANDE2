@@ -138,7 +138,7 @@
                         <div class="col" id="regform2" style="max-width: 490px;">
                             {{!-- <h3 class="regheader">Product</h3>
                             <p id="errormsg" style="color: red;"></p> --}}
-                        <form  action="/addPos" method="POST" > <!--ADDING PRODUCTS// -->
+                        <form><!--ADDING PRODUCTS// -->
 
                         <div class="table-responsive table mt-2" id="poslist"> <!--IDK HOW TO MAKE DYNAMIC ROWS OF FORMS WORK FOR DB-->
                         <div class="col" id="contents">
@@ -154,18 +154,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each bufferBO}}
+                                    <form action="">
+                                    {{#each cart}}
+                                        {{#if_eq cart.branch whichbranch}}
                                         <tr>
                                             <td>{{product}} </td>
                                             <td>{{quantity}} </td>
                                             <td>{{rate}} </td>
-                                            <td>{{amount}} </td> 
+                                            <td >{{total}} </td> 
                                             <td style="max-width:50px;">
-                                                <input type="hidden" name="BOid" value="{{this._id}}">
-                                                <button class="btn btn-primary btn-sm" formaction="/deletebufferBO" formmethod="POST" type="submit">Delete</button>
+                                                <input type="hidden" class="tot" value="{{total}}">
+                                                    <input type="hidden" name="cartID" value="{{this._id}}">
+                                                    <button class="btn btn-primary btn-sm" formaction="/deletecart" formmethod="POST"  type="submit">X</button>
                                             </td>                          
                                         </tr>
+                                        {{/if_eq}}
                                     {{/each}}
+                                    
                                 </tbody>
                                 <tfoot>
                                     
@@ -197,17 +202,36 @@
                              <p>Tax</p>
                               <p>Discount</p>
                              <p><b>Total</b> </p>
-                             <p>Amount Paid </p>
+                             <p style="width: 100px;" >Amount Paid </p>
                               <p><b>Change</b> </p>
                         </div>
                             {{!-- Change to handlebars later --}}
                             <div class="col" style="padding-left: 11.3em;">
-                             <p>0.00</p> 
-                             <p>0.00</p>
-                             <p>0.00</p>
-                             <p><b>0.00</b> </p>
-                             <p>0.00 </p>
-                            <p><b>0.00</b> </p>
+                            
+                                <p id="sub">0.00</p> 
+                                <p id="tax">0.00</p>
+                                <p id="discount">0.00</p>
+                                <p id="total"><b>0.00</b> </p>
+                                <input id="paid" type="number" class="form-control" style="height: 25px; width: 75px; margin-bottom:10px;" value="0" onchange="receipt()"> </input>
+                                <p id="change"><b>0.00</b> </p>
+                            <script>
+                                function receipt(){
+                                    var items = document.getElementsByClassName('tot');
+                                    //alert(items[0].value);
+                                    var subtotal = 0;
+                                    for(var i=0; i < items.length; i++){
+                                        subtotal = subtotal + parseFloat(items[i].value)
+                                    }
+                                    //alert(subtotal);
+                                    document.getElementById("tax").innerHTML = subtotal*.12
+                                    //document.getElementById("paid").min = subtotal ;
+                                    document.getElementById("sub").innerHTML = subtotal - subtotal*.12;
+                                    document.getElementById("total").innerHTML = subtotal +".00";
+                                    var paid = document.getElementById("paid").value;
+                                    document.getElementById("change").innerHTML = parseFloat(paid) - subtotal;
+                                }
+                                window.onload = receipt();
+                            </script>
                          </div>
                          </div>
            
@@ -222,7 +246,7 @@
                         <div class="col">
 
                             <div class="row-lg-12" style="width:500px;">
-                                <button class="btn btn-primary btn-lg" id="clear" type="submit">Clear</button>
+                                <button class="btn btn-primary btn-lg" formaction="/deleteallcart" formmethod="POST" id="clear" type="submit">Clear</button>
                                 <button class="btn btn-primary btn-lg" id="cash" type="submit" style="margin-left: 10px">Cash</button>
                                 <button class="btn btn-primary btn-lg" id="discount" type="submit" style="margin-left: 10px">Discount</button>
                                 <button class="btn btn-primary btn-lg" id="checkout" type="submit" style="margin-left: 10px">Checkout</button>
@@ -231,6 +255,7 @@
                                
                         </div>
                      </div>
+                     </form>
                      {{!-- END OF BUTTONS --}}
     
                     </div>
@@ -270,17 +295,18 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        <form action="">
+                                                        <form action="/addcart" method="POST">
                                                         {{#each thisInventory}}
                                                             {{#each ../plist}}
                                                                 {{#if_eq this.product_groupID '5f5a4c715612dee4cbb88298'}}
                                                                     {{#if_eq this.name ../this.product }}
                                                                         <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
-                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1" max='{{../this.restockedInventory}}'></td>
+                                                                            <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="quantity"  class="quantity form-control w-60" width="2" max='{{../this.restockedInventory}}'></td>
                                                                             <td>{{this.sellingprice}}</td>
-                                                                            <input type="hidden" class="productName" name="prod2arr" value="{{this.name}}">
-                                                                            <input type="hidden" class="price" name="price2arr" value="{{this.sellingprice}}">
+                                                                            <input type="hidden" class="productName" name="product" value="{{this.name}}">
+                                                                            <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
+                                                                            <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
                                                                             <td style="width: 2%;">
                                                                                 <p>{{../this.restockedInventory}}</p>
                                                                             </td>
@@ -300,7 +326,6 @@
                                                     </tfoot>
                                                 </table>
                                                 
-                                                
                                             </div>
                                             <div class="container tab-pane fade" id="jimmy" style="padding-top: 30px; max-width:fit-content;"> 
                                                 <table class="table my-0" id="dataTable">
@@ -314,17 +339,18 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        <form action="">
+                                                        <form action="/addcart" method="POST">
                                                         {{#each thisInventory}}
                                                             {{#each ../plist}}
                                                                 {{#if_eq this.product_groupID '5f5a4cca5612dee4cbb88299'}}
                                                                     {{#if_eq this.name ../this.product }}
-                                                                        <tr class="clickable" >
+                                                                         <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
-                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1" max='{{../this.restockedInventory}}'></td>
+                                                                            <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="quantity"  class="quantity form-control w-60" width="2" max='{{../this.restockedInventory}}'></td>
                                                                             <td>{{this.sellingprice}}</td>
-                                                                            <input type="hidden" class="productName" name="prod2arr" value="{{this.name}}">
-                                                                            <input type="hidden" class="price" name="price2arr" value="{{this.sellingprice}}">
+                                                                            <input type="hidden" class="productName" name="product" value="{{this.name}}">
+                                                                            <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
+                                                                            <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
                                                                             <td style="width: 2%;">
                                                                                 <p>{{../this.restockedInventory}}</p>
                                                                             </td>
@@ -357,17 +383,18 @@
                                                     </thead>
 
                                                     <tbody>
-                                                        <form action="">
+                                                        <form action="/addcart" method="POST">
                                                         {{#each thisInventory}}
                                                             {{#each ../plist}}
                                                                 {{#if_eq this.product_groupID '5f5a50e05612dee4cbb8829a'}}
                                                                     {{#if_eq this.name ../this.product }}
-                                                                        <tr class="clickable" >
+                                                                         <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
-                                                                            <td><input required type="number"  pattern="[0-9]{0}[0-9]+" name="qua2arr"  class="quantity form-control w-60" width="2" min="1" max='{{../this.restockedInventory}}'></td>
+                                                                            <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="quantity"  class="quantity form-control w-60" width="2" max='{{../this.restockedInventory}}'></td>
                                                                             <td>{{this.sellingprice}}</td>
-                                                                            <input type="hidden" class="productName" name="prod2arr" value="{{this.name}}">
-                                                                            <input type="hidden" class="price" name="price2arr" value="{{this.sellingprice}}">
+                                                                            <input type="hidden" class="productName" name="product" value="{{this.name}}">
+                                                                            <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
+                                                                            <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
                                                                             <td style="width: 2%;">
                                                                                 <p>{{../this.restockedInventory}}</p>
                                                                             </td>

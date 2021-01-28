@@ -20,6 +20,7 @@ const pulloutorderController = require('../controllers/pulloutorderController');
 const filterController = require('../controllers/filterController');
 const requestController = require('../controllers/requestController');
 const suggestionsController = require('../controllers/suggestionsController');
+const cartController = require('../controllers/cartController');
 
 const { registerValidation, loginValidation, supplierRegisterValidation } = require('../validators.js');
 const { isPublic, isPrivate } = require('../middlewares/checkAuth');
@@ -560,22 +561,25 @@ router.get('/salesrecords', isPrivate, function(req, res) {
     suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       inventoryController.fetchQuery({branch_id: branch, inventorydate: todate}, (inventory) =>{
         productgroupsController.getAllpg(req, (allproductgroups) =>{
-          res.render('sales', {
-            layout: 'main',
-            title: 'Sales Records',
-            fname:  req.session.first_name,
-            lname:  req.session.last_name,
-            utype: req.session.usertype,
-            whichbranch: req.session.branch,
-            plist: allproducts,
-            realtoday: todate,
-            suggestions: allsuggestions,
-            num_suggestions: allsuggestions.length,
-            thisInventory: inventory,
-            pglist: allproductgroups
+          cartController.fetchQuery( branch, (carts)=>{
+            res.render('sales', {
+              layout: 'main',
+              title: 'Sales Records',
+              fname:  req.session.first_name,
+              lname:  req.session.last_name,
+              utype: req.session.usertype,
+              whichbranch: req.session.branch,
+              plist: allproducts,
+              realtoday: todate,
+              suggestions: allsuggestions,
+              num_suggestions: allsuggestions.length,
+              thisInventory: inventory,
+              pglist: allproductgroups,
+              cart: carts,
+            })
           })
         })
-        console.log(inventory);
+        //console.log(inventory);
       })
     })  
   }) 
@@ -1006,5 +1010,8 @@ router.post('/filterbranch', filterController.changebranch);
 router.post('/pulloutorder', pulloutorderController.create);
 router.post('/pulloutupdate', inventoryController.pulloutUpdate);
 router.post('/addtoreqlist', requestController.create);
+router.post('/addcart', cartController.addcart);
+router.post('/deletecart', cartController.delete);
+router.post('/deleteallcart', cartController.deleteall);
 
 module.exports = router
