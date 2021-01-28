@@ -273,14 +273,14 @@ exports.addInventory = (req,res) =>{
                 var restockedInv = parseFloat(obj.quantity);
                 var prevenddayCount ="0";
                 if(obj.product == prev.product){
-                  var a = parseFloat(obj.quantity) + parseFloat(prev.endDayCount);
+                  var a = parseFloat(obj.quantity) + parseFloat(prev.restockedInventory);
                   restockedInv = a;
-                  prevenddayCount = prev.endDayCount;
+                  prevenddayCount = prev.restockedInventory;
                   var inventory ={
                     branch_id : POobj.branch,
                     inventorydate: POobj.orderDate,
                     product: obj.product,
-                    startInv: prevenddayCount,
+                    startInv: Number(prevenddayCount),
                     restockQuantity: obj.quantity,
                     restockedInventory: restockedInv,
                     srp: obj.rate
@@ -295,12 +295,12 @@ exports.addInventory = (req,res) =>{
                 }
               })
               if(checker == 0){ //if not exists in orders
-                var restockedInv = parseFloat(prev.endDayCount);
+                var restockedInv = parseFloat(prev.restockedInventory);
                 var inventory ={
                   branch_id : POobj.branch,
                   inventorydate: POobj.orderDate,
                   product: prev.product,
-                  startInv: prev.endDayCount,
+                  startInv: Number(restockedInv),
                   restockQuantity: "0",
                   restockedInventory: restockedInv,
                   srp: prev.srp

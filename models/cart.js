@@ -6,7 +6,9 @@ const cart = new mongoose.Schema({
     rate: { type: String, required:true},
     total: { type: String, required:true},
     branch: { type: String, required:false},
-    inventoryID:{ type: String, required:false}
+    inventoryID:{ type: String, required:false},
+    saleID: {type: String, required:false, default:""},
+    status: {type:String, required:false, default:"Pending"}
   }
 );
 
@@ -35,4 +37,10 @@ exports.fetchList = function(query, next) {
       console.log(err);
       next(err, cart);
     });
+  };
+
+  exports.update = function(query, update, next) {
+    cartmodel.updateMany(query, update,  function(err, res) {
+      next(err, res);
+    })
   };

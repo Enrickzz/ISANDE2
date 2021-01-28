@@ -42,6 +42,7 @@ exports.addsale = (req,res) =>{
     var total1 = req.body.total;
     var staffL = req.session.last_name;
     var staffF = req.session.first_name;
+    var saved ="";
 
     var addthis = {
         subtotal: sub1,
@@ -57,7 +58,18 @@ exports.addsale = (req,res) =>{
         if(error){
             throw error;
         }else{
-
+            var updateID = {
+                $set:{
+                    saleID: result._id,
+                }
+            }
+            cartmodel.update({branch: req.session.branch}, updateID, (err, result) => {
+                if (err) {
+                  throw err; 
+                } 
+                else {
+            }
+            }); 
         }
     })
     console.log(req.body.totsale);
@@ -88,8 +100,12 @@ exports.addsale = (req,res) =>{
             }
         })
     }
-
-    cartmodel.removeall({}, (err, result) => {
+    var updateID = {
+        $set:{
+            status: "Completed",
+        }
+    }
+    cartmodel.update({branch: req.session.branch}, updateID, (err, result) => {
         if (err) {
           throw err; 
         } 

@@ -156,6 +156,7 @@
                                 <tbody>
                                     <form action="">
                                     {{#each cart}}
+                                        {{#if_eq status 'Pending'}}
                                         {{#if_eq cart.branch whichbranch}}
                                         <tr>
                                             <td>{{product}} </td>
@@ -170,6 +171,7 @@
                                                  <button class="btn btn-primary btn-sm" formaction="/deletecart" formmethod="POST"  type="submit">X</button>
                                             </td>                          
                                         </tr>
+                                        {{/if_eq}}
                                         {{/if_eq}}
                                     {{/each}}
                                     
