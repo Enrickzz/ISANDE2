@@ -163,9 +163,11 @@
                                             <td>{{rate}} </td>
                                             <td >{{total}} </td> 
                                             <td style="max-width:50px;">
-                                                <input type="hidden" class="tot" value="{{total}}">
-                                                    <input type="hidden" name="cartID" value="{{this._id}}">
-                                                    <button class="btn btn-primary btn-sm" formaction="/deletecart" formmethod="POST"  type="submit">X</button>
+                                                <input type="hidden" name="totsale" class="totsale" value="{{this.total}}">
+                                                <input type="hidden" name="cartID" value="{{this._id}}">
+                                                <input type="hidden" name="invID" value="{{this.inventoryID}}">
+                                                <input type="hidden" name="cartqua" value="{{this.quantity}}">
+                                                 <button class="btn btn-primary btn-sm" formaction="/deletecart" formmethod="POST"  type="submit">X</button>
                                             </td>                          
                                         </tr>
                                         {{/if_eq}}
@@ -208,27 +210,40 @@
                             {{!-- Change to handlebars later --}}
                             <div class="col" style="padding-left: 11.3em;">
                             
-                                <p id="sub">0.00</p> 
-                                <p id="tax">0.00</p>
-                                <p id="discount">0.00</p>
-                                <p id="total"><b>0.00</b> </p>
-                                <input id="paid" type="number" class="form-control" style="height: 25px; width: 75px; margin-bottom:10px;" value="0" onchange="receipt()"> </input>
-                                <p id="change"><b>0.00</b> </p>
+                                <p id="subT">0.00</p> 
+                                <p id="taxT">0.00</p>
+                                <p id="discountT">0.00</p>
+                                <p id="totalT"><b>0.00</b> </p>
+                                <input id="paidT" type="number" class="form-control" style="height: 25px; width: 75px; margin-bottom:10px;" value="0" onchange="receipt()"> </input>
+                                <p id="changeT"><b>0.00</b> </p>
+
+                                <input type="hidden" name="sub" id="subIn">
+                                <input type="hidden" name="tax" id="taxIn">
+                                <input type="hidden" name="discount" id="discIn">
+                                <input type="hidden" name="total" id="totalIn">
+                                <input type="hidden" name="change" id="changeIn">
                             <script>
                                 function receipt(){
-                                    var items = document.getElementsByClassName('tot');
+                                    var items = document.getElementsByClassName('totsale');
                                     //alert(items[0].value);
                                     var subtotal = 0;
                                     for(var i=0; i < items.length; i++){
                                         subtotal = subtotal + parseFloat(items[i].value)
                                     }
                                     //alert(subtotal);
-                                    document.getElementById("tax").innerHTML = subtotal*.12
+                                    document.getElementById("taxT").innerHTML = parseFloat(subtotal*.12).toFixed(2);
                                     //document.getElementById("paid").min = subtotal ;
-                                    document.getElementById("sub").innerHTML = subtotal - subtotal*.12;
-                                    document.getElementById("total").innerHTML = subtotal +".00";
-                                    var paid = document.getElementById("paid").value;
-                                    document.getElementById("change").innerHTML = parseFloat(paid) - subtotal;
+                                    document.getElementById("subT").innerHTML = subtotal - subtotal*.12;
+                                    document.getElementById("totalT").innerHTML = subtotal +".00";
+                                    var paid = document.getElementById("paidT").value;
+                                    document.getElementById("changeT").innerHTML = parseFloat(paid) - subtotal;
+
+                                    //initialize inputs for checkout
+                                    document.getElementById("subIn").value = subtotal - subtotal*.12;
+                                    document.getElementById("taxIn").value = subtotal*.12;
+                                    document.getElementById("discIn").value = 0;
+                                    document.getElementById("totalIn").value = subtotal +".00";
+                                    document.getElementById("changeIn").value = parseFloat(paid) - subtotal;
                                 }
                                 window.onload = receipt();
                             </script>
@@ -249,7 +264,7 @@
                                 <button class="btn btn-primary btn-lg" formaction="/deleteallcart" formmethod="POST" id="clear" type="submit">Clear</button>
                                 <button class="btn btn-primary btn-lg" id="cash" type="submit" style="margin-left: 10px">Cash</button>
                                 <button class="btn btn-primary btn-lg" id="discount" type="submit" style="margin-left: 10px">Discount</button>
-                                <button class="btn btn-primary btn-lg" id="checkout" type="submit" style="margin-left: 10px">Checkout</button>
+                                <button class="btn btn-primary btn-lg" formaction="/checkout" formmethod="POST" id="checkout" type="submit" style="margin-left: 10px">Checkout</button>
                             </div>
                            
                                
@@ -307,6 +322,7 @@
                                                                             <input type="hidden" class="productName" name="product" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
                                                                             <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
+                                                                            <input type="hidden" name="invID" value="{{../this._id}}">
                                                                             <td style="width: 2%;">
                                                                                 <p>{{../this.restockedInventory}}</p>
                                                                             </td>
@@ -351,6 +367,7 @@
                                                                             <input type="hidden" class="productName" name="product" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
                                                                             <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
+                                                                            <input type="hidden" name="invID" value="{{../this._id}}">
                                                                             <td style="width: 2%;">
                                                                                 <p>{{../this.restockedInventory}}</p>
                                                                             </td>
@@ -395,6 +412,7 @@
                                                                             <input type="hidden" class="productName" name="product" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
                                                                             <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
+                                                                            <input type="hidden" name="invID" value="{{../this._id}}">
                                                                             <td style="width: 2%;">
                                                                                 <p>{{../this.restockedInventory}}</p>
                                                                             </td>
@@ -461,12 +479,14 @@
                                 <tbody>
                                     {{!-- {{#each todayprodorders}} --}}
                                     {{!-- <tr class="clickable" onclick='window.location="/productionorder/view/{{this._id}}"'> --}}
+                                    {{#each salesrecords}}
                                     <tr class="clickable">
-                                        <td>TID</td>
-                                        <td>sales</td>
-                                        <td>staff name</td>
-                                        <td>time</td>
+                                        <td>{{_id}}</td>
+                                        <td>{{total}}</td>
+                                        <td>{{staffincharge}}</td>
+                                        <td>{{date}}</td>
                                     </tr>
+                                    {{/each}}
                                     {{!-- {{/each}} --}}
                                 </tbody>
                             </table>

@@ -122,18 +122,15 @@
                             <table class="table" id="invTable">
                                 <thead style="text-align: center;">
                                     <tr>
+                                        <th>image</th>
                                         <th onclick="sortTable(0)">Name  <i class="fa fa-sort"></i></th>
-                                        <th>Start Day Stock  </th>
-                                        <th>Restock Quantity  </th>
-                                        <th>Initial Stock  </th>
-                                        <th>Mid Day Count  </th>
-                                        <th>Mid Day Sales  </th>
-                                        <th>Additional Restock  </th>
-                                        <th>Pullout  </th>
-                                        <th>Changed Stock  </th>
-                                        <th>End Day Count </th>
-                                        <th>Returns </th>
-                                        <th>Overall Sales </th>
+                                        <th>Opening Stock  </th>
+                                        <th>Restock Quantity</th>
+                                        <th>Quantity In  </th>
+                                        <th>Quantity Out  </th>
+                                        <th>Realtime Stock  </th>
+                                        <th>Sales </th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,30 +138,26 @@
                                     <form action="/midendCountUpdate" method="POST">
                                         <input type="hidden" name="srp" value="{{srp}}">
                                         <tr class="clickable" style="text-align: center;">
+                                            <td>image</td>
                                                 <td>{{product}}</td>
                                                 <td>{{startInv}}</td>
                                                 <td>{{restockQuantity}}</td>
-                                                <td>{{restockedInventory}}</td>
-                                            <input type="hidden" name="restocked" value="{{restockedInventory}}">
-                                            <input type="hidden" class="middaybasis" value="{{midDaySales}}" >
-                                                <td><input type="number" pattern="[0-9]{0}[0-9]+" name="midDayCount" class="boton" class="form-control" placeholder="{{midDayCount}}"  max="{{restockedInventory}}"style="width: 90px;" disabled> </td>
-                                                <td>{{midDaySales}}</td>
                                                 <td>{{additionalRestock}}</td>
                                                 <td>{{pulloutStock}}</td>
-                                                <td>{{runningInventory}}</td>
+                                                <td>{{restockedInventory}}</td>
+                                                <td>{{totsales}}</td>
+                                            <input type="hidden" name="restocked" value="{{restockedInventory}}">
+                                            <input type="hidden" class="middaybasis" value="{{midDaySales}}" >
+                                                
+                                                
                                             <input type="hidden" name="changedStock" value="{{runningInventory}}">
                                             <input type="hidden" name="middaysale" value="{{midDaySales}}">
                                             <input type="hidden" class="enddaybasis2" value="{{midDaySales}}">
                                             <input type="hidden" class="enddaybasis" value="{{totsales}}">
-                                                <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="endDayCount" class="boton2" class="form-control" placeholder="{{endDayCount}}" max="{{runningInventory}}" style="width: 90px;" disabled></td>
-                                                <td>{{returns}}</td>
-                                                <td>{{totsales}}</td>
                                             <input type="hidden" name="id" value="{{this._id}}">
                                             <input type="hidden" name="thisdate" value="{{inventorydate}}">
                                             <input type="hidden" name="branch" value="{{branch_id}}">
                                             <input type="hidden" name="product" value="{{product}}">
-                                            
-                                                <td><button class="btn btn-primary" type="submit" >Save</button></td>
                                         </tr>
                                     </form>
                                     {{/each}}

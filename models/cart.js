@@ -6,6 +6,7 @@ const cart = new mongoose.Schema({
     rate: { type: String, required:true},
     total: { type: String, required:true},
     branch: { type: String, required:false},
+    inventoryID:{ type: String, required:false}
   }
 );
 

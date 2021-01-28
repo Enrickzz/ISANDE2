@@ -32,6 +32,8 @@ exports.addcart = (req, res) =>{
     var product = req.body.product;
     var qua = req.body.quantity;
     var rate = req.body.rate;
+    var invID = req.body.invID;
+    console.log(req.body);
     //var amount = parseFloat(qua) * parseFloat(rate);
     var branch = req.body.branch
     for(var i =0 ; i < product.length ; i++){
@@ -44,7 +46,8 @@ exports.addcart = (req, res) =>{
         quantity: qua[i],
         branch: POID,
         rate : rate[i],
-        total: amount
+        total: amount,
+        inventoryID: invID[i],
       }
       if(qua[i] > 0){
         cartmodel.addTocart(addcart , function (err, result){
