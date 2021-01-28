@@ -15,6 +15,8 @@
                 }
             }else if(status == "Unsent"){
                 document.getElementById('showstatus').style.color="orange";
+                var rm = document.getElementById('send');
+                rm.parentNode.removeChild(rm);
             }
            
         }
@@ -24,12 +26,12 @@
 
             
             <div class="container-fluid" onload="statuscheck()" >
-                <h3 class="text-dark mb-4">  <a href="/returns" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;Return Information</h3>
+                <h3 class="text-dark mb-4">  <a href="/adjustments" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;Adjustment Information</h3>
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
-                                <h3 class="text-dark mb-1">RETURN FORM</h3>
+                                <h3 class="text-dark mb-1">ADJUSTMENT FORM</h3>
                             </div>
                             <div class="col">
                                 <div class="buttonlist" style="float: right;">
@@ -48,17 +50,17 @@
                                 <div class="row"> <!--ROW1-->
 
                                     <div class="col">
-                                        <h2 class="regheader">RETURN</h2>
+                                        <h2 class="regheader">ADJUSTMENT</h2>
                                     </div>
                                     
                                 </div>
 
                                 <div class="row"> <!--ROW2-->
                                     <div class="col">
-                                        <p><b>Return ID: </b>{{return._id}}</p>    
+                                        <p><b>Adjustment ID: </b>{{return._id}}</p>    
 
                                         <div class="form-group">
-                                                <label>Return Date</label>
+                                                <label>Adjustment Date</label>
                                                 <p>{{return.returndate}}</p>
                                         </div>  
                                     </div>
@@ -66,7 +68,7 @@
                                     <div class="col">
                                         <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">{{return.status}}</span></p>
                                         <div class="form-group">
-                                             <label>Return Type:</label>
+                                             <label>Adjustment Type:</label>
                                                 <p>{{return.type}}</p>
                                         </div>
                                         
@@ -140,9 +142,9 @@
                     <div class="row" style="margin-top: 2rem;">
                         <div class="col">
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
-                                <label id="btns">
+                                <div id="btns" style="padding-bottom: 10px;">
                                     <form action="/submitreturn" method="POST">
-                                        <a href="/returns" id="back" class="btn btn-secondary btn-sm">Continue Later</a>
+                                        <a href="/adjustments" id="back" class="btn btn-secondary btn-sm">Continue Later</a>
                                         <input type="hidden" name="returnID" value="{{return._id}}">
                                         <input type="hidden" name="changestatus" value="For review">
                                         <input type="hidden" name="currstat" value="{{return.type}}">
@@ -151,7 +153,7 @@
                                         <button id="send" class="btn btn-primary btn-sm" type="submit">Submit</button>
                                     </form>
                                     
-                                </label>
+                                </div>
                             </div>
                         </div>
                     </div> 

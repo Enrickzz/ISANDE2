@@ -47,10 +47,10 @@ const { validationResult } = require('express-validator');
         returnModel.increaseTotal(res2.returnID, add, function (err2, success){
             if(err2){
                 console.log(err2);
-                res.redirect('/returns/view/'+ req.body.returnID);
+                res.redirect('/adjustments/view/'+ req.body.returnID);
               }
               else{
-                  res.redirect('/returns/view/'+ req.body.returnID)
+                  res.redirect('/adjustments/view/'+ req.body.returnID)
               }
         } )
     })
@@ -66,7 +66,7 @@ exports.delete = (req, res) => {
           throw err; 
         } 
         else {
-          res.redirect('/returns/view/' + returnID);
+          res.redirect('/adjustments/view/' + returnID);
         }
       })
     }); 

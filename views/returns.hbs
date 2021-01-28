@@ -42,11 +42,11 @@
 
                          <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#allreturns">Today's Returns</a>
+                            <a class="nav-link active" data-toggle="tab" href="#allreturns">Today's Adjustments</a>
                             </li>
 
                             <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#addreturn">Add Return</a>
+                            <a class="nav-link" data-toggle="tab" href="#addreturn">Add Adjustment</a>
                             </li>
                             <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#archived">Archive</a>
@@ -69,8 +69,8 @@
                             <table class="table" id="retTable">
                                 <thead>
                                     <tr>
-                                        <th onclick="sortTable(0)">Return Date  <i class="fa fa-sort"></i></th>               
-                                        <th>Return # </th>
+                                        <th onclick="sortTable(0)">Adjustment Date  <i class="fa fa-sort"></i></th>               
+                                        <th>Adjustment # </th>
                                         <th onclick="sortTable(2)">Type  <i class="fa fa-sort"></i></th>
                                         <th>Amount  </th>
                                         <th onclick="sortTable(4)">Status <i class="fa fa-sort"></i></th>
@@ -78,7 +78,7 @@
                                 </thead>
                                 <tbody>
                                     {{#each returns}}
-                                    <tr class="clickable" onclick='window.location="/returns/view/{{this._id}}"'>
+                                    <tr class="clickable" onclick='window.location="/adjustments/view/{{this._id}}"'>
                                         <td>{{returndate}}</td>
                                         <td> {{this._id}}</td>
                                         <td> {{type}}</td>
@@ -104,8 +104,8 @@
                             <table class="table" id="retTable2">
                                 <thead>
                                     <tr>
-                                        <th onclick="sortTable2(0)">Return Date  <i class="fa fa-sort"></i></th>               
-                                        <th>Return # </th>
+                                        <th onclick="sortTable2(0)">Adjustment Date  <i class="fa fa-sort"></i></th>               
+                                        <th>Adjustment # </th>
                                         <th onclick="sortTable2(2)">Type  <i class="fa fa-sort"></i></th>
                                         <th>Amount  </th>
                                         <th onclick="sortTable2(4)">Status <i class="fa fa-sort"></i></th>
@@ -113,7 +113,7 @@
                                 </thead>
                                 <tbody>
                                     {{#each archivedreturn}}
-                                    <tr class="clickable" onclick='window.location="/returns/view/{{this._id}}"'>
+                                    <tr class="clickable" onclick='window.location="/adjustments/view/{{this._id}}"'>
                                         <td>{{returndate}}</td>
                                         <td> {{this._id}}</td>
                                         <td> {{type}}</td>
@@ -130,7 +130,7 @@
                         <div class="row">
                             <div class="col" id="regform2">
                                 <form action="/addreturn" method="POSt">
-                                <h3 class="regheader">Return Form</h3>
+                                <h3 class="regheader">Adjustment Form</h3>
                                 <p id="errormsg" style="color: red;"></p>
                                 <div class="row">
                                 
@@ -138,7 +138,7 @@
                                         {{!-- Start form --}}
                                             <div class="form-group">
                                                 {{!-- Product Name --}}
-                                                <label>Return Reference #</label>
+                                                <label>Adjustment Reference #</label>
                                                 <input id="" type="text" name="" class="form-control" placeholder="auto-generate" disabled><br>
                                             </div>
                                     </div>
@@ -161,15 +161,15 @@
                                         {{!-- Start form --}}
                                             <div class="form-group">
                                                 {{!-- Product Name --}}
-                                                <label>Return Date</label>
-                                                <input id="" type="date" name="returndate" class="form-control"><br>
+                                                <label>Adjustment Date</label>
+                                                <input id="" type="date" name="returndate" class="form-control today" ><br>
                                             </div>
                                     </div>
 
                                     <div class="col">
                                         {{!-- Start form --}}
                                         <div class="form-group">
-                                            <label for="cars">Return Type</label>
+                                            <label for="cars">Adjustment Type</label>
                                                 <select id="cars" name="type" class="form-control">
                                                     <option value="Sales Return">Sales Return</option>
                                                     <option value="Damaged Goods">Damaged Goods</option>
@@ -180,7 +180,7 @@
                                   </div>
                                   <div class="row">
                                     <div class="col" style="text-align: center;">
-                                        <label for="">Click 'Next' to proceed with returns</label>
+                                        <label for="">Click 'Next' to proceed with adjustments</label>
                                     </div>
                                 </div>
                             </div>
@@ -190,10 +190,10 @@
                         <div class="row" style="margin-top: 2rem;">
                             <div class="col">
                                 <div class="text-md-center dataTables_filter" id="dataTable_filter">
-                                    <label>
-                                        <button class="btn btn-secondary btn-sm" type="">Cancel</button>
+                                    <div style="padding-bottom: 10px;">
+                                        <a href="/adjustments" type="button" class="btn btn-secondary btn-sm">Cancel</a>
                                         <button class="btn btn-primary btn-sm" type="submit">Next</button>
-                                    </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>  
@@ -423,4 +423,8 @@
             }       
         }
         }
+        
+        let today = new Date().toISOString().substr(0, 10);
+        document.querySelector(".today").value = today;
+
     </script>

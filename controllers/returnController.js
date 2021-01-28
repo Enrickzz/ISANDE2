@@ -67,7 +67,7 @@ exports.getID = (req, res) => {
         if(err){
           throw err;
         }else{
-          res.redirect('/returns/view/'+ res2._id)
+          res.redirect('/adjustments/view/'+ res2._id)
         }
     })
 };
@@ -113,7 +113,7 @@ exports.getID = (req, res) => {
           if(er){
             throw er;
           }else{
-            resss.redirect('/returns/view/'+id)
+            resss.redirect('/adjustments/view/'+id)
           }
         })
       })
@@ -145,7 +145,7 @@ exports.getID = (req, res) => {
           if(er){
             throw er;
           }else{
-            resss.redirect('/returns/view/'+id)
+            resss.redirect('/adjustments/view/'+id)
           }
         })
       })

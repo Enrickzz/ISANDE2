@@ -195,7 +195,7 @@ router.get('/pulloutorder/view/:id', (req, res) => {
   });
 });
 
-router.get('/returns', isPrivate, function(req, res) {
+router.get('/adjustments', isPrivate, function(req, res) {
   // The render function takes the template filename (no extension - that's what the config is for!)
   // and an object for what's needed in that template
   var todate = new Date();
@@ -213,7 +213,7 @@ router.get('/returns', isPrivate, function(req, res) {
       returnController.fetchQuery({branchID: {$regex: branch}} , (archive)=>{
         res.render('returns', {
           layout: 'main',
-          title: 'Returns',
+          title: 'Adjustments',
           fname:  req.session.first_name,
           lname:  req.session.last_name,
           utype: req.session.usertype,
@@ -228,7 +228,7 @@ router.get('/returns', isPrivate, function(req, res) {
   })
 });
 
-router.get('/returns/view/:id', isPrivate, function (req, res) {
+router.get('/adjustments/view/:id', isPrivate, function (req, res) {
   returnController.getID(req, (returnObj)=>{
     productController.getAllproducts(req, (allproducts)=>{
       var query = returnObj._id;
@@ -240,7 +240,7 @@ router.get('/returns/view/:id', isPrivate, function (req, res) {
         suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('returns-card', {
             layout: 'main',
-            title: 'Returns View',
+            title: 'Adjustments',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
             utype: req.session.usertype,
