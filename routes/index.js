@@ -240,7 +240,7 @@ router.get('/adjustments/view/:id', isPrivate, function (req, res) {
         suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
           res.render('returns-card', {
             layout: 'main',
-            title: 'Adjustments',
+            title: 'Adjustment Information',
             fname:  req.session.first_name,
             lname:  req.session.last_name,
             utype: req.session.usertype,
