@@ -1002,7 +1002,7 @@ router.post('/updateBranchOrder', branchOrderController.updateBO);
 router.post('/addproductionorder', productionOrderController.addproductionorder);
 router.post('/deletebufferBO', branchOrderController.delete);
 router.post('/updatebranchInv', productionOrderController.statuschange4deliver);
-router.post('/recieveproductionorders', inventoryController.addInventory);
+router.post('/receiveproductionorders', inventoryController.addInventory);
 router.post('/nextday', filterController.nextday);
 router.post('/prevday', filterController.prevday);
 router.post('/today', filterController.today);

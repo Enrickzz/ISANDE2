@@ -1,6 +1,12 @@
   <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <!--<button class="btn btn-primary" type="button">Create <i class="fa fa-edit"></i></button>--> <h2 style="color: #f98c40; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{title}} </h2>
+                        <!--<button class="btn btn-primary" type="button">Create <i class="fa fa-edit"></i></button>--> 
+                        <h2 style="color: #858796; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{title}} </h2> 
+
+                        <div class="topnav-centered">
+                                <a class="active">{{utype}}</a>
+                        </div>
+
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
@@ -73,10 +79,14 @@
                                         </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
                                 </div>
                             </li>-->
+
+  
                             <li class="nav-item dropdown no-arrow mx-1" role="presentation">
+                                
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="">suggestions</i><span style="margin-bottom: 10px;" class="badge badge-danger badge-counter">{{#if num_suggestions}} {{num_suggestions}} {{/if}}</span></a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
                                         role="menu" style="min-width: 600px;">
+
                                         <h6 class="dropdown-header">Suggestions</h6>
 
                                         {{!-- NAV LINKS --}}
