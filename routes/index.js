@@ -178,7 +178,7 @@ router.get('/pulloutorder/view/:id', (req, res) => {
     var branch="";
     if(req.session.usertype === "Branch Manager"){
       branch = req.session.branch;
-    }
+    }console.log(pullouts);
     suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       var query = pullouts._id;
       res.render('pullout-card', { 
@@ -271,7 +271,7 @@ router.get('/delivery', isPrivate, function(req, res) {
       branch = req.session.branch;
     }
     suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
-      deliveryController.fetchQuery({deliverydate:todate}, (todayDeliveries)=>{
+      deliveryController.fetchQuery({deliverydate:todate, branchTO: branch}, (todayDeliveries)=>{
         res.render('delivery', {
           layout: 'main',
           title: 'Deliveries',

@@ -487,7 +487,6 @@
                                             <td>{{total}}</td>
                                             <td>{{staffincharge}}</td>
                                             <td>{{date}}</td>
-                                            
                                         </tr>
                                     {{/each}}
                                     {{!-- {{/each}} --}}
@@ -582,12 +581,12 @@
                             </thead>
                             <tbody id="addRecords">
                                 {{!-- {{>productTableDelete}} --}}
-                          {{#each invsales}}
+                                {{#each invsales}}
                                     <input type="hidden" class="inventorydate" value="{{this.inventorydate}}" name="" id=""> 
                                     <input type="hidden" name="plist" class="plist" value="{{this.product}}">
                                     <input type="hidden" class="thisreturns" value="{{this.returns}}" name="" id="">
                                     <input type="hidden" class="invsales" value="{{this.totsales}}" name="" id="">
-                               {{/each}}
+                                {{/each}}
                                <input type="hidden" class="realtoday" value="{{realtoday}}" name="" id="">            
                               
                             </tbody>

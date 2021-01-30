@@ -74,17 +74,28 @@
                                         {{!-- BRANCH --}}
                                         <label for="branch">Branch</label>
                                         <form action="/filterbranch" method="POST">
+                                        {{#if_eq usertype "Admin"}}
                                             <select id="branch" name="branch" class="form-control" onchange="this.form.submit()">
-                                                <option value="Branch A">Branch A</option>
+                                                 <option value="Branch A">Branch A</option>
                                                 <option value="Branch B">Branch B</option>
                                                 <option value="Branch C">Branch C</option>
                                             </select><br>
+                                        {{/if_eq}} 
+                                        {{#if_eq usertype "Branch Manager"}}
+                                            <select id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
+                                                 <option value="Branch A">Branch A</option>
+                                                <option value="Branch B">Branch B</option>
+                                                <option value="Branch C">Branch C</option>
+                                            </select><br>
+                                        {{/if_eq}} 
+                                               
                                         </form>
                                     </div>
                             </div>
 
                             <div style="text-align:center" class="col">
-                                <form>
+                                {{#if_eq usertype "Admin"}}
+                               <form>
                                     <h4 >{{today}}</h4>
                                     <input type="hidden" name="currdate" id="currdate" value="{{today}}">
                                     <input type="hidden" name="realdate" id="realdate" value="{{realtoday}}">
@@ -93,7 +104,10 @@
                                     <br><br>
                                     <button id="today" class="btn btn-primary btn-sm" formaction="/today" formmethod="POST" type="submit"><i class=""></i> Back to Today ({{realtoday}})</button>
                                 </form>
-                                
+                                {{/if_eq}}
+                                {{#if_eq usertype "Branch Manager"}}
+                                <h4 >{{today}}</h4>
+                                {{/if_eq}}
                             </div>
 
                             <div style="text-align:center" class="col">

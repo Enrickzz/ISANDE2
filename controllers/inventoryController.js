@@ -370,12 +370,12 @@ exports.pulloutUpdate = (req,res)=>{
         updatethis.forEach(function(doc){
           var inv = doc.toObject()
           if(inv.product == withthis.product){
-            inventoryModel.updateFind({_id: inv._id}, {$inc: {additionalRestock: parseFloat(withthis.quantity), runningInventory:parseFloat(withthis.quantity) } }, (err3, result)=>{
+            inventoryModel.updateFind({_id: inv._id}, {$inc: {additionalRestock: parseFloat(withthis.quantity), restockedInventory:parseFloat(withthis.quantity) } }, (err3, result)=>{
               if(err3){
                 throw err3;
               }else{
                 inventoryModel.updateFind({branch_id: withthis.from, inventorydate: todate, product: withthis.product }, 
-                  {$inc:{ pulloutStock: -(parseFloat(withthis.quantity)), runningInventory: -(parseFloat(withthis.quantity)) }}, (err4, invresult) =>{
+                  {$inc:{ pulloutStock: -(parseFloat(withthis.quantity)), restockedInventory: -(parseFloat(withthis.quantity)) }}, (err4, invresult) =>{
                     if(err4){
                       throw err4
                     }else{

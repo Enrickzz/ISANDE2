@@ -16,6 +16,9 @@
                         rm2.parentNode.removeChild(rm2);
                         var rm3 = document.getElementById('reject');
                         rm3.parentNode.removeChild(rm3);
+
+                        $('.suggest').remove();
+                        
                         
                     }else if(x == "For Delivery"){
                         document.getElementById('showstatus').style.color="green";
@@ -27,6 +30,7 @@
                         rm3.parentNode.removeChild(rm3);
                         var rm4 = document.getElementById('delivered');
                         rm4.parentNode.removeChild(rm4);
+                        $('.suggest').remove();
                     }else if(x == "Rejected"){
                         document.getElementById('showstatus').style.color="red";
                         var rm1 = document.getElementById('update');
@@ -39,6 +43,8 @@
                         rm4.parentNode.removeChild(rm4);
                         var removeButton5 = document.getElementById('generateSlip');
                         removeButton5.parentNode.removeChild(removeButton5);
+
+                         $("#suggest").attr("disabled", true);
                     }else if(x == "Completed"){
                         document.getElementById('showstatus').style.color="green";
                         var rm1 = document.getElementById('update');
@@ -49,6 +55,7 @@
                         rm3.parentNode.removeChild(rm3);
                         var rm4 = document.getElementById('delivered');
                         rm4.parentNode.removeChild(rm4);
+                        $('.suggest').remove();
                     }
                     
                     if(document.getElementById('utype').value == "Branch Manager"){
@@ -166,7 +173,9 @@
                                     <tr class="tr-addproducts">
                                         <th>Item</th>
                                         <th>Quantity</th>
-                                        <th>Suggestion <span style="color: red;">(!)</span></th>
+                                        {{#if_eq utype "Admin"}}
+                                        <th class="suggest">Suggestion <span style="color: red;">(!)</span></th>
+                                        {{/if_eq}}
                                         <th>Rate</th>
                                         <th>Amount</th>
                                     </tr>
@@ -175,8 +184,8 @@
                                     {{#each branchorders}}
                                         <tr class="clickable" >
                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
-                                            <td>{{quantity}}</td>
-                                            <td><form action="/updateBranchOrder" method="POST">
+                                            <td>{{quantity}}</td>{{#if_eq ../utype "Admin"}}
+                                            <td class="suggest"><form action="/updateBranchOrder" method="POST">
                                                     <input name="product" type="hidden" class="form-control w-60" width="50" placeholder="{{product}}" value="{{product}}"readonly> 
                                                     <input required type="hidden" name="quantity" placeholder="{{quantity}}" value="{{systemsuggest}}" class="form-control w-60" width="2">
                                                     <input name="rate" type="hidden" class="form-control w-60" width="2" placeholder="{{rate}}" value="{{rate}}" readonly>
@@ -184,14 +193,17 @@
                                                     <input type="hidden" name="productionorderid" value="{{../productionorder._id}}">
                                                     <input type="hidden" name="branchorderid" value="{{this._id}}">
                                                     <input type="hidden" name="prevTotal" value="{{../productionorder.total}}">
-                                                    <button class="btn btn-primary btn-sm" type="submit">{{systemsuggest}}</button>
+                                                    
+                                                    <button id="suggest" class="btn btn-primary btn-sm" type="submit">{{systemsuggest}}</button>
+                                                    
                                                 </form>
-                                            </td>
+                                            </td>{{/if_eq}}
                                             <td>{{rate}}</td>
                                             <td>{{amount}}</td>
                                         </tr>
                                     {{/each}}
                                 </tbody>
+                                
                                 <tfoot>
                                     
                                 </tfoot>

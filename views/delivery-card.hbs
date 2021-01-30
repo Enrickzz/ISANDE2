@@ -36,11 +36,15 @@
                                     <input type="hidden" name="from" value="{{pulloutOrder.FrombranchID}}">
                                     <input type="hidden" name="requestID" value="{{request._id}}">
                                     <input type="hidden" name="pulloutID" value="{{pulloutOrder._id}}"> 
+                                    {{#if_eq utype "Branch Manager"}}
                                     {{#if branchorders}}
+                                    
+                                    <button class="btn btn-primary btn-sm">Edit quantity</button>
                                     <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/receiveproductionorders" formmethod="POST">Received</button>
                                     {{else}}
                                     <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/pulloutupdate" formmethod="POST">Received</button>
                                     {{/if}}
+                                    {{/if_eq}}
                                     </form>
                                 </div>
                             </div>

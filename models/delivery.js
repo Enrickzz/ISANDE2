@@ -6,6 +6,7 @@ const deliverySchema = new mongoose.Schema({
     total: { type: String, required:true},
     status: { type: String, required:true},
     type: { type: String, required:false},
+    branchTO: { type: String, required:false},
   }
 );
 

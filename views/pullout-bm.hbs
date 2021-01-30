@@ -153,7 +153,7 @@
                                 <input type="hidden" name="from" value="{{../branch}}">
                                 <input type="hidden" name="product" value="{{product}}">
                                 <input type="hidden" name="cost" value="{{srp}}">
-                                <input type="hidden" name="currInv" value="{{runningInventory}}">
+                                <input type="hidden" name="currInv" value="{{restockedInventory}}">
                                 <input type="hidden" name="type" value="addstock">
                                 <input type="hidden" name="date" value="{{inventorydate}}">
                                 <input type="hidden" name="invID" value="{{this._id}}">
@@ -205,11 +205,11 @@
                          <form action="/addtoreqlist" method="POST">
                             <tr class="clickable" >
                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{product}} </td>
-                                <td><input required type="number" name="quantity" id="" class="form-control w-60" width="2" max="{{runningInventory}}"></td>
+                                <td><input required type="number" name="quantity" id="" class="form-control w-60" width="2" max="{{restockedInventory}}"></td>
                             <input type="hidden" name="from" value="{{../branch}}">
                             <input type="hidden" name="product" value="{{product}}">
                             <input type="hidden" name="cost" value="{{srp}}">
-                            <input type="hidden" name="currInv" value="{{runningInventory}}">
+                            <input type="hidden" name="currInv" value="{{restockedInventory}}">
                             <input type="hidden" name="type" value="pull-out">
                             <input type="hidden" name="date" value="{{inventorydate}}">
                             <input type="hidden" name="invID" value="{{this._id}}">

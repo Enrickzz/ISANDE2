@@ -140,7 +140,8 @@ exports.statuschangeAcc = (req,res) =>{
         productionID: id,
         total: total,
         status: "In production",
-        type: "Production Order"
+        type: "Production Order",
+        branchTO: branch
       }
       deliveryModel.create(delivery, (err2,resultDE)=>{
         if (err2) {
