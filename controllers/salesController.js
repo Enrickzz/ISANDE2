@@ -79,10 +79,12 @@ exports.addsale = (req,res) =>{
     var cartqua = req.body.cartqua;
     var totsale = req.body.totsale;
 
-    
-    for(var i =0 ; i < invID.length ; i++){
+    console.log("THIS IS LENGTH: " + invID.length);
+    console.log("IS ARRAY?: " + Array.isArray(invID))
+    if(Array.isArray(invID)){
+      for(var i =0 ; i < invID.length ; i++){
         var qua = Number(-cartqua[i]);
-        console.log(qua);
+        //console.log(qua);
         var saletot = Number(totsale[i]);
         var dayEnd = Number(cartqua[i]);
         var update = {
@@ -99,7 +101,28 @@ exports.addsale = (req,res) =>{
                 
             }
         })
+      }
+    }else{
+      var qua = Number(-cartqua);
+        //console.log(qua);
+        var saletot = Number(totsale);
+        var dayEnd = Number(cartqua);
+        var update = {
+            $inc: {
+                restockedInventory: Number(qua),
+                totsales: Number(saletot),
+                endDayCount: Number(qua)
+            }
+        }
+        inventorymodel.update({_id: invID}, update, (error, result)=>{
+            if(error){
+                throw error;
+            }else{
+                
+            }
+        })
     }
+    
     var updateID = {
         $set:{
             status: "Completed",
