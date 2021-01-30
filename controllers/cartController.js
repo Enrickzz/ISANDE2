@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 
 exports.fetchQuery = (req,res) => {
     var query = req;
-    cartmodel.fetchList({branch: query}, (err, result) => {
+    cartmodel.fetchList(query, (err, result) => {
       if(err){
         throw err;
       }
@@ -33,7 +33,7 @@ exports.addcart = (req, res) =>{
     var qua = req.body.quantity;
     var rate = req.body.rate;
     var invID = req.body.invID;
-    console.log(req.body);
+    //console.log(req.body);
     //var amount = parseFloat(qua) * parseFloat(rate);
     var branch = req.body.branch
     for(var i =0 ; i < product.length ; i++){
@@ -54,6 +54,7 @@ exports.addcart = (req, res) =>{
           if (err){
             throw err;
           }else{
+            console.log(result);
           }
         })
       }
@@ -63,7 +64,7 @@ exports.addcart = (req, res) =>{
   
   exports.delete = (req, res) => {
     var id = req.body.cartID;
-    console.log("DELETE NA")
+    //console.log("DELETE NA")
     cartmodel.remove(id, (err, result) => {
       if (err) {
         throw err; 
@@ -75,7 +76,7 @@ exports.addcart = (req, res) =>{
   };
   exports.deleteall = (req, res) => {
     //var id = req.body.cartID;
-    cartmodel.removeall({}, (err, result) => {
+    cartmodel.removeall({status: "Pending"}, (err, result) => {
       if (err) {
         throw err; 
       } 

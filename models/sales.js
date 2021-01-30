@@ -7,12 +7,19 @@ const sales = new mongoose.Schema({
     total: { type: String, required:true},
     date: { type: String, required:true},
     staffincharge: { type: String, required:true},
+    paid: { type: String, required:true},
+    change: { type: String, required:true},
     branch:{type: String, required:true}
   }
 );
 
 const salesmodel = mongoose.model('sales', sales, 'sale');
 
+exports.getByID = function(query, next) {
+  salesmodel.findById(query, function(err, post) {
+    next(err, post);
+  });
+};
 
 exports.fetchList = function(query, next) {
     salesmodel.find(query, function(err, orders) {

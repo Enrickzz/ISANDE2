@@ -1,0 +1,209 @@
+   <script>
+       function statuscheck(){
+            var x = document.getElementById('showstatus').innerText;
+            console.log(x);
+            if (x == "Delivered"){
+                document.getElementById('showstatus').style.color="green";
+                var rm1 = document.getElementById('received');
+                rm1.parentNode.removeChild(rm1);
+            }else if (x == "In Transit"){
+                document.getElementById('showstatus').style.color="orange";
+            }else if (x == "In production"){
+                document.getElementById('showstatus').style.color="orange";
+                var rm1 = document.getElementById('received');
+                rm1.parentNode.removeChild(rm1);
+            }
+       }
+       window.onload = statuscheck;
+   </script>
+   <div class="container-fluid">
+                <h3 class="text-dark mb-4">  <a href="javascript:history.back()" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;{{title}}</h3>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="text-dark mb-1">POS Transaction Report</h3>
+                            </div>
+                            <div class="col">
+                                <div class="buttonlist" style="float: right;">
+                                    <form>
+                                    <!--add inventory-->
+                                    <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
+                                    <input type="hidden" name="deliveryID" value="{{delivery._id}}">
+                                    <!--add pullouts inventory-->
+                                    <input type="hidden" name="to" value="{{pulloutOrder.TobranchID}}">
+                                    <input type="hidden" name="from" value="{{pulloutOrder.FrombranchID}}">
+                                    <input type="hidden" name="requestID" value="{{request._id}}">
+                                    <input type="hidden" name="pulloutID" value="{{pulloutOrder._id}}"> 
+                                    <button id="received" class="btn btn-primary btn-sm" type="button" formaction="/" formmethod="">Print Receipt</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="card">
+                    <div class="card-body" id="reguser">       
+                        <div class="row"> 
+                            <div class="col" >
+                                <h2 class="regheader">Details</h2>
+                                <p><b>Branch: </b> {{sale.branch}} </p>      
+                                
+                                <br><br>
+
+                                 <div class="row"> <!--ROW2-->
+                                      <div class="col">
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label for="">Staff in Charge</label>
+                                                <p>{{sale.staffincharge}}</p>
+                                            </div>
+                                        </form>
+                                      </div>
+                                </div>
+        
+                            </div>
+                            <div class="col" >
+                                <h2 class="regheader">POS</h2>
+                                
+                                <p><b>Status: </b> <span id="showstatus" style="font-weight: 800;">ID: {{sale._id}}</span></p>
+                                <br><br>
+                                <div class="row"> <!--ROW1-->
+
+                                    <div class="col">
+                                        <form>
+                                            
+                                              <div class="form-group">
+                                                
+                                                <label>Transaction Date</label>
+                                                <p>{{sale.date}}</p>
+                                                
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                 <div class="row"> <!--ROW2-->
+                                      <div class="col">
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label for=""></label>
+                                            
+                                            </div>
+                                        </form>
+                                      </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive table mt-2" id="regproductlist">
+                        <div class="col">
+                            <table class="table my-0" id="dataTable">
+                                <thead>
+                                    <tr class="tr-addproducts">
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each cart}}
+                                        <tr class="clickable" >
+                                            <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
+                                            <td> {{quantity}}</td>
+                                            <td>{{rate}}</td>
+                                            <td>{{total}}</td>
+                                        </tr>
+                                    {{/each}}
+                                        
+                                </tbody>
+                                <tfoot>
+                                    
+                                </tfoot>
+                            </table>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px; margin-top: 10px">
+                                    {{!-- RECEIPT --}}
+                                    <div class="row" style="float:right; ">
+                                    <div class="col">
+                                    <div class="jumbotron jumbotron-fluid" id="receipt" style="max-width: 442.7px;">
+                                    <div class="container">
+                                        <div class="row">
+                                        <div class="col">
+                                            <p>Subtotal</p>
+                                            <p>Tax</p>
+                                            <p>Discount</p>
+                                            <p><b>Total</b> </p>
+                                            <p style="width: 100px;" >Amount Paid </p>
+                                            <p><b>Change</b> </p>
+                                        </div>
+                                            {{!-- Change to handlebars later --}}
+                                            <div class="col" style="padding-left: 11.3em;">
+                                            
+                                                <p id="subT">{{sale.subtotal}}</p> 
+                                                <p id="taxT">{{sale.tax}}</p>
+                                                <p id="discountT">{{sale.discount}}</p>
+                                                <p id="totalT"><b>{{sale.total}}</b> </p>
+                                                <!--<input id="paidT" type="number" class="form-control" style="height: 25px; width: 75px; margin-bottom:10px;" value="0" onchange="receipt()"> </input>-->
+                                                <p id="changeT"><b>{{sale.paid}}</b> </p>
+                                                <p id="changeT"><b>{{sale.change}}</b> </p>
+
+                                                <input type="hidden" name="sub" id="subIn">
+                                                <input type="hidden" name="tax" id="taxIn">
+                                                <input type="hidden" name="discount" id="discIn">
+                                                <input type="hidden" name="total" id="totalIn">
+                                                <input type="hidden" name="change" id="changeIn">
+                                            <script>
+                                                function receipt(){
+                                                    
+                                                    document.getElementById("taxT").innerHTML = parseFloat(document.getElementById("taxT").innerHTML).toFixed(2);
+                                                    document.getElementById("subT").innerHTML = parseFloat(document.getElementById("subT").innerHTML).toFixed(2);
+                                                    document.getElementById("totalT").innerHTML = subtotal +".00";
+                                                    document.getElementById("changeT").innerHTML = parseFloat(document.getElementById("changeT").innerHTML).toFixed(2);
+                                                }
+                                                window.onload = receipt();
+                                            </script>
+                                        </div>
+                                        </div>
+                        
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2rem; justify-content: center; margin-bottom:1rem;">
+                                <!--<div class="total-amt" id="">
+                                    <div class="row">
+                                        <div class="col" style="text-align: center; min-width:180px;">
+                                            <span>TOTAL AMOUNT:</span>
+                                        </div>
+                                        <div class="col" style="text-align: right;">
+                                            <span>Php {{purchaseorder.total}}</span>
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="margin-top: 2rem;">
+                        <div class="col">
+                            <div class="text-md-center dataTables_filter" id="dataTable_filter">
+                                <label>
+                                    <!--<button class="btn btn-secondary btn-sm" type="submit">Continue Later</button>
+                                    <button class="btn btn-primary btn-sm" type="submit">Order</button>-->
+                                </label>
+                            </div>
+                        </div>
+                    </div> 
+                    </div>
+                </div>
+            </div>
+            <br><br>

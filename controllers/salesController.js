@@ -4,6 +4,20 @@ const cartmodel = require('../models/cart');
 
 const { validationResult } = require('express-validator');
 
+
+exports.getID = (req, res) => {
+  var id = req.params.id;
+
+  salesmodel.getByID(id, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      var Object = result.toObject();
+      res(Object);
+    }
+  });
+};
+
 exports.fetchQuery = (req,res) => {
     var query = req;
     salesmodel.fetchList({branch: query}, (err, result) => {
@@ -34,7 +48,7 @@ exports.addsale = (req,res) =>{
     var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = todate.getFullYear();
     todate = yyyy + '-' + mm + '-' + dd;
-    console.log(req.body);
+    //console.log(req.body);
 
     var sub1 = req.body.sub;
     var tax1 = req.body.tax;
@@ -42,6 +56,8 @@ exports.addsale = (req,res) =>{
     var total1 = req.body.total;
     var staffL = req.session.last_name;
     var staffF = req.session.first_name;
+    var paid1 = req.body.paid;
+    var change1= req.body.change;
     var saved ="";
 
     var addthis = {
@@ -51,40 +67,42 @@ exports.addsale = (req,res) =>{
         total: total1,
         staffincharge: staffF +" "+ staffL,
         date:todate,
-        branch: req.session.branch
+        branch: req.session.branch,
+        change: change1,
+        paid: paid1
     }
-
+    const savedsaleid = [];
     salesmodel.saveSale(addthis, function(error, result){
         if(error){
             throw error;
         }else{
-            var updateID = {
-                $set:{
-                    saleID: result._id,
-                }
+          //console.log("SAVED SALE\n")
+          //console.log(result);
+          savedsaleid.push(result._id);
+          //console.log(savedsaleid[0]);
+          var updateID = {
+            $set:{
+                status: "Completed",
+                saleID: savedsaleid[0],
             }
-            cartmodel.update({branch: req.session.branch}, updateID, (err, result) => {
-                if (err) {
-                  throw err; 
-                } 
-                else {
-            }
-            }); 
+          }
+          cartmodel.update({branch: req.session.branch, status: "Pending"}, updateID, (err, result) => {
+              if (err) {
+                throw err; 
+              } 
+              else {
+                //console.log(result)
+                res.redirect('/salesrecords');
+              }
+          }); 
         }
     })
-    console.log(req.body.totsale);
-    console.log(req.body.invID);
-    console.log(req.body.cartqua);
     var invID= req.body.invID;
     var cartqua = req.body.cartqua;
     var totsale = req.body.totsale;
-
-    console.log("THIS IS LENGTH: " + invID.length);
-    console.log("IS ARRAY?: " + Array.isArray(invID))
     if(Array.isArray(invID)){
       for(var i =0 ; i < invID.length ; i++){
         var qua = Number(-cartqua[i]);
-        //console.log(qua);
         var saletot = Number(totsale[i]);
         var dayEnd = Number(cartqua[i]);
         var update = {
@@ -123,19 +141,7 @@ exports.addsale = (req,res) =>{
         })
     }
     
-    var updateID = {
-        $set:{
-            status: "Completed",
-        }
-    }
-    cartmodel.update({branch: req.session.branch}, updateID, (err, result) => {
-        if (err) {
-          throw err; 
-        } 
-        else {
-          res.redirect('/salesrecords');
-        }
-      }); 
+    
     
 
 }

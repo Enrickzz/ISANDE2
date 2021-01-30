@@ -554,16 +554,16 @@ router.get('/salesrecords', isPrivate, function(req, res) {
   var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = todate.getFullYear();
   todate = yyyy + '-' + mm + '-' + dd;
-  var branch="";
+  var thisbranch="";
   if(req.session.usertype === "Branch Manager"){
-    branch = req.session.branch;
+    thisbranch = req.session.branch;
   }
   productController.getAllproducts(req, (allproducts)=>{
-    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
-      inventoryController.fetchQuery({branch_id: branch, inventorydate: todate}, (inventory) =>{
+    suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: thisbranch}, for:req.session.usertype}, (allsuggestions)=>{
+      inventoryController.fetchQuery({branch_id: thisbranch, inventorydate: todate}, (inventory) =>{
         productgroupsController.getAllpg(req, (allproductgroups) =>{
-          cartController.fetchQuery( branch, (carts)=>{
-            salesController.fetchQuery(branch, (sales)=>{
+          cartController.fetchQuery( {branch: thisbranch}, (carts)=>{
+            salesController.fetchQuery(thisbranch, (sales)=>{
               res.render('sales', {
                 layout: 'main',
                 title: 'Sales Records',
@@ -587,6 +587,26 @@ router.get('/salesrecords', isPrivate, function(req, res) {
       })
     })  
   }) 
+});
+
+router.get('/POSsales/view/:id', isPrivate, function (req, res) {
+  salesController.getID(req, (saleobj)=>{
+    cartController.fetchQuery({saleID: saleobj._id}, (saleCart)=>{
+            var branch="";
+            if(req.session.usertype === "Branch Manager"){
+              branch = req.session.branch;
+            }
+            res.render('POSsales-card', {
+              layout: 'main',
+              title: 'POS Transactions',
+              fname:  req.session.first_name,
+              lname:  req.session.last_name,
+              utype: req.session.usertype,
+              sale: saleobj,
+              cart: saleCart
+            });
+    })
+  })
 });
 
 router.get('/supplier', isPrivate, function(req, res) {
