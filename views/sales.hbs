@@ -629,12 +629,13 @@
                                             daysales = daysales + parseFloat(invsales[i].value);
                                             dayreturns = dayreturns + parseFloat(returns[i].value);
                                             daynet = daynet + parseFloat(netsalesOut);
-                                            dayretrate = dayretrate + returnrateOut;
+                                            dayretrate = dayretrate + returns[i].value;
 
                                             document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                        
                                     }
+                                    dayretrate = (dayretrate/daynet)*100
                                     document.getElementById("daysales").innerHTML = daysales.toFixed(2);
                                     document.getElementById("dayreturns").innerHTML = dayreturns;
                                     document.getElementById("daynet").innerHTML = daynet.toFixed(2);
@@ -681,7 +682,7 @@
                                             daysales = daysales + parseFloat(invsales[i].value);
                                             dayreturns = dayreturns + parseFloat(returns[i].value);
                                             daynet = daynet + parseFloat(netsalesOut);
-                                            dayretrate = dayretrate + returnrateOut;
+                                            dayretrate = dayretrate + parseFloat(returns[i].value);
                                             document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                         
@@ -689,10 +690,11 @@
                                         //finalpercent[i].innerHTML = percentotOut.toFixed(2) +"%";
                                         //finalreturnrate[i].innerHTML = returnrateOut.toFixed(2) +"%";
                                     }
+                                    dayretrate = (dayretrate/daynet)*100
                                     document.getElementById("daysales").innerHTML = daysales.toFixed(2);
                                     document.getElementById("dayreturns").innerHTML = dayreturns;
                                     document.getElementById("daynet").innerHTML = daynet.toFixed(2);
-                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
+                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
                                 }
                             </script>
                             <tfoot>
