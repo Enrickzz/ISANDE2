@@ -564,21 +564,24 @@ router.get('/salesrecords', isPrivate, function(req, res) {
         productgroupsController.getAllpg(req, (allproductgroups) =>{
           cartController.fetchQuery( {branch: thisbranch}, (carts)=>{
             salesController.fetchQuery(thisbranch, (sales)=>{
-              res.render('sales', {
-                layout: 'main',
-                title: 'Sales Records',
-                fname:  req.session.first_name,
-                lname:  req.session.last_name,
-                utype: req.session.usertype,
-                whichbranch: req.session.branch,
-                plist: allproducts,
-                realtoday: todate,
-                suggestions: allsuggestions,
-                num_suggestions: allsuggestions.length,
-                thisInventory: inventory,
-                pglist: allproductgroups,
-                cart: carts,
-                salesrecords: sales
+              inventoryController.fetchQuery({branch_id: thisbranch}, (invforsalesrecords)=>{
+                res.render('sales', {
+                  layout: 'main',
+                  title: 'Sales Records',
+                  fname:  req.session.first_name,
+                  lname:  req.session.last_name,
+                  utype: req.session.usertype,
+                  whichbranch: req.session.branch,
+                  plist: allproducts,
+                  realtoday: todate,
+                  suggestions: allsuggestions,
+                  num_suggestions: allsuggestions.length,
+                  thisInventory: inventory,
+                  pglist: allproductgroups,
+                  cart: carts,
+                  salesrecords: sales,
+                  invsales: invforsalesrecords
+                })
               })
             })
           })
