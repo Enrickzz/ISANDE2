@@ -15,8 +15,8 @@
                 }
             }else if(status == "Unsent"){
                 document.getElementById('showstatus').style.color="orange";
-                var rm = document.getElementById('send');
-                rm.parentNode.removeChild(rm);
+                //var rm = document.getElementById('send');
+                //rm.parentNode.removeChild(rm);
             }
            
         }
@@ -154,7 +154,7 @@
                                         <input type="hidden" name="currstat" value="{{return.type}}">
                                         <input type="hidden" name="branch" value="{{return.branchID}}">
                                         <input type="hidden" name="date" value="{{return.returndate}}">
-                                        <button id="send" class="btn btn-primary btn-sm" type="submit">Submit</button>
+                                        <button id="send" class="btn btn-primary btn-sm" type="submit">Submit</button> 
                                     </form>
                                     
                                 </div>

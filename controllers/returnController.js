@@ -91,11 +91,11 @@ exports.getID = (req, res) => {
           var obj = doc.toObject();
           var update = {
             $inc: {
-              returns: obj.quantity,
+              returns: obj.amount,
               totsales: -obj.amount
             }
           }
-          inventoryModel.updateFind({branch_id: obj.branchID, product: obj.product, inventorydate: todate }, update, function(error, success){
+          inventoryModel.updateFind({branch_id: req.session.branch, product: obj.product, inventorydate: todate }, update, function(error, success){
             if(error){
               console.log(error);
               throw error;
