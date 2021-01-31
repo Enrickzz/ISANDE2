@@ -69,52 +69,27 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div style="text-align:center" class="col">
-                                    <div class="form-group">
-                                        {{!-- BRANCH --}}
-                                        <label for="branch">Branch</label>
-                                        <form action="/filterbranch" method="POST">
-                                        {{#if_eq usertype "Admin"}}
-                                            <select id="branch" name="branch" class="form-control" onchange="this.form.submit()">
-                                                 <option value="Branch A">Branch A</option>
-                                                <option value="Branch B">Branch B</option>
-                                                <option value="Branch C">Branch C</option>
-                                            </select><br>
-                                        {{/if_eq}} 
-                                        {{#if_eq usertype "Branch Manager"}}
-                                            <select id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
-                                                 <option value="Branch A">Branch A</option>
-                                                <option value="Branch B">Branch B</option>
-                                                <option value="Branch C">Branch C</option>
-                                            </select><br>
-                                        {{/if_eq}} 
-                                               
-                                        </form>
-                                    </div>
-                            </div>
-
-                            <div style="text-align:center" class="col">
-                                {{#if_eq usertype "Admin"}}
-                               <form>
-                                    <h4 >{{today}}</h4>
-                                    <input type="hidden" name="currdate" id="currdate" value="{{today}}">
-                                    <input type="hidden" name="realdate" id="realdate" value="{{realtoday}}">
-                                    <button id="prev" class="btn btn-primary btn-sm" formaction="/prevday" formmethod="POST" type="submit"><i class="fas fa-arrow-left"></i> Previous</button>
-                                    <button id="next" class="btn btn-primary btn-sm" formaction="/nextday" formmethod="POST" type="submit">Next Day <i class="fas fa-arrow-right"></i></button>
-                                    <br><br>
-                                    <button id="today" class="btn btn-primary btn-sm" formaction="/today" formmethod="POST" type="submit"><i class=""></i> Back to Today ({{realtoday}})</button>
-                                </form>
-                                {{/if_eq}}
-                                {{#if_eq usertype "Branch Manager"}}
-                                <h4 >{{today}}</h4>
-                                {{/if_eq}}
-                            </div>
-
-                            <div style="text-align:center" class="col">
-                                <div class="dataTables_filter" id="dataTable_filter">
-                                        {{!-- Date 
-                                        <label for="a">Date</label>
-                                            <input type="date" name="thisdate" id="thisdate" class="form-control">--}}
+                            <div style="" class="col">
+                                <div style="margin-left:4rem;" class="dataTables_filter" id="dataTable_filter">
+                                    {{#if_eq utype "Admin"}}
+                                    <label for="branchselect" style="font-weight: 700;"> Branch: 
+                                    <select id="branchselect" name="branchselect" class="form-control" onchange="filterinventory()">
+                                        <option value="Branch A">Branch A</option>
+                                        <option value="Branch B">Branch B</option>
+                                        <option value="Branch C">Branch C</option>
+                                    </select></label><br>
+                                    <label style="font-weight: 700;">Date: <input type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="filterinventory()" onchange="filterinventory()" placeholder="All"></label>
+                                    {{/if_eq}}
+                                    
+                                    {{#if_eq utype "Branch Manager"}}
+                                     <h4 >{{today}}</h4>
+                                        <select style="width: 10rem;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
+                                            <option value="Branch A">Branch A</option>
+                                            <option value="Branch B">Branch B</option>
+                                            <option value="Branch C">Branch C</option>
+                                        </select><br>
+                                       
+                                    {{/if_eq}}
                                 </div>
                             </div>
                         </div>
@@ -148,35 +123,66 @@
                                         
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {{#each inventory}}
-                                    <form action="/midendCountUpdate" method="POST">
-                                        <input type="hidden" name="srp" value="{{srp}}">
-                                        <tr class="clickable" style="text-align: center;">
+                                <tbody id="inventorytable">
+                                    {{#if_eq utype "Admin"}}
+                                        {{#each reportinv}}
+                                            <input type="hidden" class="invdate" value="{{this.inventorydate}}">
+                                            <input type="hidden" class="branchid" value="{{this.branch_id}}">
+                                            <input type="hidden" class="product1" value="{{this.product}}">
+                                            <input type="hidden" class="startInv" value="{{this.startInv}}">
+                                            <input type="hidden" class="restockQuantity" value="{{this.restockQuantity}}">
+                                            <input type="hidden" class="additionalRestock" value="{{this.additionalRestock}}">
+                                            <input type="hidden" class="pulloutStock" value="{{this.pulloutStock}}">
+                                            <input type="hidden" class="returns" value="{{this.returns}}">
+                                            <input type="hidden" class="restockedInventory" value="{{this.restockedInventory}}">
+                                            <input type="hidden" class="totsales" value="{{this.totsales}}">
+                                        {{/each}}
+                                    {{/if_eq}}
+                                    {{#if_eq utype "Branch Manager"}}
+                                        {{#each inventory}}
+                                        <tr>
                                             <td>image</td>
-                                                <td>{{product}}</td>
-                                                <td>{{startInv}}</td>
-                                                <td>{{restockQuantity}}</td>
-                                                <td>{{additionalRestock}}</td>
-                                                <td>{{pulloutStock}}</td>
-                                                <td>{{returns}}</td>
-                                                <td>{{restockedInventory}}</td>
-                                                <td>{{totsales}}</td>
-                                            <input type="hidden" name="restocked" value="{{restockedInventory}}">
-                                            <input type="hidden" class="middaybasis" value="{{midDaySales}}" >
-                                                
-                                                
-                                            <input type="hidden" name="changedStock" value="{{runningInventory}}">
-                                            <input type="hidden" name="middaysale" value="{{midDaySales}}">
-                                            <input type="hidden" class="enddaybasis2" value="{{midDaySales}}">
-                                            <input type="hidden" class="enddaybasis" value="{{totsales}}">
-                                            <input type="hidden" name="id" value="{{this._id}}">
-                                            <input type="hidden" name="thisdate" value="{{inventorydate}}">
-                                            <input type="hidden" name="branch" value="{{branch_id}}">
-                                            <input type="hidden" name="product" value="{{product}}">
+                                            <td>{{product}}</td>
+                                            <td>{{startInv}}</td>
+                                            <td>{{restockQuantity}}</td>
+                                            <td>{{additionalRestock}}</td>
+                                            <td>{{pulloutStock}}</td>
+                                             <td>{{returns}}</td>
+                                            <td>{{restockedInventory}}</td>
+                                            <td>{{totsales}}</td>
                                         </tr>
-                                    </form>
-                                    {{/each}}
+                                        {{/each}}
+                                    {{/if_eq}}
+                                    <script>
+                                        function filterinventory(){
+                                            $(".remove").remove();
+                                            //document.getElementById("inventorytable").innerHTML = "";
+                                            var datefilter = document.getElementById("datepicker");
+                                            var branchfilter = document.getElementById("branchselect");
+                                            //alert(datefilter.value + branchfilter.value);
+                                            //var datefilter = $("#datefilter").val();
+                                            //var branchfilter = $("#branchfilter").val();
+                                            //var datefilter = "2021-01-30";
+                                            //var branchfilter = "Branch A";
+                                            var invdate = document.getElementsByClassName("invdate");
+                                            var branchid = document.getElementsByClassName("branchid");
+                                            var product = document.getElementsByClassName("product1");
+                                            var startInv = document.getElementsByClassName("startInv");
+                                            var restockQuantity = document.getElementsByClassName("restockQuantity");
+                                            var additionalRestock = document.getElementsByClassName("additionalRestock");
+                                            var pulloutStock = document.getElementsByClassName("pulloutStock");
+                                            var returns = document.getElementsByClassName("returns");
+                                            var restockedInventory = document.getElementsByClassName("restockedInventory");
+                                            var totsales = document.getElementsByClassName("totsales");
+                        
+                                            for(var i = 0; i < product.length; i++){
+                                                if(branchfilter.value == branchid[i].value && datefilter.value == invdate[i].value){
+                                                    //alert(" "+branchfilter+ "==" + branchid[i].value + "\n" + datefilter +"=="+invdate[i].value);
+                                                    document.getElementById("inventorytable").innerHTML += "<tr class='remove'><td>image</td><td>"+product[i].value+"</td><td>"+startInv[i].value+"</td><td>"+restockQuantity[i].value+"</td><td>"+additionalRestock[i].value+"</td><td>"+pulloutStock[i].value+"</td><td>"+returns[i].value+"</td><td>"+restockedInventory[i].value+"</td><td>"+totsales[i].value+"</td></tr>"
+                                                }
+                                            }
+                                        }
+                                    </script>
                                 </tbody>
                             </table>
                         </div>

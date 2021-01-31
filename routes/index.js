@@ -83,23 +83,27 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
     
     inventoryController.fetchQuery({inventorydate : datequery , branch_id:branchquery}, (allInventory) =>{
       suggestionsController.fetchQuery({date: todate, status:"Unresolved", tobranch:{$regex: branch}, for: utype}, (suggestionlist)=>{
+        inventoryController.fetchQuery({}, (forreportInv)=>{
+          res.render('inventory-admin', {
+            layout: 'main',
+            title: 'Inventory',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            inventory: allInventory,
+            today: datequery,
+            realtoday: todate,
+            whichbranch : branchquery,
+            usertype: req.session.usertype,
+            suggestions:suggestionlist,
+            num_suggestions: suggestionlist.length,
+            reportinv : forreportInv
+          })
+        })
         //if(Object.entries(suggestionlist).length ===0 && Object.entries(allInventory).length ===0 && req.session.usertype== "Branch Manager"){
         //  res.redirect('/processinventoryforBM');
        // }
-        res.render('inventory-admin', {
-          layout: 'main',
-          title: 'Inventory',
-          fname:  req.session.first_name,
-          lname:  req.session.last_name,
-          utype: req.session.usertype,
-          inventory: allInventory,
-          today: datequery,
-          realtoday: todate,
-          whichbranch : branchquery,
-          usertype: req.session.usertype,
-          suggestions:suggestionlist,
-          num_suggestions: suggestionlist.length
-        })
+        
       })
     })
   })
