@@ -100,19 +100,13 @@ exports.create= (req,res)=>{
             total: total,
             status: "In Transit",
             type: "Pullout Order",
-            branchTO: req.session.branch
+            branchTO: picked
           }
           deliveryModel.create(delivery, (err2,result)=>{
             if (err2) {
               throw err2;
             }else{
-              requestModel.remove(reqpulloutid, (err, result)=>{
-                if(err){
-      
-                }else{
-                  res.redirect('/delivery/view/'+result._id);
-                }
-              })
+              res.redirect('/delivery/view/'+result._id);
             }
           })
         }
@@ -141,32 +135,20 @@ exports.create= (req,res)=>{
               total: total,
               status: "In Transit",
               type: "Pullout Order",
-              branchTO: req.session.branch
+              branchTO: picked
             }
             deliveryModel.create(delivery, (err2,result)=>{
               if (err2) {
                 throw err2;
               }else{
-                
+                res.redirect('/delivery/view/'+result._id);
               }
             })
           }
         })
-        requestModel.remove(frombranch._id, (err, result)=>{
-          if(err){
-
-          }else{
-
-          }
-        })
+        
       })
-      requestModel.remove(tobranch._id, (err, result)=>{
-        if(err){
-
-        }else{
-          res.redirect('/delivery/view/'+result._id);
-        }
-      })
+      
     })
   }
 }

@@ -539,7 +539,13 @@
                            {{!-- FILTER TABLE --}}
                                <div style="" class="col">
                                 <div class="dataTables_filter" id="dataTable_filter">Date <label> 
+                                    {{#if_eq utype "Admin"}}
+                                    <input type="date" id="datepicker" class="form-control form-control-sm today" value="{{realtoday}}" onload="loadtransAdmin()" onchange="loadtransAdmin()" placeholder="All"></label>
+                                    {{/if_eq}}
+                                    {{#if_eq utype "Branch Manager"}}
                                     <input type="date" id="datepicker" class="form-control form-control-sm today" value="{{realtoday}}" onload="loadtrans2()" onchange="loadtrans2()" placeholder="All"></label>
+
+                                    {{/if_eq}}
                                 </div>
                                 </div>
                                
@@ -581,12 +587,25 @@
                             </thead>
                             <tbody id="addRecords">
                                 {{!-- {{>productTableDelete}} --}}
+                                {{#if_eq utype "Branch Manager"}}
                                 {{#each invsales}}
                                     <input type="hidden" class="inventorydate" value="{{this.inventorydate}}" name="" id=""> 
                                     <input type="hidden" name="plist" class="plist" value="{{this.product}}">
                                     <input type="hidden" class="thisreturns" value="{{this.returns}}" name="" id="">
                                     <input type="hidden" class="invsales" value="{{this.totsales}}" name="" id="">
                                 {{/each}}
+                                {{/if_eq}}
+                                {{#each plist}}
+                                <input type="hidden" name="plist2" class="plist2" value="{{this.name}}">
+                                {{/each}}
+                                {{#if_eq utype "Admin"}}
+                                {{#each invforAdmin}}
+                                    <input type="hidden" class="inventorydate" value="{{this.inventorydate}}" name="" id=""> 
+                                    <input type="hidden" name="plist" class="plist" value="{{this.product}}">
+                                    <input type="hidden" class="thisreturns" value="{{this.returns}}" name="" id="">
+                                    <input type="hidden" class="invsales" value="{{this.totsales}}" name="" id="">
+                                {{/each}}
+                                {{/if_eq}}
                                <input type="hidden" class="realtoday" value="{{realtoday}}" name="" id="">            
                               
                             </tbody>
@@ -640,7 +659,13 @@
                                     document.getElementById("daynet").innerHTML = daynet.toFixed(2);
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) +"%";
                                 }
-                                window.onload = loadtrans();
+                                var utype = document.getElementById('utype').value;
+                                if(utype == "Branch Manager"){
+                                    window.onload = loadtrans();
+                                }else{
+                                    window.onload = loadtransAdmin();
+                                }
+                                
                                 function loadtrans2(){
                                     $(".remove").remove();
                                     var finalnets = document.getElementsByClassName("net");
@@ -684,6 +709,73 @@
                                             dayretrate = dayretrate + parseFloat(returns[i].value);
                                             document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
+                                        
+                                        //finalnets[i].innerHTML = netsalesOut;
+                                        //finalpercent[i].innerHTML = percentotOut.toFixed(2) +"%";
+                                        //finalreturnrate[i].innerHTML = returnrateOut.toFixed(2) +"%";
+                                    }
+                                    dayretrate = (dayretrate/daynet)*100
+                                    document.getElementById("daysales").innerHTML = daysales.toFixed(2);
+                                    document.getElementById("dayreturns").innerHTML = dayreturns;
+                                    document.getElementById("daynet").innerHTML = daynet.toFixed(2);
+                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
+                                }
+
+                                function loadtransAdmin(){
+                                    $(".remove").remove();
+                                    var finalnets = document.getElementsByClassName("net");
+                                    var finalpercent = document.getElementsByClassName("percent");
+                                    var finalreturnrate = document.getElementsByClassName("returnrate");
+
+                                    var ref2 = document.getElementsByClassName("plist2");
+                                    var ref = document.getElementsByClassName("plist");
+                                    var invsales = document.getElementsByClassName("invsales");
+                                    var returns = document.getElementsByClassName("thisreturns");
+                                    var invdate = document.getElementsByClassName("inventorydate");
+                                    var realday = document.getElementsByClassName("realtoday");
+                                    var pickdate = document.getElementById("datepicker").value;
+                                    var totalAllProd = 0;
+                                    var totalAllreturns= 0;
+                                    //realday[0].value
+                                    for(var j = 0 ; j < invsales.length ; j++){
+                                        if(invdate[j].value == pickdate){
+                                            totalAllProd = totalAllProd + parseFloat(invsales[j].value);
+                                            totalAllreturns = totalAllProd + parseFloat(returns[j].value);
+                                        }
+                                    }
+                                    var daysales =0;
+                                    var dayreturns =0;
+                                    var daynet =0;
+                                     var dayretrate =0;
+                                    for(var i = 0; i < ref2.length ; i++){
+                                        var reference = ref2[i].value;
+                                       console.log(ref2[i].value);
+                                       var netsalesOut=0;
+                                       var percentotOut = 0;
+                                       var returnrateOut = 0;
+                                       var productref="";
+                                       var finalreturn= 0;
+                                       var finalsales = 0;
+                                       var prodinvtotal = 0;
+                                       for(var k = 0; k < invdate.length ; k++){
+                                           if(invdate[k].value == pickdate && reference == ref[k].value){
+                                             netsalesOut = netsalesOut + parseFloat(invsales[k].value - returns[k].value) ;
+                                             percentotOut= percentotOut + parseFloat(invsales[k].value);
+                                             returnrateOut = returnrateOut+ parseFloat(returns[k].value);
+                                             prodinvtotal = prodinvtotal + parseFloat(invsales[k].value);
+                                             productref = ref[k].value;
+                                             finalreturn = finalreturn + parseFloat(returns[k].value);
+                                             finalsales = finalsales+ parseFloat(invsales[k].value);
+                                            
+                                            daysales = daysales + parseFloat(invsales[k].value);
+                                            dayreturns = dayreturns + parseFloat(returns[k].value);
+                                            daynet = daynet + parseFloat(netsalesOut);
+                                            dayretrate = dayretrate + parseFloat(returns[k].value);
+                                        }
+                                       }
+                                        percentotOut = percentotOut/totalAllProd*100;
+                                        returnrateOut = returnrateOut/prodinvtotal *100;
+                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         
                                         //finalnets[i].innerHTML = netsalesOut;
                                         //finalpercent[i].innerHTML = percentotOut.toFixed(2) +"%";

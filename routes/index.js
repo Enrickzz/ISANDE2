@@ -271,7 +271,7 @@ router.get('/delivery', isPrivate, function(req, res) {
       branch = req.session.branch;
     }
     suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
-      deliveryController.fetchQuery({deliverydate:todate, branchTO: branch}, (todayDeliveries)=>{
+      deliveryController.fetchQuery({deliverydate:todate}, (todayDeliveries)=>{
         res.render('delivery', {
           layout: 'main',
           title: 'Deliveries',
@@ -565,22 +565,25 @@ router.get('/salesrecords', isPrivate, function(req, res) {
           cartController.fetchQuery( {branch: thisbranch}, (carts)=>{
             salesController.fetchQuery(thisbranch, (sales)=>{
               inventoryController.fetchQuery({branch_id: thisbranch}, (invforsalesrecords)=>{
-                res.render('sales', {
-                  layout: 'main',
-                  title: 'Sales Records',
-                  fname:  req.session.first_name,
-                  lname:  req.session.last_name,
-                  utype: req.session.usertype,
-                  whichbranch: req.session.branch,
-                  plist: allproducts,
-                  realtoday: todate,
-                  suggestions: allsuggestions,
-                  num_suggestions: allsuggestions.length,
-                  thisInventory: inventory,
-                  pglist: allproductgroups,
-                  cart: carts,
-                  salesrecords: sales,
-                  invsales: invforsalesrecords
+                inventoryController.fetchQuery({},(foradmininv)=>{
+                  res.render('sales', {
+                    layout: 'main',
+                    title: 'Sales Records',
+                    fname:  req.session.first_name,
+                    lname:  req.session.last_name,
+                    utype: req.session.usertype,
+                    whichbranch: req.session.branch,
+                    plist: allproducts,
+                    realtoday: todate,
+                    suggestions: allsuggestions,
+                    num_suggestions: allsuggestions.length,
+                    thisInventory: inventory,
+                    pglist: allproductgroups,
+                    cart: carts,
+                    salesrecords: sales,
+                    invsales: invforsalesrecords,
+                    invforAdmin: foradmininv
+                  })
                 })
               })
             })

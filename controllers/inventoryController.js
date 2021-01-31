@@ -375,7 +375,7 @@ exports.pulloutUpdate = (req,res)=>{
                 throw err3;
               }else{
                 inventoryModel.updateFind({branch_id: withthis.from, inventorydate: todate, product: withthis.product }, 
-                  {$inc:{ pulloutStock: -(parseFloat(withthis.quantity)), restockedInventory: -(parseFloat(withthis.quantity)) }}, (err4, invresult) =>{
+                  {$inc:{ pulloutStock: (parseFloat(withthis.quantity)), restockedInventory: -(parseFloat(withthis.quantity)) }}, (err4, invresult) =>{
                     if(err4){
                       throw err4
                     }else{
