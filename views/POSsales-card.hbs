@@ -20,6 +20,8 @@
                 <h3 class="text-dark mb-4">  <a href="javascript:history.back()" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;{{title}}</h3>
                 
                 <div class="card">
+                 {{!-- START PRINT --}}
+                    <div class="print">
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
@@ -36,14 +38,14 @@
                                     <input type="hidden" name="from" value="{{pulloutOrder.FrombranchID}}">
                                     <input type="hidden" name="requestID" value="{{request._id}}">
                                     <input type="hidden" name="pulloutID" value="{{pulloutOrder._id}}"> 
-                                    <button id="received" class="btn btn-primary btn-sm" type="button" formaction="/" formmethod="">Print Receipt</button>
+                                    <button id="received" class="btn btn-primary btn-sm" type="button" onclick="window.print()">Print Receipt</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                         
                     </div>
-                </div>
+             
             
                 <div class="card">
                     <div class="card-body" id="reguser">       
@@ -131,7 +133,7 @@
                                     {{!-- RECEIPT --}}
                                     <div class="row" style="float:right; ">
                                     <div class="col">
-                                    <div class="jumbotron jumbotron-fluid" id="receipt" style="max-width: 442.7px;">
+                                    <div class="jumbotron jumbotron-fluid" id="receipt" style="max-width: 700px;">
                                     <div class="container">
                                         <div class="row">
                                         <div class="col">
@@ -177,6 +179,8 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
+                            
 
                             <div class="row" style="margin-top: 2rem; justify-content: center; margin-bottom:1rem;">
                                 <!--<div class="total-amt" id="">
@@ -192,7 +196,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row" style="margin-top: 2rem;">
                         <div class="col">
                             <div class="text-md-center dataTables_filter" id="dataTable_filter">
@@ -205,5 +209,32 @@
                     </div> 
                     </div>
                 </div>
+                   </div>
             </div>
+            
             <br><br>
+
+<style type="text/css">
+@media print
+{
+body * { 
+    visibility: hidden; 
+}
+.card * { 
+    visibility: visible; 
+}
+
+.btn.btn-primary.btn-sm * {
+    visibility: hidden;
+}
+
+#received {
+    display: none;
+}
+
+#receipt * {
+    visibility: visible;
+}
+
+}
+</style>
