@@ -228,19 +228,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 2rem;">
-                        <div class="col">
-                            <div class="text-md-center dataTables_filter" id="dataTable_filter">
-                                <label>
-                                    <!--<button class="btn btn-secondary btn-sm" type="submit">Continue Later</button>
-                                    <button class="btn btn-primary btn-sm" type="submit">Order</button>-->
-                                </label>
-                            </div>
-                        </div>
-                    </div> 
+
+                    {{!-- FOR PRINT --}}
+                    <center>
+                    <div>
+                        <br>
+                    <button class="btn btn-primary btn-sm" type="button"
+                        id="generateSlip"  onclick="window.print()">Generate Order Slip</button> <br>
+                    </div>
+                    </center>
+                    {{!-- END OF PRINT --}}
+                    
                     </div>
                 </div>
-            </div>
+            </div> 
+            <br> <br>
             
         <!-- Modal TO BE CHANGED-->
 <div id="myModal" class="modal fade" role="dialog">
@@ -293,16 +295,6 @@
 
     </div>
 </div>
-{{!-- FOR PRINT --}}
-<center>
-<div style="padding-bottom: 50px;">
-     <br>
- <button class="btn btn-primary btn-sm" type="button"
-    id="generateSlip"  onclick="window.print()">Generate Order Slip</button> <br>
-</div>
-</center>
-{{!-- END OF PRINT --}}
-
 
 <!-- Update Modal -->
     <div id="updateModal" class="modal fade" role="dialog">
@@ -380,6 +372,16 @@ body * {
 
 #Received {
     display: none;
+}
+
+#generateSlip {
+    display: none;
+}
+
+.tr-addproducts th {
+    visibility: visible;
+    color: white !important;
+    background: #858796 !important;
 }
 
 }

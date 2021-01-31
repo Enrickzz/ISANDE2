@@ -105,12 +105,12 @@
                         <div class="table-responsive table mt-2" id="regproductlist">
                         <div class="col">
                             <table class="table my-0" id="dataTable">
-                                <thead>
+                                <thead class="thead">
                                     <tr class="tr-addproducts">
                                         <th>Item</th>
                                         <th>Quantity</th>
                                         <th>Rate</th>
-                                        <th>Amount</th>
+                                        <th>Amount</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -214,7 +214,7 @@
             
             <br><br>
 
-<style type="text/css">
+<style type="text/css" media="print">
 @media print
 {
 body * { 
@@ -234,6 +234,12 @@ body * {
 
 #receipt * {
     visibility: visible;
+}
+
+.tr-addproducts th {
+    visibility: visible;
+    color: white !important;
+    background: #858796 !important;
 }
 
 }

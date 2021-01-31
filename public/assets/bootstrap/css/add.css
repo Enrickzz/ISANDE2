@@ -98,10 +98,11 @@
 }
 
 .tr-addproducts{
-    background-color: #858796;
+    background-color: #858796 !important;
 }
+
 .tr-addproducts th{
-    color: white;
+    color: white !important;
 }
 
 #productlist{
