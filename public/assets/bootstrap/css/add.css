@@ -266,3 +266,18 @@ option:disabled {
     }
   }
     /* END OF USERTYPE NAVBAR */
+    
+  #checkout:disabled {
+    background-color: #858796;
+    border-color: #858796;
+    color: white;
+}
+
+
+a.d-flex.align-items-center.dropdown-item {
+  color: white !important;
+}
+
+a.d-flex.align-items-center.dropdown-item:hover {
+  color: #858796 !important;
+}
