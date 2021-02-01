@@ -55,12 +55,11 @@
                                         <th><span></span></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {{#each todaydelivery}}
+                                <tbody id="deliveryentries">
+                                    {{#each mydeliver}}
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
                                             <td>{{productionID}}</td>
-                                            {{!-- <td> Sample value</td> --}}
                                             <td>{{total}}</td>
                                             <td>{{status}}</td>
                                         </tr>
@@ -90,16 +89,16 @@
                                         <th><span></span></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                     {{#each delivery}}
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
                                             <td>{{productionID}}</td>
-                                            {{!-- <td> Sample value</td> --}}
                                             <td>{{total}}</td>
                                             <td>{{status}}</td>
                                         </tr>
                                     {{/each}}
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -107,7 +106,6 @@
 
                 </div>
                     {{!-- END TAB CONTENT --}}
-
             </div>
             
         </div>

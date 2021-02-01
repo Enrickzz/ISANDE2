@@ -276,17 +276,20 @@ router.get('/delivery', isPrivate, function(req, res) {
     }
     suggestionsController.fetchQuery({date: todate,status:"Unresolved", tobranch:{$regex: branch}, for:req.session.usertype}, (allsuggestions)=>{
       deliveryController.fetchQuery({deliverydate:todate}, (todayDeliveries)=>{
-        res.render('delivery', {
-          layout: 'main',
-          title: 'Deliveries',
-          fname:  req.session.first_name,
-          lname:  req.session.last_name,
-          utype: req.session.usertype,
-          whichbranch: req.session.branch,
-          delivery: alldeliveries,
-          suggestions: allsuggestions,
-          num_suggestions: allsuggestions.length,
-          todaydelivery: todayDeliveries
+        deliveryController.fetchQuery({deliverydate:todate, branchTO: branch}, (mydeliveries)=>{
+          res.render('delivery', {
+            layout: 'main',
+            title: 'Deliveries',
+            fname:  req.session.first_name,
+            lname:  req.session.last_name,
+            utype: req.session.usertype,
+            whichbranch: req.session.branch,
+            delivery: alldeliveries,
+            suggestions: allsuggestions,
+            num_suggestions: allsuggestions.length,
+            todaydelivery: todayDeliveries,
+            mydeliver: mydeliveries
+          })
         })
       })
     })
