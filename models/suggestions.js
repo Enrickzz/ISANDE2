@@ -18,7 +18,6 @@ const suggestionModel = mongoose.model('suggestions', suggestionSchema, 'suggest
 exports.create = function(obj, next) {
   const createthis = new suggestionModel(obj);
   createthis.save(function(err, result) {
-    console.log(err);
     next(err, result);
   });
 };

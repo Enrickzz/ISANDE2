@@ -48,7 +48,6 @@ exports.getID = (req, res) => {
           res(inventoryfetched);
         }
         else{
-          //console.log("No inventory for this branch!");
           res(result);
         }
       }
@@ -70,7 +69,6 @@ exports.getID = (req, res) => {
           res(inventoryfetched);
         }
         else{
-          //console.log("No inventory for this branch!");
           res(result);
         }
       }

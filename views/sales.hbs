@@ -248,20 +248,8 @@
                                     document.getElementById("totalIn").value = subtotal +".00";
                                     document.getElementById("changeIn").value = parseFloat(paid) - subtotal;
 
-                                    
-
                                 }
-                                function amount(){
-                                    var items = document.getElementsByClassName('totsale');
-                                    var subtotal = 0;
-                                    for(var i=0; i < items.length; i++){
-                                        subtotal = subtotal + parseFloat(items[i].value)
-                                    }
-                                    document.getElementById("paidT").value = subtotal ;
-                                    
-                                }
-                                window.onload = receipt();
-                                window.onload = amount();
+                               
                             </script>
                          </div>
                          </div>
@@ -278,23 +266,25 @@
 
                             <div class="row-lg-12" style="width:500px;">
                                 <button class="btn btn-primary btn-lg" formaction="/deleteallcart" formmethod="POST" id="clear" type="submit">Clear</button>
-                                <!--<button class="btn btn-primary btn-lg" id="cash" type="submit" style="margin-left: 10px">Cash</button>
-                                <button class="btn btn-primary btn-lg" id="discount" type="submit" style="margin-left: 10px">Discount</button>-->
                                 <button class="btn btn-primary btn-lg" formaction="/checkout" formmethod="POST" id="checkout" type="submit" style="margin-left: 10px">Checkout</button>
                             </div>
-                            <script>
-                                function disablebtn(){
-                                    var subin = document.getElementById("subT").innerHTML;
-                                    console.log(subin);
-                                    if(subin == "0" ){
-                                        document.getElementById("checkout").disabled = true;
-                                    }else{
-                                        console.log("else");
+                           <script>
+                                function amount(){
+                                    var items = document.getElementsByClassName('totsale');
+                                    var subtotal = 0;
+                                    for(var i=0; i < items.length; i++){
+                                        subtotal = subtotal + parseFloat(items[i].value)
                                     }
+                                    document.getElementById("paidT").value = subtotal ;
+
+                                    if(subtotal == 0){
+                                        document.getElementById("checkout").disabled=true;
+                                    }
+                                    
                                 }
-                                window.onload = disablebtn();
-                            </script>
-                           
+                                window.onload = receipt();
+                                window.onload = amount();
+                           </script>
                                
                         </div>
                      </div>
@@ -669,6 +659,7 @@
                                     var daynet =0;
                                     var dayretrate = 0;
                                     for(var i = 0; i < ref.length ; i++){
+                                       console.log(ref[i].value); 
                                         if(invdate[i].value == realday[0].value){
                                             var netsalesOut = invsales[i].value - returns[i].value;
                                             var percentotOut= invsales[i].value / totalAllProd * 100;
@@ -726,6 +717,7 @@
                                      var dayretrate =0;
                                     for(var i = 0; i < ref.length ; i++){
                                         var reference = 
+                                       console.log(ref[i].value); 
                                        
                                         if(invdate[i].value == pickdate){
                                             var netsalesOut = invsales[i].value - returns[i].value;
@@ -785,6 +777,7 @@
                                     if(branch.value == "Aggregate"){
                                     for(var i = 0; i < ref2.length ; i++){
                                         var reference = ref2[i].value;
+                                       console.log(ref2[i].value);
                                        var netsalesOut=0;
                                        var percentotOut = 0;
                                        var returnrateOut = 0;
