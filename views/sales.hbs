@@ -22,6 +22,7 @@
                         }
                         
                     }
+                   
 
                 }
                 window.onload = trytab;
@@ -74,7 +75,7 @@
                     }
 
                     var user = document.getElementById('usertype').value;
-
+                    
                     if(user == "Branch Manager"){
                         document.getElementById('prev').parentNode.removeChild(document.getElementById('prev'))
                         document.getElementById('next').parentNode.removeChild(document.getElementById('next'))
@@ -88,7 +89,7 @@
                             }
                         }
                     }
-
+                     
                     if(document.getElementById('realdate').value == document.getElementById('currdate').value){
                         document.getElementById('today').parentNode.removeChild(document.getElementById('today'));
                     }
@@ -280,6 +281,11 @@
                                     if(subtotal == 0){
                                         document.getElementById("checkout").disabled=true;
                                     }
+                                    var utype = document.getElementById('utype').value;
+                                    if(utype == "Admin"){
+                                        console.log(utype);
+                                        document.getElementById("clear").disabled = true;
+                                    }
                                     
                                 }
                                 window.onload = receipt();
@@ -319,12 +325,14 @@
 
                                                 <table class="table my-0" id="dataTable">
                                                     <thead>
+                                                        {{#if thisInventory}}
                                                         <tr class="tr-addproducts">
                                                             <th>Name </th>
                                                             <th style="width: 25%;">Quantity </th>
                                                             <th style="width: 10%;">Price </th>
                                                             <th style="width: 10%;">Stock</th>
                                                         </tr>
+                                                        {{/if}}
                                                     </thead>
 
                                                     <tbody>
@@ -350,7 +358,9 @@
                                                             {{/each}}
                                                         {{/each}} 
                                                             <td>
-                                                                <button class="btn btn-primary btn-sm" type="submit" onclick='submitall()'>Add</button>
+                                                                {{#if thisInventory}}
+                                                                <button id="jackadd" class="btn btn-primary btn-sm" type="submit" onclick='submitall()'>Add</button>
+                                                                {{/if}}
                                                             </td>  
                                                         </form>                                                      
                                                     </tbody>
@@ -364,12 +374,14 @@
                                             <div class="container tab-pane fade" id="jimmy" style="padding-top: 30px; max-width:fit-content;"> 
                                                 <table class="table my-0" id="dataTable">
                                                     <thead>
+                                                        {{#if thisInventory}}
                                                         <tr class="tr-addproducts">
                                                            <th>Name </th>
                                                             <th style="width: 25%;">Quantity </th>
                                                             <th style="width: 10%;">Price </th>
                                                             <th style="width: 10%;">Stock</th>
                                                         </tr>
+                                                        {{/if}}
                                                     </thead>
 
                                                     <tbody>
@@ -396,7 +408,9 @@
                                                         {{/each}} 
 
                                                             <td>
+                                                                {{#if thisInventory}}
                                                                 <button class="btn btn-primary btn-sm" type="submit" onclick='submitall()'>Add</button>
+                                                                {{/if}}
                                                             </td> 
                                                         </form>
                                                     </tbody>
@@ -409,12 +423,14 @@
                                             <div class="container tab-pane fade" id="mong" style="padding-top: 30px; max-width:fit-content;"> 
                                                 <table class="table my-0" id="dataTable">
                                                     <thead>
+                                                        {{#if thisInventory}}
                                                         <tr class="tr-addproducts">
                                                             <th>Name </th>
                                                             <th style="width: 25%;">Quantity </th>
                                                             <th style="width: 10%;">Price </th>
                                                             <th style="width: 10%;">Stock</th>
                                                         </tr>
+                                                        {{/if}}
                                                     </thead>
 
                                                     <tbody>
@@ -440,7 +456,9 @@
                                                             {{/each}}
                                                         {{/each}} 
                                                             <td>
+                                                                {{#if thisInventory}}
                                                             <button class="btn btn-primary btn-sm" type="submit" onclick='submitall()'>Add</button>
+                                                            {{/if}}
 
                                                             </td>
                                                         </form>

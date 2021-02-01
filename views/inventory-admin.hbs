@@ -176,7 +176,7 @@
                                             for(var i = 0; i < product.length; i++){
                                                 if(branchfilter.value == branchid[i].value && datefilter.value == invdate[i].value){
                                                     //alert(" "+branchfilter+ "==" + branchid[i].value + "\n" + datefilter +"=="+invdate[i].value);
-                                                    document.getElementById("inventorytable").innerHTML += "<tr class='remove'><td>image</td><td>"+product[i].value+"</td><td>"+startInv[i].value+"</td><td>"+restockQuantity[i].value+"</td><td>"+additionalRestock[i].value+"</td><td>"+pulloutStock[i].value+"</td><td>"+returns[i].value+"</td><td>"+restockedInventory[i].value+"</td><td>"+totsales[i].value+"</td></tr>"
+                                                    document.getElementById("inventorytable").innerHTML += "<tr class='remove'><td><img class="+'mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value+"</td><td>"+restockQuantity[i].value+"</td><td>"+additionalRestock[i].value+"</td><td>"+pulloutStock[i].value+"</td><td>"+returns[i].value+"</td><td>"+restockedInventory[i].value+"</td></tr>"
                                                 }
                                             }
                                         }
