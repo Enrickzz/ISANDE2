@@ -100,9 +100,9 @@ router.get('/inventory-admin', isPrivate, function(req, res) {
             reportinv : forreportInv
           })
         })
-        //if(Object.entries(suggestionlist).length ===0 && Object.entries(allInventory).length ===0 && req.session.usertype== "Branch Manager"){
-        //  res.redirect('/processinventoryforBM');
-       // }
+        if(Object.entries(suggestionlist).length ===0 && Object.entries(allInventory).length ===0 && req.session.usertype== "Branch Manager"){
+          res.redirect('/processinventoryforBM');
+        }
         
       })
     })

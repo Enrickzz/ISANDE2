@@ -14,9 +14,14 @@
                     removeButton2[i].style.display = "none";
                 }
             }else if(status == "Unsent"){
+                document.getElementById('showstatus').style.color="red";
+                //var rm = document.getElementById('send');
+                //rm.parentNode.removeChild(rm);
+            }else if(status == "For Review"){
                 document.getElementById('showstatus').style.color="orange";
                 var rm = document.getElementById('send');
                 rm.parentNode.removeChild(rm);
+                document.getElementById("back").style.display="none";
             }
            
         }

@@ -39,9 +39,10 @@
                                     {{#if_eq utype "Branch Manager"}}
                                     {{#if branchorders}}
                                     
-                                    <button class="btn btn-primary btn-sm">Edit quantity</button>
+                                    <button id="update" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#updateModal" style="background-color:gray; border: 1px solid gray; ">Quantity Mismatch</button>
                                     <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/receiveproductionorders" formmethod="POST">Received</button>
                                     {{else}}
+                                    <button id="update" class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#updateModal" style="background-color:gray; border: 1px solid gray; ">Quantity Mismatch</button>
                                     <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/pulloutupdate" formmethod="POST">Received</button>
                                     {{/if}}
                                     {{/if_eq}}
@@ -199,3 +200,71 @@
                 </div>
             </div>
             <br><br>
+
+            <!-- Update Modal -->
+    <div id="updateModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Quantity Mismatch Form</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr class="tr-addproducts">
+                            <th>Name </th>
+                            <th style="width: 25%;">Quantity </th>
+                            <th>Actual Quantity</th>
+                            <th >Rate </th>
+                            <th >Total Amount </th>
+                        </tr>
+                    </thead>
+            <form action="">
+                    {{#if branchorders}}
+                        {{#each branchorders}}
+                            <tr class="clickable" >
+                                <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
+                                <td> {{quantity}}</td>
+                                    <td><input type="text" style="width: 75%;" class="form-control"></td>
+                                <td>{{rate}}</td>
+                                <td>{{amount}}</td>
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr class="clickable" >
+                            <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
+                            <td> {{request.quantity}}</td>
+                            <td>{{request.cost}}</td>
+                            <td>{{delivery.total}}</td>
+                        </tr>
+                    {{/if}}
+                    <br>                  
+                   <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
+                    <input type="hidden" name="deliveryID" value="{{delivery._id}}">
+                    <!--add pullouts inventory-->
+                    <input type="hidden" name="to" value="{{pulloutOrder.TobranchID}}">
+                    <input type="hidden" name="from" value="{{pulloutOrder.FrombranchID}}">
+                    <input type="hidden" name="requestID" value="{{request._id}}">
+                    <input type="hidden" name="pulloutID" value="{{pulloutOrder._id}}"> 
+                    </tbody>
+
+                    <tfoot>
+                    </tfoot>
+
+                  
+
+                </table>
+                <br>
+                  {{!-- <center><button class="btn btn-primary btn-sm" type="submit">Update</button></center>
+                </form> --}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/asd" formmethod="POST">Received</button>            
+            </div>
+            </div>
+        </form>
+        </div>
+    </div>   

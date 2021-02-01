@@ -111,15 +111,14 @@
                             <table class="table" id="invTable">
                                 <thead style="text-align: center;">
                                     <tr>
-                                        <th>image</th>
+                                        <th><span></span></th>
                                         <th onclick="sortTable(0)">Name  <i class="fa fa-sort"></i></th>
                                         <th>Opening Stock  </th>
-                                        <th>Restock Quantity</th>
+                                        <th>Production Quantity</th>
                                         <th>Quantity In  </th>
                                         <th>Quantity Out  </th>
                                         <th>Adjustments</th>
                                         <th>Realtime Stock  </th>
-                                        <th>Sales </th>
                                         
                                     </tr>
                                 </thead>
@@ -141,7 +140,7 @@
                                     {{#if_eq utype "Branch Manager"}}
                                         {{#each inventory}}
                                         <tr>
-                                            <td>image</td>
+                                            <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"></td>
                                             <td>{{product}}</td>
                                             <td>{{startInv}}</td>
                                             <td>{{restockQuantity}}</td>
@@ -149,7 +148,6 @@
                                             <td>{{pulloutStock}}</td>
                                              <td>{{returns}}</td>
                                             <td>{{restockedInventory}}</td>
-                                            <td>{{totsales}}</td>
                                         </tr>
                                         {{/each}}
                                     {{/if_eq}}
