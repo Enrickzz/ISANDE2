@@ -57,7 +57,7 @@ exports.fetchQuery = (req,res) => {
     rawMaterialOrderModel.saveMaterial(RMO, function (err, RMO_result) {
       purchaseorderModel.increasetotal(RMO_result.purchaseorderID, RMO_result.subtotal, function(err2, success){
         if(err){
-          console.log(err);
+          //console.log(err);
           res.redirect('/purchaseorder/view/' + POid);
         }
         else{

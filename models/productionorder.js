@@ -33,7 +33,6 @@ exports.getAll = (param, next) => {
   exports.create = function(obj, next) {
     const purchaseorder = new productionorderModel(obj);
     purchaseorder.save(function(err, purchaseorder_result) {
-      console.log(err);
       next(err, purchaseorder_result);
     });
   };

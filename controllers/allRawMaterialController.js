@@ -23,11 +23,11 @@ exports.addMaterial = (req,res)=>{
   
   allRawMaterialModel.saveMaterial(product, function (err, result) {
     if(err){
-      console.log(err);
+      //console.log(err);
       res.redirect('/rawmaterials');
     }
     else{
-      console.log(result);
+      //console.log(result);
       res.redirect('/rawmaterials')
     }
   })
@@ -39,11 +39,8 @@ exports.delete = (req,res)=>{
       throw err; 
     } 
     else {
-      console.log(result);
       var query = result._id;
-      console.log("THIS IS THE QUERY: " + query);
       productmaterialModel.removeDeletedMaterial( query , (err2, deleted) =>{
-        console.log(deleted)
         res.redirect('/rawmaterials');
       });
     }

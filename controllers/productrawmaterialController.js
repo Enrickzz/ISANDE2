@@ -37,7 +37,7 @@ exports.getRawMaterials = (req,res) => {
   };
 
   exports.addMaterial = (req,res)=>{
-    console.log("add");
+    //console.log("add");
     var query = req.body.UOM; //returns id
     UOMmodel.getByID(query,(err,result) =>{
       if(err){
@@ -62,8 +62,9 @@ exports.getRawMaterials = (req,res) => {
         var totalUsed = unitIngrams*quantity; //final used raw material (deduct in raw materials inventory)
         productmaterialModel.saveMaterial(material, function (err, result) {
           if(err){
-            console.log(err);
+            //console.log(err);
             res.redirect('/product/view/'+material.productID);
+            throw err;
           }
           else{
             res.redirect('/product/view/'+material.productID);
@@ -98,8 +99,10 @@ exports.getRawMaterials = (req,res) => {
     var productID = req.body.productID;
     productmaterialModel.update(productID, update, (err, result) =>{
       if(err){
-        console.log(err);
+        //console.log(err);
+        
         res.redirect('back');
+        throw err;
       }
       else{
         res.redirect('/PGIncrement/'+ req.body.groupID);

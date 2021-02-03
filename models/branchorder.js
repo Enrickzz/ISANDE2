@@ -23,7 +23,6 @@ exports.fetchList = function(query, next) {
   exports.createBO = function(obj, next) {
     const BO = new branchOrderModel(obj);
     BO.save(function(err, BO) {
-      console.log(err);
       next(err, BO);
     });
   };

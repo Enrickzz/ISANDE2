@@ -34,7 +34,6 @@ exports.fetchList = function(query, next) {
   exports.addTocart = function(obj, next) {
     const newcart = new cartmodel(obj);
     newcart.save(function(err, cart) {
-      console.log(err);
       next(err, cart);
     });
   };

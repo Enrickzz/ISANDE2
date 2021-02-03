@@ -97,7 +97,7 @@ exports.getID = (req, res) => {
           }
           inventoryModel.updateFind({branch_id: req.session.branch, product: obj.product, inventorydate: todate }, update, function(error, success){
             if(error){
-              console.log(error);
+              //console.log(error);
               throw error;
             }else{
 

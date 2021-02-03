@@ -41,7 +41,6 @@ exports.fetchList = function(query, next) {
   exports.saveSale = function(obj, next) {
     const newsale = new salesmodel(obj);
     newsale.save(function(err, cart) {
-      console.log(err);
       next(err, cart);
     });
   };

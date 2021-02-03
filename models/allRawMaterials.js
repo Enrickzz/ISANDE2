@@ -32,7 +32,7 @@ exports.getByID = function(query, next) {
   exports.saveMaterial = function(obj, next) {
     const rawMaterial = new rawMaterialModel(obj);
     rawMaterial.save(function(err, save) {
-      console.log(err);
+      //console.log(err);
       next(err, save);
     });
   };

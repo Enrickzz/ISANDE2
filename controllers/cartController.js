@@ -18,7 +18,6 @@ exports.fetchQuery = (req,res) => {
           res(fetched);
         }
         else{
-          //console.log("No orders for this branch!");
           res(result);
         }
       }
@@ -27,17 +26,14 @@ exports.fetchQuery = (req,res) => {
 
 exports.addcart = (req, res) =>{
     var POID = req.session.branch;
-    //console.log(req.body)
     console.log("ADD TO CARTO NAW")
     var product = req.body.product;
     var qua = req.body.quantity;
     var rate = req.body.rate;
     var invID = req.body.invID;
-    //console.log(req.body);
     //var amount = parseFloat(qua) * parseFloat(rate);
     var branch = req.body.branch
     for(var i =0 ; i < product.length ; i++){
-      //console.log(productname[i]);
       var a = parseFloat(qua[i]);
       var b = parseFloat(rate[i]);
       var amount = a*b;
@@ -54,7 +50,7 @@ exports.addcart = (req, res) =>{
           if (err){
             throw err;
           }else{
-            console.log(result);
+            //console.log(result);
           }
         })
       }
@@ -64,7 +60,6 @@ exports.addcart = (req, res) =>{
   
   exports.delete = (req, res) => {
     var id = req.body.cartID;
-    //console.log("DELETE NA")
     cartmodel.remove(id, (err, result) => {
       if (err) {
         throw err; 

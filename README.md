@@ -1,6 +1,6 @@
 
 # Louella Bakery Inventory Management System
-This is a web application to cater Louella Bakery and adress its problems.
+This is a web application to cater Louella Bakery and address its problems.
 
 ### Local Setup
 1. Navigate to the directory
@@ -32,7 +32,6 @@ The following users may be used to log in:
 - multer
 
 ### Members
-* Brosoto, Mig
 * Cuison, Enrico
 * Madrazo, Wilford
 * Ngan, Jess

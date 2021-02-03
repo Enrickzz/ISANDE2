@@ -86,7 +86,6 @@ exports.getID = (req, res) => {
           res(inventoryObj);
         }
         else{
-          //console.log("No inventory for this branch!");
           res(result);
         }
       }
@@ -289,7 +288,7 @@ exports.QMaddInventory = (req, res) => {
                   var thisprd = qmproduct[i];
                   inventoryModel.create(inventory, (err2,result2)=>{
                     if(err2){
-                      //console.log(err2);
+                      //console.(err2);
                       throw err2;
                     }else{
                       var updateBO = {
@@ -413,7 +412,7 @@ exports.addInventory = (req,res) =>{
                   }
                   inventoryModel.create(inventory, (err2,result2)=>{
                     if(err2){
-                      console.log(err2);
+                      //console.log(err2);
                       throw err2;
                     }
                   })
@@ -433,7 +432,7 @@ exports.addInventory = (req,res) =>{
                 }
                 inventoryModel.create(inventory, (err2,result2)=>{
                   if(err2){
-                    console.log(err2);
+                    //console.log(err2);
                     throw err2;
                   }
                 })

@@ -45,7 +45,7 @@ const { validationResult } = require('express-validator');
             userModel.register(newUser, (err, user) => {
               if (err) {
                 req.flash('error_msg', 'Could not create user. Please try again.');
-                console.log(err.errors);
+                //console.log(err.errors);
                 result = { success: false, message: "User was not created!" }
                 //res.send(result); this causes an error LOL :<
                 res.redirect('/manageusers');

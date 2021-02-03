@@ -25,7 +25,6 @@ exports.getByID = function(query, next) {
 exports.createProductGroup = function(obj, next) {
     const pgroup = new productgroupModel(obj);
     pgroup.save(function(err, group) {
-      console.log(err);
       next(err, group);
     });
   };

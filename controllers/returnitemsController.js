@@ -46,7 +46,7 @@ const { validationResult } = require('express-validator');
         var add = parseFloat(a);
         returnModel.increaseTotal(res2.returnID, add, function (err2, success){
             if(err2){
-                console.log(err2);
+                //console.log(err2);
                 res.redirect('/adjustments/view/'+ req.body.returnID);
               }
               else{

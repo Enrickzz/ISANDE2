@@ -42,7 +42,6 @@ exports.getByID = function(query, next) {
 exports.createProduct = function(obj, next) {
     const product = new productModel(obj);
     product.save(function(err, product) {
-      console.log(err);
       next(err, product);
     });
   };

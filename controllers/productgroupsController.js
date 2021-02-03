@@ -52,7 +52,7 @@ const { name, description, UOM, num_products} = req.body;
 if (errors.isEmpty()) {      
   productgroupsModel.getOne({ name: name }, (err, result) => {
     if (result) {
-      console.log("Product Group already exists!");
+      //console.log("Product Group already exists!");
       // found a match, return to login with error
     req.flash('error_msg', 'Product already exists.');
     //   req.session.save( function(){ res.redirect('/'); })
@@ -70,9 +70,10 @@ if (errors.isEmpty()) {
         productgroupsModel.createProductGroup(pgroup, function (err, pgroup_result) {
           if(err){
             req.flash('error_msg', 'Could not add product Group. Please try again.');
-            console.log(err.errors);
+            //console.log(err.errors);
             result = { success: false, message: "Product Group was not created!" }
             res.redirect('/productgroup');
+            throw err;
           }
           
           else
@@ -132,7 +133,8 @@ exports.delete = (req, res) => {
       } 
       productModel.updatemany({product_groupID: groupid}, update, (err, result) =>{
         if(err){
-          console.log(err);
+          //console.log(err);
+          throw err;
           res.redirect('back');
         }
         else{

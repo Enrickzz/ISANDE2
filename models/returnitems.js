@@ -38,7 +38,6 @@ exports.update = function(query, update, next) {
 exports.create = function(obj, next) {
     const returnitem = new returnitemsModel(obj);
     returnitem.save(function(err, returnitem) {
-      console.log(err);
       next(err, returnitem);
     });
   };

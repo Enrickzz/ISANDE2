@@ -74,7 +74,7 @@ exports.register = (req, res) => {
           supplierModel.register(newSupplier, (err, supplier) => {
             if (err) {
               req.flash('error_msg', 'Could not create supplier. Please try again.');
-              console.log(err.errors);
+              //console.log(err.errors);
               result = { success: false, message: "Supplier was not created!" }
               //res.send(result); this causes an error LOL :<
               res.redirect('/supplier');
@@ -116,7 +116,7 @@ exports.update  = (req, res) => {
 
     supplierModel.update(id, query, function(err, update) {
       if(err) {
-          console.log(err);
+          //console.log(err);
           req.flash('error_msg', 'Cannot update supplier details.');
               res.redirect('/supplier');
       }
@@ -135,7 +135,7 @@ exports.delete = function(req, res) {
 
   supplierModel.delete({_id: id}, function(err, supplier) {
       if(err) {
-          console.log(err);
+          //console.log(err);
           req.flash('error_msg', 'Cannot delete supplier.');
           res.redirect('/supplier');
       }

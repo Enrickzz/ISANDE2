@@ -36,7 +36,7 @@ exports.addPurchaseOrder = (req,res)=>{
   }
   purchaseorderModel.createPurchaseOrder(purchaseorder, function (err, result_PO) {
     if(err){
-      console.log(err);
+      //console.log(err);
       res.redirect('/purchaseorder');
     }
     else{

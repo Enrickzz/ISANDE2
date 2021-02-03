@@ -34,7 +34,6 @@ exports.getByID = function(query, next) {
   exports.saveMaterial = function(obj, next) {
     const rawMaterial = new PRMmodel(obj);
     rawMaterial.save(function(err, save) {
-      console.log(err);
       next(err, save);
     });
   };

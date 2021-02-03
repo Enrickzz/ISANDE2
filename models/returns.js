@@ -30,7 +30,6 @@ exports.fetchList = function(query, next) {
   exports.create = function(obj, next) {
     const returns = new returnModel(obj);
     returns.save(function(err, returns) {
-      console.log(err);
       next(err, returns);
     });
   };

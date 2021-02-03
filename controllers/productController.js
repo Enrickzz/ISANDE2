@@ -73,7 +73,6 @@ exports.addProduct = (req, res) => {
           productModel.createProduct(newProduct, function (err, product_result) {
             if(err){
               req.flash('error_msg', 'Could not add product. Please try again.');
-              console.log(err.errors);
               result = { success: false, message: "Product was not created!" }
               res.redirect('/allproducts');
             }
@@ -112,7 +111,7 @@ exports.assigngroup = (req, res) => {
   var productID = req.body.productID;
   productModel.update({_id:productID}, update, (err, result) =>{
     if(err){
-      console.log(err);
+      //console.log(err);
       res.redirect('back');
     }
     else{
@@ -132,7 +131,7 @@ exports.ungroup = (req, res) => {
   var productID = req.body.productID;
   productModel.update({_id: productID}, update, (err, result) =>{
     if(err){
-      console.log(err);
+      //console.log(err);
       res.redirect('back');
     }
     else{
@@ -150,7 +149,7 @@ exports.ungroupBulk = (req, res) => {
   var groupID = req.body.groupID;
   productModel.updatemany({product_groupID: groupID}, update, (err, result) =>{
     if(err){
-      console.log(err);
+      //console.log(err);
       res.redirect('back');
     }
     else{
@@ -164,7 +163,7 @@ exports.delete = (req, res) => {
   var groupid = req.body.groupID;
   productModel.remove(id, (err, result) => {
     if (err) {
-      console.log(err);
+      //console.log(err);
       req.flash('error_msg', 'Cannot delete product.');
       res.redirect('/allproducts');
     } 

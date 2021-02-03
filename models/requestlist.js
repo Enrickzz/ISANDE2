@@ -28,7 +28,6 @@ exports.fetch= (query,next) =>{
 exports.create = function(obj, next) {
     const savethis = new requestListModel(obj);
     savethis.save(function(err, result) {
-      console.log(err);
       next(err, result);
     });
   };
