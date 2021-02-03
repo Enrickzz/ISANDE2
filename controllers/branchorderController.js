@@ -65,7 +65,8 @@ exports.getID = (req, res) => {
         product: productname[i],
         quantity: qua[i],
         rate : price[i],
-        amount: amount
+        amount: amount,
+        actualDelivered: "0"
       }
       if(qua[i] > 0){
         branchOrderModel.createBO(newBO , function (err, result){

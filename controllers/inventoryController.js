@@ -240,6 +240,134 @@ exports.midendCountUpdate = (req,res) =>{
     }) 
   }
 }
+exports.QMaddInventory = (req, res) => {
+  var prodID = req.body.productionorderID;
+  var qmproduct =req.body.QMproduct;
+  var qmrate =req.body.QMrate;
+  var qmamount = req.body.QMamount;
+  var actualQty = req.body.actualQty;
+
+  productionOrderModel.getByID(prodID, (er,POobj)=>{
+    branchOrderModel.fetchList({productionorderID: prodID}, (err, result)=>{
+      if(err){
+        res.redirect('back');
+      }else{
+        var curr = POobj.orderDate;
+        var todate = new Date(curr);
+        todate.setDate(todate.getDate()-1)
+        var dd = String(todate.getDate()).padStart(2, '0');
+        var mm = String(todate.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = todate.getFullYear();
+        todate = yyyy + '-' + mm + '-' + dd;
+        inventoryModel.fetchList({inventorydate: ""+todate, branch_id: POobj.branch}, (error, prevdayInv)=>{
+          if(error){
+            res.redirect('back')
+          }else{
+            var counter2 = 0;
+            prevdayInv.forEach(function(doc){
+              var prev = doc.toObject();
+              //var obj;
+              var checker = 0;
+              checker = 0;
+              for(var i = 0 ; i < qmproduct.length ; i++){
+                var prevenddayCount ="0";
+                var restockedInv= 0;
+                if(qmproduct[i] == prev.product){
+                  var a = parseFloat(actualQty[i]) + parseFloat(prev.restockedInventory);
+                  restockedInv = a;
+                  prevenddayCount = prev.restockedInventory;
+                  var inventory ={
+                    branch_id : POobj.branch,
+                    inventorydate: POobj.orderDate,
+                    product: qmproduct[i],
+                    startInv: Number(prevenddayCount),
+                    restockQuantity: actualQty[i],
+                    restockedInventory: restockedInv,
+                    srp: qmrate[i]
+                  }
+                  var thisqty = actualQty[i];
+                  var thisprd = qmproduct[i];
+                  inventoryModel.create(inventory, (err2,result2)=>{
+                    if(err2){
+                      //console.log(err2);
+                      throw err2;
+                    }else{
+                      var updateBO = {
+                        $set:{
+                          actualDelivered:thisqty
+                        }
+                      }
+                      //console.log(updateBO);
+                      branchOrderModel.updateOne({productionorderID: prodID, product: thisprd}, updateBO, (thiser, thisres)=>{
+                        if(thiser){
+                          //console.log("NAGERROR\n\n+"+ thiser);
+                          throw thiser;
+                        }else{
+                          //console.log(thisprd);
+                          //console.log("Successful");
+                        }
+                      })
+                    }
+                  })
+                  checker = checker+1;
+                }
+              }
+              if(checker==0){ //if not exist in prev inventory
+                var restockedInv = parseFloat(prev.restockedInventory);
+                var inventory ={
+                  branch_id : POobj.branch,
+                  inventorydate: POobj.orderDate,
+                  product: prev.product,
+                  startInv: Number(restockedInv),
+                  restockQuantity: "0",
+                  restockedInventory: restockedInv,
+                  srp: prev.srp
+                }
+               inventoryModel.create(inventory, (err2,result2)=>{
+                  if(err2){
+                    //console.log(err2);
+                    throw err2;
+                  }
+                })
+              }
+              counter2 = counter2+1;
+            })
+          }
+          var delID = req.body.deliveryID;
+          var update = {
+            $set: {
+              status: "Delivered with Quantity Change"
+            }
+          }
+          deliveryModel.update({_id: delID},update, (errr, result3)=>{
+            if (errr) {
+              throw errr;
+            }else{
+              var status = {
+                $set:{
+                  status:"Completed with Quantity Change"
+                }
+              }
+              productionOrderModel.update(prodID,status, (e4,result4)=>{
+                if (e4) {
+                  throw e4;
+                }else{
+                  suggestionsModel.delete({tobranch:req.session.branch, date:result4.orderDate, for:"Branch Manager"}, (error3,success3)=>{
+                    if(error3){
+                      throw error3;
+                    }else{
+                      res.redirect('/inventory-admin');
+                    }
+                  })
+                }
+              })
+            }
+          })
+        })
+      }
+    })
+  })
+}
 
 exports.addInventory = (req,res) =>{
   var prodID = req.body.productionorderID;
@@ -257,7 +385,7 @@ exports.addInventory = (req,res) =>{
         todate = yyyy + '-' + mm + '-' + dd;
         inventoryModel.fetchList({inventorydate: "" + todate , branch_id: POobj.branch}, (error, prevdayInv)=>{
           if (error) {
-            console.log(error);
+            //console.log(error);
             res.redirect('back');
           }else{
             var counter2 =0;

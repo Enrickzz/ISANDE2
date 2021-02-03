@@ -56,6 +56,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="deliveryentries">
+                                    {{#if_eq utype  "Branch Manager"}}
                                     {{#each mydeliver}}
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
@@ -64,6 +65,17 @@
                                             <td>{{status}}</td>
                                         </tr>
                                     {{/each}}
+                                    {{/if_eq}}
+                                    {{#if_eq utype  "Admin"}}
+                                    {{#each todaydelivery}}
+                                        <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
+                                            <td>{{deliverydate}}</td>
+                                            <td>{{productionID}}</td>
+                                            <td>{{total}}</td>
+                                            <td>{{status}}</td>
+                                        </tr>
+                                    {{/each}}
+                                    {{/if_eq}}
                                 </tbody>
                             </table>
                         </div>

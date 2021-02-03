@@ -12,6 +12,12 @@
                 document.getElementById('showstatus').style.color="orange";
                 var rm1 = document.getElementById('received');
                 rm1.parentNode.removeChild(rm1);
+            }else if (x == "Delivered with Quantity Change"){
+                document.getElementById('showstatus').style.color="orange";
+                var rm1 = document.getElementById('received');
+                rm1.parentNode.removeChild(rm1);
+                 var rm2 = document.getElementById('update');
+                rm2.parentNode.removeChild(rm2);
             }
        }
        window.onload = statuscheck;
@@ -139,6 +145,7 @@
                                     <tr class="tr-addproducts">
                                         <th>Item</th>
                                         <th>Quantity</th>
+                                        <th>Actual Delivered</th>
                                         <th>Rate</th>
                                         <th>Amount</th>
                                     </tr>
@@ -149,6 +156,7 @@
                                             <tr class="clickable" >
                                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
                                                 <td> {{quantity}}</td>
+                                                <td>{{actualDelivered}}</td>
                                                 <td>{{rate}}</td>
                                                 <td>{{amount}}</td>
                                             </tr>
@@ -173,16 +181,18 @@
                             </div>
 
                             <div class="row" style="margin-top: 2rem; justify-content: center; margin-bottom:1rem;">
-                                <!--<div class="total-amt" id="">
+                                <div class="row" style="margin-top: 2rem; justify-content: center; margin-bottom:1rem;">
+                                <div class="total-amt" id="">
                                     <div class="row">
                                         <div class="col" style="text-align: center; min-width:180px;">
                                             <span>TOTAL AMOUNT:</span>
                                         </div>
                                         <div class="col" style="text-align: right;">
-                                            <span>Php {{purchaseorder.total}}</span>
+                                            <span>Php {{productionorder.total}}</span>
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -221,18 +231,27 @@
                             <th >Total Amount </th>
                         </tr>
                     </thead>
-            <form action="">
+                    <form action="/QMaddinventory" method="POST" id="submitthis">
+                    <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
+                    <input type="hidden" name="deliveryID" value="{{delivery._id}}">
                     {{#if branchorders}}
                         {{#each branchorders}}
                             <tr class="clickable" >
                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
                                 <td> {{quantity}}</td>
-                                    <td><input type="text" style="width: 75%;" class="form-control"></td>
+                                    <td><input type="text" style="width: 75%;" class="actualQty form-control" name="actualQty" value="{{quantity}}"></td>
+                                    <input type="hidden" class="QMproduct" name="QMproduct" value="{{product}}">
+                                    <input type="hidden" class="QMrate" name="QMrate" value="{{rate}}">
+                                    <input type="hidden" class="QMamount" name="QMamount" value="{{amount}}">
+                                    
+                                    
                                 <td>{{rate}}</td>
                                 <td>{{amount}}</td>
                             </tr>
                         {{/each}}
+                        </form>
                     {{else}}
+                    
                         <tr class="clickable" >
                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
                             <td> {{request.quantity}}</td>
@@ -241,7 +260,7 @@
                         </tr>
                     {{/if}}
                     <br>                  
-                   <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
+                   
                     <input type="hidden" name="deliveryID" value="{{delivery._id}}">
                     <!--add pullouts inventory-->
                     <input type="hidden" name="to" value="{{pulloutOrder.TobranchID}}">
@@ -262,9 +281,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="received" class="btn btn-primary btn-sm" type="submit" formaction="/asd" formmethod="POST">Received</button>            
+                <button class="btn btn-primary btn-sm" type="button" onclick='submitall()'>Received</button>
+                <script>
+                      function submitall(){
+                        $('#submitthis').submit();
+                      }
+                </script>            
             </div>
             </div>
-        </form>
         </div>
     </div>   

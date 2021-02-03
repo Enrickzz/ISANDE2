@@ -56,6 +56,17 @@
                         var rm4 = document.getElementById('delivered');
                         rm4.parentNode.removeChild(rm4);
                         $('.suggest').remove();
+                    }else if(x == "Completed with Quantity Change"){
+                        document.getElementById('showstatus').style.color="orange";
+                        var rm1 = document.getElementById('update');
+                        rm1.parentNode.removeChild(rm1);
+                        var rm2 = document.getElementById('accept');
+                        rm2.parentNode.removeChild(rm2);
+                        var rm3 = document.getElementById('reject');
+                        rm3.parentNode.removeChild(rm3);
+                        var rm4 = document.getElementById('delivered');
+                        rm4.parentNode.removeChild(rm4);
+                        $('.suggest').remove();
                     }
                     
                     if(document.getElementById('utype').value == "Branch Manager"){
@@ -172,6 +183,7 @@
                                     <tr class="tr-addproducts">
                                         <th>Item</th>
                                         <th>Quantity</th>
+                                        <th>Actual Delivereed</th>
                                         {{#if_eq utype "Admin"}}
                                         <th class="suggest">Suggestion <span style="color: red;">(!)</span></th>
                                         {{/if_eq}}
@@ -197,6 +209,7 @@
                                                     
                                                 </form>
                                             </td>{{/if_eq}}
+                                            <td>{{actualDelivered}}</td>
                                             <td>{{rate}}</td>
                                             <td>{{amount}}</td>
                                         </tr>
