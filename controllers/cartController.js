@@ -26,7 +26,6 @@ exports.fetchQuery = (req,res) => {
 
 exports.addcart = (req, res) =>{
     var POID = req.session.branch;
-    console.log("ADD TO CARTO NAW")
     var product = req.body.product;
     var qua = req.body.quantity;
     var rate = req.body.rate;

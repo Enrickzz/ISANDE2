@@ -596,7 +596,6 @@ router.get('/salesrecords', isPrivate, function(req, res) {
             })
           })
         })
-        //console.log(inventory);
       })
     })  
   }) 
