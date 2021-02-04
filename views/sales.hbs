@@ -883,7 +883,7 @@
                                 }
                             </script>
                             <tfoot>
-                                <tr style="background-color: #F98C40; color: white">
+                                <tr id="summary" style="background-color: #F98C40; color: white">
                                     <th>Total</th>
                                     <th id="daysales" style="text-align: right;"></th>
                                     <th id="dayreturns" style="text-align: right;"></th>
@@ -1146,12 +1146,22 @@ body * {
     visibility: visible; 
 }
 
+.tfoot {
+    visibility: visible;
+}
+
 .btn.btn-primary.btn-sm * {
     visibility: hidden;
 }
 
 #received {
     display: none;
+}
+
+#summary * {
+    visibility: visible;
+    background: #F98C40 !important; 
+    color: white !important;
 }
 
 }
