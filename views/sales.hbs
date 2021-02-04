@@ -819,18 +819,18 @@
                                             
                                             daysales = daysales + parseFloat(invsales[k].value);
                                             dayreturns = dayreturns + parseFloat(returns[k].value);
-                                            daynet = daynet + parseFloat(netsalesOut);
+                                            daynet = daynet + parseFloat(invsales[k].value - returns[k].value);
                                             dayretrate = dayretrate + parseFloat(returns[k].value);
                                         }
                                        }
                                         percentotOut = percentotOut/totalAllProd*100;
                                         returnrateOut = returnrateOut/prodinvtotal *100;
-                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales.toFixed(2)+"</td><td>"+finalreturn.toFixed(2)+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         
                                     }
                                     dayretrate = (dayretrate/daynet)*100
                                     document.getElementById("daysales").innerHTML = daysales.toFixed(2);
-                                    document.getElementById("dayreturns").innerHTML = dayreturns;
+                                    document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                     document.getElementById("daynet").innerHTML = daynet.toFixed(2);
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
                                     }else{
@@ -865,17 +865,17 @@
                                                     //alert(branch.value +"===="+ invbranch[k].value);
                                                     daysales =daysales +  parseFloat(invsales[k].value);
                                                     dayreturns =dayreturns +  parseFloat(returns[k].value);
-                                                    daynet =daynet + parseFloat(netsalesOut);
+                                                    daynet =daynet + parseFloat(invsales[k].value - returns[k].value);
                                                     dayretrate =dayretrate + parseFloat(returns[k].value);
                                                 }
                                             }
                                             percentotOut = percentotOut/thistotalAllProd*100;
                                             returnrateOut = returnrateOut/thistotalAllreturns *100;
                                             document.getElementById("daysales").innerHTML = daysales.toFixed(2);
-                                            document.getElementById("dayreturns").innerHTML = dayreturns;
+                                            document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                             document.getElementById("daynet").innerHTML = daynet.toFixed(2);
                                             document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales.toFixed(2)+"</td><td>"+finalreturn.toFixed(2)+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                         
                                         }
