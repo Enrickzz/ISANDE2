@@ -267,7 +267,7 @@ option:disabled {
   }
     /* END OF USERTYPE NAVBAR */
     
-  #checkout:disabled {
+  #checkout:disabled, #clear:disabled {
     background-color: #858796;
     border-color: #858796;
     color: white;
@@ -287,9 +287,25 @@ a.d-flex.align-items-center.dropdown-item:hover {
 }
 
 #srTable td:first-child {
-    text-align: left;
+    text-align: left !important;
 }
 
 #srTable td:last-child tr:last-child {
+    padding-right: 30px;
+}
+
+#inventorytable td {
+    text-align: right;
+}
+
+#inventorytable td:first-child {
+    text-align: left !important;
+}
+
+#inventorytable td:nth-child(2) {
+    text-align: left !important;
+ }
+
+#inventorytable td:last-child  {
     padding-right: 30px;
 }
