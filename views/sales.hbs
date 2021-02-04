@@ -106,7 +106,7 @@
 
                  <div class="card">
 
-                    <div class="card-header">
+                    <div class="card-header" id="dataTable_filter2">
 
                          <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
@@ -572,7 +572,7 @@
                             
                            {{!-- FILTER TABLE --}}
                                <div style="" class="col">
-                                <div class="dataTables_filter" id="dataTable_filter">
+                                <div class="dataTables_filter" id="dataTable_filter2">
                                     {{#if_eq utype "Admin"}}
                                     <label for="branchselect">
                                     <select id="branchselect" name="branchselect" class="form-control" onchange="loadtransAdmin()">
@@ -581,7 +581,7 @@
                                         <option value="Branch B">Branch B</option>
                                         <option value="Branch C">Branch C</option>
                                     </select></label><br>
-                                 <label> <input type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="loadtransAdmin()" onchange="loadtransAdmin()" placeholder="All"></label>
+                                 
                                     {{/if_eq}}
                                     {{#if_eq utype "Branch Manager"}}
                                     Date <label> <input type="date" id="datepicker" class="form-control form-control-sm today" value="{{realtoday}}" onload="loadtrans2()" onchange="loadtrans2()" placeholder="All"></label>
@@ -590,6 +590,10 @@
                                 </div>
 
                                 </div>
+                                <div class="col" id="dataTable_filter2">
+                                    <input type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="loadtransAdmin()" onchange="loadtransAdmin()" placeholder="All">
+                                </div>
+                                <div class="col"></div><div class="col"></div><div class="col"></div>
                                
                         {{!-- END FILTER --}}
                      
@@ -613,6 +617,12 @@
                                             <input type="date" name="thisdate" id="thisdate" class="form-control">--}}
                                 </div>
                             </div>
+                        </div>
+                        <div class="row" style="text-align: center; ">
+                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;">Sales Report for</h4>
+                        </div>
+                        <div class="row" style="text-align: center; ">
+                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;"> <span id="pickedday"></span></h4>
                         </div>
                         </div>
                         
@@ -655,6 +665,16 @@
                                <input type="hidden" class="realtoday" value="{{realtoday}}" name="" id="">            
                               
                             </tbody>
+                            <tfoot id="summary">
+                                <tr style="background-color: #F98C40; color: white">
+                                    <th>Total</th>
+                                    <th id="daysales" style="text-align: right;"></th>
+                                    <th id="dayreturns" style="text-align: right;"></th>
+                                    <th id="daynet" style="text-align: right;"></th>
+                                    <th id="dayperctot" style="text-align: right;">100.00 %</th>
+                                    <th id="dayretrate" style="text-align: right;"></th>
+                                </tr>
+                            </tfoot>
                             <script>
                                 function loadtrans(){
                                     var finalnets = document.getElementsByClassName("net");
@@ -695,7 +715,7 @@
                                             daynet = daynet + parseFloat(netsalesOut);
                                             dayretrate = dayretrate + returns[i].value;
 
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+".00</td><td>"+finalreturn+".00</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                        
                                     }
@@ -753,7 +773,7 @@
                                             dayreturns = dayreturns + parseFloat(returns[i].value);
                                             daynet = daynet + parseFloat(netsalesOut);
                                             dayretrate = dayretrate + parseFloat(returns[i].value);
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+"</td><td>"+finalreturn+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+".00</td><td>"+finalreturn+".00</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                         
                                         //finalnets[i].innerHTML = netsalesOut;
@@ -833,6 +853,8 @@
                                     document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                     document.getElementById("daynet").innerHTML = daynet.toFixed(2);
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
+
+                                    document.getElementById("pickedday").innerHTML = "All Branches" +" "+ pickdate;
                                     }else{
                                         var thistotalAllProd = 0;
                                         var thistotalAllreturns= 0;
@@ -877,21 +899,12 @@
                                             document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
                                             document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales.toFixed(2)+"</td><td>"+finalreturn.toFixed(2)+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
-                                        
+                                        document.getElementById("pickedday").innerHTML = branch.value +" "+ pickdate;
                                         }
                                     
                                 }
                             </script>
-                            <tfoot>
-                                <tr id="summary" style="background-color: #F98C40; color: white">
-                                    <th>Total</th>
-                                    <th id="daysales" style="text-align: right;"></th>
-                                    <th id="dayreturns" style="text-align: right;"></th>
-                                    <th id="daynet" style="text-align: right;"></th>
-                                    <th id="dayperctot" style="text-align: right;">100.00 %</th>
-                                    <th id="dayretrate" style="text-align: right;"></th>
-                                </tr>
-                            </tfoot>
+                            
                         </table>
                     </div>
                     <br>
@@ -1142,6 +1155,7 @@
 body * { 
     visibility: hidden; 
 }
+
 .card * { 
     visibility: visible; 
 }
@@ -1164,5 +1178,8 @@ body * {
     color: white !important;
 }
 
+#dataTable_filter2 {
+    display: none;
+}
 }
 </style>
