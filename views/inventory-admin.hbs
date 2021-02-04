@@ -44,6 +44,7 @@
                         document.getElementById('next').parentNode.removeChild(document.getElementById('next'))
                         var branch = document.getElementById('whichbranch').value;
                         var select =  document.getElementById('branch'); select.disabled=true;
+                        document.getElementById('datepicker').disabled=true;
                         var option;
                         for(i = 0; i< select.options.length ; i++){
                             option = select.options[i];
@@ -67,10 +68,10 @@
 
                 {{!-- HEADER --}}
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" id="bgcolor">
                         <div class="row">
                             <div style="" class="col">
-                                <div style="margin-left:4rem;" class="dataTables_filter" id="dataTable_filter">
+                                <div style="margin-left:4rem;" class="dataTables_filter" id="dataTable_filter2">
                                     {{#if_eq utype "Admin"}}
                                     <label for="branchselect" style="font-weight: 700;"> Branch: 
                                     <select id="branchselect" name="branchselect" class="form-control" onchange="filterinventory()">
@@ -78,20 +79,42 @@
                                         <option value="Branch B">Branch B</option>
                                         <option value="Branch C">Branch C</option>
                                     </select></label><br>
-                                    <label style="font-weight: 700;">Date: <input type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="filterinventory()" onchange="filterinventory()" placeholder="All"></label>
                                     {{/if_eq}}
                                     
                                     {{#if_eq utype "Branch Manager"}}
-                                     <h4 >{{today}}</h4>
-                                        <select style="width: 10rem;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
+                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 10rem;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
                                             <option value="Branch A">Branch A</option>
                                             <option value="Branch B">Branch B</option>
                                             <option value="Branch C">Branch C</option>
-                                        </select><br>
+                                        </select></label><br>
                                        
                                     {{/if_eq}}
                                 </div>
+                                
                             </div>
+                            <div id="dataTable_filter2" class="col">
+                                {{#if_eq utype "Branch Manager"}}
+                                <label style="font-weight: 700;">Date: <input disabled type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="filterinventory()" onchange="filterinventory()" placeholder="All"></label>
+                                {{/if_eq}}
+                                {{#if_eq utype "Admin"}}
+                                <label style="font-weight: 700;">Date: <input type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="filterinventory()" onchange="filterinventory()" placeholder="All"></label>
+                                {{/if_eq}}
+                            </div>
+                             <div style="" class="col">
+                                
+                            </div>
+                             <div style="" class="col">
+
+                            </div>
+                            <div style="" class="col">
+
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: center; " >
+                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;" id="textprint">Inventory Report for</h4>
+                        </div>
+                        <div class="row" style="text-align: center; " >
+                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;" id="textprint"> <span id="pickedday">{{whichbranch}} {{realtoday}}</span></h4>
                         </div>
                     </div>
                 
@@ -101,7 +124,7 @@
                     <div class="container tab-pane active" id="product_group" style="padding-top:30px;">
 
                         {{!-- FILTER TABLE --}}
-                        <div class="dataTables_filter" id="dataTable_filter"> Product: <label> 
+                        <div  class="dataTables_filter" id="dataTable_filter2"> Product: <label> 
                                     <input type="text" class="form-control form-control-sm" 
                                         id="filter" onkeyup="filter()" placeholder="All"></label>
                         </div>
@@ -112,10 +135,10 @@
                         <div style="padding-bottom: 10px;"> </div>
                         <div class="table-responsive">
                             <table class="table" id="invTable">
-                                <thead>
+                                <thead style="text-align: center;">
                                     <tr>
                                         <th><span></span></th>
-                                        <th onclick="sortTable(0)" style="text-align: left;">Name  <i class="fa fa-sort"></i></th>
+                                        <th onclick="sortTable(0)">Name  <i class="fa fa-sort"></i></th>
                                         <th style="text-align: right;">Opening Stock  </th>
                                         <th style="text-align: right;">Production Quantity</th>
                                         <th style="text-align: right;">Quantity In  </th>
@@ -156,15 +179,11 @@
                                     {{/if_eq}}
                                     <script>
                                         function filterinventory(){
-                                            $(".remove").remove();
+                                            $(".remove").remove(); 
                                             //document.getElementById("inventorytable").innerHTML = "";
                                             var datefilter = document.getElementById("datepicker");
                                             var branchfilter = document.getElementById("branchselect");
-                                            //alert(datefilter.value + branchfilter.value);
-                                            //var datefilter = $("#datefilter").val();
-                                            //var branchfilter = $("#branchfilter").val();
-                                            //var datefilter = "2021-01-30";
-                                            //var branchfilter = "Branch A";
+                                            
                                             var invdate = document.getElementsByClassName("invdate");
                                             var branchid = document.getElementsByClassName("branchid");
                                             var product = document.getElementsByClassName("product1");
@@ -175,16 +194,28 @@
                                             var returns = document.getElementsByClassName("returns");
                                             var restockedInventory = document.getElementsByClassName("restockedInventory");
                                             var totsales = document.getElementsByClassName("totsales");
-                        
+
                                             for(var i = 0; i < product.length; i++){
                                                 if(branchfilter.value == branchid[i].value && datefilter.value == invdate[i].value){
                                                     //alert(" "+branchfilter+ "==" + branchid[i].value + "\n" + datefilter +"=="+invdate[i].value);
                                                     document.getElementById("inventorytable").innerHTML += "<tr class='remove'><td><img class="+'mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value+"</td><td>"+restockQuantity[i].value+"</td><td>"+additionalRestock[i].value+"</td><td>"+pulloutStock[i].value+"</td><td>"+returns[i].value+"</td><td>"+restockedInventory[i].value+"</td></tr>"
                                                 }
                                             }
-                                        }
+                                            document.getElementById("pickedday").innerHTML = branchfilter.value +" "+ datefilter.value;
+                                        }window.onload = filterinventory();
                                     </script>
                                 </tbody>
+                                <tfoot id="summary">
+                                <tr style="background-color: #F98C40; color: white">
+                                    <th></th>
+                                    <th id="daysales" style="text-align: right;"></th>
+                                    <th id="dayreturns" style="text-align: right;"></th>
+                                    <th id="daynet" style="text-align: right;"></th>
+                                    <th id="dayperctot" style="text-align: right;"></th>
+                                    <th id="dayretrate" style="text-align: right;"></th>
+                                    <th></th><th></th>
+                                </tr>
+                            </tfoot>
                             </table>
                         </div>
                         </div>
@@ -295,11 +326,24 @@ body * {
 .btn.btn-primary.btn-sm * {
     visibility: hidden;
 }
-
+#summary * {
+    visibility: visible;
+    background: #F98C40 !important; 
+    color: white !important;
+}
 #received {
     display: none;
 }
-
+#dataTable_filter2 {
+    display: none;
+}
+#bgcolor {
+    background-color:#f98c40;
+    color: white;
+}
+#textprint {
+    font-size: 3rem;
+}
 }
 </style>
 

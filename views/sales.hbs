@@ -567,14 +567,14 @@
 
                 {{!-- SALES RECORDS --}}
                 <div class="container tab-pane fade" id="salesrecords" style="padding-top: 30px;">
-                         <div class="card-header">
+                         <div class="card-header" id="bgcolor">
                          <div class="row">
                             
                            {{!-- FILTER TABLE --}}
                                <div style="" class="col">
                                 <div class="dataTables_filter" id="dataTable_filter2">
                                     {{#if_eq utype "Admin"}}
-                                    <label for="branchselect">
+                                    <label for="branchselect" style="font-weight: 700;"> Branch: 
                                     <select id="branchselect" name="branchselect" class="form-control" onchange="loadtransAdmin()">
                                         <option value="Aggregate"> Aggregate </option>
                                         <option value="Branch A">Branch A</option>
@@ -584,14 +584,22 @@
                                  
                                     {{/if_eq}}
                                     {{#if_eq utype "Branch Manager"}}
-                                    Date <label> <input type="date" id="datepicker" class="form-control form-control-sm today" value="{{realtoday}}" onload="loadtrans2()" onchange="loadtrans2()" placeholder="All"></label>
-
+                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 10rem;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
+                                            <option value="Branch A">Branch A</option>
+                                            <option value="Branch B">Branch B</option>
+                                            <option value="Branch C">Branch C</option>
+                                        </select></label><br>
                                     {{/if_eq}}
                                 </div>
 
                                 </div>
                                 <div class="col" id="dataTable_filter2">
-                                    <input type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="loadtransAdmin()" onchange="loadtransAdmin()" placeholder="All">
+                                    {{#if_eq utype "Branch Manager"}}
+                                    <label style="font-weight: 700;">Date: <input disabled type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="loadtransAdmin()" onchange="loadtransAdmin()" placeholder="All"></label>
+                                    {{/if_eq}}
+                                    {{#if_eq utype "Admin"}}
+                                    <label style="font-weight: 700;">Date: <input type="date" id="datepicker" class="form-control  today" value="{{realtoday}}" onload="loadtransAdmin()" onchange="loadtransAdmin()" placeholder="All"></label>
+                                    {{/if_eq}}
                                 </div>
                                 <div class="col"></div><div class="col"></div><div class="col"></div>
                                
@@ -619,10 +627,15 @@
                             </div>
                         </div>
                         <div class="row" style="text-align: center; ">
-                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;">Sales Report for</h4>
+                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;" id="textprint">Sales Report for</h4>
                         </div>
                         <div class="row" style="text-align: center; ">
-                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;"> <span id="pickedday"></span></h4>
+                            {{#if_eq utype "Branch Manager"}}
+                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;" id="textprint"> <span id="pickedday">{{whichbranch}} {{realtoday}}</span></h4>
+                            {{/if_eq}}
+                            {{#if_eq utype "Admin"}}
+                                <h4 style="font-weight: 700;margin:auto;vertical-align:middle;" id="textprint"> <span id="pickedday"></span></h4>
+                            {{/if_eq}}
                         </div>
                         </div>
                         
@@ -852,7 +865,7 @@
                                     document.getElementById("daysales").innerHTML = daysales.toFixed(2);
                                     document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                     document.getElementById("daynet").innerHTML = daynet.toFixed(2);
-                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
+                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
 
                                     document.getElementById("pickedday").innerHTML = "All Branches" +" "+ pickdate;
                                     }else{
@@ -896,7 +909,7 @@
                                             document.getElementById("daysales").innerHTML = daysales.toFixed(2);
                                             document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                             document.getElementById("daynet").innerHTML = daynet.toFixed(2);
-                                            document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
+                                            document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
                                             document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales.toFixed(2)+"</td><td>"+finalreturn.toFixed(2)+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                         document.getElementById("pickedday").innerHTML = branch.value +" "+ pickdate;
@@ -1180,6 +1193,13 @@ body * {
 
 #dataTable_filter2 {
     display: none;
+}
+#bgcolor {
+    background-color:#f98c40;
+    color: white;
+}
+#textprint {
+    font-size: 3rem;
 }
 }
 </style>
