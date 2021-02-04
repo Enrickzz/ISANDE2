@@ -4,19 +4,20 @@
 <tr class="clickable" onclick='window.location="/allproducts/view/{{this._id}}"'>
     <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{name}}</td>
     <td> {{UOM}}</td>
-    <td>{{sellingprice}}</td>
-    <td style="max-width:50px;">
+    <td style="text-align: right; padding-right: 30px">{{sellingprice}}</td>
+    {{!-- <td style="max-width:50px;">
         <form action="/">
             <button class="btn btn-secondary btn-sm" type="submit">Edit</button>
         </form> 
-        </td>
-    <td style="max-width:50px;">
+        </td> --}}
+
+    {{!-- <td style="max-width:50px;">
         <form action="/deleteProduct" method="POST">
             <input type="hidden" name="productID" value="{{this._id}}">
             <input type="hidden" name="groupID" value="{{this.product_groupID}}">
             <button class="btn btn-primary btn-sm" type="submit">Delete</button>
         </form>
-    </td>
+    </td> --}}
 </tr>
 
 {{/each}}

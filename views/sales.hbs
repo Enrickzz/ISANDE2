@@ -147,9 +147,9 @@
                                 <thead>
                                     <tr class="tr-addposproducts">
                                         <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th>Rate</th>
-                                        <th>Amount</th>
+                                        <th style="text-align: right;">Quantity</th>
+                                        <th style="text-align: right;">Rate</th>
+                                        <th style="text-align: right;">Amount</th>
                                         <th><span></span></th>
 
                                     </tr>
@@ -161,9 +161,9 @@
                                         {{#if_eq cart.branch whichbranch}}
                                         <tr>
                                             <td>{{product}} </td>
-                                            <td>{{quantity}} </td>
-                                            <td>{{rate}} </td>
-                                            <td >{{total}} </td> 
+                                            <td style="text-align: right;">{{quantity}} </td>
+                                            <td style="text-align: right;">{{rate}} </td>
+                                            <td style="text-align: right;" >{{total}} </td> 
                                             <td style="max-width:50px;">
                                                 <input type="hidden" name="totsale" class="totsale" value="{{this.total}}">
                                                 <input type="hidden" name="cartID" value="{{this._id}}">
@@ -328,9 +328,9 @@
                                                         {{#if thisInventory}}
                                                         <tr class="tr-addproducts">
                                                             <th>Name </th>
-                                                            <th style="width: 25%;">Quantity </th>
-                                                            <th style="width: 10%;">Price </th>
-                                                            <th style="width: 10%;">Stock</th>
+                                                            <th style="width: 25%; text-align: right">Quantity </th>
+                                                            <th style="width: 10%; text-align: right">Price </th>
+                                                            <th style="width: 10%; text-align: right">Stock</th>
                                                         </tr>
                                                         {{/if}}
                                                     </thead>
@@ -343,14 +343,14 @@
                                                                     {{#if_eq this.name ../this.product }}
                                                                         <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
-                                                                            <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="quantity"  class="quantity form-control w-60" width="2" min="0" max='{{../this.restockedInventory}}'></td>
-                                                                            <td>{{this.sellingprice}}</td>
+                                                                            <td style="text-align: right;"><input type="number"  pattern="[0-9]{0}[0-9]+" name="quantity"  class="quantity form-control w-60" width="2" min="0" max='{{../this.restockedInventory}}'></td>
+                                                                            <td style="text-align: right;">{{this.sellingprice}}</td>
                                                                             <input type="hidden" class="productName" name="product" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
                                                                             <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
                                                                             <input type="hidden" name="invID" value="{{../this._id}}">
                                                                             <td style="width: 2%;">
-                                                                                <p>{{../this.restockedInventory}}</p>
+                                                                                <p style="text-align: right;">{{../this.restockedInventory}}</p>
                                                                             </td>
                                                                         </tr>
                                                                     {{/if_eq}}
@@ -377,9 +377,9 @@
                                                         {{#if thisInventory}}
                                                         <tr class="tr-addproducts">
                                                            <th>Name </th>
-                                                            <th style="width: 25%;">Quantity </th>
-                                                            <th style="width: 10%;">Price </th>
-                                                            <th style="width: 10%;">Stock</th>
+                                                            <th style="width: 25%; text-align: right">Quantity </th>
+                                                            <th style="width: 10%; text-align: right">Price </th>
+                                                            <th style="width: 10%; text-align: right">Stock</th>
                                                         </tr>
                                                         {{/if}}
                                                     </thead>
@@ -393,13 +393,13 @@
                                                                          <tr class="clickable" >
                                                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
                                                                             <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="quantity"  class="quantity form-control w-60" width="2" max='{{../this.restockedInventory}}'></td>
-                                                                            <td>{{this.sellingprice}}</td>
+                                                                            <td style="text-align: right;">{{this.sellingprice}}</td>
                                                                             <input type="hidden" class="productName" name="product" value="{{this.name}}">
                                                                             <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
                                                                             <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
                                                                             <input type="hidden" name="invID" value="{{../this._id}}">
                                                                             <td style="width: 2%;">
-                                                                                <p>{{../this.restockedInventory}}</p>
+                                                                                <p style="text-align: right;">{{../this.restockedInventory}}</p>
                                                                             </td>
                                                                         </tr>
                                                                     {{/if_eq}}
@@ -426,9 +426,9 @@
                                                         {{#if thisInventory}}
                                                         <tr class="tr-addproducts">
                                                             <th>Name </th>
-                                                            <th style="width: 25%;">Quantity </th>
-                                                            <th style="width: 10%;">Price </th>
-                                                            <th style="width: 10%;">Stock</th>
+                                                            <th style="width: 25%; text-align: right">Quantity </th>
+                                                            <th style="width: 10%; text-align: right">Price </th>
+                                                            <th style="width: 10%; text-align: right">Stock</th>
                                                         </tr>
                                                         {{/if}}
                                                     </thead>
@@ -442,13 +442,13 @@
                                                                             <tr class="clickable" >
                                                                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"> {{this.name}} </td>
                                                                                 <td><input type="number"  pattern="[0-9]{0}[0-9]+" name="quantity"  class="quantity form-control w-60" width="2" max='{{../this.restockedInventory}}'></td>
-                                                                                <td>{{this.sellingprice}}</td>
+                                                                                <td style="text-align: right">{{this.sellingprice}}</td>
                                                                                 <input type="hidden" class="productName" name="product" value="{{this.name}}">
                                                                                 <input type="hidden" class="price" name="rate" value="{{this.sellingprice}}">
                                                                                 <input type="hidden" name="branch" value='{{../this.branch_id}}' id="">
                                                                                 <input type="hidden" name="invID" value="{{../this._id}}">
                                                                                 <td style="width: 2%;">
-                                                                                    <p>{{../this.restockedInventory}}</p>
+                                                                                    <p style="text-align: right">{{../this.restockedInventory}}</p>
                                                                                 </td>
                                                                             </tr>
                                                                         {{/if_eq}}
@@ -507,9 +507,9 @@
                                 <thead>
                                     <tr>
                                         <th onclick="sortTable(0)">Transaction ID <i class="fa fa-sort"></i></th>               
-                                        <th onclick="sortTable(1)">Sales <i class="fa fa-sort"></i></th>
-                                        <th onclick="sortTable(2)">Staff Name <i class="fa fa-sort"> </i></th>
-                                        <th onclick="sortTable(3)">Time of Transaction <i class="fa fa-sort"></i></th>
+                                        <th onclick="sortTable(1)" style="text-align: right; padding-right: 40px; padding-left: 30px">Sales <i class="fa fa-sort"></i></th>
+                                        <th onclick="sortTable(2)" style="padding-left: 90px;">Staff Name <i class="fa fa-sort"> </i></th>
+                                        <th onclick="sortTable(3)" style="text-align: right; padding-right: 50px">Time of Transaction <i class="fa fa-sort"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -518,9 +518,9 @@
                                     {{#each salesrecords}}
                                         <tr class="clickable" onclick='window.location="/POSsales/view/{{this._id}}"'>
                                             <td>{{_id}}</td>
-                                            <td>{{total}}</td>
-                                            <td>{{staffincharge}}</td>
-                                            <td>{{date}}</td>
+                                            <td style="text-align: right; padding-right: 40px; padding-left: 30px">{{total}}</td>
+                                            <td style="padding-left: 90px;">{{staffincharge}}</td>
+                                            <td style="text-align: right; padding-right: 50px">{{date}}</td>
                                         </tr>
                                     {{/each}}
                                     {{!-- {{/each}} --}}
@@ -569,7 +569,7 @@
                 <div class="container tab-pane fade" id="salesrecords" style="padding-top: 30px;">
                          <div class="card-header">
                          <div class="row">
-
+                            
                            {{!-- FILTER TABLE --}}
                                <div style="" class="col">
                                 <div class="dataTables_filter" id="dataTable_filter">
@@ -588,6 +588,7 @@
 
                                     {{/if_eq}}
                                 </div>
+
                                 </div>
                                
                         {{!-- END FILTER --}}
@@ -614,16 +615,19 @@
                             </div>
                         </div>
                         </div>
+                        
+                    {{!-- START PRINT --}}
+                    <div class="print">
                     <div class="table-responsive">
                         <table class="table" id="srTable">
                             <thead>
                                 <tr>
                                     <th onclick="sortTable(0)">Item  <i class="fa fa-sort"></i></th>
-                                    <th>Sales</th>
-                                     <th>Returns</th>
-                                      <th>Net Sales</th>
-                                       <th>% of Total</th>
-                                        <th>Return Rate</th>
+                                    <th style="text-align: right;">Sales</th>
+                                     <th style="text-align: right;">Returns</th>
+                                      <th style="text-align: right;">Net Sales</th>
+                                       <th style="text-align: right;">% of Total</th>
+                                        <th style="text-align: right;">Return Rate</th>
                                 </tr>
                             </thead>
                             <tbody id="addRecords">
@@ -880,18 +884,29 @@
                             </script>
                             <tfoot>
                                 <tr style="background-color: #F98C40; color: white">
-                                    <th></th>
-                                    <th id="daysales"></th>
-                                    <th id="dayreturns"></th>
-                                    <th id="daynet"></th>
-                                    <th id="dayperctot">100.00 %</th>
-                                    <th id="dayretrate"></th>
+                                    <th>Total</th>
+                                    <th id="daysales" style="text-align: right;"></th>
+                                    <th id="dayreturns" style="text-align: right;"></th>
+                                    <th id="daynet" style="text-align: right;"></th>
+                                    <th id="dayperctot" style="text-align: right;">100.00 %</th>
+                                    <th id="dayretrate" style="text-align: right;"></th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
+                    <br>
+                    <center>
+                    <div>
+                     <button id="received" class="btn btn-primary btn-sm" type="button" onclick="window.print()">Print Report</button>
+                    </div>
+                    </center>
+                    <br>
+                    
+                </div>
                 </div>
                 {{!-- END OF SALES RECORDS --}}      
+
+                
 
                     </div>
                     {{!-- END OF TAB CONTENT --}}
@@ -1120,3 +1135,24 @@
         }
         }
     </script>
+
+<style type="text/css" media="print">
+@media print
+{
+body * { 
+    visibility: hidden; 
+}
+.card * { 
+    visibility: visible; 
+}
+
+.btn.btn-primary.btn-sm * {
+    visibility: hidden;
+}
+
+#received {
+    display: none;
+}
+
+}
+</style>

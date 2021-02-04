@@ -281,3 +281,15 @@ a.d-flex.align-items-center.dropdown-item {
 a.d-flex.align-items-center.dropdown-item:hover {
   color: #858796 !important;
 }
+
+#srTable td {
+    text-align: right;
+}
+
+#srTable td:first-child {
+    text-align: left;
+}
+
+#srTable td:last-child tr:last-child {
+    padding-right: 30px;
+}

@@ -147,10 +147,10 @@
                                 <thead>
                                     <tr class="tr-addproducts">
                                         <th>Item</th>
-                                        <th>Quantity</th>
-                                        <th class="nochange">Actual Delivered</th>
-                                        <th>Rate</th>
-                                        <th>Amount</th>
+                                        <th style="text-align: right;">Quantity</th>
+                                        <th class="nochange" style="text-align: right; padding-right: 90px">Actual Delivered</th>
+                                        <th style="text-align: right; padding-right: 60px">Rate</th>
+                                        <th style="text-align: right; padding-right: 30px">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -158,10 +158,10 @@
                                         {{#each branchorders}}
                                             <tr class="clickable" >
                                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
-                                                <td> {{quantity}}</td>
-                                                <td class="nochange">{{actualDelivered}}</td>
-                                                <td>{{rate}}</td>
-                                                <td>{{amount}}</td>
+                                                <td style="text-align: right;"> {{quantity}}</td>
+                                                <td class="nochange" style="text-align: right; padding-right: 90px">{{actualDelivered}}</td>
+                                                <td style="text-align: right; padding-right: 60px">{{rate}}</td>
+                                                <td style="text-align: right; padding-right: 30px">{{amount}}</td>
                                             </tr>
                                         {{/each}}
                                     {{else}}

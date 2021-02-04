@@ -72,7 +72,7 @@
                                         <th onclick="sortTable(0)">Adjustment Date  <i class="fa fa-sort"></i></th>               
                                         <th>Adjustment # </th>
                                         <th onclick="sortTable(2)">Type  <i class="fa fa-sort"></i></th>
-                                        <th>Amount  </th>
+                                        <th style="text-align: right; padding-right: 60px">Amount  </th>
                                         <th onclick="sortTable(4)">Status <i class="fa fa-sort"></i></th>
                                     </tr>
                                 </thead>
@@ -82,7 +82,7 @@
                                         <td>{{returndate}}</td>
                                         <td> {{this._id}}</td>
                                         <td> {{type}}</td>
-                                        <td>{{amount}}</td>
+                                        <td style="text-align: right; padding-right: 60px">{{amount}}</td>
                                         <td>{{status}}</td>
                                     </tr>
                                     {{/each}}
