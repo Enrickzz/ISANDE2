@@ -2,17 +2,13 @@
         function statuscheck() {
             var status = document.getElementById('showstatus').innerText
             if(status == "Done"){
-                document.getElementById('additem').parentNode.removeChild(document.getElementById('additem'));
-                //document.getElementById('delete').parentNode.removeChild(document.getElementById('delete'));
-                document.getElementById('back').parentNode.removeChild(document.getElementById('back'));
-                document.getElementById('send').parentNode.removeChild(document.getElementById('send'));
-                document.getElementById('showstatus').style.color="green";
-
-                var removeButton2 = document.getElementsByClassName('delete');
-                var i;
-                for(i=0 ; i < removeButton2.length; i++){
-                    removeButton2[i].style.display = "none";
-                }
+                var rm = document.getElementById('send');
+                rm.parentNode.removeChild(rm);
+                document.getElementById("back").style.display="none"; 
+                document.getElementById("additem").style.display="none";
+                document.getElementById("confirm").style.display="none"; 
+                document.getElementById("reject").style.display="none";
+                $(".delete").remove();
             }else if(status == "Unsent"){
                 document.getElementById('showstatus').style.color="red";
                 //var rm = document.getElementById('send');
@@ -21,15 +17,32 @@
                 document.getElementById('showstatus').style.color="orange";
                 var rm = document.getElementById('send');
                 rm.parentNode.removeChild(rm);
-                document.getElementById("back").style.display="none";
+                document.getElementById("back").style.display="none"; 
+                document.getElementById("additem").style.display="none";
+                $(".delete").remove();
+            }else if(status == "Rejected"){
+                document.getElementById('showstatus').style.color="red";
+                var rm = document.getElementById('send');
+                rm.parentNode.removeChild(rm);
+                document.getElementById("back").style.display="none"; 
+                document.getElementById("additem").style.display="none";
+                document.getElementById("confirm").style.display="none"; 
+                document.getElementById("reject").style.display="none";
+                $(".delete").remove();
+            }else if(status == "Accepted"){
+                document.getElementById('showstatus').style.color="green";
+                var rm = document.getElementById('send');
+                rm.parentNode.removeChild(rm);
+                document.getElementById("back").style.display="none"; 
+                document.getElementById("additem").style.display="none";
+                document.getElementById("confirm").style.display="none"; 
+                document.getElementById("reject").style.display="none";
+                $(".delete").remove();
             }
-           
         }
         
         window.onload = statuscheck;
     </script>
-
-            
             <div class="container-fluid" onload="statuscheck()" >
                 <h3 class="text-dark mb-4">  <a href="/adjustments" type="button" class="btn btn-secondary btn-sm">Back</a> &nbsp;Adjustment Information</h3>
                 <div class="card">
@@ -40,7 +53,11 @@
                             </div>
                             <div class="col">
                                 <div class="buttonlist" style="float: right;">
-                                   
+                                    <form >
+                                        <input type="hidden" name="returnID" value="{{return._id}}">
+                                        <button id="confirm" class="btn btn-primary btn-sm" type="submit" formaction="/acceptreturns" formmethod="POST" style="background-color:green; border: 1px solid green;">Confirm</button>
+                                        <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectreturns" formmethod="POST" style="background-color:red; border: 1px solid red; ">Reject</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

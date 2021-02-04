@@ -1052,5 +1052,7 @@ router.post('/deletecart', cartController.delete);
 router.post('/deleteallcart', cartController.deleteall);
 router.post('/checkout', salesController.addsale);
 router.post('/QMaddinventory', inventoryController.QMaddInventory);
+router.post('/acceptreturns', returnController.statuschangeAcc);
+router.post('/rejectreturns', returnController.statuschangeRej);
 
 module.exports = router

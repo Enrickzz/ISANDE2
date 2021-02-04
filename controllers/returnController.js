@@ -106,7 +106,7 @@ exports.getID = (req, res) => {
         })
         var changestatus = {
           $set:{
-            status : "Done"
+            status : "For Review"
           }
         }
         returnModel.update({_id:id}, changestatus, function (er, done){
@@ -119,7 +119,7 @@ exports.getID = (req, res) => {
       })
     }else if(curr == "Damaged Goods"){
       returnItemsModel.fetchList({branchID: branch, returnID:id}, (err,result)=>{
-        /*result.forEach(function(doc) {
+        result.forEach(function(doc) {
           var obj = doc.toObject();
           var update = {
             $inc: {
@@ -135,7 +135,7 @@ exports.getID = (req, res) => {
 
             }
           })
-        })*/
+        })
         var changestatus = {
           $set:{
             status : "For Review"
@@ -151,4 +151,35 @@ exports.getID = (req, res) => {
       })
 
     }
+  }
+
+  exports.statuschangeRej = (req,res) =>{
+    var change = {
+      $set: {
+        status: "Rejected"
+      }
+    }
+    var id = req.body.returnID;
+    returnModel.update({_id:id}, change, (err, resultPO)=>{
+      if(err){
+        throw err;
+      }else{
+        res.redirect('/adjustments/view/'+id);
+      }
+    })
+  }
+  exports.statuschangeAcc = (req,res) =>{
+    var change = {
+      $set: {
+        status: "Accepted"
+      }
+    }
+    var id = req.body.returnID;
+    returnModel.update({_id:id}, change, (err, resultPO)=>{
+      if(err){
+        throw err;
+      }else{
+        res.redirect('/adjustments/view/'+id);
+      }
+    })
   }
