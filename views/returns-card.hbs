@@ -53,11 +53,13 @@
                             </div>
                             <div class="col">
                                 <div class="buttonlist" style="float: right;">
+                                    {{#if_eq utype "Admin"}}
                                     <form >
                                         <input type="hidden" name="returnID" value="{{return._id}}">
                                         <button id="confirm" class="btn btn-primary btn-sm" type="submit" formaction="/acceptreturns" formmethod="POST" style="background-color:green; border: 1px solid green;">Confirm</button>
                                         <button id="reject" class="btn btn-primary btn-sm" type="submit" formaction="/rejectreturns" formmethod="POST" style="background-color:red; border: 1px solid red; ">Reject</button>
                                     </form>
+                                    {{/if_eq}}
                                 </div>
                             </div>
                         </div>
@@ -132,7 +134,7 @@
                                                 <input type="hidden" name="returnitemID" value="{{this._id}}">
                                                 <input type="hidden" name="returnID" value="{{../return._id}}">
                                                 <input type="hidden" name="amount" value="{{amount}}">
-                                                <button class="delete" class="btn btn-primary btn-sm" type="submit">Delete</button>
+                                                <button class="delete btn btn-primary btn-sm" type="submit">Delete</button>
                                             </form>
                                         </td>
                                         </tr>

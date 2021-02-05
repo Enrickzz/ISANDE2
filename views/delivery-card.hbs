@@ -166,10 +166,11 @@
                                         {{/each}}
                                     {{else}}
                                         <tr class="clickable" >
-                                            <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
-                                            <td> {{request.quantity}}</td>
-                                            <td>{{request.cost}}</td>
-                                            <td>{{delivery.total}}</td>
+                                            <td ><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
+                                            <td style="text-align: right; padding-right: 60px"> {{request.quantity}}</td>
+                                            <td style="text-align: right; padding-right: 60px">0</td>
+                                            <td style="text-align: right; padding-right: 60px">{{request.cost}}</td>
+                                            <td style="text-align: right; padding-right: 60px">{{delivery.total}}</td>
                                         </tr>
                                     {{/if}}
                                 </tbody>
@@ -234,6 +235,7 @@
                             <th >Total Amount </th>
                         </tr>
                     </thead>
+                    
                     <form action="/QMaddinventory" method="POST" id="submitthis">
                     <input type="hidden" name="productionorderID" value="{{productionorder._id}}">
                     <input type="hidden" name="deliveryID" value="{{delivery._id}}">
@@ -258,6 +260,10 @@
                         <tr class="clickable" >
                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
                             <td> {{request.quantity}}</td>
+                             <td><input type="text" style="width: 75%;" class="actualQty form-control" name="actualQty" value="{{request.quantity}}"></td>
+                                    <input type="hidden" class="QMproduct" name="QMproduct" value="{{product}}">
+                                    <input type="hidden" class="QMrate" name="QMrate" value="{{request.cost}}">
+                                    <input type="hidden" class="QMamount" name="QMamount" value="{{delivery.total}}">
                             <td>{{request.cost}}</td>
                             <td>{{delivery.total}}</td>
                         </tr>

@@ -516,12 +516,14 @@
                                     {{!-- {{#each todayprodorders}} --}}
                                     {{!-- <tr class="clickable" onclick='window.location="/productionorder/view/{{this._id}}"'> --}}
                                     {{#each salesrecords}}
+                                        {{#if_eq ../realtoday this.date }}
                                         <tr class="clickable" onclick='window.location="/POSsales/view/{{this._id}}"'>
                                             <td>{{_id}}</td>
                                             <td style="text-align: right; padding-right: 40px; padding-left: 30px">{{total}}</td>
                                             <td style="padding-left: 90px;">{{staffincharge}}</td>
                                             <td style="text-align: right; padding-right: 50px">{{date}}</td>
                                         </tr>
+                                        {{/if_eq}}
                                     {{/each}}
                                     {{!-- {{/each}} --}}
                                 </tbody>
