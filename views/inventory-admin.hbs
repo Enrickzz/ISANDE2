@@ -73,7 +73,7 @@
                             <div style="" class="col">
                                 <div style="margin-left:4rem;" class="dataTables_filter" id="dataTable_filter2">
                                     {{#if_eq utype "Admin"}}
-                                    <label for="branchselect" style="font-weight: 700; width:70%"> Branch: 
+                                    <label for="branchselect" style="font-weight: 700; width:100%"> Branch: 
                                     <select id="branchselect" name="branchselect" class="form-control" onchange="filterinventory()">
                                         <option value="Branch A">Branch A</option>
                                         <option value="Branch B">Branch B</option>
@@ -82,7 +82,7 @@
                                     {{/if_eq}}
                                     
                                     {{#if_eq utype "Branch Manager"}}
-                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 70%;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
+                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 100%;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
                                             <option value="Branch A">Branch A</option>
                                             <option value="Branch B">Branch B</option>
                                             <option value="Branch C">Branch C</option>
@@ -198,7 +198,7 @@
                                             for(var i = 0; i < product.length; i++){
                                                 if(branchfilter.value == branchid[i].value && datefilter.value == invdate[i].value){
                                                     //alert(" "+branchfilter+ "==" + branchid[i].value + "\n" + datefilter +"=="+invdate[i].value);
-                                                    document.getElementById("inventorytable").innerHTML += "<tr class='remove'><td><img class="+'mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value+"</td><td>"+restockQuantity[i].value+"</td><td>"+additionalRestock[i].value+"</td><td>"+pulloutStock[i].value+"</td><td>"+returns[i].value+"</td><td>"+restockedInventory[i].value+"</td></tr>"
+                                                    document.getElementById("inventorytable").innerHTML += "<tr class='remove'><td class='removeimg'><img class="+' mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value+"</td><td>"+restockQuantity[i].value+"</td><td>"+additionalRestock[i].value+"</td><td>"+pulloutStock[i].value+"</td><td>"+returns[i].value+"</td><td>"+restockedInventory[i].value+"</td></tr>"
                                                 }
                                             }
                                             document.getElementById("pickedday").innerHTML = branchfilter.value +" "+ datefilter.value;
@@ -206,14 +206,15 @@
                                     </script>
                                 </tbody>
                                 <tfoot id="summary">
-                                <tr style="background-color: #F98C40; color: white">
+                                <tr style="background-color: #F98C40; color: #F98C40">
+                                    <th>0</th>
+                                    <th id="daysales" style="text-align: right;">0</th>
+                                    <th id="dayreturns" style="text-align: right;"><span>0 </span></th>
+                                    <th id="daynet" style="text-align: right;"><span>0 </span></th>
+                                    <th id="dayperctot" style="text-align: right;"><span> 0</span></th>
+                                    <th id="dayretrate" style="text-align: right;"><span>0 </span></th>
+                                    <th id="dayretrate" style="text-align: right;"><span>0 </span></th>
                                     <th></th>
-                                    <th id="daysales" style="text-align: right;"></th>
-                                    <th id="dayreturns" style="text-align: right;"></th>
-                                    <th id="daynet" style="text-align: right;"></th>
-                                    <th id="dayperctot" style="text-align: right;"></th>
-                                    <th id="dayretrate" style="text-align: right;"></th>
-                                    <th></th><th></th>
                                 </tr>
                             </tfoot>
                             </table>
@@ -329,7 +330,7 @@ body * {
 #summary * {
     visibility: visible;
     background: #F98C40 !important; 
-    color: white !important;
+    color: #F98C40 !important;
 }
 #received {
     display: none;

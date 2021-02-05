@@ -497,8 +497,8 @@
                     <div class="container tab-pane fade" id="poshistory" style="padding-top: 30px;">
                         {{!-- FILTER TABLE --}}
                                 <div class="dataTables_filter" id="dataTable_filter"> Date: <label> 
-                                    <input type="text" class="form-control form-control-sm" 
-                                        id="filter" onkeyup="filter()" placeholder="All"></label>
+                                    <input type="date" class="form-control form-control-sm today" 
+                                        id="filter" value="{{realtoday}}" onkeyup="filter()" placeholder="{{realtoday}}"></label>
                                 </div>
                         {{!-- END FILTER --}}
                             <div style="padding-bottom: 10px;"> </div>
@@ -663,6 +663,7 @@
                                     <input type="hidden" name="plist" class="plist" value="{{this.product}}">
                                     <input type="hidden" class="thisreturns" value="{{this.returns}}" name="" id="">
                                     <input type="hidden" class="invsales" value="{{this.totsales}}" name="" id="">
+                                    <input type="hidden" class="srp" value="{{this.srp}}" name="" id="">
                                 {{/each}}
                                 {{/if_eq}}
                                 {{#each plist}}
@@ -675,6 +676,7 @@
                                     <input type="hidden" class="thisreturns" value="{{this.returns}}" name="" id="">
                                     <input type="hidden" class="invsales" value="{{this.totsales}}" name="" id="">
                                     <input type="hidden" class="invbranch" value="{{this.branch_id}}" name="" id="">
+                                    <input type="hidden" class="srp" value="{{this.srp}}" name="" id="">
                                 {{/each}}
                                 {{/if_eq}}
                                <input type="hidden" class="realtoday" value="{{realtoday}}" name="" id="">            
@@ -701,6 +703,7 @@
                                     var returns = document.getElementsByClassName("thisreturns");
                                     var invdate = document.getElementsByClassName("inventorydate");
                                     var realday = document.getElementsByClassName("realtoday");
+                                    var srp = document.getElementsByClassName("srp");
                                     var pickdate = document.getElementById("datepicker").value;
                                     var totalAllProd = 0;
                                     var totalAllreturns= 0;
@@ -718,29 +721,36 @@
                                     for(var i = 0; i < ref.length ; i++){
                                        console.log(ref[i].value); 
                                         if(invdate[i].value == realday[0].value){
-                                            var netsalesOut = invsales[i].value - returns[i].value;
+                                            var netsalesOut = invsales[i].value - (returns[i].value * srp[i].value);
                                             var percentotOut= invsales[i].value / totalAllProd * 100;
                                             var returnrateOut = returns[i].value / totalAllreturns *100 ;
                                             var productref =ref[i].value;
-                                            var finalreturn = returns[i].value;
+                                            var finalreturn = returns[i].value * srp[i].value;
                                             var finalsales = invsales[i].value;
 
                                             daysales = daysales + parseFloat(invsales[i].value);
-                                            dayreturns = dayreturns + parseFloat(returns[i].value);
+                                            dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
                                             daynet = daynet + parseFloat(netsalesOut);
-                                            dayretrate = dayretrate + returns[i].value;
+                                            dayretrate = dayretrate + (returns[i].value * srp[i].value);
 
-                                            var fmtdsales = daysales.toString().split(".");
+                                            var fmtdsales = finalsales.toString().split(".");
                                             fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                             fmtdsales.join(".");
 
-                                            var fmtdnet = daynet.toString().split(".");
+                                            var fmtdnet = netsalesOut.toString().split(".");
                                             fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                             fmtdnet.join(".");
                                             document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmtdsales+".00</td><td>"+finalreturn+".00</td><td>"+fmtdnet+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                        
                                     }
+                                    var fmtdsales = daysales.toString().split(".");
+                                    fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    fmtdsales.join(".");
+
+                                    var fmtdnet = daynet.toString().split(".");
+                                    fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    fmtdnet.join(".");
                                     dayretrate = (dayretrate/daynet)*100
                                     document.getElementById("daysales").innerHTML = fmtdsales+".00";
                                     document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
@@ -788,7 +798,7 @@
                                             var percentotOut= invsales[i].value / totalAllProd * 100;
                                             var returnrateOut = returns[i].value / invsales[i].value *100 ;
                                             var productref =ref[i].value;
-                                            var finalreturn = returns[i].value;
+                                            var finalreturn = returns[i].value *180;
                                             var finalsales = invsales[i].value;
                                             
                                             daysales = daysales + parseFloat(invsales[i].value);
@@ -821,6 +831,7 @@
                                     var returns = document.getElementsByClassName("thisreturns");
                                     var invdate = document.getElementsByClassName("inventorydate");
                                     var invbranch = document.getElementsByClassName("invbranch");
+                                    var srp = document.getElementsByClassName("srp");
 
                                     var realday = document.getElementsByClassName("realtoday");
                                     var pickdate = document.getElementById("datepicker").value;
@@ -849,19 +860,20 @@
                                        var finalreturn= 0;
                                        var finalsales = 0;
                                        var prodinvtotal = 0;
+                                       
                                        for(var k = 0; k < invdate.length ; k++){
                                            if(invdate[k].value == pickdate && reference == ref[k].value){
-                                             netsalesOut = netsalesOut + parseFloat(invsales[k].value - returns[k].value) ;
+                                             netsalesOut = netsalesOut + parseFloat(invsales[k].value - (returns[k].value * srp[k].value)) ;
                                              percentotOut= percentotOut + parseFloat(invsales[k].value);
                                              returnrateOut = returnrateOut+ parseFloat(returns[k].value);
                                              prodinvtotal = prodinvtotal + parseFloat(invsales[k].value);
                                              productref = ref[k].value;
-                                             finalreturn = finalreturn + parseFloat(returns[k].value);
+                                             finalreturn = finalreturn + parseFloat(returns[k].value * srp[k].value);
                                              finalsales = finalsales+ parseFloat(invsales[k].value);
                                             
                                             daysales = daysales + parseFloat(invsales[k].value);
-                                            dayreturns = dayreturns + parseFloat(returns[k].value);
-                                            daynet = daynet + parseFloat(invsales[k].value - returns[k].value);
+                                            dayreturns = dayreturns + parseFloat(returns[k].value * srp[k].value);
+                                            daynet = daynet + parseFloat(invsales[k].value - (returns[k].value*srp[k].value));
                                             dayretrate = dayretrate + parseFloat(returns[k].value);
                                         }
                                        }
@@ -872,13 +884,25 @@
                                         fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                         fmtdsales.join(".");
 
-                                        var fmtdnet = daynet.toString().split(".");
+                                        var fmtdnet = netsalesOut.toString().split(".");
                                         fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                         fmtdnet.join(".");
-                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmtdsales+".00</td><td>"+finalreturn.toFixed(2)+"</td><td>"+fmtdnet+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+
+                                        var fmfinalsales = finalsales.toString().split(".");
+                                        fmfinalsales[0] = fmfinalsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        fmfinalsales.join(".");
+                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmfinalsales+".00</td><td>"+finalreturn.toFixed(2)+"</td><td>"+fmtdnet+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         
                                     }
                                     dayretrate = (dayretrate/daynet)*100
+                                    
+                                    var fmtdsales = daysales.toString().split(".");
+                                    fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    fmtdsales.join(".");
+
+                                    var fmtdnet = daynet.toString().split(".");
+                                    fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    fmtdnet.join(".");
                                     document.getElementById("daysales").innerHTML = fmtdsales+".00";
                                     document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                     document.getElementById("daynet").innerHTML = fmtdnet+".00";
@@ -904,30 +928,45 @@
                                             var finalreturn= 0;
                                             var finalsales = 0;
                                             var prodinvtotal = 0;
-                                            
+                                            //THIS SHIT
                                             for(var k = 0; k < invdate.length ; k++){
                                                 if(invdate[k].value == pickdate && reference == ref[k].value && branch.value == invbranch[k].value){
-                                                    netsalesOut = parseFloat(invsales[k].value - returns[k].value) ;
+                                                    netsalesOut = parseFloat(invsales[k].value - (returns[k].value * srp[k].value)) ;
                                                     percentotOut= parseFloat(invsales[k].value);
                                                     returnrateOut = parseFloat(returns[k].value);
                                                     prodinvtotal = parseFloat(invsales[k].value);
                                                     productref = ref[k].value;
-                                                    finalreturn = parseFloat(returns[k].value);
+                                                    finalreturn = parseFloat(returns[k].value * srp[k].value);
                                                     finalsales = parseFloat(invsales[k].value);
                                                     //alert(branch.value +"===="+ invbranch[k].value);
                                                     daysales =daysales +  parseFloat(invsales[k].value);
-                                                    dayreturns =dayreturns +  parseFloat(returns[k].value);
-                                                    daynet =daynet + parseFloat(invsales[k].value - returns[k].value);
+                                                    dayreturns =dayreturns +  parseFloat(returns[k].value * srp[k].value);
+                                                    daynet =daynet + parseFloat(invsales[k].value - (returns[k].value * srp[k].value));
                                                     dayretrate =dayretrate + parseFloat(returns[k].value);
                                                 }
                                             }
                                             percentotOut = percentotOut/thistotalAllProd*100;
                                             returnrateOut = returnrateOut/thistotalAllreturns *100;
-                                            document.getElementById("daysales").innerHTML = daysales.toFixed(2);
+
+                                            var fmtdsales = daysales.toString().split(".");
+                                            fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            fmtdsales.join(".");
+
+                                            var fmtdnet = daynet.toString().split(".");
+                                            fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            fmtdnet.join(".");
+
+                                             var fmfinalsales = finalsales.toString().split(".");
+                                            fmfinalsales[0] = fmfinalsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            fmfinalsales.join(".");
+                                            var fmntsale = netsalesOut.toString().split(".");
+                                            fmntsale[0] = fmntsale[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            fmntsale.join(".");
+                                            document.getElementById("daysales").innerHTML = fmtdsales+".00";
                                             document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
-                                            document.getElementById("daynet").innerHTML = daynet.toFixed(2);
+                                            document.getElementById("daynet").innerHTML = fmtdnet+".00";
                                             document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales.toFixed(2)+"</td><td>"+finalreturn.toFixed(2)+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmfinalsales+".00</td><td>"+finalreturn.toFixed(2)+"</td><td>"+fmntsale+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                         document.getElementById("pickedday").innerHTML = branch.value +" "+ pickdate;
                                         }
