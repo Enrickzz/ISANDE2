@@ -743,7 +743,7 @@
                                     }
                                     dayretrate = (dayretrate/daynet)*100
                                     document.getElementById("daysales").innerHTML = fmtdsales+".00";
-                                    document.getElementById("dayreturns").innerHTML = dayreturns;
+                                    document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                     document.getElementById("daynet").innerHTML = fmtdnet+".00";
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) +"%";
                                 }
@@ -804,7 +804,7 @@
                                     }
                                     dayretrate = (dayretrate/daynet)*100
                                     document.getElementById("daysales").innerHTML = daysales.toFixed(2);
-                                    document.getElementById("dayreturns").innerHTML = dayreturns;
+                                    document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
                                     document.getElementById("daynet").innerHTML = daynet.toFixed(2);
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
                                 }

@@ -137,7 +137,7 @@
                             <table class="table" id="invTable">
                                 <thead style="text-align: center;">
                                     <tr>
-                                        <th><span></span></th>
+                                        <th class="removeimg"><span></span></th>
                                         <th onclick="sortTable(0)">Name  <i class="fa fa-sort"></i></th>
                                         <th style="text-align: right;">Opening Stock  </th>
                                         <th style="text-align: right;">Production Quantity</th>
@@ -166,7 +166,7 @@
                                     {{#if_eq utype "Branch Manager"}}
                                         {{#each inventory}}
                                         <tr>
-                                            <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png"></td>
+                                            <td class="removeimg"><img class=" mini-pic-list" src="../../assets/img/icons/box-2.png"></td>
                                             <td>{{product}}</td>
                                             <td style="text-align: right;">{{startInv}}</td>
                                             <td style="text-align: right;">{{restockQuantity}}</td>
@@ -343,6 +343,9 @@ body * {
 }
 #textprint {
     font-size: 3rem;
+}
+.removeimg{
+    display: none;
 }
 }
 </style>
