@@ -73,7 +73,7 @@
                             <div style="" class="col">
                                 <div style="margin-left:4rem;" class="dataTables_filter" id="dataTable_filter2">
                                     {{#if_eq utype "Admin"}}
-                                    <label for="branchselect" style="font-weight: 700;"> Branch: 
+                                    <label for="branchselect" style="font-weight: 700; width:70%"> Branch: 
                                     <select id="branchselect" name="branchselect" class="form-control" onchange="filterinventory()">
                                         <option value="Branch A">Branch A</option>
                                         <option value="Branch B">Branch B</option>
@@ -82,7 +82,7 @@
                                     {{/if_eq}}
                                     
                                     {{#if_eq utype "Branch Manager"}}
-                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 10rem;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
+                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 70%;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
                                             <option value="Branch A">Branch A</option>
                                             <option value="Branch B">Branch B</option>
                                             <option value="Branch C">Branch C</option>
