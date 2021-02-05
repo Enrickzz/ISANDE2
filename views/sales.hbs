@@ -730,14 +730,21 @@
                                             daynet = daynet + parseFloat(netsalesOut);
                                             dayretrate = dayretrate + returns[i].value;
 
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+".00</td><td>"+finalreturn+".00</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                            var fmtdsales = daysales.toString().split(".");
+                                            fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            fmtdsales.join(".");
+
+                                            var fmtdnet = daynet.toString().split(".");
+                                            fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            fmtdnet.join(".");
+                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmtdsales+".00</td><td>"+finalreturn+".00</td><td>"+fmtdnet+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                        
                                     }
                                     dayretrate = (dayretrate/daynet)*100
-                                    document.getElementById("daysales").innerHTML = daysales.toFixed(2);
+                                    document.getElementById("daysales").innerHTML = fmtdsales+".00";
                                     document.getElementById("dayreturns").innerHTML = dayreturns;
-                                    document.getElementById("daynet").innerHTML = daynet.toFixed(2);
+                                    document.getElementById("daynet").innerHTML = fmtdnet+".00";
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) +"%";
                                 }
                                 var utype = document.getElementById('utype').value;
@@ -860,13 +867,21 @@
                                        }
                                         percentotOut = percentotOut/totalAllProd*100;
                                         returnrateOut = returnrateOut/prodinvtotal *100;
-                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales.toFixed(2)+"</td><td>"+finalreturn.toFixed(2)+"</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+
+                                        var fmtdsales = daysales.toString().split(".");
+                                        fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        fmtdsales.join(".");
+
+                                        var fmtdnet = daynet.toString().split(".");
+                                        fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        fmtdnet.join(".");
+                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmtdsales+".00</td><td>"+finalreturn.toFixed(2)+"</td><td>"+fmtdnet+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         
                                     }
                                     dayretrate = (dayretrate/daynet)*100
-                                    document.getElementById("daysales").innerHTML = daysales.toFixed(2);
+                                    document.getElementById("daysales").innerHTML = fmtdsales+".00";
                                     document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
-                                    document.getElementById("daynet").innerHTML = daynet.toFixed(2);
+                                    document.getElementById("daynet").innerHTML = fmtdnet+".00";
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
 
                                     document.getElementById("pickedday").innerHTML = "All Branches" +" "+ pickdate;
