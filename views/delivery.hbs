@@ -50,7 +50,7 @@
                                     <tr>
                                         <th onclick="sortTable(0)">Package Date  <i class="fa fa-sort"></i></th>
                                         <th>Order ID</th>
-                                        <th style="text-align: right; padding-right: 60px">Total Amount </th>
+                                        <th style="text-align: right;">Total Amount </th>
                                         <th onclick="sortTable(3)">Status <i class="fa fa-sort"></i></th>
                                         <th><span></span></th>
                                     </tr>
@@ -71,7 +71,7 @@
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
                                             <td>{{productionID}}</td>
-                                            <td>{{total}}</td>
+                                            <td style="text-align: right;">{{total}}.00</td>
                                             <td>{{status}}</td>
                                         </tr>
                                     {{/each}}
@@ -96,7 +96,7 @@
                                     <tr>
                                         <th onclick="sortTable2(0)">Package Date  <i class="fa fa-sort"></i></th>
                                         <th>Order ID</th>
-                                        <th>Total Amount </th>
+                                        <th style="text-align: right;">Total Amount </th>
                                         <th onclick="sortTable2(3)">Status <i class="fa fa-sort"></i></th>
                                         <th><span></span></th>
                                     </tr>
@@ -106,7 +106,7 @@
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
                                             <td>{{productionID}}</td>
-                                            <td>{{total}}</td>
+                                            <td style="text-align: right;">{{total}}.00</td>
                                             <td>{{status}}</td>
                                         </tr>
                                     {{/each}}

@@ -51,11 +51,11 @@
                             <li class="nav-item">
                             <a class="nav-link active" id="lnk1" data-toggle="tab" href="#production_order">Today's Production Orders</a>
                             </li>
-
+                            {{#if_eq utype "Branch Manager"}}
                             <li class="nav-item" >
                             <a class="nav-link" id="create" data-toggle="tab" href="#regproduct_group" >Create Production Order</a>
                             </li>
-
+                            {{/if_eq}}
                             <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#archived">Archive</a>
                             </li>
