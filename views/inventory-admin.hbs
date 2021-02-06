@@ -179,6 +179,7 @@
                                     {{/if_eq}}
                                     <script>
                                         function filterinventory(){
+                                            
                                             $(".remove").remove(); 
                                             //document.getElementById("inventorytable").innerHTML = "";
                                             var datefilter = document.getElementById("datepicker");
@@ -198,11 +199,13 @@
                                             for(var i = 0; i < product.length; i++){
                                                 if(branchfilter.value == branchid[i].value && datefilter.value == invdate[i].value){
                                                     //alert(" "+branchfilter+ "==" + branchid[i].value + "\n" + datefilter +"=="+invdate[i].value);
-                                                    document.getElementById("inventorytable").innerHTML += "<tr class='remove'><td class='removeimg'><img class="+' mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value+"</td><td>"+restockQuantity[i].value+"</td><td>"+additionalRestock[i].value+"</td><td>"+pulloutStock[i].value+"</td><td>"+returns[i].value+"</td><td>"+restockedInventory[i].value+"</td></tr>"
+                                                    document.getElementById("inventorytable").innerHTML +=   "<tr class='remove'><td class='removeimg'><img class="+' mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+restockQuantity[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+additionalRestock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+pulloutStock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+returns[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+restockedInventory[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td></tr>"
                                                 }
                                             }
                                             document.getElementById("pickedday").innerHTML = branchfilter.value +" "+ datefilter.value;
                                         }window.onload = filterinventory();
+
+                                        
                                     </script>
                                 </tbody>
                                 <tfoot id="summary">
@@ -228,6 +231,126 @@
                     </div>
                     </center>
                     <br>
+                    </div>
+                    <div id="printthis" style="min-height: 11.5in;max-height: 11.5in;width: 8.5in;height: 11.5in;min-width: 8.5in;max-width: 8.5in; display:none;">
+                            
+                            <div class="col" style="background:#f98c40;margin-bottom: 15px;padding: 5px;">
+                                <div><img class="d-block" src="/assets/img/icons/bakery_logo2.png" style="width: 80px;margin-left: auto;margin-right: auto;">
+                                    <h5 class="text-center" style="margin-bottom: 0px;margin-top: 5px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 18px; font-size: 2rem;">LOUELLA BAKERY</h5>
+                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif; font-size: 1.5rem;">Daily Inventory Report Branch A</h6>
+                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 1.5rem;">For February 1, 2021</h6>
+                                </div>
+                            </div>
+                            <div class="d-block" style="background:#f98c40;">
+                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">FCC</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">LO Number</th>
+                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Purchase Date</th>
+                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Buying Price</th>
+                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Quantity</th>
+                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="padding: 2px;">
+                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 323242</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/01/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
+                                        </tr>
+                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
+                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 432423</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/02/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
+                                        </tr>
+                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
+                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 432432</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/03/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
+                                        </tr>
+                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
+                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 43242</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/04/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-block" style="background:#f98c40;">
+                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">RCC</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">LO Number</th>
+                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Purchase Date</th>
+                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Buying Price</th>
+                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Quantity</th>
+                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="padding: 2px;">
+                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/01/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
+                                        </tr>
+                                        <tr style="padding: 2px;">
+                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/02/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
+                                        </tr>
+                                        <tr style="padding: 2px;">
+                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/03/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
+                                        </tr>
+                                        <tr style="padding: 2px;">
+                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/04/2021</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
+                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
+                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
+                                        </tr>
+                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;"></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xl-4 offset-xl-8" style="padding: 0px;">
+                                <div class="d-inline-flex d-xl-flex justify-content-xl-center align-items-xl-center" style="background: #fbb35a;margin-bottom: 15px;"></div>
+                            </div>
+                            <div class="footer-clean" style="padding: 0px;">
+                                <footer>
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <div class="col"></div>
+                                            <div class="col-sm-4 col-md-3 col-xl-3 item" style="text-align: center;"></div>
+                                            <div class="col footer">
+                                                <h3 style="text-align: right;font-weight: normal;font-family: Alata, sans-serif;font-size: 14px;">Page 1 of 1</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                        <div class="col"></div>
                     </div>
                 {{!-- END OF ALL INVENTORY --}}
                </div> 
@@ -339,6 +462,7 @@ body * {
     display: none;
 }
 #bgcolor {
+    display: none;
     background-color:#f98c40;
     color: white;
 }
@@ -347,6 +471,12 @@ body * {
 }
 .removeimg{
     display: none;
+}
+#invTable{
+    display: none !important;
+}
+#printthis {
+    display: inline !important;
 }
 }
 </style>
