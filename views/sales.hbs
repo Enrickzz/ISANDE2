@@ -694,6 +694,11 @@
                             </tfoot>
                             <script>
                                 function loadtrans(){
+                                    const formatter = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'PHP',
+                                        minimumFractionDigits: 2
+                                    })
                                     var finalnets = document.getElementsByClassName("net");
                                     var finalpercent = document.getElementsByClassName("percent");
                                     var finalreturnrate = document.getElementsByClassName("returnrate");
@@ -728,33 +733,27 @@
                                             var finalreturn = returns[i].value * srp[i].value;
                                             var finalsales = invsales[i].value;
 
-                                            daysales = daysales + parseFloat(invsales[i].value);
-                                            dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
-                                            daynet = daynet + parseFloat(netsalesOut);
-                                            dayretrate = dayretrate + (returns[i].value * srp[i].value);
-
-                                            var fmtdsales = finalsales.toString().split(".");
-                                            fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                            fmtdsales.join(".");
-
-                                            var fmtdnet = netsalesOut.toString().split(".");
-                                            fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                            fmtdnet.join(".");
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmtdsales+".00</td><td>"+finalreturn+".00</td><td>"+fmtdnet+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                            if(finalsales < 0){
+                                                netsalesOut = 0;
+                                                finalsales = 0;
+                                                dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
+                                                var subtractthis = returns[i].value * srp[i].value;
+                                                daynet = daynet - parseFloat(subtractthis);
+                                            }else{
+                                                daysales = daysales + parseFloat(invsales[i].value);
+                                                dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
+                                                daynet = daynet + parseFloat(netsalesOut);
+                                                dayretrate = dayretrate + (returns[i].value * srp[i].value);
+                                            }
+                                            
+                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                        
                                     }
-                                    var fmtdsales = daysales.toString().split(".");
-                                    fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                    fmtdsales.join(".");
-
-                                    var fmtdnet = daynet.toString().split(".");
-                                    fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                    fmtdnet.join(".");
-                                    dayretrate = (dayretrate/daynet)*100
-                                    document.getElementById("daysales").innerHTML = fmtdsales+".00";
-                                    document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
-                                    document.getElementById("daynet").innerHTML = fmtdnet+".00";
+                                    
+                                    document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
+                                    document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
+                                    document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) +"%";
                                 }
                                 var utype = document.getElementById('utype').value;
@@ -820,6 +819,11 @@
                                 }
 
                                 function loadtransAdmin(){
+                                    const formatter = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'PHP',
+                                        minimumFractionDigits: 2
+                                    })
                                     $(".remove").remove();
                                     var finalnets = document.getElementsByClassName("net");
                                     var finalpercent = document.getElementsByClassName("percent");
@@ -879,33 +883,21 @@
                                        }
                                         percentotOut = percentotOut/totalAllProd*100;
                                         returnrateOut = returnrateOut/prodinvtotal *100;
-
-                                        var fmtdsales = daysales.toString().split(".");
-                                        fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                        fmtdsales.join(".");
-
-                                        var fmtdnet = netsalesOut.toString().split(".");
-                                        fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                        fmtdnet.join(".");
-
-                                        var fmfinalsales = finalsales.toString().split(".");
-                                        fmfinalsales[0] = fmfinalsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                        fmfinalsales.join(".");
-                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmfinalsales+".00</td><td>"+finalreturn.toFixed(2)+"</td><td>"+fmtdnet+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                        if(finalsales < 0 )
+                                            {
+                                                daysales = daysales - finalsales;
+                                                daynet = daynet - finalsales;
+                                                finalsales = 0;
+                                                netsalesOut = 0;
+                                            }
+                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         
                                     }
                                     dayretrate = (dayretrate/daynet)*100
                                     
-                                    var fmtdsales = daysales.toString().split(".");
-                                    fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                    fmtdsales.join(".");
-
-                                    var fmtdnet = daynet.toString().split(".");
-                                    fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                    fmtdnet.join(".");
-                                    document.getElementById("daysales").innerHTML = fmtdsales+".00";
-                                    document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
-                                    document.getElementById("daynet").innerHTML = fmtdnet+".00";
+                                    document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
+                                    document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
+                                    document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
                                     document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
 
                                     document.getElementById("pickedday").innerHTML = "All Branches" +" "+ pickdate;
@@ -944,29 +936,22 @@
                                                     daynet =daynet + parseFloat(invsales[k].value - (returns[k].value * srp[k].value));
                                                     dayretrate =dayretrate + parseFloat(returns[k].value);
                                                 }
+                                                
                                             }
                                             percentotOut = percentotOut/thistotalAllProd*100;
                                             returnrateOut = returnrateOut/thistotalAllreturns *100;
-
-                                            var fmtdsales = daysales.toString().split(".");
-                                            fmtdsales[0] = fmtdsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                            fmtdsales.join(".");
-
-                                            var fmtdnet = daynet.toString().split(".");
-                                            fmtdnet[0] = fmtdnet[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                            fmtdnet.join(".");
-
-                                             var fmfinalsales = finalsales.toString().split(".");
-                                            fmfinalsales[0] = fmfinalsales[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                            fmfinalsales.join(".");
-                                            var fmntsale = netsalesOut.toString().split(".");
-                                            fmntsale[0] = fmntsale[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                            fmntsale.join(".");
-                                            document.getElementById("daysales").innerHTML = fmtdsales+".00";
-                                            document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
-                                            document.getElementById("daynet").innerHTML = fmtdnet+".00";
+                                            if(finalsales < 0 )
+                                            {
+                                                daysales = daysales - finalsales;
+                                                daynet = daynet - finalsales;
+                                                finalsales = 0;
+                                                netsalesOut = 0;
+                                            }
+                                            document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
+                                            document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
+                                            document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
                                             document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+fmfinalsales+".00</td><td>"+finalreturn.toFixed(2)+"</td><td>"+fmntsale+".00</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
                                         }
                                         document.getElementById("pickedday").innerHTML = branch.value +" "+ pickdate;
                                         }
@@ -983,6 +968,7 @@
                     </div>
                     </center>
                     <br>
+                    
                     <div id="printthis" style="min-height: 11.5in;max-height: 11.5in;width: 8.5in;height: 11.5in;min-width: 8.5in;max-width: 8.5in; display:none;">
                             
                             <div class="col" style="background:#f98c40;margin-bottom: 15px;padding: 5px;">
@@ -1101,8 +1087,6 @@
                                     </div>
                                 </footer>
                             </div>
-                        
-                        
                         <div class="col"></div>
                     </div>
                 </div>
