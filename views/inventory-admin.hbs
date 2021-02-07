@@ -62,7 +62,7 @@
             </script>
             <input type="hidden" id="whichbranch" value="{{whichbranch}}">
             <input type="hidden" id="usertype" value="{{usertype}}">
-            <input type="hidden" id="usertype" value="{{usertype}}">
+            <input type="hidden" id="realtoday" value="{{realtoday}}">
             <div class="container-fluid" style="padding-bottom: 50px;">
                 <!--<h3 class="text-dark mb-1">Inventory</h3>-->
 
@@ -144,11 +144,12 @@
                                         <th style="text-align: right;">Quantity In  </th>
                                         <th style="text-align: right;">Quantity Out  </th>
                                         <th style="text-align: right;">Adjustments</th>
-                                        <th style="text-align: right; padding-right: 30px">Realtime Stock  </th>
+                                        <th style="text-align: right;">Realtime Stock  </th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody id="inventorytable">
+                                    
                                     {{#if_eq utype "Admin"}}
                                         {{#each reportinv}}
                                             <input type="hidden" class="invdate" value="{{this.inventorydate}}">
@@ -173,40 +174,11 @@
                                             <td style="text-align: right;">{{additionalRestock}}</td>
                                             <td style="text-align: right;">{{pulloutStock}}</td>
                                              <td style="text-align: right;">{{returns}}</td>
-                                            <td style="text-align: right; padding-right: 30px">{{restockedInventory}}</td>
+                                            <td style="text-align: right;">{{restockedInventory}}</td>
                                         </tr>
                                         {{/each}}
                                     {{/if_eq}}
-                                    <script>
-                                        function filterinventory(){
-                                            
-                                            $(".remove").remove(); 
-                                            //document.getElementById("inventorytable").innerHTML = "";
-                                            var datefilter = document.getElementById("datepicker");
-                                            var branchfilter = document.getElementById("branchselect");
-                                            
-                                            var invdate = document.getElementsByClassName("invdate");
-                                            var branchid = document.getElementsByClassName("branchid");
-                                            var product = document.getElementsByClassName("product1");
-                                            var startInv = document.getElementsByClassName("startInv");
-                                            var restockQuantity = document.getElementsByClassName("restockQuantity");
-                                            var additionalRestock = document.getElementsByClassName("additionalRestock");
-                                            var pulloutStock = document.getElementsByClassName("pulloutStock");
-                                            var returns = document.getElementsByClassName("returns");
-                                            var restockedInventory = document.getElementsByClassName("restockedInventory");
-                                            var totsales = document.getElementsByClassName("totsales");
-
-                                            for(var i = 0; i < product.length; i++){
-                                                if(branchfilter.value == branchid[i].value && datefilter.value == invdate[i].value){
-                                                    //alert(" "+branchfilter+ "==" + branchid[i].value + "\n" + datefilter +"=="+invdate[i].value);
-                                                    document.getElementById("inventorytable").innerHTML +=   "<tr class='remove'><td class='removeimg'><img class="+' mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+restockQuantity[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+additionalRestock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+pulloutStock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+returns[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+restockedInventory[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td></tr>"
-                                                }
-                                            }
-                                            document.getElementById("pickedday").innerHTML = branchfilter.value +" "+ datefilter.value;
-                                        }window.onload = filterinventory();
-
-                                        
-                                    </script>
+                                    
                                 </tbody>
                                 <tfoot id="summary">
                                 <tr style="background-color: #F98C40; color: #F98C40">
@@ -237,58 +209,61 @@
                             <div class="col" style="background:#f98c40;margin-bottom: 15px;padding: 5px;">
                                 <div><img class="d-block" src="/assets/img/icons/bakery_logo2.png" style="width: 80px;margin-left: auto;margin-right: auto;">
                                     <h5 class="text-center" style="margin-bottom: 0px;margin-top: 5px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 18px; font-size: 2rem;">LOUELLA BAKERY</h5>
-                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif; font-size: 1.5rem;">Daily Inventory Report Branch A</h6>
-                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 1.5rem;">For February 1, 2021</h6>
+                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif; font-size: 1.5rem;">Daily Inventory Report <span id="insertbranch">Branch A</span> </h6>
+                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 1.5rem;"> <span id="insertdate"></span>  </h6>
                                 </div>
                             </div>
                             <div class="d-block" style="background:#f98c40;">
-                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">FCC</h5>
+                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">Inventory Report</h5>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">LO Number</th>
-                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Purchase Date</th>
-                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Buying Price</th>
-                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Quantity</th>
-                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Amount</th>
-                                        </tr>
+                                    <thead id="insertheader">
+                                    {{#if_eq utype "Branch Manager"}}
+                                       <tr>
+                                        <th class="removeimg"><span></span></th>
+                                        <th onclick="sortTable(0)" style="border-style:none;">Name </th>
+                                        <th style="text-align: right; border-style:none;">Opening Stock</th>
+                                        <th style="text-align: right;border-style:none;">Production Quantity</th>
+                                        <th style="text-align: right;border-style:none;">Transferred</th>
+                                        <th style="text-align: right;border-style:none;">Pull Out</th>
+                                        <th style="text-align: right;border-style:none;">Adjustments</th>
+                                        <th style="text-align: right; border-style:none;">Current Stock</th>
+                                    </tr>
+                                    {{/if_eq}}
                                     </thead>
-                                    <tbody>
-                                        <tr style="padding: 2px;">
-                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 323242</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/01/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
+                                    <tbody id="insertprint">
+                                         {{#if_eq utype "Branch Manager"}}
+                                        {{#each inventory}}
+                                        <tr>
+                                            <td class="removeimg"><img class=" mini-pic-list" src="../../assets/img/icons/box-2.png"></td>
+                                            <td style="border-style:none;">{{product}}</td>
+                                            <td style="text-align: right; border-style:none;">{{startInv}}</td>
+                                            <td style="text-align: right; border-style:none;">{{restockQuantity}}</td>
+                                            <td style="text-align: right; border-style:none;">{{additionalRestock}}</td>
+                                            <td style="text-align: right; border-style:none;">{{pulloutStock}}</td>
+                                             <td style="text-align: right; border-style:none;">{{returns}}</td>
+                                            <td style="text-align: right; border-style:none;">{{restockedInventory}}</td>
                                         </tr>
-                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
-                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 432423</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/02/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
-                                        </tr>
-                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
-                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 432432</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/03/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
-                                        </tr>
-                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
-                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 43242</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/04/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
-                                        </tr>
+                                        {{/each}}
+                                    {{/if_eq}}
                                     </tbody>
+                                    <tfoot id="summary">
+                                        <tr style="background-color: #F98C40; color: #F98C40">
+                                            <th>0</th>
+                                            <th id="daysales" style="text-align: right;">0</th>
+                                            <th id="dayreturns" style="text-align: right;"><span>0 </span></th>
+                                            <th id="daynet" style="text-align: right;"><span>0 </span></th>
+                                            <th id="dayperctot" style="text-align: right;"><span> 0</span></th>
+                                            <th id="dayretrate" style="text-align: right;"><span>0 </span></th>
+                                            <th id="dayretrate" style="text-align: right;"><span>0 </span></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
-                            <div class="d-block" style="background:#f98c40;">
-                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">RCC</h5>
+                            <!--<div class="d-block" style="background:#f98c40;">
+                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);"></h5>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-sm">
@@ -332,8 +307,9 @@
                                         </tr>
                                         <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;"></tr>
                                     </tbody>
+                                    
                                 </table>
-                            </div>
+                            </div>-->
                             <div class="col-xl-4 offset-xl-8" style="padding: 0px;">
                                 <div class="d-inline-flex d-xl-flex justify-content-xl-center align-items-xl-center" style="background: #fbb35a;margin-bottom: 15px;"></div>
                             </div>
@@ -359,6 +335,56 @@
             </div>
     
         </div>
+    <script>
+        function filterinventory(){
+            
+            $(".remove").remove(); 
+            //document.getElementById("inventorytable").innerHTML = "";
+            var datefilter = document.getElementById("datepicker");
+            var branchfilter = document.getElementById("branchselect");
+            var realtoday = document.getElementById("realtoday");
+
+            var invdate = document.getElementsByClassName("invdate");
+            var branchid = document.getElementsByClassName("branchid");
+            var product = document.getElementsByClassName("product1");
+            var startInv = document.getElementsByClassName("startInv");
+            var restockQuantity = document.getElementsByClassName("restockQuantity");
+            var additionalRestock = document.getElementsByClassName("additionalRestock");
+            var pulloutStock = document.getElementsByClassName("pulloutStock");
+            var returns = document.getElementsByClassName("returns");
+            var restockedInventory = document.getElementsByClassName("restockedInventory");
+            var totsales = document.getElementsByClassName("totsales");
+            document.getElementById("insertheader").innerHTML = "<tr><th class='removeimg'><span></span></th><th onclick='sortTable(0)' style='border-style: none;' class='text-left'>Name</th><th style='border-style: none;' class='text-right'>Opening Stock</th><th style='border-style: none;' class='text-right'>Production Quantity</th><th style='border-style: none;' class='text-right'>Transferred</th><th style='border-style: none;' class='text-right'>Pull Out</th><th style='border-style: none;' class='text-right'>Adjustments</th><th style='border-style: none;' class='text-right'>Current Stock</th></tr>"
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            
+            if(realtoday.value != datefilter.value){
+                var s = new Date(datefilter.value);
+                document.getElementById("insertdate").innerHTML = "For "+ months[s.getMonth()] + " " + s.getDate() + " " + s.getFullYear(); 
+            }else{
+                var s = new Date();
+                document.getElementById("insertdate").innerHTML = "As of "+ months[s.getMonth()] + " " + s.getDate() + " " + s.getFullYear() + " <span style='font-weight: 700;'>" + s.getHours() + ":" + s.getMinutes() + "</span>"; 
+            }
+            document.getElementById("insertbranch").innerHTML = branchfilter.value;
+            for(var i = 0; i < product.length; i++){
+                if(branchfilter.value == branchid[i].value && datefilter.value == invdate[i].value){
+                    document.getElementById("inventorytable").innerHTML +=   "<tr class='remove'><td class='removeimg'><img class="+' mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td>"+product[i].value+"</td><td>"+startInv[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+restockQuantity[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+additionalRestock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+pulloutStock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+returns[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td>"+restockedInventory[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td></tr>"
+                    document.getElementById("insertprint").innerHTML +=   "<tr class='remove '><td class='removeimg'><img class="+' mini-pic-list'+" src="+'../../assets/img/icons/box-2.png'+"></td><td style='border-style: none;'>"+product[i].value+"</td><td style='border-style: none;' class='text-right'>"+startInv[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td style='border-style: none;' class='text-right'>"+restockQuantity[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td style='border-style: none;' class='text-right'>"+additionalRestock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td style='border-style: none;' class='text-right'>"+pulloutStock[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td style='border-style: none;' class='text-right'>"+returns[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td><td style='border-style: none;' class='text-right'>"+restockedInventory[i].value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')+"</td></tr>"
+                }
+            }
+            document.getElementById("pickedday").innerHTML = branchfilter.value +" "+ datefilter.value;
+        }
+        var user = document.getElementById('usertype').value
+        if(user == "Admin"){
+            window.onload = filterinventory();
+        }
+        function initiateDate(){
+            console.log("INITIATE");
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var s = new Date();
+            document.getElementById("insertdate").innerHTML = "As of "+ months[s.getMonth()] + " " + s.getDate() + " " + s.getFullYear() + " <span style='font-weight: 700;'>" + s.getHours() + ":" + s.getMinutes() + "</span>"; 
+            document.getElementById("insertbranch").innerHTML = document.getElementById("whichbranch").value;
+        }window.onload = initiateDate();
+    </script>
 
     <script>
         function sortTable(n) {

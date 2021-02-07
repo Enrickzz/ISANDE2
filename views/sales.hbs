@@ -100,6 +100,7 @@
 
             {{!-- <input type="hidden" id="checkthis" name="buffer" value="{{check}}"> --}}
             <input type="hidden" id="utype" name="utype" value="{{utype}}">
+            <input type="hidden" id="OGdate" name="utype" value="{{realtoday}}">
             <input type="hidden" id="whichbranch" name="whichbranch" value="{{whichbranch}}">
 
             <div class="container-fluid" style="padding-bottom: 50px;">
@@ -217,7 +218,7 @@
                                 <p id="taxT">0.00</p>
                                 <p id="discountT">0.00</p>
                                 <p id="totalT"><b>0.00</b> </p>
-                                <input id="paidT" type="number" name="paid" class="form-control" style="height: 25px; width: 75px; margin-bottom:10px;" min="1" value="0" onchange="receipt()"> </input>
+                                <input id="paidT" type="number" name="paid" class="form-control" style="height: 40px; width: 100px; margin-bottom:10px;" min="1" value="0" onchange="receipt()"> </input>
                                 <p id="changeT"><b>0.00</b> </p>
 
                                 <input type="hidden" name="sub" id="subIn">
@@ -228,7 +229,6 @@
                             <script>
                                 function receipt(){
                                     var items = document.getElementsByClassName('totsale');
-                                    //alert(items[0].value);W
                                     var subtotal = 0;
                                     for(var i=0; i < items.length; i++){
                                         subtotal = subtotal + parseFloat(items[i].value)
@@ -237,7 +237,7 @@
                                     document.getElementById("taxT").innerHTML = parseFloat(subtotal*.12).toFixed(2);
                                     document.getElementById("paidT").min = subtotal ;
                                     
-                                    document.getElementById("subT").innerHTML = subtotal - subtotal*.12;
+                                    document.getElementById("subT").innerHTML = subtotal - subtotal*.12 +".00";
                                     document.getElementById("totalT").innerHTML = subtotal +".00";
                                     var paid = document.getElementById("paidT").value;
                                     document.getElementById("changeT").innerHTML = (parseFloat(paid) - subtotal).toFixed(2);
@@ -248,9 +248,7 @@
                                     document.getElementById("discIn").value = 0;
                                     document.getElementById("totalIn").value = subtotal +".00";
                                     document.getElementById("changeIn").value = parseFloat(paid) - subtotal;
-
                                 }
-                               
                             </script>
                          </div>
                          </div>
@@ -586,7 +584,7 @@
                                  
                                     {{/if_eq}}
                                     {{#if_eq utype "Branch Manager"}}
-                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 10rem;" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
+                                        <label for="branch" style="font-weight: 700;">Branch: <select style="width: 10rem;" value="{{whichbranch}}" id="branch" name="branch" class="form-control" onchange="this.form.submit()" disabled>
                                             <option value="Branch A">Branch A</option>
                                             <option value="Branch B">Branch B</option>
                                             <option value="Branch C">Branch C</option>
@@ -692,273 +690,6 @@
                                     <th id="dayretrate" style="text-align: right;"></th>
                                 </tr>
                             </tfoot>
-                            <script>
-                                function loadtrans(){
-                                    const formatter = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'PHP',
-                                        minimumFractionDigits: 2
-                                    })
-                                    var finalnets = document.getElementsByClassName("net");
-                                    var finalpercent = document.getElementsByClassName("percent");
-                                    var finalreturnrate = document.getElementsByClassName("returnrate");
-
-                                    var ref = document.getElementsByClassName("plist");
-                                    var invsales = document.getElementsByClassName("invsales");
-                                    var returns = document.getElementsByClassName("thisreturns");
-                                    var invdate = document.getElementsByClassName("inventorydate");
-                                    var realday = document.getElementsByClassName("realtoday");
-                                    var srp = document.getElementsByClassName("srp");
-                                    var pickdate = document.getElementById("datepicker").value;
-                                    var totalAllProd = 0;
-                                    var totalAllreturns= 0;
-                                    //realday[0].value
-                                    for(var j = 0 ; j < invsales.length ; j++){
-                                        if(invdate[j].value == realday[0].value){
-                                            totalAllProd = totalAllProd + parseFloat(invsales[j].value);
-                                            totalAllreturns = totalAllProd + parseFloat(returns[j].value);
-                                        }
-                                    }
-                                    var daysales =0;
-                                    var dayreturns =0;
-                                    var daynet =0;
-                                    var dayretrate = 0;
-                                    for(var i = 0; i < ref.length ; i++){
-                                       console.log(ref[i].value); 
-                                        if(invdate[i].value == realday[0].value){
-                                            var netsalesOut = invsales[i].value - (returns[i].value * srp[i].value);
-                                            var percentotOut= invsales[i].value / totalAllProd * 100;
-                                            var returnrateOut = returns[i].value / totalAllreturns *100 ;
-                                            var productref =ref[i].value;
-                                            var finalreturn = returns[i].value * srp[i].value;
-                                            var finalsales = invsales[i].value;
-
-                                            if(finalsales < 0){
-                                                netsalesOut = 0;
-                                                finalsales = 0;
-                                                dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
-                                                var subtractthis = returns[i].value * srp[i].value;
-                                                daynet = daynet - parseFloat(subtractthis);
-                                            }else{
-                                                daysales = daysales + parseFloat(invsales[i].value);
-                                                dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
-                                                daynet = daynet + parseFloat(netsalesOut);
-                                                dayretrate = dayretrate + (returns[i].value * srp[i].value);
-                                            }
-                                            
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
-                                        }
-                                       
-                                    }
-                                    
-                                    document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
-                                    document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
-                                    document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
-                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) +"%";
-                                }
-                                var utype = document.getElementById('utype').value;
-                                if(utype == "Branch Manager"){
-                                    window.onload = loadtrans();
-                                }else{
-                                    window.onload = loadtransAdmin();
-                                }
-                                
-                                function loadtrans2(){
-                                    $(".remove").remove();
-                                    var finalnets = document.getElementsByClassName("net");
-                                    var finalpercent = document.getElementsByClassName("percent");
-                                    var finalreturnrate = document.getElementsByClassName("returnrate");
-
-                                    var ref = document.getElementsByClassName("plist");
-                                    var invsales = document.getElementsByClassName("invsales");
-                                    var returns = document.getElementsByClassName("thisreturns");
-                                    var invdate = document.getElementsByClassName("inventorydate");
-                                    var realday = document.getElementsByClassName("realtoday");
-                                    var pickdate = document.getElementById("datepicker").value;
-                                    var totalAllProd = 0;
-                                    var totalAllreturns= 0;
-                                    //realday[0].value
-                                    for(var j = 0 ; j < invsales.length ; j++){
-                                        if(invdate[j].value == pickdate){
-                                            totalAllProd = totalAllProd + parseFloat(invsales[j].value);
-                                            totalAllreturns = totalAllProd + parseFloat(returns[j].value);
-                                        }
-                                    }
-                                    var daysales =0;
-                                    var dayreturns =0;
-                                    var daynet =0;
-                                     var dayretrate =0;
-                                    for(var i = 0; i < ref.length ; i++){
-                                        var reference = 
-                                       console.log(ref[i].value); 
-                                       
-                                        if(invdate[i].value == pickdate){
-                                            var netsalesOut = invsales[i].value - returns[i].value;
-                                            var percentotOut= invsales[i].value / totalAllProd * 100;
-                                            var returnrateOut = returns[i].value / invsales[i].value *100 ;
-                                            var productref =ref[i].value;
-                                            var finalreturn = returns[i].value *180;
-                                            var finalsales = invsales[i].value;
-                                            
-                                            daysales = daysales + parseFloat(invsales[i].value);
-                                            dayreturns = dayreturns + parseFloat(returns[i].value);
-                                            daynet = daynet + parseFloat(netsalesOut);
-                                            dayretrate = dayretrate + parseFloat(returns[i].value);
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+finalsales+".00</td><td>"+finalreturn+".00</td><td>"+netsalesOut.toFixed(2)+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
-                                        }
-                                        
-                                        //finalnets[i].innerHTML = netsalesOut;
-                                        //finalpercent[i].innerHTML = percentotOut.toFixed(2) +"%";
-                                        //finalreturnrate[i].innerHTML = returnrateOut.toFixed(2) +"%";
-                                    }
-                                    dayretrate = (dayretrate/daynet)*100
-                                    document.getElementById("daysales").innerHTML = daysales.toFixed(2);
-                                    document.getElementById("dayreturns").innerHTML = dayreturns.toFixed(2);
-                                    document.getElementById("daynet").innerHTML = daynet.toFixed(2);
-                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2);
-                                }
-
-                                function loadtransAdmin(){
-                                    const formatter = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'PHP',
-                                        minimumFractionDigits: 2
-                                    })
-                                    $(".remove").remove();
-                                    var finalnets = document.getElementsByClassName("net");
-                                    var finalpercent = document.getElementsByClassName("percent");
-                                    var finalreturnrate = document.getElementsByClassName("returnrate");
-
-                                    var ref2 = document.getElementsByClassName("plist2");
-                                    var ref = document.getElementsByClassName("plist");
-                                    var invsales = document.getElementsByClassName("invsales");
-                                    var returns = document.getElementsByClassName("thisreturns");
-                                    var invdate = document.getElementsByClassName("inventorydate");
-                                    var invbranch = document.getElementsByClassName("invbranch");
-                                    var srp = document.getElementsByClassName("srp");
-
-                                    var realday = document.getElementsByClassName("realtoday");
-                                    var pickdate = document.getElementById("datepicker").value;
-                                    var totalAllProd = 0;
-                                    var totalAllreturns= 0;
-                                    //realday[0].value
-                                    for(var j = 0 ; j < invsales.length ; j++){
-                                        if(invdate[j].value == pickdate){
-                                            totalAllProd = totalAllProd + parseFloat(invsales[j].value);
-                                            totalAllreturns = totalAllProd + parseFloat(returns[j].value);
-                                        }
-                                    }
-                                    var daysales =0;
-                                    var dayreturns =0;
-                                    var daynet =0;
-                                    var dayretrate =0;
-                                    var branch = document.getElementById("branchselect")
-                                    if(branch.value == "Aggregate"){
-                                    for(var i = 0; i < ref2.length ; i++){
-                                        var reference = ref2[i].value;
-                                       console.log(ref2[i].value);
-                                       var netsalesOut=0;
-                                       var percentotOut = 0;
-                                       var returnrateOut = 0;
-                                       var productref="";
-                                       var finalreturn= 0;
-                                       var finalsales = 0;
-                                       var prodinvtotal = 0;
-                                       
-                                       for(var k = 0; k < invdate.length ; k++){
-                                           if(invdate[k].value == pickdate && reference == ref[k].value){
-                                             netsalesOut = netsalesOut + parseFloat(invsales[k].value - (returns[k].value * srp[k].value)) ;
-                                             percentotOut= percentotOut + parseFloat(invsales[k].value);
-                                             returnrateOut = returnrateOut+ parseFloat(returns[k].value);
-                                             prodinvtotal = prodinvtotal + parseFloat(invsales[k].value);
-                                             productref = ref[k].value;
-                                             finalreturn = finalreturn + parseFloat(returns[k].value * srp[k].value);
-                                             finalsales = finalsales+ parseFloat(invsales[k].value);
-                                            
-                                            daysales = daysales + parseFloat(invsales[k].value);
-                                            dayreturns = dayreturns + parseFloat(returns[k].value * srp[k].value);
-                                            daynet = daynet + parseFloat(invsales[k].value - (returns[k].value*srp[k].value));
-                                            dayretrate = dayretrate + parseFloat(returns[k].value);
-                                        }
-                                       }
-                                        percentotOut = percentotOut/totalAllProd*100;
-                                        returnrateOut = returnrateOut/prodinvtotal *100;
-                                        if(finalsales < 0 )
-                                            {
-                                                daysales = daysales - finalsales;
-                                                daynet = daynet - finalsales;
-                                                finalsales = 0;
-                                                netsalesOut = 0;
-                                            }
-                                        document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
-                                        
-                                    }
-                                    dayretrate = (dayretrate/daynet)*100
-                                    
-                                    document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
-                                    document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
-                                    document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
-                                    document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
-
-                                    document.getElementById("pickedday").innerHTML = "All Branches" +" "+ pickdate;
-                                    }else{
-                                        var thistotalAllProd = 0;
-                                        var thistotalAllreturns= 0;
-                                        //realday[0].value
-                                        for(var j = 0 ; j < invsales.length ; j++){
-                                            if(invdate[j].value == pickdate && invbranch[j].value == branch.value){
-                                                thistotalAllProd = thistotalAllProd + parseFloat(invsales[j].value);
-                                                thistotalAllreturns = thistotalAllProd + parseFloat(returns[j].value);
-                                            }
-                                        }
-                                        for(var i =0; i < ref2.length; i++){
-                                            var reference = ref2[i].value;
-                                            var netsalesOut=0;
-                                            var percentotOut = 0;
-                                            var returnrateOut = 0;
-                                            var productref="";
-                                            var finalreturn= 0;
-                                            var finalsales = 0;
-                                            var prodinvtotal = 0;
-                                            //THIS SHIT
-                                            for(var k = 0; k < invdate.length ; k++){
-                                                if(invdate[k].value == pickdate && reference == ref[k].value && branch.value == invbranch[k].value){
-                                                    netsalesOut = parseFloat(invsales[k].value - (returns[k].value * srp[k].value)) ;
-                                                    percentotOut= parseFloat(invsales[k].value);
-                                                    returnrateOut = parseFloat(returns[k].value);
-                                                    prodinvtotal = parseFloat(invsales[k].value);
-                                                    productref = ref[k].value;
-                                                    finalreturn = parseFloat(returns[k].value * srp[k].value);
-                                                    finalsales = parseFloat(invsales[k].value);
-                                                    //alert(branch.value +"===="+ invbranch[k].value);
-                                                    daysales =daysales +  parseFloat(invsales[k].value);
-                                                    dayreturns =dayreturns +  parseFloat(returns[k].value * srp[k].value);
-                                                    daynet =daynet + parseFloat(invsales[k].value - (returns[k].value * srp[k].value));
-                                                    dayretrate =dayretrate + parseFloat(returns[k].value);
-                                                }
-                                                
-                                            }
-                                            percentotOut = percentotOut/thistotalAllProd*100;
-                                            returnrateOut = returnrateOut/thistotalAllreturns *100;
-                                            if(finalsales < 0 )
-                                            {
-                                                daysales = daysales - finalsales;
-                                                daynet = daynet - finalsales;
-                                                finalsales = 0;
-                                                netsalesOut = 0;
-                                            }
-                                            document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
-                                            document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
-                                            document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
-                                            document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
-                                            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
-                                        }
-                                        document.getElementById("pickedday").innerHTML = branch.value +" "+ pickdate;
-                                        }
-                                    
-                                }
-                            </script>
-                            
                         </table>
                     </div>
                     <br>
@@ -974,103 +705,44 @@
                             <div class="col" style="background:#f98c40;margin-bottom: 15px;padding: 5px;">
                                 <div><img class="d-block" src="/assets/img/icons/bakery_logo2.png" style="width: 80px;margin-left: auto;margin-right: auto;">
                                     <h5 class="text-center" style="margin-bottom: 0px;margin-top: 5px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 18px; font-size: 2rem;">LOUELLA BAKERY</h5>
-                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif; font-size: 1.5rem;">Daily Sales Report Branch A</h6>
-                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 1.5rem;">For February 1, 2021</h6>
+                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif; font-size: 1.5rem;">Daily Sales Report <span id="insertbranch"></span> </h6>
+                                    <h6 class="text-center" style="margin-bottom: 0px;background: rgba(251,179,90,0);color: rgb(255,255,255);font-family: Alata, sans-serif;font-size: 1.5rem;"> <span id="insertdate"></span>  </h6>
                                 </div>
                             </div>
                             <div class="d-block" style="background:#f98c40;">
-                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">FCC</h5>
+                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">Sales Report</h5>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-sm">
-                                    <thead>
+                                    
+                                    <thead id="insertheader">
+                                        {{#if_eq utype "Branch Manager"}}
                                         <tr>
-                                            <th style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">LO Number</th>
-                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Purchase Date</th>
-                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Buying Price</th>
-                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Quantity</th>
-                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Amount</th>
+                                            <th onclick="sortTable(0)" style="border-style: none;">Item </th>
+                                            <th style="text-align: right; border-style: none;">Sales</th>
+                                            <th style="text-align: right;border-style: none;">Returns</th>
+                                            <th style="text-align: right;border-style: none;">Net Sales</th>
+                                            <th style="text-align: right;border-style: none;">% of Total</th>
+                                            <th style="text-align: right;border-style: none;">Return Rate</th>
                                         </tr>
+                                        {{/if_eq}}
                                     </thead>
-                                    <tbody>
-                                        <tr style="padding: 2px;">
-                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 323242</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/01/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
-                                        </tr>
-                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
-                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 432423</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/02/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
-                                        </tr>
-                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
-                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 432432</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/03/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
-                                        </tr>
-                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;border-style: none;">
-                                            <td style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">LO 43242</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">02/04/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">210.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">136,080.00</td>
-                                        </tr>
+                                    <tbody id="insertprint">
+                                        
                                     </tbody>
+                                    <tfoot id="summary">
+                                        <tr style="background-color: #F98C40; color: white">
+                                            <th>Total</th>
+                                            <th id="daysalesprint" style="text-align: right;"></th>
+                                            <th id="dayreturnsprint" style="text-align: right;"></th>
+                                            <th id="daynetprint" style="text-align: right;"></th>
+                                            <th id="dayperctotprint" style="text-align: right;">100.00 %</th>
+                                            <th id="dayretrateprint" style="text-align: right;"></th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
-                            <div class="d-block" style="background:#f98c40;">
-                                <h5 style="font-family: Alata, sans-serif;font-size: 16px;font-weight: normal;padding: 3px;margin-bottom: 2px;color: rgb(255,255,255);">RCC</h5>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">LO Number</th>
-                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Purchase Date</th>
-                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Buying Price</th>
-                                            <th class="text-center" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Quantity</th>
-                                            <th class="text-right" style="border-style: none;background: rgb(251,179,90);font-family: Alata, sans-serif;font-size: 14px;padding: 3px;">Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="padding: 2px;">
-                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/01/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
-                                        </tr>
-                                        <tr style="padding: 2px;">
-                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/02/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
-                                        </tr>
-                                        <tr style="padding: 2px;">
-                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/03/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
-                                        </tr>
-                                        <tr style="padding: 2px;">
-                                            <td style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">LO 30087</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-weight: normal;font-size: 12px;border-style: none;padding: 3px;">02/04/2021</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">180.00</td>
-                                            <td class="text-center" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">648</td>
-                                            <td class="text-right" style="font-family: Alata, sans-serif;font-size: 12px;font-weight: normal;border-style: none;padding: 3px;">116,640.00</td>
-                                        </tr>
-                                        <tr style="font-size: 12px;font-family: Alata, sans-serif;font-weight: normal;"></tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            
                             <div class="col-xl-4 offset-xl-8" style="padding: 0px;">
                                 <div class="d-inline-flex d-xl-flex justify-content-xl-center align-items-xl-center" style="background: #fbb35a;margin-bottom: 15px;"></div>
                             </div>
@@ -1092,7 +764,266 @@
                 </div>
                 </div>
                 {{!-- END OF SALES RECORDS --}}      
+<script>
+    function loadtrans(){
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'PHP',
+            minimumFractionDigits: 2
+        })
+        var finalnets = document.getElementsByClassName("net");
+        var finalpercent = document.getElementsByClassName("percent");
+        var finalreturnrate = document.getElementsByClassName("returnrate");
 
+        var ref = document.getElementsByClassName("plist");
+        var invsales = document.getElementsByClassName("invsales");
+        var returns = document.getElementsByClassName("thisreturns");
+        var invdate = document.getElementsByClassName("inventorydate");
+        var realday = document.getElementsByClassName("realtoday");
+        var srp = document.getElementsByClassName("srp");
+        var pickdate = document.getElementById("datepicker").value;
+        var totalAllProd = 0;
+        var totalAllreturns= 0;
+        var OGdate = document.getElementById("OGdate");
+
+        //realday[0].value
+        for(var j = 0 ; j < invsales.length ; j++){
+            if(invdate[j].value == realday[0].value){
+                totalAllProd = totalAllProd + parseFloat(invsales[j].value);
+                totalAllreturns = totalAllProd + parseFloat(returns[j].value);
+            }
+        }
+        var daysales =0;
+        var dayreturns =0;
+        var daynet =0;
+        var dayretrate = 0;
+        for(var i = 0; i < ref.length ; i++){
+            console.log(ref[i].value); 
+            if(invdate[i].value == realday[0].value){
+                var netsalesOut = invsales[i].value - (returns[i].value * srp[i].value);
+                var percentotOut= invsales[i].value / totalAllProd * 100;
+                var returnrateOut = returns[i].value / totalAllreturns *100 ;
+                var productref =ref[i].value;
+                var finalreturn = returns[i].value * srp[i].value;
+                var finalsales = invsales[i].value;
+
+                if(finalsales < 0){
+                    netsalesOut = 0;
+                    finalsales = 0;
+                    dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
+                    var subtractthis = returns[i].value * srp[i].value;
+                    daynet = daynet - parseFloat(subtractthis);
+                }else{
+                    daysales = daysales + parseFloat(invsales[i].value);
+                    dayreturns = dayreturns + parseFloat(returns[i].value * srp[i].value);
+                    daynet = daynet + parseFloat(netsalesOut);
+                    dayretrate = dayretrate + (returns[i].value * srp[i].value);
+                }
+                
+                document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                document.getElementById("insertprint").innerHTML += "<tr class='remove'><td style='border-style: none;'>"+productref+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(finalsales))+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(finalreturn))+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(netsalesOut))+"</td><td style='border-style: none;' class='text-right'>"+percentotOut.toFixed(2)+"%"+"</td><td style='border-style: none;' class='text-right'>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+            }
+        }
+        var branch = document.getElementById("whichbranch");
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        if(OGdate.value != pickdate){
+            var s = new Date(pickdate);
+            document.getElementById("insertdate").innerHTML = "For "+ months[s.getMonth()] + " " + s.getDate() + " " + s.getFullYear(); 
+        }else{
+            var s = new Date();
+            document.getElementById("insertdate").innerHTML = "As of "+ months[s.getMonth()] + " " + s.getDate() + " " + s.getFullYear() + " <span style='font-weight: 700;'>" + s.getHours() + ":" + s.getMinutes() + "</span>"; 
+        }
+        document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
+        document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
+        document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
+        document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) +"%";
+
+        document.getElementById("daysalesprint").innerHTML = formatter.format(parseFloat(daysales));
+        document.getElementById("dayreturnsprint").innerHTML = formatter.format(parseFloat(dayreturns));
+        document.getElementById("daynetprint").innerHTML = formatter.format(parseFloat(daynet));
+        document.getElementById("dayretrateprint").innerHTML = dayretrate.toFixed(2) + "%";
+    }
+    var utype = document.getElementById('utype').value;
+    if(utype == "Branch Manager"){
+        window.onload = loadtrans();
+    }else{
+        window.onload = loadtransAdmin();
+    }
+    
+    function loadtransAdmin(){
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'PHP',
+            minimumFractionDigits: 2
+        })
+        $(".remove").remove();
+        var finalnets = document.getElementsByClassName("net");
+        var finalpercent = document.getElementsByClassName("percent");
+        var finalreturnrate = document.getElementsByClassName("returnrate");
+
+        var ref2 = document.getElementsByClassName("plist2");
+        var ref = document.getElementsByClassName("plist");
+        var invsales = document.getElementsByClassName("invsales");
+        var returns = document.getElementsByClassName("thisreturns");
+        var invdate = document.getElementsByClassName("inventorydate");
+        var invbranch = document.getElementsByClassName("invbranch");
+        var srp = document.getElementsByClassName("srp");
+
+        var OGdate = document.getElementById("OGdate");
+        var pickdate = document.getElementById("datepicker").value;
+        var totalAllProd = 0;
+        var totalAllreturns= 0;
+        //realday[0].value
+        for(var j = 0 ; j < invsales.length ; j++){
+            if(invdate[j].value == pickdate){
+                totalAllProd = totalAllProd + parseFloat(invsales[j].value);
+                totalAllreturns = totalAllProd + parseFloat(returns[j].value);
+            }
+        }
+        var daysales =0;
+        var dayreturns =0;
+        var daynet =0;
+        var dayretrate =0;
+        var branch = document.getElementById("branchselect");
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        if(OGdate.value != pickdate){
+            var s = new Date(pickdate);
+            document.getElementById("insertdate").innerHTML = "For "+ months[s.getMonth()] + " " + s.getDate() + " " + s.getFullYear(); 
+        }else{
+            var s = new Date();
+            document.getElementById("insertdate").innerHTML = "As of "+ months[s.getMonth()] + " " + s.getDate() + " " + s.getFullYear() + " <span style='font-weight: 700;'>" + s.getHours() + ":" + s.getMinutes() + "</span>"; 
+        }
+
+        if(branch.value != "Aggregate"){
+            document.getElementById("insertbranch").innerHTML = branch.value;
+        }else{
+            document.getElementById("insertbranch").innerHTML = "All Branches";
+        }
+        
+        if(branch.value == "Aggregate"){
+        for(var i = 0; i < ref2.length ; i++){
+            var reference = ref2[i].value;
+            console.log(ref2[i].value);
+            var netsalesOut=0;
+            var percentotOut = 0;
+            var returnrateOut = 0;
+            var productref="";
+            var finalreturn= 0;
+            var finalsales = 0;
+            var prodinvtotal = 0;
+            
+            for(var k = 0; k < invdate.length ; k++){
+                if(invdate[k].value == pickdate && reference == ref[k].value){
+                    netsalesOut = netsalesOut + parseFloat(invsales[k].value - (returns[k].value * srp[k].value)) ;
+                    percentotOut= percentotOut + parseFloat(invsales[k].value);
+                    returnrateOut = returnrateOut+ parseFloat(returns[k].value);
+                    prodinvtotal = prodinvtotal + parseFloat(invsales[k].value);
+                    productref = ref[k].value;
+                    finalreturn = finalreturn + parseFloat(returns[k].value * srp[k].value);
+                    finalsales = finalsales+ parseFloat(invsales[k].value);
+                
+                daysales = daysales + parseFloat(invsales[k].value);
+                dayreturns = dayreturns + parseFloat(returns[k].value * srp[k].value);
+                daynet = daynet + parseFloat(invsales[k].value - (returns[k].value*srp[k].value));
+                dayretrate = dayretrate + parseFloat(returns[k].value *srp[k].value);
+            }
+            }
+            percentotOut = percentotOut/totalAllProd*100;
+            returnrateOut = returnrateOut/prodinvtotal *100;
+            if(finalsales < 0 )
+                {
+                    daysales = daysales - finalsales;
+                    daynet = daynet - finalsales;
+                    finalsales = 0;
+                    netsalesOut = 0;
+                }
+            
+            document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+            document.getElementById("insertprint").innerHTML += "<tr class='remove'><td style='border-style: none;'>"+productref+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(finalsales))+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(finalreturn))+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(netsalesOut))+"</td><td style='border-style: none;' class='text-right'>"+percentotOut.toFixed(2)+"%"+"</td><td style='border-style: none;' class='text-right'>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+            
+        }
+        dayretrate = (dayretrate/daynet)*100
+        document.getElementById("insertheader").innerHTML = "<tr><th onclick='sortTable(0)' style='border-style: none'>Name </th><th style='text-align: right; border-style: none;'>Sales</th><th style='text-align: right; border-style: none;'>Returns</th><th style='text-align: right; border-style: none;'>Net Sales</th><th style='text-align: right;border-style: none;'>% of Total</th><th style='text-align: right; border-style: none;'>Return Rate</th></tr>"
+        document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
+        document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
+        document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
+        document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
+
+        document.getElementById("daysalesprint").innerHTML = formatter.format(parseFloat(daysales));
+        document.getElementById("dayreturnsprint").innerHTML = formatter.format(parseFloat(dayreturns));
+        document.getElementById("daynetprint").innerHTML = formatter.format(parseFloat(daynet));
+        document.getElementById("dayretrateprint").innerHTML = dayretrate.toFixed(2) + "%";
+
+        document.getElementById("pickedday").innerHTML = "All Branches" +" "+ pickdate;
+
+
+        }else{
+            var thistotalAllProd = 0;
+            var thistotalAllreturns= 0;
+            //realday[0].value
+            for(var j = 0 ; j < invsales.length ; j++){
+                if(invdate[j].value == pickdate && invbranch[j].value == branch.value){
+                    thistotalAllProd = thistotalAllProd + parseFloat(invsales[j].value);
+                    thistotalAllreturns = thistotalAllProd + parseFloat(returns[j].value);
+                }
+            }
+            for(var i =0; i < ref2.length; i++){
+                var reference = ref2[i].value;
+                var netsalesOut=0;
+                var percentotOut = 0;
+                var returnrateOut = 0;
+                var productref="";
+                var finalreturn= 0;
+                var finalsales = 0;
+                var prodinvtotal = 0;
+                //THIS SHIT
+                for(var k = 0; k < invdate.length ; k++){
+                    if(invdate[k].value == pickdate && reference == ref[k].value && branch.value == invbranch[k].value){
+                        netsalesOut = parseFloat(invsales[k].value - (returns[k].value * srp[k].value)) ;
+                        percentotOut= parseFloat(invsales[k].value);
+                        returnrateOut = returnrateOut+ parseFloat(returns[k].value);
+                        prodinvtotal = parseFloat(invsales[k].value);
+                        productref = ref[k].value;
+                        finalreturn = parseFloat(returns[k].value * srp[k].value);
+                        finalsales = parseFloat(invsales[k].value);
+                        //alert(branch.value +"===="+ invbranch[k].value);
+                        daysales =daysales +  parseFloat(invsales[k].value);
+                        dayreturns =dayreturns +  parseFloat(returns[k].value * srp[k].value);
+                        daynet =daynet + parseFloat(invsales[k].value - (returns[k].value * srp[k].value));
+                        dayretrate =dayretrate + parseFloat(returns[k].value *srp[k].value);
+                    }
+                    
+                }
+                percentotOut = percentotOut/thistotalAllProd*100;
+                returnrateOut = returnrateOut/thistotalAllreturns *100;
+                if(finalsales < 0 )
+                {
+                    daysales = daysales - finalsales;
+                    daynet = daynet - finalsales;
+                    finalsales = 0;
+                    netsalesOut = 0;
+                }
+                
+                document.getElementById("addRecords").innerHTML += "<tr class='remove'><td>"+productref+"</td><td>"+formatter.format(parseFloat(finalsales))+"</td><td>"+formatter.format(parseFloat(finalreturn))+"</td><td>"+formatter.format(parseFloat(netsalesOut))+"</td><td>"+percentotOut.toFixed(2)+"%"+"</td><td>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+                document.getElementById("insertprint").innerHTML += "<tr class='remove'><td style='border-style: none;'>"+productref+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(finalsales))+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(finalreturn))+"</td><td style='border-style: none;' class='text-right'>"+formatter.format(parseFloat(netsalesOut))+"</td><td style='border-style: none;' class='text-right'>"+percentotOut.toFixed(2)+"%"+"</td><td style='border-style: none;' class='text-right'>"+returnrateOut.toFixed(2)+"%"+"</td></tr> "
+            
+            }
+            dayretrate = (dayretrate/daynet)*100
+                document.getElementById("daysales").innerHTML = formatter.format(parseFloat(daysales));
+                document.getElementById("dayreturns").innerHTML = formatter.format(parseFloat(dayreturns));
+                document.getElementById("daynet").innerHTML = formatter.format(parseFloat(daynet));
+                document.getElementById("dayretrate").innerHTML = dayretrate.toFixed(2) + "%";
+
+                document.getElementById("daysalesprint").innerHTML = formatter.format(parseFloat(daysales));
+                document.getElementById("dayreturnsprint").innerHTML = formatter.format(parseFloat(dayreturns));
+                document.getElementById("daynetprint").innerHTML = formatter.format(parseFloat(daynet));
+                document.getElementById("dayretrateprint").innerHTML = dayretrate.toFixed(2) + "%";
+
+            document.getElementById("pickedday").innerHTML = branch.value +" "+ pickdate;
+            }
+        
+    }
+</script>
                 
 
                     </div>
@@ -1347,7 +1278,6 @@ body * {
 }
 
 #summary * {
-    display: none;
     visibility: visible;
     background: #F98C40 !important; 
     color: white !important;
