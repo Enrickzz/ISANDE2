@@ -171,7 +171,7 @@
                         <form action="/addRawMaterialOrder" method="POST">
                         <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
                         <td> {{UOM}}</td>
-                        <td> {{price}}</td>
+                        <td> {{addZeroesComma price}}</td>
                         <td><input  type="number" name="quantity" class="form-control" style="min-width: 40px;"  required></td>
                         <td style="width: 2%;">
                             <input type="hidden" name="product" value="{{product}}">

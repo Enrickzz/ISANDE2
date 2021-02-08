@@ -196,7 +196,7 @@
                                     {{#each branchorders}}
                                         <tr class="clickable" >
                                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
-                                            <td style="text-align: right;">{{quantity}}</td>{{#if_eq ../utype "Admin"}}
+                                            <td style="text-align: right;">{{addComma quantity}}</td>{{#if_eq ../utype "Admin"}}
                                             <td class="suggest"><form action="/updateBranchOrder" method="POST">
                                             
                                                     <input name="product" type="hidden" class="form-control w-60" width="50" placeholder="{{product}}" value="{{product}}"readonly> 
@@ -207,13 +207,13 @@
                                                     <input type="hidden" name="branchorderid" value="{{this._id}}">
                                                     <input type="hidden" name="prevTotal" value="{{../productionorder.total}}">
                                                     
-                                                    <button id="suggest" class="btn btn-primary btn-sm" type="submit">{{systemsuggest}}</button>
+                                                    <button id="suggest" class="btn btn-primary btn-sm" type="submit">{{addZeroesComma systemsuggest}}</button>
                                                     
                                                 </form>
                                             </td>{{/if_eq}}
-                                            <td style="text-align: right; padding-right: 90px">{{actualDelivered}}</td>
-                                            <td style="text-align: right; padding-right: 60px">{{rate}}</td>
-                                            <td style="text-align: right; padding-right: 30px">{{amount}}</td>
+                                            <td style="text-align: right; padding-right: 90px">{{addZeroesComma actualDelivered}}</td>
+                                            <td style="text-align: right; padding-right: 60px">{{addZeroesComma rate}}</td>
+                                            <td style="text-align: right; padding-right: 30px">{{addZeroesComma amount}}</td>
                                         </tr>
                                     {{/each}}
                                 </tbody>
@@ -235,7 +235,7 @@
                                             <span>TOTAL AMOUNT:</span>
                                         </div>
                                         <div class="col" style="text-align: right;">
-                                            <span>Php {{productionorder.total}}</span>
+                                            <span>Php {{addZeroesComma productionorder.total}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -337,9 +337,9 @@
                           <form action="/updateBranchOrder" method="POST">
                             <tr class="clickable" >
                                 <td><input name="product" class="form-control w-60" width="50" placeholder="{{product}}" value="{{product}}"readonly> </td>
-                                <td><input required type="text" name="quantity" placeholder="{{quantity}}" class="form-control w-60" width="2"></td>
-                                <td><input name="rate" class="form-control w-60" width="2" placeholder="{{rate}}" value="{{rate}}" readonly></td>
-                                 <td><input name="amount" class="form-control w-60" width="2" placeholder="{{amount}}" value="{{amount}}" readonly></td>
+                                <td><input required type="text" name="quantity" placeholder="{{addComma quantity}}" class="form-control w-60" width="2"></td>
+                                <td><input name="rate" class="form-control w-60" width="2" placeholder="{{addZeroesComma rate}}" value="{{addZeroesComma rate}}" readonly></td>
+                                 <td><input name="amount" class="form-control w-60" width="2" placeholder="{{addZeroesComma amount}}" value="{{addZeroesComma amount}}" readonly></td>
                                 <input type="hidden" name="productionorderid" value="{{../productionorder._id}}">
                                  <input type="hidden" name="branchorderid" value="{{this._id}}">
                                  <input type="hidden" name="prevTotal" value="{{../productionorder.total}}">

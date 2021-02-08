@@ -37,6 +37,21 @@ app.engine('hbs', exphbs({
         return opts.fn(this);
       else
        return opts.inverse(this);
+    },
+
+    addComma: function(num){
+      // Convert input string to a number and store as a variable.
+      var value = parseFloat(num);      
+      var formattedString= value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      return formattedString;
+    },
+    addZeroesComma: function(num){
+      // Convert input string to a number and store as a variable.
+      var value = parseFloat(num).toFixed(2);      
+      var formattedString= value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      return formattedString;
     }
   }
 }));

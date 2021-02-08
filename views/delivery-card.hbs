@@ -158,19 +158,19 @@
                                         {{#each branchorders}}
                                             <tr class="clickable" >
                                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
-                                                <td style="text-align: right;"> {{quantity}}</td>
-                                                <td class="nochange" style="text-align: right; padding-right: 90px">{{actualDelivered}}</td>
-                                                <td style="text-align: right; padding-right: 60px">{{rate}}</td>
-                                                <td style="text-align: right; padding-right: 30px">{{amount}}</td>
+                                                <td style="text-align: right;"> {{addComma quantity}}</td>
+                                                <td class="nochange" style="text-align: right; padding-right: 90px">{{addComma actualDelivered}}</td>
+                                                <td style="text-align: right; padding-right: 60px">{{addZeroesComma rate}}</td>
+                                                <td style="text-align: right; padding-right: 30px">{{addZeroesComma amount}}</td>
                                             </tr>
                                         {{/each}}
                                     {{else}}
                                         <tr class="clickable" >
                                             <td ><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
-                                            <td style="text-align: right; padding-right: 60px"> {{request.quantity}}</td>
+                                            <td style="text-align: right; padding-right: 60px"> {{addComma request.quantity}}</td>
                                             <td style="text-align: right; padding-right: 60px">0</td>
-                                            <td style="text-align: right; padding-right: 60px">{{request.cost}}</td>
-                                            <td style="text-align: right; padding-right: 60px">{{delivery.total}}</td>
+                                            <td style="text-align: right; padding-right: 60px">{{addZeroesComma request.cost}}</td>
+                                            <td style="text-align: right; padding-right: 60px">{{addZeroesComma delivery.total}}</td>
                                         </tr>
                                     {{/if}}
                                 </tbody>
@@ -192,7 +192,7 @@
                                             <span>TOTAL AMOUNT:</span>
                                         </div>
                                         <div class="col" style="text-align: right;">
-                                            <span>Php {{productionorder.total}}</span>
+                                            <span>Php {{addZeroesComma productionorder.total}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -244,14 +244,14 @@
                             <tr class="clickable" >
                                 <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
                                 <td> {{quantity}}</td>
-                                    <td><input type="text" style="width: 75%;" class="actualQty form-control" name="actualQty" value="{{quantity}}"></td>
+                                    <td><input type="text" style="width: 75%;" class="actualQty form-control" name="actualQty" value="{{addComma quantity}}"></td>
                                     <input type="hidden" class="QMproduct" name="QMproduct" value="{{product}}">
-                                    <input type="hidden" class="QMrate" name="QMrate" value="{{rate}}">
-                                    <input type="hidden" class="QMamount" name="QMamount" value="{{amount}}">
+                                    <input type="hidden" class="QMrate" name="QMrate" value="{{addZeroesComma rate}}">
+                                    <input type="hidden" class="QMamount" name="QMamount" value="{{addZeroesComma amount}}">
                                     
                                     
-                                <td>{{rate}}</td>
-                                <td>{{amount}}</td>
+                                <td>{{addZeroesComma rate}}</td>
+                                <td>{{addZeroesComma amount}}</td>
                             </tr>
                         {{/each}}
                         </form>
@@ -260,12 +260,12 @@
                         <tr class="clickable" >
                             <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{request.product}}</td>
                             <td> {{request.quantity}}</td>
-                             <td><input type="text" style="width: 75%;" class="actualQty form-control" name="actualQty" value="{{request.quantity}}"></td>
+                             <td><input type="text" style="width: 75%;" class="actualQty form-control" name="actualQty" value="{{addComma request.quantity}}"></td>
                                     <input type="hidden" class="QMproduct" name="QMproduct" value="{{product}}">
-                                    <input type="hidden" class="QMrate" name="QMrate" value="{{request.cost}}">
-                                    <input type="hidden" class="QMamount" name="QMamount" value="{{delivery.total}}">
-                            <td>{{request.cost}}</td>
-                            <td>{{delivery.total}}</td>
+                                    <input type="hidden" class="QMrate" name="QMrate" value="{{addZeroesComma request.cost}}">
+                                    <input type="hidden" class="QMamount" name="QMamount" value="{{addZeroesComma delivery.total}}">
+                            <td>{{addZeroesComma request.cost}}</td>
+                            <td>{{addZeroesComma delivery.total}}</td>
                         </tr>
                     {{/if}}
                     <br>                  

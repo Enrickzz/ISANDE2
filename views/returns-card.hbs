@@ -125,10 +125,10 @@
                                     {{#each returnitems}}
                                         <tr class="clickable" >
                                         <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{product}}</td>
-                                        <td style="text-align: right; padding-right: 60px;">{{quantity}}</td>
+                                        <td style="text-align: right; padding-right: 60px;">{{addComma quantity}}</td>
                                         <td> {{unit}}</td>
-                                        <td style="text-align: right; padding-right: 40px;">{{sellingprice}}</td>
-                                        <td style="text-align: right; padding-right: 60px;">{{amount}}</td>
+                                        <td style="text-align: right; padding-right: 40px;">{{addZeroesComma sellingprice}}</td>
+                                        <td style="text-align: right; padding-right: 60px;">{{addZeroesComma amount}}</td>
                                         <td>
                                             <form action="/deleteReturnItem" method="POST">
                                                 <input type="hidden" name="returnitemID" value="{{this._id}}">
@@ -216,7 +216,7 @@
                     <tr class="clickable" >
                         <form action="/addreturnItem" method="POST">
                         <td><img class="mini-pic-list" src="../../assets/img/icons/box-2.png">{{name}}</td>
-                        <td> {{sellingprice}}</td>
+                        <td> {{addZeroesComma sellingprice}}</td>
                         <td><input  type="number" type="number"  pattern="[0-9]{0}[0-9]+" name="quantity" class="form-control" style="min-width: 40px;"  min="1" required></td>
                         <td style="width: 2%;">
                             <input type="hidden" name="product" value="{{name}}">

@@ -61,7 +61,7 @@
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
                                             <td>{{productionID}}</td>
-                                            <td style="text-align: right; padding-right: 60px">{{total}}</td>
+                                            <td style="text-align: right; padding-right: 60px">{{addZeroesComma total}}</td>
                                             <td>{{status}}</td>
                                         </tr>
                                     {{/each}}
@@ -71,7 +71,7 @@
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
                                             <td>{{productionID}}</td>
-                                            <td style="text-align: right;">{{total}}.00</td>
+                                            <td style="text-align: right;">{{addZeroesComma total}}.00</td>
                                             <td>{{status}}</td>
                                         </tr>
                                     {{/each}}
@@ -106,7 +106,7 @@
                                         <tr class="clickable" onclick='window.location="/delivery/view/{{this._id}}"'>
                                             <td>{{deliverydate}}</td>
                                             <td>{{productionID}}</td>
-                                            <td style="text-align: right;">{{total}}.00</td>
+                                            <td style="text-align: right;">{{addZeroesComma total}}</td>
                                             <td>{{status}}</td>
                                         </tr>
                                     {{/each}}
