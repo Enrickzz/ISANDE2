@@ -86,7 +86,7 @@
   
                             <li class="nav-item dropdown no-arrow mx-1" role="presentation">
                                 
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="">suggestions</i><span style="margin-bottom: 10px;" class="badge badge-danger badge-counter">{{#if num_suggestions}} {{num_suggestions}} {{/if}}</span></a>
+                                <div class="nav-item dropdown no-arrow">{{#if suggestions}}<a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: red; font-weight: 600;"> {{else}} <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style=" font-weight: 600;">   {{/if}}<i class="">suggestions</i><span style="margin-bottom: 10px;" class="badge badge-danger badge-counter">{{#if num_suggestions}} {{num_suggestions}} {{/if}}</span></a> 
                                     <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
                                         role="menu" style="min-width: 600px;">
 
